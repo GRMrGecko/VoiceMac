@@ -1,0 +1,12 @@
+build
+*.zip
+*.xcodeproj/*.pbxuser
+*.xcodeproj/*.mode*
+*.xcodeproj/*.perspective*
+*.xcodeproj/xcuserdata
+*.xcodeproj/project.xcworkspace/xcuserdata
+*.xcworkspace/xcuserdata
+SIP/opt*
+SIP/pjproject*
+VoiceMac/*
+Screenshots/*

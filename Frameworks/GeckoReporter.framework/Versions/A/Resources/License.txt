@@ -1,0 +1,27 @@
+Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+
+Permission is granted, to any person obtaining a copy of this framework, to
+	use, copy, modify, merge, or redistribute this framework under the following terms:
+
+1. This file must be included in all copies of this framework unmodified in
+	GeckoReporter.framework/Resource/License.txt and/or GeckoReporter.framework/Versions/A/Resources/License.txt.
+
+2. THIS FRAMEWORK IS PROVIDED "AS IS" BY JAMES COLEMAN, WITHOUT WARRANTY OF
+	ANY KIND. IF YOUR SOFTWARE/FRAMEWORK/COMPUTER CRASH OR FAILS TO WORK IN ANY
+	WAY SHAPE OR FORM BECAUSE OF THIS FRAMEWORK, I (JAMES COLEMAN) AM NOT IN ANYWAY
+	RESPONSIBLE FOR YOUR PROBLEM. BUT, I MAY BE WILLING TO HELP YOU, NO PROMISES.
+
+3. Redistributions of source code included in this framework must retain the
+	copyright notice above this license file without modifications.
+
+4. Redistributions of binary must contain the copyright above this license file
+	without modifications.
+
+5. If you use the crash reporter in this framework, you are allowed to remove the
+	NSTextField that says, "GeckoReporter by Mr. Gecko's Media".
+
+6. For the users convenience, you must retain the notice about anonymous system
+	information being sent.
+
+7. Mr. Gecko's Media (James Coleman) is allowed to modify these terms without notice to you
+	or your customers.

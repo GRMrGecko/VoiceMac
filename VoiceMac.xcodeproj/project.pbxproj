@@ -1,0 +1,1106 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2A03CC761247D45B00730F0C /* AccountSetup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CC751247D45B00730F0C /* AccountSetup.xib */; };
+		2A03CC781247D46600730F0C /* InboxWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CC771247D46600730F0C /* InboxWindow.xib */; };
+		2A03CC7A1247D46D00730F0C /* MultiSMS.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CC791247D46D00730F0C /* MultiSMS.xib */; };
+		2A03CC7C1247D47400730F0C /* RecordedView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CC7B1247D47400730F0C /* RecordedView.xib */; };
+		2A03CC7E1247D47A00730F0C /* SIPCallWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CC7D1247D47A00730F0C /* SIPCallWindow.xib */; };
+		2A03CC801247D48100730F0C /* SIPUser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CC7F1247D48100730F0C /* SIPUser.xib */; };
+		2A03CC821247D48800730F0C /* SMSMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CC811247D48800730F0C /* SMSMessageView.xib */; };
+		2A03CC841247D48E00730F0C /* SMSWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CC831247D48E00730F0C /* SMSWindow.xib */; };
+		2A03CC861247D49300730F0C /* VoicemailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CC851247D49300730F0C /* VoicemailView.xib */; };
+		2A03CC881247D49800730F0C /* VoiceUser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CC871247D49800730F0C /* VoiceUser.xib */; };
+		2A03CC8A1247D5B100730F0C /* License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CC891247D5B100730F0C /* License.txt */; };
+		2A03CCA01247D75100730F0C /* SIPPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CC9F1247D75100730F0C /* SIPPane.xib */; };
+		2A03CCA21247D75700730F0C /* SMSThemesPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CCA11247D75700730F0C /* SMSThemesPane.xib */; };
+		2A03CCA41247D75C00730F0C /* SoundsPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CCA31247D75C00730F0C /* SoundsPane.xib */; };
+		2A11738212456E4300D119B5 /* MGMInboxPlayWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11734112456E4300D119B5 /* MGMInboxPlayWindow.m */; };
+		2A11738312456E4300D119B5 /* MGMInboxWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11734312456E4300D119B5 /* MGMInboxWindow.m */; };
+		2A11738412456E4300D119B5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11734412456E4300D119B5 /* main.m */; };
+		2A11738512456E4300D119B5 /* MGMAccountSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11734612456E4300D119B5 /* MGMAccountSetup.m */; };
+		2A11738612456E4300D119B5 /* MGMBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11734812456E4300D119B5 /* MGMBadge.m */; };
+		2A11738712456E4300D119B5 /* MGMContactsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11734A12456E4300D119B5 /* MGMContactsController.m */; };
+		2A11738812456E4300D119B5 /* MGMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11734C12456E4300D119B5 /* MGMController.m */; };
+		2A11738912456E4300D119B5 /* MGMNumberOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11734E12456E4300D119B5 /* MGMNumberOptions.m */; };
+		2A11738A12456E4300D119B5 /* MGMVMAddons.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11735012456E4300D119B5 /* MGMVMAddons.m */; };
+		2A11738B12456E4300D119B5 /* MGMVoiceUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11735212456E4300D119B5 /* MGMVoiceUser.m */; };
+		2A11738C12456E4300D119B5 /* MGMAccountsPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11735512456E4300D119B5 /* MGMAccountsPane.m */; };
+		2A11738D12456E4300D119B5 /* MGMSIPPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11735712456E4300D119B5 /* MGMSIPPane.m */; };
+		2A11738E12456E4300D119B5 /* MGMSMSThemesPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11735912456E4300D119B5 /* MGMSMSThemesPane.m */; };
+		2A11738F12456E4300D119B5 /* MGMSoundsPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11735B12456E4300D119B5 /* MGMSoundsPane.m */; };
+		2A11739012456E4300D119B5 /* MGMSIPCallWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11735E12456E4300D119B5 /* MGMSIPCallWindow.m */; };
+		2A11739112456E4300D119B5 /* MGMSIPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11736012456E4300D119B5 /* MGMSIPUser.m */; };
+		2A11739212456E4300D119B5 /* MGMSIPWavConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11736212456E4300D119B5 /* MGMSIPWavConverter.m */; };
+		2A11739312456E4300D119B5 /* MGMMultiSMS.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11736512456E4300D119B5 /* MGMMultiSMS.m */; };
+		2A11739412456E4300D119B5 /* MGMSMSManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11736712456E4300D119B5 /* MGMSMSManager.m */; };
+		2A11739512456E4300D119B5 /* MGMSMSMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11736912456E4300D119B5 /* MGMSMSMessageView.m */; };
+		2A11739612456E4300D119B5 /* MGMSMSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11736B12456E4300D119B5 /* MGMSMSTextView.m */; };
+		2A11739712456E4300D119B5 /* MGMSMSView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11736D12456E4300D119B5 /* MGMSMSView.m */; };
+		2A11739812456E4300D119B5 /* MGMBlackWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11737012456E4300D119B5 /* MGMBlackWindow.m */; };
+		2A11739912456E4300D119B5 /* MGMBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11737212456E4300D119B5 /* MGMBottomView.m */; };
+		2A11739A12456E4300D119B5 /* MGMContactView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11737412456E4300D119B5 /* MGMContactView.m */; };
+		2A11739B12456E4300D119B5 /* MGMGradiantView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11737612456E4300D119B5 /* MGMGradiantView.m */; };
+		2A11739C12456E4300D119B5 /* MGMPhoneFeild.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11737812456E4300D119B5 /* MGMPhoneFeild.m */; };
+		2A11739D12456E4300D119B5 /* MGMProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11737A12456E4300D119B5 /* MGMProgressView.m */; };
+		2A11739E12456E4300D119B5 /* MGMSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11737C12456E4300D119B5 /* MGMSplitView.m */; };
+		2A11739F12456E4300D119B5 /* MGMTranslucentTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11737E12456E4300D119B5 /* MGMTranslucentTabView.m */; };
+		2A1173A012456E4300D119B5 /* MGMViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11738012456E4300D119B5 /* MGMViewCell.m */; };
+		2A11746C12456F2700D119B5 /* badge.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173B212456F2400D119B5 /* badge.png */; };
+		2A11746D12456F2700D119B5 /* badgel.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173B312456F2400D119B5 /* badgel.png */; };
+		2A11746E12456F2700D119B5 /* badgem.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173B412456F2400D119B5 /* badgem.png */; };
+		2A11746F12456F2700D119B5 /* badger.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173B512456F2500D119B5 /* badger.png */; };
+		2A11747212456F2700D119B5 /* answerButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173B912456F2500D119B5 /* answerButton.png */; };
+		2A11747412456F2700D119B5 /* callButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173BB12456F2500D119B5 /* callButton.png */; };
+		2A11747612456F2700D119B5 /* cancelButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173BD12456F2500D119B5 /* cancelButton.png */; };
+		2A11747812456F2700D119B5 /* cancelCall.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173BF12456F2500D119B5 /* cancelCall.png */; };
+		2A11747A12456F2700D119B5 /* hangUpButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173C112456F2500D119B5 /* hangUpButton.png */; };
+		2A11747C12456F2700D119B5 /* holdButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173C312456F2500D119B5 /* holdButton.png */; };
+		2A11747E12456F2700D119B5 /* ignoreButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173C512456F2500D119B5 /* ignoreButton.png */; };
+		2A11748012456F2700D119B5 /* padButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173C712456F2500D119B5 /* padButton.png */; };
+		2A11748212456F2700D119B5 /* placeCall.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173C912456F2500D119B5 /* placeCall.png */; };
+		2A11748412456F2700D119B5 /* sms.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173CB12456F2500D119B5 /* sms.png */; };
+		2A11748612456F2700D119B5 /* SMSButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173CD12456F2500D119B5 /* SMSButton.png */; };
+		2A11748812456F2700D119B5 /* unholdButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173CF12456F2500D119B5 /* unholdButton.png */; };
+		2A11748912456F2700D119B5 /* Close.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173D012456F2500D119B5 /* Close.png */; };
+		2A11748A12456F2700D119B5 /* ClosePressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173D112456F2500D119B5 /* ClosePressed.png */; };
+		2A1174B112456F2700D119B5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173FD12456F2600D119B5 /* InfoPlist.strings */; };
+		2A1174B212456F2700D119B5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A1173FF12456F2600D119B5 /* MainMenu.xib */; };
+		2A1174B412456F2700D119B5 /* Growl Registration Ticket.growlRegDict in Resources */ = {isa = PBXBuildFile; fileRef = 2A11740212456F2600D119B5 /* Growl Registration Ticket.growlRegDict */; };
+		2A1174B712456F2700D119B5 /* map.html in Resources */ = {isa = PBXBuildFile; fileRef = 2A11740512456F2600D119B5 /* map.html */; };
+		2A1174B912456F2700D119B5 /* micVolume.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11740712456F2600D119B5 /* micVolume.png */; };
+		2A1174BC12456F2700D119B5 /* n#.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11740B12456F2600D119B5 /* n#.png */; };
+		2A1174BE12456F2700D119B5 /* n*.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11740D12456F2600D119B5 /* n*.png */; };
+		2A1174C012456F2700D119B5 /* n0.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11740F12456F2600D119B5 /* n0.png */; };
+		2A1174C212456F2700D119B5 /* n1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11741112456F2600D119B5 /* n1.png */; };
+		2A1174C412456F2700D119B5 /* n2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11741312456F2600D119B5 /* n2.png */; };
+		2A1174C612456F2700D119B5 /* n3.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11741512456F2600D119B5 /* n3.png */; };
+		2A1174C812456F2700D119B5 /* n4.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11741712456F2600D119B5 /* n4.png */; };
+		2A1174CA12456F2700D119B5 /* n5.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11741912456F2600D119B5 /* n5.png */; };
+		2A1174CC12456F2700D119B5 /* n6.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11741B12456F2600D119B5 /* n6.png */; };
+		2A1174CE12456F2700D119B5 /* n7.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11741D12456F2600D119B5 /* n7.png */; };
+		2A1174D012456F2700D119B5 /* n8.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11741F12456F2600D119B5 /* n8.png */; };
+		2A1174D212456F2700D119B5 /* n9.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11742112456F2600D119B5 /* n9.png */; };
+		2A1174D312456F2700D119B5 /* NumberOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A11742212456F2600D119B5 /* NumberOptions.xib */; };
+		2A1174D512456F2700D119B5 /* Accounts.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11742512456F2600D119B5 /* Accounts.png */; };
+		2A1174D812456F2700D119B5 /* SIP.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11742812456F2600D119B5 /* SIP.png */; };
+		2A1174DB12456F2700D119B5 /* SMSThemes.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11742B12456F2600D119B5 /* SMSThemes.png */; };
+		2A1174DF12456F2700D119B5 /* Sounds.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11742F12456F2600D119B5 /* Sounds.png */; };
+		2A11750B12456F2700D119B5 /* VoiceMac Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11746312456F2700D119B5 /* VoiceMac Icon.png */; };
+		2A11750D12456F2700D119B5 /* VoiceMac Setup.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11746512456F2700D119B5 /* VoiceMac Setup.png */; };
+		2A11751112456F2700D119B5 /* volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11746912456F2700D119B5 /* volume.png */; };
+		2A11753D12456FA600D119B5 /* SMS Themes in Resources */ = {isa = PBXBuildFile; fileRef = 2A11751212456FA600D119B5 /* SMS Themes */; };
+		2A1175ED12456FC100D119B5 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 2A1175E312456FC100D119B5 /* Sounds */; };
+		2A1175F51245703100D119B5 /* VoiceBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1175F31245700300D119B5 /* VoiceBase.framework */; };
+		2A1175F61245704100D119B5 /* VoiceBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1175F31245700300D119B5 /* VoiceBase.framework */; };
+		2A1175F81245705100D119B5 /* GeckoReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1175F71245705100D119B5 /* GeckoReporter.framework */; };
+		2A1175FA1245705400D119B5 /* GeckoReporter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1175F71245705100D119B5 /* GeckoReporter.framework */; };
+		2A1176041245706A00D119B5 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1176031245706A00D119B5 /* Growl.framework */; };
+		2A11760B1245707A00D119B5 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A11760A1245707A00D119B5 /* Sparkle.framework */; };
+		2A1176341245708E00D119B5 /* MGMUsers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1176331245708E00D119B5 /* MGMUsers.framework */; };
+		2A1176351245709100D119B5 /* MGMUsers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1176331245708E00D119B5 /* MGMUsers.framework */; };
+		2A1176461245709D00D119B5 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A11760A1245707A00D119B5 /* Sparkle.framework */; };
+		2A117647124570A400D119B5 /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1176031245706A00D119B5 /* Growl.framework */; };
+		2A11765D1245724100D119B5 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A11765C1245724100D119B5 /* QTKit.framework */; };
+		2A1176611245724B00D119B5 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1176601245724A00D119B5 /* WebKit.framework */; };
+		2A1176681245725C00D119B5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1176671245725B00D119B5 /* QuartzCore.framework */; };
+		2A117685124573D600D119B5 /* VoiceMac.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2A117684124573D600D119B5 /* VoiceMac.icns */; };
+		2A11770412458C8A00D119B5 /* blankicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11770312458C8A00D119B5 /* blankicon.png */; };
+		2A91A3F61247D6B900013B43 /* AccountsPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A91A3F81247D6B900013B43 /* AccountsPane.xib */; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2A1175F21245700300D119B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A1175EE1245700300D119B5 /* VoiceBase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = VoiceBase;
+		};
+		2A117650124571C900D119B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A1175EE1245700300D119B5 /* VoiceBase.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = VoiceBase;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2A1175F91245705200D119B5 /* Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2A1175F51245703100D119B5 /* VoiceBase.framework in Frameworks */,
+				2A1176351245709100D119B5 /* MGMUsers.framework in Frameworks */,
+				2A1175FA1245705400D119B5 /* GeckoReporter.framework in Frameworks */,
+				2A1176461245709D00D119B5 /* Sparkle.framework in Frameworks */,
+				2A117647124570A400D119B5 /* Growl.framework in Frameworks */,
+			);
+			name = Frameworks;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2A03CC891247D5B100730F0C /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = SOURCE_ROOT; };
+		2A11734012456E4300D119B5 /* MGMInboxPlayWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMInboxPlayWindow.h; sourceTree = "<group>"; };
+		2A11734112456E4300D119B5 /* MGMInboxPlayWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMInboxPlayWindow.m; sourceTree = "<group>"; };
+		2A11734212456E4300D119B5 /* MGMInboxWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMInboxWindow.h; sourceTree = "<group>"; };
+		2A11734312456E4300D119B5 /* MGMInboxWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMInboxWindow.m; sourceTree = "<group>"; };
+		2A11734412456E4300D119B5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/VoiceMac/main.m; sourceTree = "<group>"; };
+		2A11734512456E4300D119B5 /* MGMAccountSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMAccountSetup.h; sourceTree = "<group>"; };
+		2A11734612456E4300D119B5 /* MGMAccountSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMAccountSetup.m; sourceTree = "<group>"; };
+		2A11734712456E4300D119B5 /* MGMBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMBadge.h; sourceTree = "<group>"; };
+		2A11734812456E4300D119B5 /* MGMBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMBadge.m; sourceTree = "<group>"; };
+		2A11734912456E4300D119B5 /* MGMContactsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMContactsController.h; sourceTree = "<group>"; };
+		2A11734A12456E4300D119B5 /* MGMContactsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMContactsController.m; sourceTree = "<group>"; };
+		2A11734B12456E4300D119B5 /* MGMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMController.h; sourceTree = "<group>"; };
+		2A11734C12456E4300D119B5 /* MGMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMController.m; sourceTree = "<group>"; };
+		2A11734D12456E4300D119B5 /* MGMNumberOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMNumberOptions.h; sourceTree = "<group>"; };
+		2A11734E12456E4300D119B5 /* MGMNumberOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMNumberOptions.m; sourceTree = "<group>"; };
+		2A11734F12456E4300D119B5 /* MGMVMAddons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMVMAddons.h; sourceTree = "<group>"; };
+		2A11735012456E4300D119B5 /* MGMVMAddons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMVMAddons.m; sourceTree = "<group>"; };
+		2A11735112456E4300D119B5 /* MGMVoiceUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMVoiceUser.h; sourceTree = "<group>"; };
+		2A11735212456E4300D119B5 /* MGMVoiceUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMVoiceUser.m; sourceTree = "<group>"; };
+		2A11735412456E4300D119B5 /* MGMAccountsPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMAccountsPane.h; sourceTree = "<group>"; };
+		2A11735512456E4300D119B5 /* MGMAccountsPane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMAccountsPane.m; sourceTree = "<group>"; };
+		2A11735612456E4300D119B5 /* MGMSIPPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSIPPane.h; sourceTree = "<group>"; };
+		2A11735712456E4300D119B5 /* MGMSIPPane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSIPPane.m; sourceTree = "<group>"; };
+		2A11735812456E4300D119B5 /* MGMSMSThemesPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSMSThemesPane.h; sourceTree = "<group>"; };
+		2A11735912456E4300D119B5 /* MGMSMSThemesPane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSMSThemesPane.m; sourceTree = "<group>"; };
+		2A11735A12456E4300D119B5 /* MGMSoundsPane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSoundsPane.h; sourceTree = "<group>"; };
+		2A11735B12456E4300D119B5 /* MGMSoundsPane.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSoundsPane.m; sourceTree = "<group>"; };
+		2A11735D12456E4300D119B5 /* MGMSIPCallWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSIPCallWindow.h; sourceTree = "<group>"; };
+		2A11735E12456E4300D119B5 /* MGMSIPCallWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSIPCallWindow.m; sourceTree = "<group>"; };
+		2A11735F12456E4300D119B5 /* MGMSIPUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSIPUser.h; sourceTree = "<group>"; };
+		2A11736012456E4300D119B5 /* MGMSIPUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSIPUser.m; sourceTree = "<group>"; };
+		2A11736112456E4300D119B5 /* MGMSIPWavConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSIPWavConverter.h; sourceTree = "<group>"; };
+		2A11736212456E4300D119B5 /* MGMSIPWavConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSIPWavConverter.m; sourceTree = "<group>"; };
+		2A11736412456E4300D119B5 /* MGMMultiSMS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMMultiSMS.h; sourceTree = "<group>"; };
+		2A11736512456E4300D119B5 /* MGMMultiSMS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMMultiSMS.m; sourceTree = "<group>"; };
+		2A11736612456E4300D119B5 /* MGMSMSManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSMSManager.h; sourceTree = "<group>"; };
+		2A11736712456E4300D119B5 /* MGMSMSManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSMSManager.m; sourceTree = "<group>"; };
+		2A11736812456E4300D119B5 /* MGMSMSMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSMSMessageView.h; sourceTree = "<group>"; };
+		2A11736912456E4300D119B5 /* MGMSMSMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSMSMessageView.m; sourceTree = "<group>"; };
+		2A11736A12456E4300D119B5 /* MGMSMSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSMSTextView.h; sourceTree = "<group>"; };
+		2A11736B12456E4300D119B5 /* MGMSMSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSMSTextView.m; sourceTree = "<group>"; };
+		2A11736C12456E4300D119B5 /* MGMSMSView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSMSView.h; sourceTree = "<group>"; };
+		2A11736D12456E4300D119B5 /* MGMSMSView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSMSView.m; sourceTree = "<group>"; };
+		2A11736F12456E4300D119B5 /* MGMBlackWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMBlackWindow.h; sourceTree = "<group>"; };
+		2A11737012456E4300D119B5 /* MGMBlackWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMBlackWindow.m; sourceTree = "<group>"; };
+		2A11737112456E4300D119B5 /* MGMBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMBottomView.h; sourceTree = "<group>"; };
+		2A11737212456E4300D119B5 /* MGMBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMBottomView.m; sourceTree = "<group>"; };
+		2A11737312456E4300D119B5 /* MGMContactView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMContactView.h; sourceTree = "<group>"; };
+		2A11737412456E4300D119B5 /* MGMContactView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMContactView.m; sourceTree = "<group>"; };
+		2A11737512456E4300D119B5 /* MGMGradiantView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMGradiantView.h; sourceTree = "<group>"; };
+		2A11737612456E4300D119B5 /* MGMGradiantView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMGradiantView.m; sourceTree = "<group>"; };
+		2A11737712456E4300D119B5 /* MGMPhoneFeild.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMPhoneFeild.h; sourceTree = "<group>"; };
+		2A11737812456E4300D119B5 /* MGMPhoneFeild.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMPhoneFeild.m; sourceTree = "<group>"; };
+		2A11737912456E4300D119B5 /* MGMProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMProgressView.h; sourceTree = "<group>"; };
+		2A11737A12456E4300D119B5 /* MGMProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMProgressView.m; sourceTree = "<group>"; };
+		2A11737B12456E4300D119B5 /* MGMSplitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSplitView.h; sourceTree = "<group>"; };
+		2A11737C12456E4300D119B5 /* MGMSplitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSplitView.m; sourceTree = "<group>"; };
+		2A11737D12456E4300D119B5 /* MGMTranslucentTabView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMTranslucentTabView.h; sourceTree = "<group>"; };
+		2A11737E12456E4300D119B5 /* MGMTranslucentTabView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMTranslucentTabView.m; sourceTree = "<group>"; };
+		2A11737F12456E4300D119B5 /* MGMViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMViewCell.h; sourceTree = "<group>"; };
+		2A11738012456E4300D119B5 /* MGMViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMViewCell.m; sourceTree = "<group>"; };
+		2A11738112456E4300D119B5 /* VoiceMac_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoiceMac_Prefix.pch; path = Classes/VoiceMac/VoiceMac_Prefix.pch; sourceTree = "<group>"; };
+		2A1173AF12456F2400D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AccountSetup.xib; sourceTree = "<group>"; };
+		2A1173B212456F2400D119B5 /* badge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = badge.png; sourceTree = "<group>"; };
+		2A1173B312456F2400D119B5 /* badgel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = badgel.png; sourceTree = "<group>"; };
+		2A1173B412456F2400D119B5 /* badgem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = badgem.png; sourceTree = "<group>"; };
+		2A1173B512456F2500D119B5 /* badger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = badger.png; sourceTree = "<group>"; };
+		2A1173B912456F2500D119B5 /* answerButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = answerButton.png; sourceTree = "<group>"; };
+		2A1173BB12456F2500D119B5 /* callButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = callButton.png; sourceTree = "<group>"; };
+		2A1173BD12456F2500D119B5 /* cancelButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancelButton.png; sourceTree = "<group>"; };
+		2A1173BF12456F2500D119B5 /* cancelCall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancelCall.png; sourceTree = "<group>"; };
+		2A1173C112456F2500D119B5 /* hangUpButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hangUpButton.png; sourceTree = "<group>"; };
+		2A1173C312456F2500D119B5 /* holdButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = holdButton.png; sourceTree = "<group>"; };
+		2A1173C512456F2500D119B5 /* ignoreButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ignoreButton.png; sourceTree = "<group>"; };
+		2A1173C712456F2500D119B5 /* padButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = padButton.png; sourceTree = "<group>"; };
+		2A1173C912456F2500D119B5 /* placeCall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeCall.png; sourceTree = "<group>"; };
+		2A1173CB12456F2500D119B5 /* sms.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sms.png; sourceTree = "<group>"; };
+		2A1173CD12456F2500D119B5 /* SMSButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SMSButton.png; sourceTree = "<group>"; };
+		2A1173CF12456F2500D119B5 /* unholdButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unholdButton.png; sourceTree = "<group>"; };
+		2A1173D012456F2500D119B5 /* Close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Close.png; sourceTree = "<group>"; };
+		2A1173D112456F2500D119B5 /* ClosePressed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ClosePressed.png; sourceTree = "<group>"; };
+		2A1173FE12456F2600D119B5 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2A11740012456F2600D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		2A11740212456F2600D119B5 /* Growl Registration Ticket.growlRegDict */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Growl Registration Ticket.growlRegDict"; sourceTree = "<group>"; };
+		2A11740312456F2600D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/InboxWindow.xib; sourceTree = "<group>"; };
+		2A11740412456F2600D119B5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A11740512456F2600D119B5 /* map.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = map.html; sourceTree = "<group>"; };
+		2A11740712456F2600D119B5 /* micVolume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = micVolume.png; sourceTree = "<group>"; };
+		2A11740812456F2600D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MultiSMS.xib; sourceTree = "<group>"; };
+		2A11740B12456F2600D119B5 /* n#.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "n#.png"; sourceTree = "<group>"; };
+		2A11740D12456F2600D119B5 /* n*.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "n*.png"; sourceTree = "<group>"; };
+		2A11740F12456F2600D119B5 /* n0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = n0.png; sourceTree = "<group>"; };
+		2A11741112456F2600D119B5 /* n1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = n1.png; sourceTree = "<group>"; };
+		2A11741312456F2600D119B5 /* n2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = n2.png; sourceTree = "<group>"; };
+		2A11741512456F2600D119B5 /* n3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = n3.png; sourceTree = "<group>"; };
+		2A11741712456F2600D119B5 /* n4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = n4.png; sourceTree = "<group>"; };
+		2A11741912456F2600D119B5 /* n5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = n5.png; sourceTree = "<group>"; };
+		2A11741B12456F2600D119B5 /* n6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = n6.png; sourceTree = "<group>"; };
+		2A11741D12456F2600D119B5 /* n7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = n7.png; sourceTree = "<group>"; };
+		2A11741F12456F2600D119B5 /* n8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = n8.png; sourceTree = "<group>"; };
+		2A11742112456F2600D119B5 /* n9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = n9.png; sourceTree = "<group>"; };
+		2A11742212456F2600D119B5 /* NumberOptions.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NumberOptions.xib; sourceTree = "<group>"; };
+		2A11742512456F2600D119B5 /* Accounts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Accounts.png; sourceTree = "<group>"; };
+		2A11742812456F2600D119B5 /* SIP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SIP.png; sourceTree = "<group>"; };
+		2A11742912456F2600D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SIPPane.xib; sourceTree = "<group>"; };
+		2A11742B12456F2600D119B5 /* SMSThemes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SMSThemes.png; sourceTree = "<group>"; };
+		2A11742C12456F2600D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SMSThemesPane.xib; sourceTree = "<group>"; };
+		2A11742F12456F2600D119B5 /* Sounds.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Sounds.png; sourceTree = "<group>"; };
+		2A11743012456F2600D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SoundsPane.xib; sourceTree = "<group>"; };
+		2A11743112456F2600D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/RecordedView.xib; sourceTree = "<group>"; };
+		2A11743212456F2600D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SIPCallWindow.xib; sourceTree = "<group>"; };
+		2A11743312456F2600D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SIPUser.xib; sourceTree = "<group>"; };
+		2A11745912456F2700D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SMSMessageView.xib; sourceTree = "<group>"; };
+		2A11745A12456F2700D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SMSWindow.xib; sourceTree = "<group>"; };
+		2A11746312456F2700D119B5 /* VoiceMac Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VoiceMac Icon.png"; sourceTree = "<group>"; };
+		2A11746512456F2700D119B5 /* VoiceMac Setup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VoiceMac Setup.png"; sourceTree = "<group>"; };
+		2A11746612456F2700D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/VoicemailView.xib; sourceTree = "<group>"; };
+		2A11746712456F2700D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/VoiceUser.xib; sourceTree = "<group>"; };
+		2A11746912456F2700D119B5 /* volume.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = volume.png; sourceTree = "<group>"; };
+		2A11751212456FA600D119B5 /* SMS Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "SMS Themes"; sourceTree = "<group>"; };
+		2A1175E312456FC100D119B5 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
+		2A1175EE1245700300D119B5 /* VoiceBase.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = VoiceBase.xcodeproj; sourceTree = "<group>"; };
+		2A1175F71245705100D119B5 /* GeckoReporter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GeckoReporter.framework; path = Frameworks/GeckoReporter.framework; sourceTree = "<group>"; };
+		2A1176031245706A00D119B5 /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = Frameworks/Growl.framework; sourceTree = "<group>"; };
+		2A11760A1245707A00D119B5 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
+		2A1176331245708E00D119B5 /* MGMUsers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MGMUsers.framework; path = Frameworks/MGMUsers.framework; sourceTree = "<group>"; };
+		2A11765C1245724100D119B5 /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = System/Library/Frameworks/QTKit.framework; sourceTree = SDKROOT; };
+		2A1176601245724A00D119B5 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		2A1176671245725B00D119B5 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		2A117684124573D600D119B5 /* VoiceMac.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = VoiceMac.icns; sourceTree = SOURCE_ROOT; };
+		2A11770312458C8A00D119B5 /* blankicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blankicon.png; sourceTree = "<group>"; };
+		2A91A3F71247D6B900013B43 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/AccountsPane.xib; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* VoiceMac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoiceMac.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A1175F61245704100D119B5 /* VoiceBase.framework in Frameworks */,
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				2A1175F81245705100D119B5 /* GeckoReporter.framework in Frameworks */,
+				2A1176041245706A00D119B5 /* Growl.framework in Frameworks */,
+				2A11760B1245707A00D119B5 /* Sparkle.framework in Frameworks */,
+				2A1176341245708E00D119B5 /* MGMUsers.framework in Frameworks */,
+				2A11765D1245724100D119B5 /* QTKit.framework in Frameworks */,
+				2A1176611245724B00D119B5 /* WebKit.framework in Frameworks */,
+				2A1176681245725C00D119B5 /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A1176331245708E00D119B5 /* MGMUsers.framework */,
+				2A1175F71245705100D119B5 /* GeckoReporter.framework */,
+				2A11760A1245707A00D119B5 /* Sparkle.framework */,
+				2A1176031245706A00D119B5 /* Growl.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+				2A11765C1245724100D119B5 /* QTKit.framework */,
+				2A1176601245724A00D119B5 /* WebKit.framework */,
+				2A1176671245725B00D119B5 /* QuartzCore.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* VoiceMac.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* VoiceMac */ = {
+			isa = PBXGroup;
+			children = (
+				2A1175EE1245700300D119B5 /* VoiceBase.xcodeproj */,
+				2A11733E12456E4300D119B5 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				2A1173AE12456F2400D119B5 /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = VoiceMac;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				2A11734412456E4300D119B5 /* main.m */,
+				2A11738112456E4300D119B5 /* VoiceMac_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2A11733E12456E4300D119B5 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2A11733F12456E4300D119B5 /* Inbox */,
+				2A11734512456E4300D119B5 /* MGMAccountSetup.h */,
+				2A11734612456E4300D119B5 /* MGMAccountSetup.m */,
+				2A11734712456E4300D119B5 /* MGMBadge.h */,
+				2A11734812456E4300D119B5 /* MGMBadge.m */,
+				2A11734912456E4300D119B5 /* MGMContactsController.h */,
+				2A11734A12456E4300D119B5 /* MGMContactsController.m */,
+				2A11734B12456E4300D119B5 /* MGMController.h */,
+				2A11734C12456E4300D119B5 /* MGMController.m */,
+				2A11734D12456E4300D119B5 /* MGMNumberOptions.h */,
+				2A11734E12456E4300D119B5 /* MGMNumberOptions.m */,
+				2A11734F12456E4300D119B5 /* MGMVMAddons.h */,
+				2A11735012456E4300D119B5 /* MGMVMAddons.m */,
+				2A11735112456E4300D119B5 /* MGMVoiceUser.h */,
+				2A11735212456E4300D119B5 /* MGMVoiceUser.m */,
+				2A11735312456E4300D119B5 /* Preferences */,
+				2A11735C12456E4300D119B5 /* SIP */,
+				2A11736312456E4300D119B5 /* SMS */,
+				2A11736E12456E4300D119B5 /* Views */,
+			);
+			name = Classes;
+			path = Classes/VoiceMac;
+			sourceTree = "<group>";
+		};
+		2A11733F12456E4300D119B5 /* Inbox */ = {
+			isa = PBXGroup;
+			children = (
+				2A11734012456E4300D119B5 /* MGMInboxPlayWindow.h */,
+				2A11734112456E4300D119B5 /* MGMInboxPlayWindow.m */,
+				2A11734212456E4300D119B5 /* MGMInboxWindow.h */,
+				2A11734312456E4300D119B5 /* MGMInboxWindow.m */,
+			);
+			path = Inbox;
+			sourceTree = "<group>";
+		};
+		2A11735312456E4300D119B5 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				2A11735412456E4300D119B5 /* MGMAccountsPane.h */,
+				2A11735512456E4300D119B5 /* MGMAccountsPane.m */,
+				2A11735612456E4300D119B5 /* MGMSIPPane.h */,
+				2A11735712456E4300D119B5 /* MGMSIPPane.m */,
+				2A11735812456E4300D119B5 /* MGMSMSThemesPane.h */,
+				2A11735912456E4300D119B5 /* MGMSMSThemesPane.m */,
+				2A11735A12456E4300D119B5 /* MGMSoundsPane.h */,
+				2A11735B12456E4300D119B5 /* MGMSoundsPane.m */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		2A11735C12456E4300D119B5 /* SIP */ = {
+			isa = PBXGroup;
+			children = (
+				2A11735D12456E4300D119B5 /* MGMSIPCallWindow.h */,
+				2A11735E12456E4300D119B5 /* MGMSIPCallWindow.m */,
+				2A11735F12456E4300D119B5 /* MGMSIPUser.h */,
+				2A11736012456E4300D119B5 /* MGMSIPUser.m */,
+				2A11736112456E4300D119B5 /* MGMSIPWavConverter.h */,
+				2A11736212456E4300D119B5 /* MGMSIPWavConverter.m */,
+			);
+			path = SIP;
+			sourceTree = "<group>";
+		};
+		2A11736312456E4300D119B5 /* SMS */ = {
+			isa = PBXGroup;
+			children = (
+				2A11736412456E4300D119B5 /* MGMMultiSMS.h */,
+				2A11736512456E4300D119B5 /* MGMMultiSMS.m */,
+				2A11736612456E4300D119B5 /* MGMSMSManager.h */,
+				2A11736712456E4300D119B5 /* MGMSMSManager.m */,
+				2A11736812456E4300D119B5 /* MGMSMSMessageView.h */,
+				2A11736912456E4300D119B5 /* MGMSMSMessageView.m */,
+				2A11736A12456E4300D119B5 /* MGMSMSTextView.h */,
+				2A11736B12456E4300D119B5 /* MGMSMSTextView.m */,
+				2A11736C12456E4300D119B5 /* MGMSMSView.h */,
+				2A11736D12456E4300D119B5 /* MGMSMSView.m */,
+			);
+			path = SMS;
+			sourceTree = "<group>";
+		};
+		2A11736E12456E4300D119B5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2A11736F12456E4300D119B5 /* MGMBlackWindow.h */,
+				2A11737012456E4300D119B5 /* MGMBlackWindow.m */,
+				2A11737112456E4300D119B5 /* MGMBottomView.h */,
+				2A11737212456E4300D119B5 /* MGMBottomView.m */,
+				2A11737312456E4300D119B5 /* MGMContactView.h */,
+				2A11737412456E4300D119B5 /* MGMContactView.m */,
+				2A11737512456E4300D119B5 /* MGMGradiantView.h */,
+				2A11737612456E4300D119B5 /* MGMGradiantView.m */,
+				2A11737712456E4300D119B5 /* MGMPhoneFeild.h */,
+				2A11737812456E4300D119B5 /* MGMPhoneFeild.m */,
+				2A11737912456E4300D119B5 /* MGMProgressView.h */,
+				2A11737A12456E4300D119B5 /* MGMProgressView.m */,
+				2A11737B12456E4300D119B5 /* MGMSplitView.h */,
+				2A11737C12456E4300D119B5 /* MGMSplitView.m */,
+				2A11737D12456E4300D119B5 /* MGMTranslucentTabView.h */,
+				2A11737E12456E4300D119B5 /* MGMTranslucentTabView.m */,
+				2A11737F12456E4300D119B5 /* MGMViewCell.h */,
+				2A11738012456E4300D119B5 /* MGMViewCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2A1173AE12456F2400D119B5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2A03CC891247D5B100730F0C /* License.txt */,
+				2A117684124573D600D119B5 /* VoiceMac.icns */,
+				2A11740412456F2600D119B5 /* Info.plist */,
+				2A03CC751247D45B00730F0C /* AccountSetup.xib */,
+				2A1173B012456F2400D119B5 /* badge */,
+				2A11770312458C8A00D119B5 /* blankicon.png */,
+				2A1173B712456F2500D119B5 /* buttons */,
+				2A1173D012456F2500D119B5 /* Close.png */,
+				2A1173D112456F2500D119B5 /* ClosePressed.png */,
+				2A1173FD12456F2600D119B5 /* InfoPlist.strings */,
+				2A1173FF12456F2600D119B5 /* MainMenu.xib */,
+				2A11740212456F2600D119B5 /* Growl Registration Ticket.growlRegDict */,
+				2A03CC771247D46600730F0C /* InboxWindow.xib */,
+				2A11740512456F2600D119B5 /* map.html */,
+				2A11740712456F2600D119B5 /* micVolume.png */,
+				2A03CC791247D46D00730F0C /* MultiSMS.xib */,
+				2A11740912456F2600D119B5 /* Number Pad */,
+				2A11742212456F2600D119B5 /* NumberOptions.xib */,
+				2A11742312456F2600D119B5 /* Preferences */,
+				2A03CC7B1247D47400730F0C /* RecordedView.xib */,
+				2A03CC7D1247D47A00730F0C /* SIPCallWindow.xib */,
+				2A03CC7F1247D48100730F0C /* SIPUser.xib */,
+				2A11751212456FA600D119B5 /* SMS Themes */,
+				2A03CC811247D48800730F0C /* SMSMessageView.xib */,
+				2A03CC831247D48E00730F0C /* SMSWindow.xib */,
+				2A1175E312456FC100D119B5 /* Sounds */,
+				2A11746312456F2700D119B5 /* VoiceMac Icon.png */,
+				2A11746512456F2700D119B5 /* VoiceMac Setup.png */,
+				2A03CC851247D49300730F0C /* VoicemailView.xib */,
+				2A03CC871247D49800730F0C /* VoiceUser.xib */,
+				2A11746912456F2700D119B5 /* volume.png */,
+			);
+			name = Resources;
+			path = Resources/VoiceMac;
+			sourceTree = "<group>";
+		};
+		2A1173B012456F2400D119B5 /* badge */ = {
+			isa = PBXGroup;
+			children = (
+				2A1173B212456F2400D119B5 /* badge.png */,
+				2A1173B312456F2400D119B5 /* badgel.png */,
+				2A1173B412456F2400D119B5 /* badgem.png */,
+				2A1173B512456F2500D119B5 /* badger.png */,
+			);
+			path = badge;
+			sourceTree = "<group>";
+		};
+		2A1173B712456F2500D119B5 /* buttons */ = {
+			isa = PBXGroup;
+			children = (
+				2A1173B912456F2500D119B5 /* answerButton.png */,
+				2A1173BB12456F2500D119B5 /* callButton.png */,
+				2A1173BD12456F2500D119B5 /* cancelButton.png */,
+				2A1173BF12456F2500D119B5 /* cancelCall.png */,
+				2A1173C112456F2500D119B5 /* hangUpButton.png */,
+				2A1173C312456F2500D119B5 /* holdButton.png */,
+				2A1173C512456F2500D119B5 /* ignoreButton.png */,
+				2A1173C712456F2500D119B5 /* padButton.png */,
+				2A1173C912456F2500D119B5 /* placeCall.png */,
+				2A1173CB12456F2500D119B5 /* sms.png */,
+				2A1173CD12456F2500D119B5 /* SMSButton.png */,
+				2A1173CF12456F2500D119B5 /* unholdButton.png */,
+			);
+			path = buttons;
+			sourceTree = "<group>";
+		};
+		2A11740912456F2600D119B5 /* Number Pad */ = {
+			isa = PBXGroup;
+			children = (
+				2A11740B12456F2600D119B5 /* n#.png */,
+				2A11740D12456F2600D119B5 /* n*.png */,
+				2A11740F12456F2600D119B5 /* n0.png */,
+				2A11741112456F2600D119B5 /* n1.png */,
+				2A11741312456F2600D119B5 /* n2.png */,
+				2A11741512456F2600D119B5 /* n3.png */,
+				2A11741712456F2600D119B5 /* n4.png */,
+				2A11741912456F2600D119B5 /* n5.png */,
+				2A11741B12456F2600D119B5 /* n6.png */,
+				2A11741D12456F2600D119B5 /* n7.png */,
+				2A11741F12456F2600D119B5 /* n8.png */,
+				2A11742112456F2600D119B5 /* n9.png */,
+			);
+			path = "Number Pad";
+			sourceTree = "<group>";
+		};
+		2A11742312456F2600D119B5 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				2A11742512456F2600D119B5 /* Accounts.png */,
+				2A91A3F81247D6B900013B43 /* AccountsPane.xib */,
+				2A11742812456F2600D119B5 /* SIP.png */,
+				2A03CC9F1247D75100730F0C /* SIPPane.xib */,
+				2A11742B12456F2600D119B5 /* SMSThemes.png */,
+				2A03CCA11247D75700730F0C /* SMSThemesPane.xib */,
+				2A11742F12456F2600D119B5 /* Sounds.png */,
+				2A03CCA31247D75C00730F0C /* SoundsPane.xib */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
+		2A1175EF1245700300D119B5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2A1175F31245700300D119B5 /* VoiceBase.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* VoiceMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "VoiceMac" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+				2A1175F91245705200D119B5 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2A117651124571C900D119B5 /* PBXTargetDependency */,
+			);
+			name = VoiceMac;
+			productInstallPath = "$(HOME)/Applications";
+			productName = VoiceMac;
+			productReference = 8D1107320486CEB800E47090 /* VoiceMac.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "VoiceMac" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* VoiceMac */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 2A1175EF1245700300D119B5 /* Products */;
+					ProjectRef = 2A1175EE1245700300D119B5 /* VoiceBase.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* VoiceMac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		2A1175F31245700300D119B5 /* VoiceBase.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VoiceBase.framework;
+			remoteRef = 2A1175F21245700300D119B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A03CC761247D45B00730F0C /* AccountSetup.xib in Resources */,
+				2A11746C12456F2700D119B5 /* badge.png in Resources */,
+				2A11746D12456F2700D119B5 /* badgel.png in Resources */,
+				2A11746E12456F2700D119B5 /* badgem.png in Resources */,
+				2A11746F12456F2700D119B5 /* badger.png in Resources */,
+				2A11747212456F2700D119B5 /* answerButton.png in Resources */,
+				2A11747412456F2700D119B5 /* callButton.png in Resources */,
+				2A11747612456F2700D119B5 /* cancelButton.png in Resources */,
+				2A11747812456F2700D119B5 /* cancelCall.png in Resources */,
+				2A11747A12456F2700D119B5 /* hangUpButton.png in Resources */,
+				2A11747C12456F2700D119B5 /* holdButton.png in Resources */,
+				2A11747E12456F2700D119B5 /* ignoreButton.png in Resources */,
+				2A11748012456F2700D119B5 /* padButton.png in Resources */,
+				2A11748212456F2700D119B5 /* placeCall.png in Resources */,
+				2A11748412456F2700D119B5 /* sms.png in Resources */,
+				2A11748612456F2700D119B5 /* SMSButton.png in Resources */,
+				2A11748812456F2700D119B5 /* unholdButton.png in Resources */,
+				2A11748912456F2700D119B5 /* Close.png in Resources */,
+				2A11748A12456F2700D119B5 /* ClosePressed.png in Resources */,
+				2A1174B112456F2700D119B5 /* InfoPlist.strings in Resources */,
+				2A1174B212456F2700D119B5 /* MainMenu.xib in Resources */,
+				2A1174B412456F2700D119B5 /* Growl Registration Ticket.growlRegDict in Resources */,
+				2A03CC781247D46600730F0C /* InboxWindow.xib in Resources */,
+				2A1174B712456F2700D119B5 /* map.html in Resources */,
+				2A1174B912456F2700D119B5 /* micVolume.png in Resources */,
+				2A03CC7A1247D46D00730F0C /* MultiSMS.xib in Resources */,
+				2A1174BC12456F2700D119B5 /* n#.png in Resources */,
+				2A1174BE12456F2700D119B5 /* n*.png in Resources */,
+				2A1174C012456F2700D119B5 /* n0.png in Resources */,
+				2A1174C212456F2700D119B5 /* n1.png in Resources */,
+				2A1174C412456F2700D119B5 /* n2.png in Resources */,
+				2A1174C612456F2700D119B5 /* n3.png in Resources */,
+				2A1174C812456F2700D119B5 /* n4.png in Resources */,
+				2A1174CA12456F2700D119B5 /* n5.png in Resources */,
+				2A1174CC12456F2700D119B5 /* n6.png in Resources */,
+				2A1174CE12456F2700D119B5 /* n7.png in Resources */,
+				2A1174D012456F2700D119B5 /* n8.png in Resources */,
+				2A1174D212456F2700D119B5 /* n9.png in Resources */,
+				2A1174D312456F2700D119B5 /* NumberOptions.xib in Resources */,
+				2A1174D512456F2700D119B5 /* Accounts.png in Resources */,
+				2A91A3F61247D6B900013B43 /* AccountsPane.xib in Resources */,
+				2A1174D812456F2700D119B5 /* SIP.png in Resources */,
+				2A03CCA01247D75100730F0C /* SIPPane.xib in Resources */,
+				2A1174DB12456F2700D119B5 /* SMSThemes.png in Resources */,
+				2A03CCA21247D75700730F0C /* SMSThemesPane.xib in Resources */,
+				2A1174DF12456F2700D119B5 /* Sounds.png in Resources */,
+				2A03CCA41247D75C00730F0C /* SoundsPane.xib in Resources */,
+				2A03CC7C1247D47400730F0C /* RecordedView.xib in Resources */,
+				2A03CC7E1247D47A00730F0C /* SIPCallWindow.xib in Resources */,
+				2A03CC801247D48100730F0C /* SIPUser.xib in Resources */,
+				2A03CC821247D48800730F0C /* SMSMessageView.xib in Resources */,
+				2A03CC841247D48E00730F0C /* SMSWindow.xib in Resources */,
+				2A11750B12456F2700D119B5 /* VoiceMac Icon.png in Resources */,
+				2A11750D12456F2700D119B5 /* VoiceMac Setup.png in Resources */,
+				2A03CC861247D49300730F0C /* VoicemailView.xib in Resources */,
+				2A03CC881247D49800730F0C /* VoiceUser.xib in Resources */,
+				2A11751112456F2700D119B5 /* volume.png in Resources */,
+				2A11753D12456FA600D119B5 /* SMS Themes in Resources */,
+				2A1175ED12456FC100D119B5 /* Sounds in Resources */,
+				2A117685124573D600D119B5 /* VoiceMac.icns in Resources */,
+				2A11770412458C8A00D119B5 /* blankicon.png in Resources */,
+				2A03CC8A1247D5B100730F0C /* License.txt in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A11738212456E4300D119B5 /* MGMInboxPlayWindow.m in Sources */,
+				2A11738312456E4300D119B5 /* MGMInboxWindow.m in Sources */,
+				2A11738412456E4300D119B5 /* main.m in Sources */,
+				2A11738512456E4300D119B5 /* MGMAccountSetup.m in Sources */,
+				2A11738612456E4300D119B5 /* MGMBadge.m in Sources */,
+				2A11738712456E4300D119B5 /* MGMContactsController.m in Sources */,
+				2A11738812456E4300D119B5 /* MGMController.m in Sources */,
+				2A11738912456E4300D119B5 /* MGMNumberOptions.m in Sources */,
+				2A11738A12456E4300D119B5 /* MGMVMAddons.m in Sources */,
+				2A11738B12456E4300D119B5 /* MGMVoiceUser.m in Sources */,
+				2A11738C12456E4300D119B5 /* MGMAccountsPane.m in Sources */,
+				2A11738D12456E4300D119B5 /* MGMSIPPane.m in Sources */,
+				2A11738E12456E4300D119B5 /* MGMSMSThemesPane.m in Sources */,
+				2A11738F12456E4300D119B5 /* MGMSoundsPane.m in Sources */,
+				2A11739012456E4300D119B5 /* MGMSIPCallWindow.m in Sources */,
+				2A11739112456E4300D119B5 /* MGMSIPUser.m in Sources */,
+				2A11739212456E4300D119B5 /* MGMSIPWavConverter.m in Sources */,
+				2A11739312456E4300D119B5 /* MGMMultiSMS.m in Sources */,
+				2A11739412456E4300D119B5 /* MGMSMSManager.m in Sources */,
+				2A11739512456E4300D119B5 /* MGMSMSMessageView.m in Sources */,
+				2A11739612456E4300D119B5 /* MGMSMSTextView.m in Sources */,
+				2A11739712456E4300D119B5 /* MGMSMSView.m in Sources */,
+				2A11739812456E4300D119B5 /* MGMBlackWindow.m in Sources */,
+				2A11739912456E4300D119B5 /* MGMBottomView.m in Sources */,
+				2A11739A12456E4300D119B5 /* MGMContactView.m in Sources */,
+				2A11739B12456E4300D119B5 /* MGMGradiantView.m in Sources */,
+				2A11739C12456E4300D119B5 /* MGMPhoneFeild.m in Sources */,
+				2A11739D12456E4300D119B5 /* MGMProgressView.m in Sources */,
+				2A11739E12456E4300D119B5 /* MGMSplitView.m in Sources */,
+				2A11739F12456E4300D119B5 /* MGMTranslucentTabView.m in Sources */,
+				2A1173A012456E4300D119B5 /* MGMViewCell.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2A117651124571C900D119B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VoiceBase;
+			targetProxy = 2A117650124571C900D119B5 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2A03CC751247D45B00730F0C /* AccountSetup.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A1173AF12456F2400D119B5 /* English */,
+			);
+			name = AccountSetup.xib;
+			sourceTree = "<group>";
+		};
+		2A03CC771247D46600730F0C /* InboxWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A11740312456F2600D119B5 /* English */,
+			);
+			name = InboxWindow.xib;
+			sourceTree = "<group>";
+		};
+		2A03CC791247D46D00730F0C /* MultiSMS.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A11740812456F2600D119B5 /* English */,
+			);
+			name = MultiSMS.xib;
+			sourceTree = "<group>";
+		};
+		2A03CC7B1247D47400730F0C /* RecordedView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A11743112456F2600D119B5 /* English */,
+			);
+			name = RecordedView.xib;
+			sourceTree = "<group>";
+		};
+		2A03CC7D1247D47A00730F0C /* SIPCallWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A11743212456F2600D119B5 /* English */,
+			);
+			name = SIPCallWindow.xib;
+			sourceTree = "<group>";
+		};
+		2A03CC7F1247D48100730F0C /* SIPUser.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A11743312456F2600D119B5 /* English */,
+			);
+			name = SIPUser.xib;
+			sourceTree = "<group>";
+		};
+		2A03CC811247D48800730F0C /* SMSMessageView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A11745912456F2700D119B5 /* English */,
+			);
+			name = SMSMessageView.xib;
+			sourceTree = "<group>";
+		};
+		2A03CC831247D48E00730F0C /* SMSWindow.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A11745A12456F2700D119B5 /* English */,
+			);
+			name = SMSWindow.xib;
+			sourceTree = "<group>";
+		};
+		2A03CC851247D49300730F0C /* VoicemailView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A11746612456F2700D119B5 /* English */,
+			);
+			name = VoicemailView.xib;
+			sourceTree = "<group>";
+		};
+		2A03CC871247D49800730F0C /* VoiceUser.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A11746712456F2700D119B5 /* English */,
+			);
+			name = VoiceUser.xib;
+			sourceTree = "<group>";
+		};
+		2A03CC9F1247D75100730F0C /* SIPPane.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A11742912456F2600D119B5 /* English */,
+			);
+			name = SIPPane.xib;
+			sourceTree = "<group>";
+		};
+		2A03CCA11247D75700730F0C /* SMSThemesPane.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A11742C12456F2600D119B5 /* English */,
+			);
+			name = SMSThemesPane.xib;
+			sourceTree = "<group>";
+		};
+		2A03CCA31247D75C00730F0C /* SoundsPane.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A11743012456F2600D119B5 /* English */,
+			);
+			name = SoundsPane.xib;
+			sourceTree = "<group>";
+		};
+		2A1173FD12456F2600D119B5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A1173FE12456F2600D119B5 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2A1173FF12456F2600D119B5 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A11740012456F2600D119B5 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		2A91A3F81247D6B900013B43 /* AccountsPane.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A91A3F71247D6B900013B43 /* English */,
+			);
+			name = AccountsPane.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		2A117648124570C300D119B5 /* Debug SIP */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+					x86_64,
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/include\"";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/lib\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-DPJ_AUTOCONF=1",
+					"-DNDEBUG",
+					"-DMGMSIPENABLED=1",
+				);
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = "Debug SIP";
+		};
+		2A117649124570C300D119B5 /* Debug SIP */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Classes/VoiceMac/VoiceMac_Prefix.pch;
+				INFOPLIST_FILE = Resources/VoiceMac/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = VoiceMac;
+			};
+			name = "Debug SIP";
+		};
+		2A11764A124570C800D119B5 /* Release SIP */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+					x86_64,
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/include\"";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/lib\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				OTHER_CFLAGS = (
+					"-DPJ_AUTOCONF=1",
+					"-DNDEBUG",
+					"-DMGMSIPENABLED=1",
+				);
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = "Release SIP";
+		};
+		2A11764B124570C800D119B5 /* Release SIP */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Classes/VoiceMac/VoiceMac_Prefix.pch;
+				INFOPLIST_FILE = Resources/VoiceMac/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = VoiceMac;
+			};
+			name = "Release SIP";
+		};
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Classes/VoiceMac/VoiceMac_Prefix.pch;
+				INFOPLIST_FILE = Resources/VoiceMac/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = VoiceMac;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Classes/VoiceMac/VoiceMac_Prefix.pch;
+				INFOPLIST_FILE = Resources/VoiceMac/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = VoiceMac;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+					x86_64,
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+					x86_64,
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "VoiceMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				2A117649124570C300D119B5 /* Debug SIP */,
+				C01FCF4C08A954540054247B /* Release */,
+				2A11764B124570C800D119B5 /* Release SIP */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "VoiceMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				2A117648124570C300D119B5 /* Debug SIP */,
+				C01FCF5008A954540054247B /* Release */,
+				2A11764A124570C800D119B5 /* Release SIP */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

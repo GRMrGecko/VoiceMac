@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'VoiceBase' target in the 'VoiceBase' project.
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

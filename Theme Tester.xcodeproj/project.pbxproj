@@ -1,0 +1,392 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2A6D4DF412470DC0009C4029 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D4DF012470DC0009C4029 /* main.m */; };
+		2A6D4DF512470DC0009C4029 /* MGMThemeTesterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D4DF212470DC0009C4029 /* MGMThemeTesterController.m */; };
+		2A6D4DFC12470E0A009C4029 /* blankicon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2A6D4DF712470E0A009C4029 /* blankicon.jpg */; };
+		2A6D4DFD12470E0A009C4029 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2A6D4DF812470E0A009C4029 /* InfoPlist.strings */; };
+		2A6D4E0112470E1E009C4029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A6D4E0012470E1E009C4029 /* MainMenu.xib */; };
+		2A6D4E0C12470E9D009C4029 /* VoiceBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A6D4E0A12470E83009C4029 /* VoiceBase.framework */; };
+		2A6D4E0D12470EA1009C4029 /* VoiceBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A6D4E0A12470E83009C4029 /* VoiceBase.framework */; };
+		2A6D4E1312470EC2009C4029 /* MGMUsers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A6D4E1212470EC2009C4029 /* MGMUsers.framework */; };
+		2A6D4E1612470EC9009C4029 /* MGMUsers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A6D4E1212470EC2009C4029 /* MGMUsers.framework */; };
+		2A6D4E2F12470F18009C4029 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A6D4E2E12470F18009C4029 /* WebKit.framework */; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2A6D4E0912470E83009C4029 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A6D4E0512470E83009C4029 /* VoiceBase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = VoiceBase;
+		};
+		2A6D4E0E12470EA7009C4029 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A6D4E0512470E83009C4029 /* VoiceBase.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
+			remoteInfo = VoiceBase;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2A6D4E1112470EAA009C4029 /* Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2A6D4E1612470EC9009C4029 /* MGMUsers.framework in Frameworks */,
+				2A6D4E0C12470E9D009C4029 /* VoiceBase.framework in Frameworks */,
+			);
+			name = Frameworks;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2A6D4DF012470DC0009C4029 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Classes/Theme Tester/main.m"; sourceTree = "<group>"; };
+		2A6D4DF112470DC0009C4029 /* MGMThemeTesterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMThemeTesterController.h; sourceTree = "<group>"; };
+		2A6D4DF212470DC0009C4029 /* MGMThemeTesterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMThemeTesterController.m; sourceTree = "<group>"; };
+		2A6D4DF312470DC0009C4029 /* Theme Tester_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Theme Tester_Prefix.pch"; path = "Classes/Theme Tester/Theme Tester_Prefix.pch"; sourceTree = "<group>"; };
+		2A6D4DF712470E0A009C4029 /* blankicon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blankicon.jpg; sourceTree = "<group>"; };
+		2A6D4DF912470E0A009C4029 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2A6D4DFA12470E0A009C4029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		2A6D4DFB12470E0A009C4029 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A6D4E0512470E83009C4029 /* VoiceBase.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = VoiceBase.xcodeproj; sourceTree = "<group>"; };
+		2A6D4E1212470EC2009C4029 /* MGMUsers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MGMUsers.framework; path = Frameworks/MGMUsers.framework; sourceTree = "<group>"; };
+		2A6D4E2E12470F18009C4029 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		8D1107320486CEB800E47090 /* Theme Tester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Theme Tester.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A6D4E0D12470EA1009C4029 /* VoiceBase.framework in Frameworks */,
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				2A6D4E1312470EC2009C4029 /* MGMUsers.framework in Frameworks */,
+				2A6D4E2F12470F18009C4029 /* WebKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A6D4E1212470EC2009C4029 /* MGMUsers.framework */,
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+				2A6D4E2E12470F18009C4029 /* WebKit.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* Theme Tester.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* Theme Tester */ = {
+			isa = PBXGroup;
+			children = (
+				2A6D4E0512470E83009C4029 /* VoiceBase.xcodeproj */,
+				2A6D4DEF12470DC0009C4029 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				2A6D4DF612470E0A009C4029 /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+			);
+			name = "Theme Tester";
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				2A6D4DF012470DC0009C4029 /* main.m */,
+				2A6D4DF312470DC0009C4029 /* Theme Tester_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2A6D4DEF12470DC0009C4029 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2A6D4DF112470DC0009C4029 /* MGMThemeTesterController.h */,
+				2A6D4DF212470DC0009C4029 /* MGMThemeTesterController.m */,
+			);
+			name = Classes;
+			path = "Classes/Theme Tester";
+			sourceTree = "<group>";
+		};
+		2A6D4DF612470E0A009C4029 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2A6D4DFB12470E0A009C4029 /* Info.plist */,
+				2A6D4DF712470E0A009C4029 /* blankicon.jpg */,
+				2A6D4DF812470E0A009C4029 /* InfoPlist.strings */,
+				2A6D4E0012470E1E009C4029 /* MainMenu.xib */,
+			);
+			name = Resources;
+			path = "Resources/Theme Tester";
+			sourceTree = "<group>";
+		};
+		2A6D4E0612470E83009C4029 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2A6D4E0A12470E83009C4029 /* VoiceBase.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* Theme Tester */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Theme Tester" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+				2A6D4E1112470EAA009C4029 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2A6D4E0F12470EA7009C4029 /* PBXTargetDependency */,
+			);
+			name = "Theme Tester";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "Theme Tester";
+			productReference = 8D1107320486CEB800E47090 /* Theme Tester.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Theme Tester" */;
+			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* Theme Tester */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 2A6D4E0612470E83009C4029 /* Products */;
+					ProjectRef = 2A6D4E0512470E83009C4029 /* VoiceBase.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* Theme Tester */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		2A6D4E0A12470E83009C4029 /* VoiceBase.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VoiceBase.framework;
+			remoteRef = 2A6D4E0912470E83009C4029 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A6D4DFC12470E0A009C4029 /* blankicon.jpg in Resources */,
+				2A6D4DFD12470E0A009C4029 /* InfoPlist.strings in Resources */,
+				2A6D4E0112470E1E009C4029 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A6D4DF412470DC0009C4029 /* main.m in Sources */,
+				2A6D4DF512470DC0009C4029 /* MGMThemeTesterController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2A6D4E0F12470EA7009C4029 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = VoiceBase;
+			targetProxy = 2A6D4E0E12470EA7009C4029 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		2A6D4DF812470E0A009C4029 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A6D4DF912470E0A009C4029 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		2A6D4E0012470E1E009C4029 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A6D4DFA12470E0A009C4029 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Classes/Theme Tester/Theme Tester_Prefix.pch";
+				INFOPLIST_FILE = "Resources/Theme Tester/Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "Theme Tester";
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Theme_Tester_Prefix.pch;
+				INFOPLIST_FILE = "Theme_Tester-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = "Theme Tester";
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+					x86_64,
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+					x86_64,
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Theme Tester" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Theme Tester" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

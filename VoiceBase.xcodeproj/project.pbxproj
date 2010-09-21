@@ -1,0 +1,602 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2A1171C01245676A00D119B5 /* MGMAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171A51245676A00D119B5 /* MGMAddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A1171C11245676A00D119B5 /* MGMAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171A61245676A00D119B5 /* MGMAddressBook.m */; };
+		2A1171C21245676A00D119B5 /* MGMContacts.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171A71245676A00D119B5 /* MGMContacts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A1171C31245676A00D119B5 /* MGMContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171A81245676A00D119B5 /* MGMContacts.m */; };
+		2A1171C41245676A00D119B5 /* MGMContactsProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171A91245676A00D119B5 /* MGMContactsProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A1171C51245676A00D119B5 /* MGMContactsProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171AA1245676A00D119B5 /* MGMContactsProtocol.m */; };
+		2A1171C61245676A00D119B5 /* MGMGoogleContacts.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171AB1245676A00D119B5 /* MGMGoogleContacts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A1171C71245676A00D119B5 /* MGMGoogleContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171AC1245676A00D119B5 /* MGMGoogleContacts.m */; };
+		2A1171C81245676A00D119B5 /* MGMAddons.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171AD1245676A00D119B5 /* MGMAddons.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A1171C91245676A00D119B5 /* MGMAddons.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171AE1245676A00D119B5 /* MGMAddons.m */; };
+		2A1171CA1245676A00D119B5 /* MGMInbox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171AF1245676A00D119B5 /* MGMInbox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A1171CB1245676A00D119B5 /* MGMInbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171B01245676A00D119B5 /* MGMInbox.m */; };
+		2A1171CC1245676A00D119B5 /* MGMInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B11245676A00D119B5 /* MGMInstance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A1171CD1245676A00D119B5 /* MGMInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171B21245676A00D119B5 /* MGMInstance.m */; };
+		2A1171CE1245676A00D119B5 /* MGMThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B31245676A00D119B5 /* MGMThemeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A1171CF1245676A00D119B5 /* MGMThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171B41245676A00D119B5 /* MGMThemeManager.m */; };
+		2A1171D01245676A00D119B5 /* MGMSIP.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B61245676A00D119B5 /* MGMSIP.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A1171D11245676A00D119B5 /* MGMSIP.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171B71245676A00D119B5 /* MGMSIP.m */; };
+		2A1171D21245676A00D119B5 /* MGMSIPAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B81245676A00D119B5 /* MGMSIPAccount.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A1171D31245676A00D119B5 /* MGMSIPAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171B91245676A00D119B5 /* MGMSIPAccount.m */; };
+		2A1171D41245676A00D119B5 /* MGMSIPCall.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BA1245676A00D119B5 /* MGMSIPCall.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A1171D51245676A00D119B5 /* MGMSIPCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171BB1245676A00D119B5 /* MGMSIPCall.m */; };
+		2A1171D61245676A00D119B5 /* MGMSIPURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BC1245676A00D119B5 /* MGMSIPURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A1171D71245676A00D119B5 /* MGMSIPURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171BD1245676A00D119B5 /* MGMSIPURL.m */; };
+		2A1171D81245676A00D119B5 /* VoiceBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BE1245676A00D119B5 /* VoiceBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A1171DE1245678600D119B5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2A1171DB1245678600D119B5 /* InfoPlist.strings */; };
+		2A1172991245684600D119B5 /* MGMUsers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1172981245684600D119B5 /* MGMUsers.framework */; };
+		2A1172BB124569AC00D119B5 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1172BA124569AC00D119B5 /* AddressBook.framework */; };
+		2A1172F312456BFA00D119B5 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1172F212456BFA00D119B5 /* libssl.dylib */; };
+		2A1172FA12456C2B00D119B5 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1172F912456C2B00D119B5 /* libcrypto.dylib */; };
+		2A1172FE12456C3800D119B5 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1172FD12456C3800D119B5 /* CoreAudio.framework */; };
+		2A11730912456C4F00D119B5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A11730812456C4F00D119B5 /* AudioToolbox.framework */; };
+		2A11730D12456C5F00D119B5 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A11730C12456C5F00D119B5 /* AudioUnit.framework */; };
+		2A11731112456C6D00D119B5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A11731012456C6D00D119B5 /* SystemConfiguration.framework */; };
+		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		2A1171A51245676A00D119B5 /* MGMAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMAddressBook.h; sourceTree = "<group>"; };
+		2A1171A61245676A00D119B5 /* MGMAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMAddressBook.m; sourceTree = "<group>"; };
+		2A1171A71245676A00D119B5 /* MGMContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMContacts.h; sourceTree = "<group>"; };
+		2A1171A81245676A00D119B5 /* MGMContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMContacts.m; sourceTree = "<group>"; };
+		2A1171A91245676A00D119B5 /* MGMContactsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMContactsProtocol.h; sourceTree = "<group>"; };
+		2A1171AA1245676A00D119B5 /* MGMContactsProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMContactsProtocol.m; sourceTree = "<group>"; };
+		2A1171AB1245676A00D119B5 /* MGMGoogleContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMGoogleContacts.h; sourceTree = "<group>"; };
+		2A1171AC1245676A00D119B5 /* MGMGoogleContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMGoogleContacts.m; sourceTree = "<group>"; };
+		2A1171AD1245676A00D119B5 /* MGMAddons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMAddons.h; sourceTree = "<group>"; };
+		2A1171AE1245676A00D119B5 /* MGMAddons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMAddons.m; sourceTree = "<group>"; };
+		2A1171AF1245676A00D119B5 /* MGMInbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMInbox.h; sourceTree = "<group>"; };
+		2A1171B01245676A00D119B5 /* MGMInbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMInbox.m; sourceTree = "<group>"; };
+		2A1171B11245676A00D119B5 /* MGMInstance.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMInstance.h; sourceTree = "<group>"; };
+		2A1171B21245676A00D119B5 /* MGMInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMInstance.m; sourceTree = "<group>"; };
+		2A1171B31245676A00D119B5 /* MGMThemeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMThemeManager.h; sourceTree = "<group>"; };
+		2A1171B41245676A00D119B5 /* MGMThemeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMThemeManager.m; sourceTree = "<group>"; };
+		2A1171B61245676A00D119B5 /* MGMSIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSIP.h; sourceTree = "<group>"; };
+		2A1171B71245676A00D119B5 /* MGMSIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSIP.m; sourceTree = "<group>"; };
+		2A1171B81245676A00D119B5 /* MGMSIPAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSIPAccount.h; sourceTree = "<group>"; };
+		2A1171B91245676A00D119B5 /* MGMSIPAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSIPAccount.m; sourceTree = "<group>"; };
+		2A1171BA1245676A00D119B5 /* MGMSIPCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSIPCall.h; sourceTree = "<group>"; };
+		2A1171BB1245676A00D119B5 /* MGMSIPCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSIPCall.m; sourceTree = "<group>"; };
+		2A1171BC1245676A00D119B5 /* MGMSIPURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSIPURL.h; sourceTree = "<group>"; };
+		2A1171BD1245676A00D119B5 /* MGMSIPURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSIPURL.m; sourceTree = "<group>"; };
+		2A1171BE1245676A00D119B5 /* VoiceBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceBase.h; sourceTree = "<group>"; };
+		2A1171BF1245676A00D119B5 /* VoiceBase_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoiceBase_Prefix.pch; path = Classes/VoiceBase/VoiceBase_Prefix.pch; sourceTree = "<group>"; };
+		2A1171DC1245678600D119B5 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		2A1171DD1245678600D119B5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2A1172981245684600D119B5 /* MGMUsers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MGMUsers.framework; path = Frameworks/MGMUsers.framework; sourceTree = "<group>"; };
+		2A1172BA124569AC00D119B5 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		2A1172F212456BFA00D119B5 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
+		2A1172F912456C2B00D119B5 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
+		2A1172FD12456C3800D119B5 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		2A11730812456C4F00D119B5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		2A11730C12456C5F00D119B5 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		2A11731012456C6D00D119B5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		8DC2EF5B0486A6940098B216 /* VoiceBase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VoiceBase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8DC2EF560486A6940098B216 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
+				2A1172991245684600D119B5 /* MGMUsers.framework in Frameworks */,
+				2A1172BB124569AC00D119B5 /* AddressBook.framework in Frameworks */,
+				2A1172F312456BFA00D119B5 /* libssl.dylib in Frameworks */,
+				2A1172FA12456C2B00D119B5 /* libcrypto.dylib in Frameworks */,
+				2A1172FE12456C3800D119B5 /* CoreAudio.framework in Frameworks */,
+				2A11730912456C4F00D119B5 /* AudioToolbox.framework in Frameworks */,
+				2A11730D12456C5F00D119B5 /* AudioUnit.framework in Frameworks */,
+				2A11731112456C6D00D119B5 /* SystemConfiguration.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8DC2EF5B0486A6940098B216 /* VoiceBase.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* VoiceBase */ = {
+			isa = PBXGroup;
+			children = (
+				2A1171A31245676A00D119B5 /* Classes */,
+				32C88DFF0371C24200C91783 /* Other Sources */,
+				2A1171DA1245678600D119B5 /* Resources */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = VoiceBase;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				2A1172F612456C0600D119B5 /* Linked Libraries */,
+				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
+				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A1172981245684600D119B5 /* MGMUsers.framework */,
+				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
+				2A1172BA124569AC00D119B5 /* AddressBook.framework */,
+				2A1172FD12456C3800D119B5 /* CoreAudio.framework */,
+				2A11730812456C4F00D119B5 /* AudioToolbox.framework */,
+				2A11730C12456C5F00D119B5 /* AudioUnit.framework */,
+				2A11731012456C6D00D119B5 /* SystemConfiguration.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
+				D2F7E79907B2D74100F64583 /* CoreData.framework */,
+				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		2A1171A31245676A00D119B5 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2A1171A41245676A00D119B5 /* AddressBook */,
+				2A1171AD1245676A00D119B5 /* MGMAddons.h */,
+				2A1171AE1245676A00D119B5 /* MGMAddons.m */,
+				2A1171AF1245676A00D119B5 /* MGMInbox.h */,
+				2A1171B01245676A00D119B5 /* MGMInbox.m */,
+				2A1171B11245676A00D119B5 /* MGMInstance.h */,
+				2A1171B21245676A00D119B5 /* MGMInstance.m */,
+				2A1171B31245676A00D119B5 /* MGMThemeManager.h */,
+				2A1171B41245676A00D119B5 /* MGMThemeManager.m */,
+				2A1171B51245676A00D119B5 /* SIP */,
+				2A1171BE1245676A00D119B5 /* VoiceBase.h */,
+			);
+			name = Classes;
+			path = Classes/VoiceBase;
+			sourceTree = "<group>";
+		};
+		2A1171A41245676A00D119B5 /* AddressBook */ = {
+			isa = PBXGroup;
+			children = (
+				2A1171A51245676A00D119B5 /* MGMAddressBook.h */,
+				2A1171A61245676A00D119B5 /* MGMAddressBook.m */,
+				2A1171A71245676A00D119B5 /* MGMContacts.h */,
+				2A1171A81245676A00D119B5 /* MGMContacts.m */,
+				2A1171A91245676A00D119B5 /* MGMContactsProtocol.h */,
+				2A1171AA1245676A00D119B5 /* MGMContactsProtocol.m */,
+				2A1171AB1245676A00D119B5 /* MGMGoogleContacts.h */,
+				2A1171AC1245676A00D119B5 /* MGMGoogleContacts.m */,
+			);
+			path = AddressBook;
+			sourceTree = "<group>";
+		};
+		2A1171B51245676A00D119B5 /* SIP */ = {
+			isa = PBXGroup;
+			children = (
+				2A1171B61245676A00D119B5 /* MGMSIP.h */,
+				2A1171B71245676A00D119B5 /* MGMSIP.m */,
+				2A1171B81245676A00D119B5 /* MGMSIPAccount.h */,
+				2A1171B91245676A00D119B5 /* MGMSIPAccount.m */,
+				2A1171BA1245676A00D119B5 /* MGMSIPCall.h */,
+				2A1171BB1245676A00D119B5 /* MGMSIPCall.m */,
+				2A1171BC1245676A00D119B5 /* MGMSIPURL.h */,
+				2A1171BD1245676A00D119B5 /* MGMSIPURL.m */,
+			);
+			path = SIP;
+			sourceTree = "<group>";
+		};
+		2A1171DA1245678600D119B5 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2A1171DB1245678600D119B5 /* InfoPlist.strings */,
+				2A1171DD1245678600D119B5 /* Info.plist */,
+			);
+			name = Resources;
+			path = Resources/VoiceBase;
+			sourceTree = "<group>";
+		};
+		2A1172F612456C0600D119B5 /* Linked Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				2A1172F212456BFA00D119B5 /* libssl.dylib */,
+				2A1172F912456C2B00D119B5 /* libcrypto.dylib */,
+			);
+			name = "Linked Libraries";
+			sourceTree = "<group>";
+		};
+		32C88DFF0371C24200C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				2A1171BF1245676A00D119B5 /* VoiceBase_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		8DC2EF500486A6940098B216 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A1171C01245676A00D119B5 /* MGMAddressBook.h in Headers */,
+				2A1171C21245676A00D119B5 /* MGMContacts.h in Headers */,
+				2A1171C41245676A00D119B5 /* MGMContactsProtocol.h in Headers */,
+				2A1171C61245676A00D119B5 /* MGMGoogleContacts.h in Headers */,
+				2A1171C81245676A00D119B5 /* MGMAddons.h in Headers */,
+				2A1171CA1245676A00D119B5 /* MGMInbox.h in Headers */,
+				2A1171CC1245676A00D119B5 /* MGMInstance.h in Headers */,
+				2A1171CE1245676A00D119B5 /* MGMThemeManager.h in Headers */,
+				2A1171D01245676A00D119B5 /* MGMSIP.h in Headers */,
+				2A1171D21245676A00D119B5 /* MGMSIPAccount.h in Headers */,
+				2A1171D41245676A00D119B5 /* MGMSIPCall.h in Headers */,
+				2A1171D61245676A00D119B5 /* MGMSIPURL.h in Headers */,
+				2A1171D81245676A00D119B5 /* VoiceBase.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		8DC2EF4F0486A6940098B216 /* VoiceBase */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "VoiceBase" */;
+			buildPhases = (
+				8DC2EF500486A6940098B216 /* Headers */,
+				8DC2EF520486A6940098B216 /* Resources */,
+				8DC2EF540486A6940098B216 /* Sources */,
+				8DC2EF560486A6940098B216 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VoiceBase;
+			productInstallPath = "$(HOME)/Library/Frameworks";
+			productName = VoiceBase;
+			productReference = 8DC2EF5B0486A6940098B216 /* VoiceBase.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "VoiceBase" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0867D691FE84028FC02AAC07 /* VoiceBase */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8DC2EF4F0486A6940098B216 /* VoiceBase */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8DC2EF520486A6940098B216 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A1171DE1245678600D119B5 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8DC2EF540486A6940098B216 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A1171C11245676A00D119B5 /* MGMAddressBook.m in Sources */,
+				2A1171C31245676A00D119B5 /* MGMContacts.m in Sources */,
+				2A1171C51245676A00D119B5 /* MGMContactsProtocol.m in Sources */,
+				2A1171C71245676A00D119B5 /* MGMGoogleContacts.m in Sources */,
+				2A1171C91245676A00D119B5 /* MGMAddons.m in Sources */,
+				2A1171CB1245676A00D119B5 /* MGMInbox.m in Sources */,
+				2A1171CD1245676A00D119B5 /* MGMInstance.m in Sources */,
+				2A1171CF1245676A00D119B5 /* MGMThemeManager.m in Sources */,
+				2A1171D11245676A00D119B5 /* MGMSIP.m in Sources */,
+				2A1171D31245676A00D119B5 /* MGMSIPAccount.m in Sources */,
+				2A1171D51245676A00D119B5 /* MGMSIPCall.m in Sources */,
+				2A1171D71245676A00D119B5 /* MGMSIPURL.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		2A1171DB1245678600D119B5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A1171DC1245678600D119B5 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB91AE08733DA50010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
+				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				PRODUCT_NAME = VoiceBase;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		1DEB91AF08733DA50010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
+				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				PRODUCT_NAME = VoiceBase;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		1DEB91B208733DA50010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+					x86_64,
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Debug;
+		};
+		1DEB91B308733DA50010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+					x86_64,
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = Release;
+		};
+		2A1172E612456A6700D119B5 /* Debug SIP */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+					x86_64,
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/include\"";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/lib\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-DPJ_AUTOCONF=1",
+					"-DNDEBUG",
+					"-DMGMSIPENABLED=1",
+				);
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = "Debug SIP";
+		};
+		2A1172E712456A6700D119B5 /* Debug SIP */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
+				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
+				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				OTHER_LDFLAGS = (
+					"-lpjsua-universal",
+					"-lpjsip-ua-universal",
+					"-lpjsip-simple-universal",
+					"-lpjsip-universal",
+					"-lpjmedia-codec-universal",
+					"-lpjmedia-universal",
+					"-lpjmedia-audiodev-universal",
+					"-lpjnath-universal",
+					"-lpjlib-util-universal",
+					"-lresample-universal",
+					"-lmilenage-universal",
+					"-lsrtp-universal",
+					"-lgsmcodec-universal",
+					"-lspeex-universal",
+					"-lilbccodec-universal",
+					"-lportaudio-universal",
+					"-lpj-universal",
+				);
+				PRODUCT_NAME = VoiceBase;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = "Debug SIP";
+		};
+		2A1172E812456A6C00D119B5 /* Release SIP */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					ppc,
+					i386,
+					x86_64,
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/include\"";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/lib\"";
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				OTHER_CFLAGS = (
+					"-DPJ_AUTOCONF=1",
+					"-DNDEBUG",
+					"-DMGMSIPENABLED=1",
+				);
+				PREBINDING = NO;
+				SDKROOT = macosx10.5;
+			};
+			name = "Release SIP";
+		};
+		2A1172E912456A6C00D119B5 /* Release SIP */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Frameworks\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
+				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				OTHER_LDFLAGS = (
+					"-lpjsua-universal",
+					"-lpjsip-ua-universal",
+					"-lpjsip-simple-universal",
+					"-lpjsip-universal",
+					"-lpjmedia-codec-universal",
+					"-lpjmedia-universal",
+					"-lpjmedia-audiodev-universal",
+					"-lpjnath-universal",
+					"-lpjlib-util-universal",
+					"-lresample-universal",
+					"-lmilenage-universal",
+					"-lsrtp-universal",
+					"-lgsmcodec-universal",
+					"-lspeex-universal",
+					"-lilbccodec-universal",
+					"-lportaudio-universal",
+					"-lpj-universal",
+				);
+				PRODUCT_NAME = VoiceBase;
+				WRAPPER_EXTENSION = framework;
+			};
+			name = "Release SIP";
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "VoiceBase" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91AE08733DA50010E9CD /* Debug */,
+				2A1172E712456A6700D119B5 /* Debug SIP */,
+				1DEB91AF08733DA50010E9CD /* Release */,
+				2A1172E912456A6C00D119B5 /* Release SIP */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "VoiceBase" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91B208733DA50010E9CD /* Debug */,
+				2A1172E612456A6700D119B5 /* Debug SIP */,
+				1DEB91B308733DA50010E9CD /* Release */,
+				2A1172E812456A6C00D119B5 /* Release SIP */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

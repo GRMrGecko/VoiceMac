@@ -1,0 +1,194 @@
+<html>
+<head>
+<style type="text/css">
+.ttl {
+	background: url("images/ttl.png") no-repeat top left;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+.utl {
+	background: url("images/utl.png") no-repeat top left;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+
+.ttm {
+	background: url("images/ttm.png") repeat-x top;
+	height:14px;
+	font-size:0pt;
+}
+.utm {
+	background: url("images/utm.png") repeat-x top;
+	height:14px;
+	font-size:0pt;
+}
+
+.ttr {
+	background: url("images/ttr.png") no-repeat top right;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+.utr {
+	background: url("images/utr.png") no-repeat top right;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+
+.tml {
+	background: url("images/tml.png") repeat-y bottom left;
+	width:21px;
+	font-size:0pt;
+}
+.uml {
+	background: url("images/uml.png") repeat-y bottom left;
+	width:21px;
+	font-size:0pt;
+}
+
+.tmm {
+	background: url("images/tmm.png") repeat bottom;
+}
+.umm {
+	background: url("images/umm.png") repeat bottom;
+}
+
+.tmr {
+	background: url("images/tmr.png") repeat-y bottom left;
+	width:21px;
+	font-size:0pt;
+}
+.umr {
+	background: url("images/umr.png") repeat-y bottom left;
+	width:21px;
+	font-size:0pt;
+}
+
+.tbl {
+	background: url("images/tbl.png") no-repeat bottom left;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+.ubl {
+	background: url("images/ubl.png") no-repeat bottom left;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+
+.tbm {
+	background: url("images/tbm.png") repeat-x bottom;
+	height:14px;
+	font-size:0pt;
+}
+.ubm {
+	background: url("images/ubm.png") repeat-x bottom;
+	height:14px;
+	font-size:0pt;
+}
+
+.tbr {
+	background: url("images/tbr.png") no-repeat bottom left;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+.ubr {
+	background: url("images/ubr.png") no-repeat bottom left;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+td.pname {
+	font-size:9pt;
+	color:#999999;
+	text-align:center;
+}
+
+#inContext {
+	display: none;
+}
+#inNextContext {
+	display: none;
+}
+#outContext {
+	display: none;
+}
+#outNextContext {
+	display: none;
+}
+.inContent .inNextContent .outContent .outNextContent {
+	display: block;
+}
+</style>
+<script type="text/javascript">
+var resourceurl = "%RESOURCE%";
+var themeurl = "%THEME%";
+var themesurl = "%THEMES%";
+function newMessage(text, photourl, time, id, name, number, lastDate, type) {
+	var template = "";
+	if (type==1) {
+		template = document.getElementById("inContext").cloneNode(true);
+		template.setAttribute("class", "inContent");
+	} else if (type==2) {
+		template = document.getElementById("inNextContext").cloneNode(true);
+		template.setAttribute("class", "inNextContent");
+	} else if (type==3) {
+		template = document.getElementById("outContext").cloneNode(true);
+		template.setAttribute("class", "outContent");
+	} else if (type==4) {
+		template = document.getElementById("outNextContext").cloneNode(true);
+		template.setAttribute("class", "outNextContent");
+	}	
+	template.removeAttribute("id");
+	template.innerHTML = template.innerHTML.replace("%TEXT%", text);
+	template.innerHTML = template.innerHTML.replace("%PHOTO%", photourl);
+	template.innerHTML = template.innerHTML.replace("%TIME%", time);
+	template.innerHTML = template.innerHTML.replace("%MESSAGEID%", id);
+	template.innerHTML = template.innerHTML.replace("%NAME%", name);
+	template.innerHTML = template.innerHTML.replace("%NUMBER%", number);
+	document.getElementById("content").appendChild(template);
+}
+function scrollToBottom() {
+	window.scrollTo(0, document.body.scrollHeight);
+}
+</script>
+</head>
+<body>
+<div id="inContext">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<tr>
+		<td valign="bottom" class="pname" width="50"><img src="%THEIRPHOTO%" width="45" height="45" /><br />%TIME%</td>
+		<td align="left"><table border="0" cellpadding="0" cellspacing="0">
+			<tr><td class="ttl">&nbsp;</td><td class="ttm">&nbsp;</td><td class="ttr">&nbsp;</td></tr>
+			<tr><td class="tml">&nbsp;</td>
+				<td class="tmm">%TEXT%</td>
+			<td class="tmr">&nbsp;</td></tr>
+			<tr><td class="tbl">&nbsp;</td><td class="tbm">&nbsp;</td><td class="tbr">&nbsp;</td></tr>
+		</table></td>
+	</tr>
+</table>
+</div>
+<div id="inNextContext">
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+	<tr>
+		<td valign="bottom" class="pname" width="50"><img src="%THEIRPHOTO%" width="45" height="45" /><br />%TIME%</td>
+		<td align="left"><table border="0" cellpadding="0" cellspacing="0">
+			<tr><td class="ttl">&nbsp;</td><td class="ttm">&nbsp;</td><td class="ttr">&nbsp;</td></tr>
+			<tr><td class="tml">&nbsp;</td>
+				<td class="tmm">%TEXT%</td>
+			<td class="tmr">&nbsp;</td></tr>
+			<tr><td class="tbl">&nbsp;</td><td class="tbm">&nbsp;</td><td class="tbr">&nbsp;</td></tr>
+		</table></td>
+	</tr>
+</table>
+</div>
+<div id="content">
+	
+</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>variants</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>White - Light Blue</string>
+			<key>folder</key>
+			<string>white-lightblue</string>
+			<key>rebuild</key>
+			<false/>
+			<key>date</key>
+			<string>MMMM d, yyyy h:mm:ss a</string>
+		</dict>
+	</array>
+	<key>name</key>
+	<string>Bubbles</string>
+	<key>author</key>
+	<string>Mr. Gecko</string>
+	<key>site</key>
+	<string>http://mrgeckosmedia.com/</string>
+</dict>
+</plist>

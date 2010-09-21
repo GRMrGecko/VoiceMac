@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace>
+   <FileRef
+      location = "container:VoiceBase.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "container:Theme Tester.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "container:VoiceMac.xcodeproj">
+   </FileRef>
+</Workspace>

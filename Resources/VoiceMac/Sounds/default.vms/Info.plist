@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>sounds</key>
+	<array>
+		<dict>
+			<key>name</key>
+			<string>Bass</string>
+			<key>file</key>
+			<string>bass.mp3</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Bells</string>
+			<key>file</key>
+			<string>bells.mp3</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Ringtone</string>
+			<key>file</key>
+			<string>ringtone.mp3</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Hold Music 1</string>
+			<key>file</key>
+			<string>hold1.mp3</string>
+		</dict>
+		<dict>
+			<key>name</key>
+			<string>Hold Music 2</string>
+			<key>file</key>
+			<string>hold2.mp3</string>
+		</dict>
+	</array>
+	<key>name</key>
+	<string>Voice Mac</string>
+	<key>author</key>
+	<string>Mr. Gecko</string>
+	<key>site</key>
+	<string>http://mrgeckosmedia.com/</string>
+</dict>
+</plist>

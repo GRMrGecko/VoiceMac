@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ADP2,1</key>
+	<string>Developer Transition Kit</string>
+	<key>iMac1,1</key>
+	<string>iMac G3 (Rev A-D)</string>
+	<key>PowerMac2,1</key>
+	<string>iMac G3 (Slot-loading CD-ROM)</string>
+	<key>PowerMac2,2</key>
+	<string>iMac G3 (Summer 2000)</string>
+	<key>PowerMac4,1</key>
+	<string>iMac G3 (2001)</string>
+	<key>PowerMac4,2</key>
+	<string>iMac G4 (Flat Panel)</string>
+	<key>PowerMac4,5</key>
+	<string>iMac G4 (17&quot; Flat Panel)</string>
+	<key>PowerMac6,1</key>
+	<string>iMac G4 (USB 2.0)</string>
+	<key>PowerMac6,3</key>
+	<string>iMac G4 (20&quot; Flat Panel)</string>
+	<key>PowerMac8,1</key>
+	<string>iMac G5</string>
+	<key>PowerMac8,2</key>
+	<string>iMac G5 (Ambient Light Sensor)</string>
+	<key>PowerMac12,1</key>
+	<string>iMac G5 (iSight)</string>
+	<key>iMac4,1</key>
+	<string>iMac (Core Duo)</string>
+	<key>iMac4,2</key>
+	<string>iMac for Education (17&quot; Core Duo)</string>
+	<key>iMac5,1</key>
+	<string>iMac (Core 2 Duo 17&quot;/20&quot; SuperDrive)</string>
+	<key>iMac5,2</key>
+	<string>iMac (Core 2 Duo 17&quot; Combo Drive)</string>
+	<key>iMac6,1</key>
+	<string>iMac (Core 2 Duo 24&quot; SuperDrive)</string>
+	<key>iMac7,1</key>
+	<string>iMac (AI)</string>
+	<key>iMac8,1</key>
+	<string>iMac (2008)</string>
+	<key>iMac9,1</key>
+	<string>iMac (2009)</string>
+	<key>iMac10,1</key>
+	<string>iMac (2009 Magic)</string>
+	<key>iMac11,1</key>
+	<string>iMac (2009 Core I5)</string>
+	<key>PowerMac4,4</key>
+	<string>eMac</string>
+	<key>PowerMac6,4</key>
+	<string>eMac (USB 2.0 2005)</string>
+	<key>PowerMac10,1</key>
+	<string>Mac Mini G4</string>
+	<key>PowerMac10,2</key>
+	<string>Mac Mini (2005)</string>
+	<key>Macmini1,1</key>
+	<string>Mac Mini (Core Solo/Duo)</string>
+	<key>Macmini2,1</key>
+	<string>Mac Mini (Core 2 Duo)</string>
+	<key>Macmini3,1</key>
+	<string>Mac Mini (2009)</string>
+	<key>PowerBook2,1</key>
+	<string>iBook G3</string>
+	<key>PowerBook2,2</key>
+	<string>iBook G3 (FireWire)</string>
+	<key>PowerBook2,3</key>
+	<string>iBook G3</string>
+	<key>PowerBook2,4</key>
+	<string>iBook G3</string>
+	<key>PowerBook4,1</key>
+	<string>iBook G3 (Dual USB 2001)</string>
+	<key>PowerBook4,2</key>
+	<string>iBook G3 (16MB VRAM)</string>
+	<key>PowerBook4,3</key>
+	<string>iBook G3 Opaque 16MB VRAM/32MB VRAM 2003)</string>
+	<key>PowerBook6,3</key>
+	<string>iBook G4</string>
+	<key>PowerBook6,5</key>
+	<string>iBook G4 (2004)</string>
+	<key>PowerBook6,7</key>
+	<string>iBook G4 (Mid 2005)</string>
+	<key>PowerBook1,1</key>
+	<string>PowerBook G3</string>
+	<key>PowerBook3,1</key>
+	<string>PowerBook G3 (FireWire)</string>
+	<key>PowerBook3,2</key>
+	<string>PowerBook G4</string>
+	<key>PowerBook3,3</key>
+	<string>PowerBook G4 (Gigabit Ethernet)</string>
+	<key>PowerBook3,4</key>
+	<string>PowerBook G4 (DVI)</string>
+	<key>PowerBook3,5</key>
+	<string>PowerBook G4 (1GHz/867MHz)</string>
+	<key>PowerBook5,1</key>
+	<string>PowerBook G4 (17&quot;)</string>
+	<key>PowerBook5,2</key>
+	<string>PowerBook G4 (15&quot; FW 800)</string>
+	<key>PowerBook5,3</key>
+	<string>PowerBook G4 (17&quot; 1.33GHz)</string>
+	<key>PowerBook5,4</key>
+	<string>PowerBook G4 (15&quot; 1.5/1.33GHz)</string>
+	<key>PowerBook5,5</key>
+	<string>PowerBook G4 (17&quot; 1.5GHz)</string>
+	<key>PowerBook5,6</key>
+	<string>PowerBook G4 (15&quot; 1.67GHz/1.5GHz)</string>
+	<key>PowerBook5,7</key>
+	<string>PowerBook G4 (17&quot; 1.67GHz)</string>
+	<key>PowerBook5,8</key>
+	<string>PowerBook G4 (Double layer SD 15&quot;)</string>
+	<key>PowerBook5,9</key>
+	<string>PowerBook G4 (Double layer SD 17&quot;)</string>
+	<key>PowerBook6,1</key>
+	<string>PowerBook G4 (12&quot;)</string>
+	<key>PowerBook6,2</key>
+	<string>PowerBook G4 (12&quot; DVI)</string>
+	<key>PowerBook6,4</key>
+	<string>PowerBook G4 (12&quot; 1.33GHz)</string>
+	<key>PowerBook6,8</key>
+	<string>PowerBook G4 (12&quot; 1.5GHz)</string>
+	<key>MacBook1,1</key>
+	<string>MacBook (Core Duo)</string>
+	<key>MacBook2,1</key>
+	<string>MacBook (Core 2 Duo)</string>
+	<key>MacBook4,1</key>
+	<string>MacBook (2008)</string>
+	<key>MacBook5,1</key>
+	<string>MacBook (Unibody)</string>
+	<key>MacBook5,2</key>
+	<string>MacBook (White 2009)</string>
+	<key>MacBook6,1</key>
+	<string>MacBook (White Unibody)</string>
+	<key>MacBookAir1,1</key>
+	<string>MacBook Air (2008)</string>
+	<key>MacBookPro1,1</key>
+	<string>MacBook Pro Core Duo (15&quot;)</string>
+	<key>MacBookPro1,2</key>
+	<string>MacBook Pro Core Duo (17&quot;)</string>
+	<key>MacBookPro2,1</key>
+	<string>MacBook Pro Core 2 Duo (17&quot;)</string>
+	<key>MacBookPro2,2</key>
+	<string>MacBook Pro Core 2 Duo (15&quot;)</string>
+	<key>MacBookPro3,1</key>
+	<string>MacBook Pro Core 2 Duo (15&quot; LED Core 2 Duo)</string>
+	<key>MacBookPro3,2</key>
+	<string>MacBook Pro Core 2 Duo (17&quot; HD Core 2 Duo)</string>
+	<key>MacBookPro4,1</key>
+	<string>MacBook Pro (Core 2 Duo 2008)</string>
+	<key>MacBookPro5,1</key>
+	<string>MacBook Pro (Unibody)</string>
+	<key>MacBookPro5,2</key>
+	<string>MacBook Pro (Unibody 17&quot; 2009)</string>
+	<key>MacBookPro5,3</key>
+	<string>MacBook Pro (Unibody 15&quot; 2009)</string>
+	<key>MacBookPro5,4</key>
+	<string>MacBook Pro (Unibody 15&quot; 2009)</string>
+	<key>MacBookPro5,5</key>
+	<string>MacBook Pro (Unibody 13&quot; 2009)</string>
+	<key>PowerMac1,1</key>
+	<string>Power Macintosh G3 (Blue &amp; White)</string>
+	<key>PowerMac1,2</key>
+	<string>Power Macintosh G4 (PCI Graphics)</string>
+	<key>PowerMac11,2</key>
+	<string>Power Macintosh G5 (2005)</string>
+	<key>PowerMac3,1</key>
+	<string>Power Macintosh G4 (AGP Graphics)</string>
+	<key>PowerMac3,2</key>
+	<string>Power Macintosh G4 (AGP Graphics)</string>
+	<key>PowerMac3,3</key>
+	<string>Power Macintosh G4 (Gigabit Ethernet)</string>
+	<key>PowerMac3,4</key>
+	<string>Power Macintosh G4 (Digital Audio)</string>
+	<key>PowerMac3,5</key>
+	<string>Power Macintosh G4 (Quick Silver)</string>
+	<key>PowerMac3,6</key>
+	<string>Power Macintosh G4 (Mirrored Drive Door)</string>
+	<key>PowerMac5,1</key>
+	<string>Power Macintosh G4 Cube</string>
+	<key>PowerMac7,2</key>
+	<string>Power Macintosh G5</string>
+	<key>PowerMac7,3</key>
+	<string>Power Macintosh G5</string>
+	<key>PowerMac9,1</key>
+	<string>Power Macintosh G5 (2005)</string>
+	<key>MacPro1,1</key>
+	<string>Mac Pro (Four-Core)</string>
+	<key>MacPro2,1</key>
+	<string>Mac Pro (Eight-Core)</string>
+	<key>MacPro3,1</key>
+	<string>Mac Pro (2008 4/8 core &quot;Harpertown&quot;)</string>
+	<key>MacPro4,1</key>
+	<string>Mac Pro (2009 &quot;Nehalem&quot;)</string>
+	<key>RackMac1,1</key>
+	<string>Xserve G4</string>
+	<key>RackMac1,2</key>
+	<string>Xserve G4 (Slot-loading cluster node)</string>
+	<key>RackMac3,1</key>
+	<string>Xserve G5</string>
+	<key>Xserve1,1</key>
+	<string>Xserve (Intel Xeon)</string>
+	<key>Xserve2,1</key>
+	<string>Xserve (2008 Quad-Core)</string>
+	<key>Xserve3,1</key>
+	<string>Xserve (2009 Quad-Core)</string>
+</dict>
+</plist>

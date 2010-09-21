@@ -1,0 +1,88 @@
+#!/bin/bash
+
+PPCFLAGS="-isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.4  -arch ppc"
+PPCCC="/usr/bin/gcc-4.0"
+PPCCXX="/usr/bin/g++-4.0"
+PPCHOST="ppc-apple-darwin8"
+PPCPATH="${PWD}/opt-ppc"
+PPCLDFLAGS="-arch ppc"
+
+I386FLAGS="-isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.4  -arch i386"
+I386CC="/usr/bin/gcc-4.0"
+I386CXX="/usr/bin/g++-4.0"
+I386HOST="i386-apple-darwin8"
+I386PATH="${PWD}/opt-i386"
+I386LDFLAGS="-arch i386"
+
+X86_64FLAGS="-isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5  -arch x86_64"
+X86_64CC="/usr/bin/gcc-4.2"
+X86_64CXX="/usr/bin/g++-4.2"
+X86_64HOST="x86_64-apple-darwin9"
+X86_64PATH="${PWD}/opt-x86_64"
+X86_64LDFLAGS="-arch x86_64"
+
+FINALPATH="${PWD}/opt"
+
+if [ "$1" = "clean" ]; then
+	echo "Cleaning PjProject"
+	rm -fR pjproject-i386 pjproject-x86_64 pjproject-ppc
+fi
+if [ "$1" = "" ]; then
+	echo "Copying PjProject"
+	PJPROJECTNAME="pjproject"
+	cp -R ${PJPROJECTNAME} ${PJPROJECTNAME}-ppc
+	cp -R ${PJPROJECTNAME}-ppc ${PJPROJECTNAME}-i386
+	cp -R ${PJPROJECTNAME}-ppc ${PJPROJECTNAME}-x86_64
+	
+	echo "Configuring PjProject"
+	cd ${PJPROJECTNAME}-ppc
+	LDFLAGS="${PPCLDFLAGS}" CFLAGS="${PPCFLAGS}" CXXFLAGS="${PPCFLAGS}" ./configure --prefix="${PPCPATH}" --host="${PPCHOST}" --disable-shared --enable-static
+	cd ../${PJPROJECTNAME}-i386
+	LDFLAGS="${I386LDFLAGS}" CFLAGS="${I386FLAGS}" CXXFLAGS="${I386FLAGS}" ./configure --prefix="${I386PATH}" --host="${I386HOST}" --disable-shared --enable-static
+	cd ../${PJPROJECTNAME}-x86_64
+	LDFLAGS="${X86_64LDFLAGS}" CFLAGS="${X86_64FLAGS}" CXXFLAGS="${X86_64FLAGS}" ./configure --prefix="${X86_64PATH}" --host="${X86_64HOST}" --disable-shared --enable-static
+	cd ../
+	
+	echo "Compiling PjProject"
+	cd ${PJPROJECTNAME}-ppc
+	make dep
+	make
+	cd ../${PJPROJECTNAME}-i386
+	make dep
+	make
+	cd ../${PJPROJECTNAME}-x86_64
+	make dep
+	make
+	cd ../
+	
+	echo "Installing PjProject"
+	cd ${PJPROJECTNAME}-ppc
+	make install
+	cd ../${PJPROJECTNAME}-i386
+	make install
+	cd ../${PJPROJECTNAME}-x86_64
+	make install
+	cd ../
+	
+	echo "Making PjProject Universal"
+	mkdir -p "${FINALPATH}/lib/pkgconfig"
+	cp -R "${PPCPATH}/include" "${FINALPATH}/include"
+	lipo -create "${PPCPATH}/lib/libg7221codec-powerpc-apple-darwin8.a" "${I386PATH}/lib/libg7221codec-i386-apple-darwin8.a" "${X86_64PATH}/lib/libg7221codec-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libg7221codec-universal.a"
+	lipo -create "${PPCPATH}/lib/libgsmcodec-powerpc-apple-darwin8.a" "${I386PATH}/lib/libgsmcodec-i386-apple-darwin8.a" "${X86_64PATH}/lib/libgsmcodec-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libgsmcodec-universal.a"
+	lipo -create "${PPCPATH}/lib/libilbccodec-powerpc-apple-darwin8.a" "${I386PATH}/lib/libilbccodec-i386-apple-darwin8.a" "${X86_64PATH}/lib/libilbccodec-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libilbccodec-universal.a"
+	lipo -create "${PPCPATH}/lib/libmilenage-powerpc-apple-darwin8.a" "${I386PATH}/lib/libmilenage-i386-apple-darwin8.a" "${X86_64PATH}/lib/libmilenage-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libmilenage-universal.a"
+	lipo -create "${PPCPATH}/lib/libpj-powerpc-apple-darwin8.a" "${I386PATH}/lib/libpj-i386-apple-darwin8.a" "${X86_64PATH}/lib/libpj-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libpj-universal.a"
+	lipo -create "${PPCPATH}/lib/libpjlib-util-powerpc-apple-darwin8.a" "${I386PATH}/lib/libpjlib-util-i386-apple-darwin8.a" "${X86_64PATH}/lib/libpjlib-util-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libpjlib-util-universal.a"
+	lipo -create "${PPCPATH}/lib/libpjmedia-audiodev-powerpc-apple-darwin8.a" "${I386PATH}/lib/libpjmedia-audiodev-i386-apple-darwin8.a" "${X86_64PATH}/lib/libpjmedia-audiodev-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libpjmedia-audiodev-universal.a"
+	lipo -create "${PPCPATH}/lib/libpjmedia-codec-powerpc-apple-darwin8.a" "${I386PATH}/lib/libpjmedia-codec-i386-apple-darwin8.a" "${X86_64PATH}/lib/libpjmedia-codec-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libpjmedia-codec-universal.a"
+	lipo -create "${PPCPATH}/lib/libpjmedia-powerpc-apple-darwin8.a" "${I386PATH}/lib/libpjmedia-i386-apple-darwin8.a" "${X86_64PATH}/lib/libpjmedia-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libpjmedia-universal.a"
+	lipo -create "${PPCPATH}/lib/libpjnath-powerpc-apple-darwin8.a" "${I386PATH}/lib/libpjnath-i386-apple-darwin8.a" "${X86_64PATH}/lib/libpjnath-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libpjnath-universal.a"
+	lipo -create "${PPCPATH}/lib/libpjsip-powerpc-apple-darwin8.a" "${I386PATH}/lib/libpjsip-i386-apple-darwin8.a" "${X86_64PATH}/lib/libpjsip-simple-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libpjsip-simple-universal.a"
+	lipo -create "${PPCPATH}/lib/libpjsip-simple-powerpc-apple-darwin8.a" "${I386PATH}/lib/libpjsip-simple-i386-apple-darwin8.a" "${X86_64PATH}/lib/libpjsip-ua-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libpjsip-ua-universal.a"
+	lipo -create "${PPCPATH}/lib/libpjsip-ua-powerpc-apple-darwin8.a" "${I386PATH}/lib/libpjsip-ua-i386-apple-darwin8.a" "${X86_64PATH}/lib/libpjsip-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libpjsip-universal.a"
+	lipo -create "${PPCPATH}/lib/libpjsua-powerpc-apple-darwin8.a" "${I386PATH}/lib/libpjsua-i386-apple-darwin8.a" "${X86_64PATH}/lib/libpjsua-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libpjsua-universal.a"
+	lipo -create "${PPCPATH}/lib/libportaudio-powerpc-apple-darwin8.a" "${I386PATH}/lib/libportaudio-i386-apple-darwin8.a" "${X86_64PATH}/lib/libportaudio-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libportaudio-universal.a"
+	lipo -create "${PPCPATH}/lib/libresample-powerpc-apple-darwin8.a" "${I386PATH}/lib/libresample-i386-apple-darwin8.a" "${X86_64PATH}/lib/libresample-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libresample-universal.a"
+	lipo -create "${PPCPATH}/lib/libspeex-powerpc-apple-darwin8.a" "${I386PATH}/lib/libspeex-i386-apple-darwin8.a" "${X86_64PATH}/lib/libspeex-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libspeex-universal.a"
+	lipo -create "${PPCPATH}/lib/libsrtp-powerpc-apple-darwin8.a" "${I386PATH}/lib/libsrtp-i386-apple-darwin8.a" "${X86_64PATH}/lib/libsrtp-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libsrtp-universal.a"
+fi

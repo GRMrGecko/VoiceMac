@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>vmtask</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>VoiceMac</string>
+			<key>CFBundleTypeName</key>
+			<string>VoiceMac Task</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<true/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>Binary</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>vmt</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>VoiceMac</string>
+			<key>CFBundleTypeName</key>
+			<string>VoiceMac Theme</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<true/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>Binary</string>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>vms</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>VoiceMac</string>
+			<key>CFBundleTypeName</key>
+			<string>VoiceMac Sound</string>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSTypeIsPackage</key>
+			<true/>
+			<key>NSPersistentStoreTypeKey</key>
+			<string>Binary</string>
+		</dict>
+	</array>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIconFile</key>
+	<string>VoiceMac</string>
+	<key>CFBundleIdentifier</key>
+	<string>com.MrGeckosMedia.${PRODUCT_NAME:identifier}</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright (c) 2010 Mr. Gecko&apos;s Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.1</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>Phone Number URL</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>tel</string>
+				<string>callto</string>
+				<string>telephone</string>
+				<string>phone</string>
+				<string>phonenumber</string>
+				<string>call</string>
+				<string>sms</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>VoiceMac Sound</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>vmsound</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>VoiceMac Theme</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>vmtheme</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>0.1</string>
+	<key>MGMGRBugsEmail</key>
+	<string>bugs@mrgeckosmedia.com</string>
+	<key>MGMGRContactEmail</key>
+	<string>support@mrgeckosmedia.com</string>
+	<key>MGMGRCrashEmail</key>
+	<string>crashreports@mrgeckosmedia.com</string>
+	<key>MGMGRReportFileAttached</key>
+	<true/>
+	<key>MGMGRTimeFormat</key>
+	<string>%A, %m/%d/%y %I:%M:%S %p</string>
+	<key>MGMGRTimeZone</key>
+	<string>CST</string>
+	<key>NSMainNibFile</key>
+	<string>MainMenu</string>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>SUCheckAtStartup</key>
+	<true/>
+	<key>SUEnableSystemProfiling</key>
+	<true/>
+	<key>SUFeedURL</key>
+	<string>http://mrgeckosmedia.com/applications/appcast/VoiceMac</string>
+	<key>SUScheduledCheckInterval</key>
+	<integer>86400</integer>
+</dict>
+</plist>

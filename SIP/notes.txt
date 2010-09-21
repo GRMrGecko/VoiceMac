@@ -1,0 +1,1 @@
+To get the latest PJProject, "svn checkout http://svn.pjsip.org/repos/pjproject/trunk pjproject" To get the one I used, "svn checkout -r 3310 http://svn.pjsip.org/repos/pjproject/trunk pjproject" After you check out PJProject, run ./install to build it for Voice Mac.
