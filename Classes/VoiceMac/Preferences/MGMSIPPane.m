@@ -74,7 +74,7 @@
 			[NSTask launchedTaskWithLaunchPath:relaunchPath arguments:[NSArray arrayWithObjects:pathToRelaunch, [NSString stringWithFormat:@"%d", [[NSProcessInfo processInfo] processIdentifier]], nil]];
 			[[NSApplication sharedApplication] terminate:self];
 		}
-		//[[MGMSIP sharedSIP] restart];
+		[[MGMSIP sharedSIP] restart];
 	}
 	if (mainView!=nil)
 		[mainView release];

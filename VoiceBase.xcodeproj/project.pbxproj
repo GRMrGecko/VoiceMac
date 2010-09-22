@@ -368,7 +368,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
 				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				INSTALL_PATH = "@executable_path/../Frameworks";
 				PRODUCT_NAME = VoiceBase;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -390,7 +390,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
 				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				INSTALL_PATH = "@executable_path/../Frameworks";
 				PRODUCT_NAME = VoiceBase;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -480,7 +480,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
 				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
-				INSTALL_PATH = "$(HOME)/Library/Frameworks";
+				INSTALL_PATH = "@executable_path/../Frameworks";
 				OTHER_LDFLAGS = (
 					"-lpjsua-universal",
 					"-lpjsip-ua-universal",

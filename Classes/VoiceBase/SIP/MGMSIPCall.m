@@ -19,7 +19,8 @@
 		account = theAccount;
 		identifier = theIdentifier;
 		
-		[[MGMSIP sharedSIP] registerThread];
+		pj_thread_desc PJThreadDesc;
+		[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 		
 		pjsua_call_info callInfo;
 		pj_status_t status = pjsua_call_get_info(identifier, &callInfo);
@@ -40,6 +41,7 @@
 			incoming = (state==MGMSIPCallIncomingState);
 			muted = NO;
 		}
+		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	}
 	return self;
 }
@@ -142,26 +144,34 @@
 	if (identifier==PJSUA_INVALID_ID)
 		return NO;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
-	return pjsua_call_is_active(identifier);
+	pj_bool_t active = pjsua_call_is_active(identifier);
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
+	return (active==PJ_TRUE);
 }
 - (BOOL)hasMedia {
 	if (identifier==PJSUA_INVALID_ID)
 		return NO;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
-	return pjsua_call_has_media(identifier);
+	pj_bool_t media = pjsua_call_has_media(identifier);
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
+	return (media==PJ_TRUE);
 }
 - (BOOL)hasActiveMedia {
 	if (identifier==PJSUA_INVALID_ID)
 		return NO;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pjsua_call_info callInfo;
 	pjsua_call_get_info(identifier, &callInfo);
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	return (callInfo.media_status==PJSUA_CALL_MEDIA_ACTIVE);
 }
 
@@ -175,10 +185,12 @@
 	if (identifier==PJSUA_INVALID_ID)
 		return NO;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pjsua_call_info callInfo;
 	pjsua_call_get_info(identifier, &callInfo);
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	return (callInfo.media_status==PJSUA_CALL_MEDIA_REMOTE_HOLD);
 }
 - (void)setHoldMusicPath:(NSString *)thePath {
@@ -186,7 +198,8 @@
 	holdMusicPath = [thePath copy];
 }
 - (void)hold {
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	if (state==MGMSIPCallConfirmedState) {
 		pjsua_conf_port_id conf_port = pjsua_call_get_conf_port(identifier);
@@ -202,6 +215,7 @@
 			[self performSelectorOnMainThread:@selector(stopHoldMusic) withObject:nil waitUntilDone:NO];
 		}
 	}
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 - (void)startHoldMusic {
 	if (holdMusicPlayer!=PJSUA_INVALID_ID)
@@ -217,17 +231,20 @@
 	if (identifier==PJSUA_INVALID_ID || state==MGMSIPCallDisconnectedState)
 		return;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pj_status_t status = pjsua_call_answer(identifier, PJSIP_SC_OK, NULL, NULL);
 	if (status!=PJ_SUCCESS)
 		NSLog(@"Error answering call %@", self);
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 - (void)hangUp {
 	if (identifier==PJSUA_INVALID_ID || state==MGMSIPCallDisconnectedState)
 		return;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pj_status_t status = pjsua_call_hangup(identifier, 0, NULL, NULL);
 	if (status!=PJ_SUCCESS)
@@ -238,22 +255,26 @@
 	if (identifier==PJSUA_INVALID_ID || state==MGMSIPCallDisconnectedState)
 		return;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pj_status_t status = pjsua_call_answer(identifier, PJSIP_SC_RINGING, NULL, NULL);
 	if (status!=PJ_SUCCESS)
 		NSLog(@"Error sending ringing notification to call %@", self);
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 
 - (void)replyWithTemporarilyUnavailable {
 	if (identifier==PJSUA_INVALID_ID || state==MGMSIPCallDisconnectedState)
 		return;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pj_status_t status = pjsua_call_answer(identifier, PJSIP_SC_TEMPORARILY_UNAVAILABLE, NULL, NULL);
 	if (status!=PJ_SUCCESS)
 		NSLog(@"Error replying 480 Temporarily Unavailable");
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 
 - (void)startRingback {
@@ -264,11 +285,13 @@
 		return;
 	isRingbackOn = YES;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	[[MGMSIP sharedSIP] setRingbackCount:[[MGMSIP sharedSIP] ringbackCount]+1];
 	if ([[MGMSIP sharedSIP] ringbackCount]==1 && [[MGMSIP sharedSIP] ringbackSlot]!=PJSUA_INVALID_ID)
 		pjsua_conf_connect([[MGMSIP sharedSIP] ringbackSlot], 0);
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 - (void)stopRingback {
 	if (identifier==PJSUA_INVALID_ID || state==MGMSIPCallDisconnectedState)
@@ -278,7 +301,8 @@
 		return;
 	isRingbackOn = NO;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	int ringbackCount = [[MGMSIP sharedSIP] ringbackCount];
 	if (ringbackCount<0) return;
@@ -287,13 +311,15 @@
 		pjsua_conf_disconnect([[MGMSIP sharedSIP] ringbackSlot], 0);
 		pjmedia_tonegen_rewind([[MGMSIP sharedSIP] ringbackPort]);
 	}
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 
 - (void)sendDTMFDigits:(NSString *)theDigits {
 	if (identifier==PJSUA_INVALID_ID || state!=MGMSIPCallConfirmedState)
 		return;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pj_str_t digits = [theDigits PJString];
 	pj_status_t status = pjsua_call_dial_dtmf(identifier, &digits);
@@ -310,6 +336,7 @@
 				NSLog(@"Unable to send DTMF with status %d.", status);
 		}
 	}
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 
 - (void)playSound:(NSString *)theFile {
@@ -325,7 +352,8 @@
 	if (identifier==PJSUA_INVALID_ID || state!=MGMSIPCallConfirmedState)
 		return PJSUA_INVALID_ID;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pjsua_player_id player_id = PJSUA_INVALID_ID;
 	if (theFile==nil || ![[NSFileManager defaultManager] fileExistsAtPath:theFile])
@@ -340,16 +368,19 @@
 		if (status!=PJ_SUCCESS)
 			NSLog(@"Unable to play sound");
 	}
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	return player_id;
 }
 - (void)stopPlayingSound:(pjsua_player_id *)thePlayerID {
 	if (*thePlayerID==PJSUA_INVALID_ID)
 		return;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pjsua_player_destroy(*thePlayerID);
 	*thePlayerID = PJSUA_INVALID_ID;
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 
 - (BOOL)isRecording {
@@ -362,7 +393,8 @@
 	if (recorderID!=PJSUA_INVALID_ID || identifier==PJSUA_INVALID_ID || state!=MGMSIPCallConfirmedState)
 		return;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pj_str_t file = [toFile PJString];
 	pj_status_t status = pjsua_recorder_create(&file, 0, NULL, 0, 0, &recorderID);
@@ -372,6 +404,7 @@
 		pjsua_conf_connect(pjsua_call_get_conf_port(identifier), pjsua_recorder_get_conf_port(recorderID));
 		pjsua_conf_connect(0, pjsua_recorder_get_conf_port(recorderID));
 	}
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 - (void)stopRecording {
 	[self performSelectorOnMainThread:@selector(stopRecordingMain) withObject:nil waitUntilDone:YES];
@@ -380,10 +413,12 @@
 	if (recorderID==PJSUA_INVALID_ID)
 		return;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pjsua_recorder_destroy(recorderID);
 	recorderID = PJSUA_INVALID_ID;
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 
 - (BOOL)isMuted {
@@ -393,7 +428,8 @@
 	if (identifier==PJSUA_INVALID_ID || holdMusicPlayer!=PJSUA_INVALID_ID || state!=MGMSIPCallConfirmedState)
 		return;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pj_status_t status;
 	if (muted)
@@ -404,6 +440,7 @@
 		NSLog(@"Error %@ speakers for call %@", (muted ? @"unmuting" : @"mutting"), self);
 	else
 		muted = !muted;
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 - (BOOL)isMicMuted {
 	return micMuted;
@@ -412,7 +449,8 @@
 	if (identifier==PJSUA_INVALID_ID || holdMusicPlayer!=PJSUA_INVALID_ID || state!=MGMSIPCallConfirmedState)
 		return;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pj_status_t status;
 	if (micMuted)
@@ -423,6 +461,7 @@
 		NSLog(@"Error %@ microphone for call %@", (micMuted ? @"unmuting" : @"mutting"), self);
 	else
 		micMuted = !micMuted;
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 @end
 #endif

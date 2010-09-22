@@ -247,10 +247,12 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	if (identifier==PJSUA_INVALID_ID)
 		return;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pjsua_acc_set_registration(identifier, (isRegistered ? PJ_TRUE : PJ_FALSE));
 	[self setOnline:isRegistered];
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 - (void)networkConnected:(NSNotification *)theNotification {
 	if ([self isLoggedIn])
@@ -260,10 +262,12 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	if (identifier==PJSUA_INVALID_ID)
 		return 0;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pjsua_acc_info accountInfo;
 	pj_status_t status = pjsua_acc_get_info(identifier, &accountInfo);
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	if (status!=PJ_SUCCESS)
 		return 0;
 	return accountInfo.status;
@@ -272,10 +276,12 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	if (identifier==PJSUA_INVALID_ID)
 		return nil;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pjsua_acc_info accountInfo;
 	pj_status_t status = pjsua_acc_get_info(identifier, &accountInfo);
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	if (status!=PJ_SUCCESS)
 		return nil;
 	return [NSString stringWithPJString:accountInfo.status_text];
@@ -284,10 +290,12 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	if (identifier==PJSUA_INVALID_ID)
 		return -1;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pjsua_acc_info accountInfo;
 	pj_status_t status = pjsua_acc_get_info(identifier, &accountInfo);
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	if (status!=PJ_SUCCESS)
 		return -1;
 	return accountInfo.expires;
@@ -297,10 +305,12 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	if (identifier==PJSUA_INVALID_ID)
 		return NO;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pjsua_acc_info accountInfo;
 	pj_status_t status = pjsua_acc_get_info(identifier, &accountInfo);
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	if (status!=PJ_SUCCESS)
 		return NO;
 	return (accountInfo.online_status==PJ_TRUE);
@@ -309,7 +319,8 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	if ([self identifier]==PJSUA_INVALID_ID)
 		return;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pj_status_t status = pjsua_acc_set_online_status(identifier, (isOnline ? PJ_TRUE : PJ_FALSE));
 	if (status==PJ_SUCCESS) {
@@ -321,15 +332,18 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 		if (isOnline)
 			reregisterTimer = [[NSTimer scheduledTimerWithTimeInterval:(float)reregisterTimeout target:self selector:@selector(reregister) userInfo:nil repeats:YES] retain];
 	}
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 - (NSString *)onlineStatusText {
 	if (identifier==PJSUA_INVALID_ID)
 		return nil;
 	
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pjsua_acc_info accountInfo;
 	pj_status_t status = pjsua_acc_get_info(identifier, &accountInfo);
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	if (status!=PJ_SUCCESS)
 		return nil;
 	return [NSString stringWithPJString:accountInfo.online_status_text];
@@ -345,7 +359,8 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	return [self makeCallToSIPURL:SIPURL];
 }
 - (MGMSIPCall *)makeCallToSIPURL:(MGMSIPURL *)theURL {
-	[[MGMSIP sharedSIP] registerThread];
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pjsua_call_id callIdentifier;
 	pj_str_t url = [[theURL SIPID] PJString];
@@ -356,6 +371,7 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	} else {
 		call = [self callWithIdentifier:callIdentifier];
 	}
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	return call;
 }
 - (NSArray *)calls {

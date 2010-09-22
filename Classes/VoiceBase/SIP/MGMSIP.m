@@ -359,7 +359,8 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		[pool drain];
 		return;
 	}
-	[self registerThread];
+	pj_thread_desc PJThreadDesc;
+	[self registerThread:&PJThreadDesc];
 	
 	PJPool = pjsua_pool_create("MGMSIP-pjsua", 1000, 1000);
 	
@@ -427,6 +428,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	status = pjsua_init(&sipConfig, &loggingConfig, &mediaConfig);
 	if (status!=PJ_SUCCESS) {
 		NSLog(@"Error initializing PJSUA");
+		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 		[self stop];
 		[lock unlock];
 		[pool drain];
@@ -438,6 +440,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	status = pjmedia_tonegen_create2(PJPool, &name, mediaConfig.clock_rate, mediaConfig.channel_count, samplesPerFrame, 16, PJMEDIA_TONEGEN_LOOP, &ringbackPort);
 	if (status!=PJ_SUCCESS) {
 		NSLog(@"Error creating ringback tones");
+		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 		[self stop];
 		[lock unlock];
 		[pool drain];
@@ -456,6 +459,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	status = pjsua_conf_add_port(PJPool, ringbackPort, &ringbackSlot);
 	if (status!=PJ_SUCCESS) {
 		NSLog(@"Error adding ringback tone");
+		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 		[self stop];
 		[lock unlock];
 		[pool drain];
@@ -470,6 +474,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	status = pjsua_transport_create(PJSIP_TRANSPORT_UDP, &transportConfig, &UDPTransport);
 	if (status!=PJ_SUCCESS) {
 		NSLog(@"Error creating transport");
+		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 		[self stop];
 		[lock unlock];
 		[pool drain];
@@ -492,6 +497,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	status = pjsua_start();
 	if (status!=PJ_SUCCESS) {
 		NSLog(@"Error starting PJSUA");
+		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 		[self stop];
 		[lock unlock];
 		[pool drain];
@@ -513,6 +519,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	
 	NSLog(@"MGMSIP Started");
 	
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	[lock unlock];
 	[pool drain];
 }
@@ -532,7 +539,8 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	
 	[accounts makeObjectsPerformSelector:@selector(logout)];
 	
-	[self registerThread];
+	pj_thread_desc PJThreadDesc;
+	[self registerThread:&PJThreadDesc];
 	
 	if (ringbackPort!=NULL && ringbackSlot!=PJSUA_INVALID_ID) {
 		pjsua_conf_remove_port(ringbackSlot);
@@ -551,6 +559,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	status = pjsua_destroy();
 	if (status!=PJ_SUCCESS)
 		NSLog(@"Error stopping SIP");
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	
 	state = MGMSIPStoppedState;
 	
@@ -596,11 +605,10 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	[self stop];
 }
 
-- (void)registerThread {
-	pj_thread_desc PJThreadDesc;
+- (void)registerThread:(pj_thread_desc *)thePJThreadDesc {
 	if (!pj_thread_is_registered()) {
 		pj_thread_t *PJThread;
-		pj_status_t status = pj_thread_register(NULL, PJThreadDesc, &PJThread);
+		pj_status_t status = pj_thread_register(NULL, *thePJThreadDesc, &PJThread);
 		if (status!=PJ_SUCCESS)
 			NSLog(@"Error registering thread for PJSUA with status %d", status);
 	}
@@ -625,7 +633,8 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		return;
 	}
 	
-	[self registerThread];
+	pj_thread_desc PJThreadDesc;
+	[self registerThread:&PJThreadDesc];
 	
 	pjsua_acc_config accountConfig;
 	pjsua_acc_config_default(&accountConfig);
@@ -666,11 +675,13 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		[theAccount loginErrored];
 		NSLog(@"Error With Account %@: %@", theAccount, [theAccount lastError]);
 		[accounts removeObject:theAccount];
+		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 		[pool drain];
 		return;
 	}
 	[theAccount setIdentifier:identifier];
 	[theAccount setOnline:YES];
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	if (delegate!=nil && [delegate respondsToSelector:@selector(accountLoggedIn:)]) [delegate accountLoggedIn:theAccount];
 	if ([theAccount delegate]!=nil && [[theAccount delegate] respondsToSelector:@selector(loggedIn)]) [[theAccount delegate] loggedIn];
 	[pool drain];
@@ -686,7 +697,8 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		return;
 	}
 	
-	[self registerThread];
+	pj_thread_desc PJThreadDesc;
+	[self registerThread:&PJThreadDesc];
 	
 	pj_status_t status = pjsua_acc_del([theAccount identifier]);
 	if (status!=PJ_SUCCESS) {
@@ -700,6 +712,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	if (delegate!=nil && [delegate respondsToSelector:@selector(accountLoggedOut:)]) [delegate accountLoggedOut:theAccount];
 	if ([theAccount delegate]!=nil && [[theAccount delegate] respondsToSelector:@selector(loggedOut)]) [[theAccount delegate] loggedOut];
 	[accounts removeObject:theAccount];
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	[pool drain];
 }
 
@@ -722,30 +735,36 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 }
 
 - (void)hangUpAllCalls {
-	[self registerThread];
+	pj_thread_desc PJThreadDesc;
+	[self registerThread:&PJThreadDesc];
 	
 	pjsua_call_hangup_all();
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 
 - (float)volume {
 	return [[NSUserDefaults standardUserDefaults] floatForKey:MGMSIPVolume];
 }
 - (void)setVolume:(float)theVolume {
-	[self registerThread];
+	pj_thread_desc PJThreadDesc;
+	[self registerThread:&PJThreadDesc];
 	
 	[[NSUserDefaults standardUserDefaults] setFloat:theVolume forKey:MGMSIPVolume];
 	pjsua_conf_adjust_tx_level(0, theVolume);
 	[[NSNotificationCenter defaultCenter] postNotificationName:MGMSIPVolumeChangedNotification object:[NSNumber numberWithFloat:theVolume]];
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 - (float)micVolume {
 	return [[NSUserDefaults standardUserDefaults] floatForKey:MGMSIPMicVolume];
 }
 - (void)setMicVolume:(float)theVolume {
-	[self registerThread];
+	pj_thread_desc PJThreadDesc;
+	[self registerThread:&PJThreadDesc];
 	
 	[[NSUserDefaults standardUserDefaults] setFloat:theVolume forKey:MGMSIPMicVolume];
 	pjsua_conf_adjust_rx_level(0, theVolume);
 	[[NSNotificationCenter defaultCenter] postNotificationName:MGMSIPMicVolumeChangedNotification object:[NSNumber numberWithFloat:theVolume]];
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 
 - (BOOL)setInputSoundDevice:(int)theInputDevice outputSoundDevice:(int)theOutputDevice {
@@ -790,18 +809,22 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	[defaults setObject:inputDeviceUID forKey:MGMSIPACurrentInputDevice];
 	[defaults setObject:outputDeviceUID forKey:MGMSIPACurrentOutputDevice];
 	
-	[self registerThread];
+	pj_thread_desc PJThreadDesc;
+	[self registerThread:&PJThreadDesc];
 	
 	pj_status_t status = pjsua_set_snd_dev(theInputDevice, theOutputDevice);
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	return (status==PJ_SUCCESS);
 }
 - (BOOL)stopSound {
 	if (state!=MGMSIPStartedState)
 		return NO;
 	
-	[self registerThread];
+	pj_thread_desc PJThreadDesc;
+	[self registerThread:&PJThreadDesc];
 	
 	pj_status_t status = pjsua_set_null_snd_dev();
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	return (status==PJ_SUCCESS);
 }
 - (void)updateAudioDevices {
@@ -919,7 +942,8 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	if (audioDevices!=nil) [audioDevices release];
 	audioDevices = [devicesArray copy];
 	
-	[self registerThread];
+	pj_thread_desc PJThreadDesc;
+	[self registerThread:&PJThreadDesc];
 	
 	pjsua_set_null_snd_dev();
 	pjmedia_snd_deinit();
@@ -928,6 +952,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	[self setInputSoundDevice:currentInput outputSoundDevice:currentOutput];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:MGMSIPAudioChangedNotification object:audioDevices];
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	[pool drain];
 }
 - (NSArray *)audioDevices {

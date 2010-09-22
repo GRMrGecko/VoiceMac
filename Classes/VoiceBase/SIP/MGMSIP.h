@@ -125,7 +125,7 @@ typedef enum {
 - (void)stop;
 - (void)restart;
 
-- (void)registerThread;
+- (void)registerThread:(pj_thread_desc *)thePJThreadDesc;
 
 - (void)loginToAccount:(MGMSIPAccount *)theAccount;
 - (void)logoutOfAccount:(MGMSIPAccount *)theAccount;
