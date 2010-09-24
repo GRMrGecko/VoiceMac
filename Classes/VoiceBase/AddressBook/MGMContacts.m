@@ -90,6 +90,13 @@ const int MGMCMaxResults = 10;
 	[super dealloc];
 }
 
+- (void)setDelegate:(id)theDelegate {
+	delegate = theDelegate;
+}
+- (id<MGMContactsOwnerDelegate>)delegate {
+	return delegate;
+}
+
 - (void)stop {
 	if (isUpdating) {
 		stopingUpdate = YES;
@@ -234,7 +241,7 @@ const int MGMCMaxResults = 10;
 	[self setContactsConnection:[MGMLiteConnection connectionWithPath:[[user supportPath] stringByAppendingPathComponent:MGMCContactsDB]]];
 	[updateLock unlock];
 	isUpdating = NO;
-	if ([delegate respondsToSelector:@selector(updatedContacts)]) [delegate updatedContacts];
+	if (delegate!=nil && [delegate respondsToSelector:@selector(updatedContacts)]) [delegate updatedContacts];
 }
 
 - (NSNumber *)countContactsMatching:(NSString *)theString {

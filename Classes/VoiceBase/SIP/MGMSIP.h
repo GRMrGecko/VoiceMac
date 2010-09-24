@@ -130,6 +130,8 @@ typedef enum {
 - (void)start;
 - (void)stop;
 - (void)restart;
+- (void)computerSleep;
+- (void)computerWake;
 
 - (void)registerThread:(pj_thread_desc *)thePJThreadDesc;
 

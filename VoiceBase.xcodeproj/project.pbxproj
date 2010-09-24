@@ -868,6 +868,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/lib\"",
 				);
+				OTHER_CFLAGS = "-fblocks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -892,6 +893,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/lib\"",
+				);
+				OTHER_CFLAGS = (
+					"-fblocks",
+					"-DPJ_AUTOCONF=1",
+					"-DNDEBUG",
+					"-DMGMSIPENABLED=1",
 				);
 				OTHER_LDFLAGS = (
 					"-lg7221codec-ios-universal",
@@ -938,6 +945,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/lib\"",
 				);
+				OTHER_CFLAGS = "-fblocks";
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -963,6 +971,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/lib\"",
+				);
+				OTHER_CFLAGS = (
+					"-fblocks",
+					"-DPJ_AUTOCONF=1",
+					"-DNDEBUG",
+					"-DMGMSIPENABLED=1",
 				);
 				OTHER_LDFLAGS = (
 					"-lg7221codec-ios-universal",

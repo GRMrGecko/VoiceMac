@@ -150,6 +150,7 @@
 	[[SMSView mainFrame] loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[manager themeManager] currentThemeVariantPath]]];
 }
 - (void)webView:(WebView *)sender resource:(id)identifier didFinishLoadingFromDataSource:(WebDataSource *)dataSource {
+	if (marking) return;
 	[SMSView stringByEvaluatingJavaScriptFromString:@"scrollToBottom();"];
 }
 - (void)addMessage:(NSDictionary *)theMessage {

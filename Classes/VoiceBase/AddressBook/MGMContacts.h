@@ -33,6 +33,9 @@
 + (id)contactsWithClass:(Class)theClass delegate:(id)theDelegate;
 - (id)initWithClass:(Class)theClass delegate:(id)theDelegate;
 
+- (void)setDelegate:(id)theDelegate;
+- (id<MGMContactsOwnerDelegate>)delegate;
+
 - (void)stop;
 
 - (void)setMaxResults:(int)theMaxResults;

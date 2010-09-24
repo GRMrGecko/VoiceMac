@@ -62,6 +62,8 @@ NSString * const MGMSID = @"id";
 	[sidebarView setAutosaveExpandedItems:YES];
 }
 - (void)dealloc {
+	if (inboxWindow!=nil)
+		[inboxWindow close];
 	if (currentData!=nil)
 		[currentData release];
 	[super dealloc];
@@ -128,13 +130,17 @@ NSString * const MGMSID = @"id";
 }
 
 - (void)startProgress {
-	if (progressStartCount==0)
-		[progress startAnimation:self];
+	if (progress!=nil) {
+		if (progressStartCount==0)
+			[progress startAnimation:self];
+	}
 	progressStartCount++;
 }
 - (void)stopProgress {
-	if (progressStartCount==1)
-		[progress stopAnimation:self];
+	if (progress!=nil) {
+		if (progressStartCount==1)
+			[progress stopAnimation:self];
+	}
 	progressStartCount--;
 }
 
@@ -470,6 +476,7 @@ NSString * const MGMSID = @"id";
 }
 - (void)windowWillClose:(NSNotification *)notification {
 	[self setCurrentData:nil];
+	[inboxWindow setDelegate:nil];
 	inboxWindow = nil;
 	splitView = nil;
 	sidebarView = nil;
@@ -477,6 +484,7 @@ NSString * const MGMSID = @"id";
 	nextButton = nil;
 	previousButton = nil;
 	pageField = nil;
+	progress = nil;
 }
 @end
 

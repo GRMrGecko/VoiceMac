@@ -166,7 +166,7 @@ const BOOL MGMInstanceInvisible = YES;
 	return contacts;
 }
 - (void)updatedContacts {
-	if ([delegate respondsToSelector:@selector(updatedContacts)]) [delegate updatedContacts];
+	if (delegate!=nil && [delegate respondsToSelector:@selector(updatedContacts)]) [delegate updatedContacts];
 }
 
 - (NSString *)XPCURL {
@@ -199,7 +199,7 @@ const BOOL MGMInstanceInvisible = YES;
 }
 
 - (void)index:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
-	if ([delegate respondsToSelector:@selector(loginError:)]) {
+	if (delegate!=nil && [delegate respondsToSelector:@selector(loginError:)]) {
 		[delegate loginError:theError];
 	} else {
 		NSLog(@"Login Error: %@", theError);
@@ -239,7 +239,7 @@ const BOOL MGMInstanceInvisible = YES;
 	} else if ([returnedString containsString:@"<div id=\"gaia_loginbox\">"]) {
 		if (webLoginTries>2) {
 			NSError *error = [NSError errorWithDomain:@"com.MrGeckosMedia.MGMInstance.Login" code:1 userInfo:[NSDictionary dictionaryWithObject:@"Unable to login. Please check your Credentials." forKey:NSLocalizedDescriptionKey]];
-			if ([delegate respondsToSelector:@selector(loginError:)]) {
+			if (delegate!=nil && [delegate respondsToSelector:@selector(loginError:)]) {
 				[delegate loginError:error];
 			} else {
 				NSLog(@"Login Error: %@", error);
@@ -413,7 +413,7 @@ const BOOL MGMInstanceInvisible = YES;
 		}
 		if (![returnedString containsString:@"gc-header-did-display"] && ![userNumber isPhoneComplete]) {
 			NSError *error = [NSError errorWithDomain:@"com.MrGeckosMedia.MGMInstance.Login" code:2 userInfo:[NSDictionary dictionaryWithObject:@"Your Google Account does not appear to have a Google Number, please visit voice.google.com and setup one before continuing." forKey:NSLocalizedDescriptionKey]];
-			if ([delegate respondsToSelector:@selector(loginError:)]) {
+			if (delegate!=nil && [delegate respondsToSelector:@selector(loginError:)]) {
 				[delegate loginError:error];
 			} else {
 				NSLog(@"Login Error: %@", error);
@@ -473,7 +473,7 @@ const BOOL MGMInstanceInvisible = YES;
 		NSLog(@"XPCURL = %@", XPCURL);
 #endif
 		loggedIn = YES;
-		if ([delegate respondsToSelector:@selector(loginSuccessful)]) [delegate loginSuccessful];
+		if (delegate!=nil && [delegate respondsToSelector:@selector(loginSuccessful)]) [delegate loginSuccessful];
 		if (!checkingAccount) {
 			[contacts updateContacts];
 			if (checkTimer!=nil) {
@@ -529,13 +529,12 @@ const BOOL MGMInstanceInvisible = YES;
 			//int recordedCount = [[currentUnreadCounts objectForKey:MGMUCRecorded] intValue];
 			int voicemailCount = [[currentUnreadCounts objectForKey:MGMUCVoicemail] intValue];
 			int smsCount = [[currentUnreadCounts objectForKey:MGMUCSMS] intValue];
-			if ([[unreadCounts objectForKey:MGMUCInbox] intValue]!=inboxCount) {
-				if ([delegate respondsToSelector:@selector(updateUnreadCount:)]) [delegate updateUnreadCount:inboxCount];
-			}
+			if ([[unreadCounts objectForKey:MGMUCInbox] intValue]!=inboxCount)
+				if (delegate!=nil && [delegate respondsToSelector:@selector(updateUnreadCount:)]) [delegate updateUnreadCount:inboxCount];
 			if (voicemailCount>0)
-				if ([delegate respondsToSelector:@selector(updateVoicemail)]) [delegate updateVoicemail];
+				if (delegate!=nil && [delegate respondsToSelector:@selector(updateVoicemail)]) [delegate updateVoicemail];
 			if (smsCount>0)
-				if ([delegate respondsToSelector:@selector(updateSMS)]) [delegate updateSMS];
+				if (delegate!=nil && [delegate respondsToSelector:@selector(updateSMS)]) [delegate updateSMS];
 			if (unreadCounts!=nil) [unreadCounts release];
 			unreadCounts = [currentUnreadCounts copy];
 		}
@@ -553,7 +552,7 @@ const BOOL MGMInstanceInvisible = YES;
 #if MGMInstanceDebug
 	NSLog(@"Credit = %@", credit);
 #endif
-	if ([delegate respondsToSelector:@selector(updateCredit:)]) [delegate updateCredit:credit];
+	if (delegate!=nil && [delegate respondsToSelector:@selector(updateCredit:)]) [delegate updateCredit:credit];
 }
 
 - (void)placeCall:(NSString *)thePhoneNumber usingPhone:(int)thePhone delegate:(id)theDelegate {

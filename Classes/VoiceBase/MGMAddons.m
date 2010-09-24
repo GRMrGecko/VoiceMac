@@ -1340,11 +1340,17 @@ NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *cont
 @end
 
 @implementation NSData (MGMAddons)
+
+- (NSData *)resizeTo:(
 #if TARGET_OS_IPHONE
-- (NSData *)resizeTo:(CGSize)theSize {
+	CGSize
+#else
+	NSSize
+#endif
+	)theSize {
+#if TARGET_OS_IPHONE
 	UIImage *image = [[UIImage alloc] initWithData:self];
 #else
-- (NSData *)resizeTo:(NSSize)theSize {
 	NSImage *image = [[NSImage alloc] initWithData:self];
 #endif
 	if (image!=nil) {
@@ -1357,11 +1363,13 @@ NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *cont
 		float scaledWidth = theSize.width;
 		float scaledHeight = theSize.height;
 		
+		if (
 #if TARGET_OS_IPHONE
-		if (!CGSizeEqualToSize(size, theSize)) {
+		!CGSizeEqualToSize(size, theSize)
 #else
-		if (!NSEqualSizes(size, theSize)) {
+		!NSEqualSizes(size, theSize)
 #endif
+		) {
 			float widthFactor = theSize.width / size.width;
 			float heightFactor = theSize.height / size.height;
 			
@@ -1372,38 +1380,37 @@ NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *cont
 			
 			scaledWidth = size.width * scaleFactor;
 			scaledHeight = size.height * scaleFactor;
+		}
+		NSData *scaledData = self;
 #if TARGET_OS_IPHONE
+		CGSize newSize = CGSizeMake(scaledWidth, scaledHeight);
+		if (!CGSizeEqualToSize(newSize, CGSizeZero)) {
+			NSAutoreleasePool *pool = [NSAutoreleasePool new];
+			UIGraphicsBeginImageContext(newSize);
+			[image drawInRect:CGRectMake(0, 0, scaledWidth, scaledHeight)];
+			UIImage *newImage = [UIGraphicsGetImageFromCurrentImageContext() retain];
+			UIGraphicsEndImageContext();
+			[pool drain];
+			scaledData = UIImagePNGRepresentation(newImage);
+			[newImage release];
 		}
 #else
+		NSSize newSize = NSMakeSize(scaledWidth, scaledHeight);
+		if (!NSEqualSizes(newSize, NSZeroSize)) {
+			NSImage *newImage = [[NSImage alloc] initWithSize:newSize];
+			[newImage lockFocus];
+			NSGraphicsContext *graphicsContext = [NSGraphicsContext currentContext];
+			[graphicsContext setImageInterpolation:NSImageInterpolationHigh];
+			[graphicsContext setShouldAntialias:YES];
+			[image drawInRect:NSMakeRect(0, 0, scaledWidth, scaledHeight) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
+			[newImage unlockFocus];
+			scaledData = [newImage TIFFRepresentation];
+			[newImage release];
 		}
-#endif
-#if TARGET_OS_IPHONE
-		NSAutoreleasePool *pool = [NSAutoreleasePool new];
-		UIGraphicsBeginImageContext(CGSizeMake(scaledWidth, scaledHeight));
-		[image drawInRect:CGRectMake(0, 0, scaledWidth, scaledHeight)];
-		UIImage *newImage = [UIGraphicsGetImageFromCurrentImageContext() retain];
-		UIGraphicsEndImageContext();
-		[pool drain];
-		NSData *scaledData = UIImagePNGRepresentation(newImage);
-		[newImage release];
-#else
-		NSImage *newImage = [[NSImage alloc] initWithSize:NSMakeSize(scaledWidth, scaledHeight)];
-		[newImage lockFocus];
-		NSGraphicsContext *graphicsContext = [NSGraphicsContext currentContext];
-		[graphicsContext setImageInterpolation:NSImageInterpolationHigh];
-		[graphicsContext setShouldAntialias:YES];
-		[image drawInRect:NSMakeRect(0, 0, scaledWidth, scaledHeight) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
-		[newImage unlockFocus];
-		NSData *scaledData = [newImage TIFFRepresentation];
-		[newImage release];
 #endif
 		[image release];
 		return scaledData;
 	}
 	return nil;
-#if TARGET_OS_IPHONE
 }
-#else
-}
-#endif
 @end

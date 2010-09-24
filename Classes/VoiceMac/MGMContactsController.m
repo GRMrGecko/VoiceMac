@@ -42,6 +42,7 @@ NSString *MGMContactsWindowOpen = @"MGMContactsWindowOpen";
 	[self filterContacts];
 }
 - (void)dealloc {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	if (contactsWindow!=nil)
 		[contactsWindow close];
 	if (filterLock!=nil) {

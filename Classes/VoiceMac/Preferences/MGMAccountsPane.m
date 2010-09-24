@@ -82,7 +82,10 @@ NSString * const MGMLogout = @"Logout";
 - (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
 	if ([[tableColumn identifier] isEqual:@"username"]) {
 #if MGMSIPENABLED
-		MGMUser *user = [MGMUser userWithID:[[MGMUser users] objectAtIndex:row]];
+		NSArray *users = [MGMUser users];
+		if ([users count]>=row)
+			return nil;
+		MGMUser *user = [MGMUser userWithID:[users objectAtIndex:row]];
 		if ([[user settingForKey:MGMSAccountType] isEqual:MGMSSIP]) {
 			if ([user settingForKey:MGMSIPAccountFullName]!=nil && ![[user settingForKey:MGMSIPAccountFullName] isEqual:@""])
 				return [user settingForKey:MGMSIPAccountFullName];
@@ -91,6 +94,8 @@ NSString * const MGMLogout = @"Logout";
 		return [[MGMUser userNames] objectAtIndex:row];
 	} else if ([[tableColumn identifier] isEqual:@"state"]) {
 		NSDictionary *users = [MGMUser usersPlist];
+		if ([[users allKeys] count]>=row)
+			return nil;
 		return ([[users objectForKey:[[users allKeys] objectAtIndex:row]] boolValue] ? @"✓" : @"");
 	}
 	return nil;

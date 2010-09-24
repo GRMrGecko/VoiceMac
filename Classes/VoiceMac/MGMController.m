@@ -196,6 +196,7 @@ NSString * const MGMLoading = @"Loading...";
 	return badge;
 }
 - (void)setBadge:(int)theBadge forInstance:(MGMInstance *)theInstance {
+	if (quitting) return;
 	if (![theInstance isLoggedIn]) return;
 	if (theBadge==0)
 		[badgeValues removeObjectForKey:[theInstance userNumber]];
@@ -247,8 +248,7 @@ NSString * const MGMLoading = @"Loading...";
 	return YES;
 }
 - (void)updateWindowMenu {
-	if (quitting)
-		return;
+	if (quitting) return;
 	int splitterIndex = 0;
 	for (int i=0; i<[windowMenu numberOfItems]; i++) {
 		if (splitterIndex!=0) {
@@ -274,6 +274,7 @@ NSString * const MGMLoading = @"Loading...";
 	}
 }
 - (IBAction)showUserWindow:(id)sender {
+	if (quitting) return;
 	MGMContactsController *contactsController = [contactsControllers objectAtIndex:[sender tag]];
 	[contactsController showContactsWindow];
 }

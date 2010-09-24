@@ -273,6 +273,7 @@ const float updateTimeInterval = 300.0;
 }
 
 - (void)windowDidBecomeKey:(NSNotification *)notification {
+	if ([messagesTable selectedRow]==-1) return;
 	[(MGMVoiceUser *)[[[SMSMessages objectAtIndex:[messagesTable selectedRow]] instance] delegate] windowDidBecomeKey:notification];
 }
 - (BOOL)windowShouldClose:(id)sender {
@@ -295,6 +296,7 @@ const float updateTimeInterval = 300.0;
 	return YES;
 }
 - (void)windowWillClose:(NSNotification *)notification {
+	[SMSWindow setDelegate:nil];
 	SMSWindow = nil;
 	splitView = nil;
 	messageView = nil;

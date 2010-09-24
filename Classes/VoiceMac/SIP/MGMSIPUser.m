@@ -74,6 +74,7 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 	}
 	if (contacts!=nil) {
 		[contacts stop];
+		[contacts setDelegate:nil];
 		[contacts release];
 	}
 	if (user!=nil)

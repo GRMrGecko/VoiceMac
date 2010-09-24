@@ -269,11 +269,17 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 				CFRelease(storeRunLoop);
 			}
 		}
+		NSNotificationCenter *wsNotifications = [[NSWorkspace sharedWorkspace] notificationCenter];
+		[wsNotifications addObserver:self selector:@selector(computerSleep) name:NSWorkspaceWillSleepNotification object:nil];
+		[wsNotifications addObserver:self selector:@selector(computerWake) name:NSWorkspaceDidWakeNotification object:nil];
 #endif
 	}
 	return self;
 }
 - (void)dealloc {
+#if !TARGET_OS_IPHONE
+	[[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
+#endif
 	[self stop];
 	if (storeRunLoop!=NULL)
 		CFRunLoopRemoveSource(CFRunLoopGetCurrent(), storeRunLoop, kCFRunLoopDefaultMode);
@@ -609,6 +615,23 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	[self stop];
 }
 
+- (void)computerSleep {
+	restartAccounts = [accounts copy];
+	[self stopBackground];
+}
+- (void)computerWake {
+	if (restartAccounts!=nil) {
+		for (int i=0; i<[restartAccounts count]; i++) {
+			if (![accounts containsObject:[restartAccounts objectAtIndex:i]])
+				[accounts addObject:[restartAccounts objectAtIndex:i]];
+		}
+		[restartAccounts release];
+		restartAccounts = nil;
+	}
+	
+	[self start];
+}
+
 - (void)registerThread:(pj_thread_desc *)thePJThreadDesc {
 	if (!pj_thread_is_registered()) {
 		pj_thread_t *PJThread;
@@ -817,6 +840,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	pj_thread_desc PJThreadDesc;
 	[self registerThread:&PJThreadDesc];
 	
+	pjsua_set_null_snd_dev();
 	pj_status_t status = pjsua_set_snd_dev(theInputDevice, theOutputDevice);
 	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	return (status==PJ_SUCCESS);

@@ -61,10 +61,8 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 }
 - (void)dealloc {
 	[super dealloc];
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if (user!=nil)
-		[user release];
 	if (instance!=nil) {
+		[instance setDelegate:nil];
 		[instance stop];
 		[instance release];
 	}
@@ -80,6 +78,8 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 		[callTimer invalidate];
 		[callTimer release];
 	}
+	if (user!=nil)
+		[user release];
 }
 
 - (void)registerSettings {
