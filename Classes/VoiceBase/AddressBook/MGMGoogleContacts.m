@@ -10,6 +10,7 @@
 #import "MGMContactsProtocol.h"
 #import "MGMInstance.h"
 #import "MGMAddons.h"
+#import "MGMXML.h"
 #import <MGMUsers/MGMUsers.h>
 
 NSString * const MGMGCAuthenticationURL = @"https://www.google.com/accounts/ClientLogin";
@@ -145,7 +146,7 @@ const BOOL MGMGoogleContactsInvisible = YES;
 	}
 	if (contacts!=nil) [contacts release];
 	contacts = [NSMutableArray new];
-	NSXMLElement *XML = [[[[NSXMLDocument alloc] initWithData:[theInfo objectForKey:MGMConnectionData] options:NSXMLDocumentTidyXML error:nil] autorelease] rootElement];
+	MGMXMLElement *XML = [(MGMXMLDocument *)[[[MGMXMLDocument alloc] initWithData:[theInfo objectForKey:MGMConnectionData] options:MGMXMLDocumentTidyXML error:nil] autorelease] rootElement];
 	contactEntries = [[XML elementsForName:@"entry"] retain];
 	contactsIndex=0;
 	[self continueContacts];
@@ -164,7 +165,7 @@ const BOOL MGMGoogleContactsInvisible = YES;
 }
 - (void)parseContact {
 	if (shouldStop) return;
-	NSXMLElement *entry = [contactEntries objectAtIndex:contactsIndex];
+	MGMXMLElement *entry = [contactEntries objectAtIndex:contactsIndex];
 	NSArray *titles = [entry elementsForName:@"title"];
 	NSString *name = @"";
 	if ([titles count]!=0)
@@ -180,14 +181,14 @@ const BOOL MGMGoogleContactsInvisible = YES;
 	NSData *image = nil;
 	if ([phones count]>0) {
 		if (contactPhoto!=nil) {
-			image = [contactPhoto resizeTo:NSMakeSize(MGMABPhotoSize, MGMABPhotoSize)];
+			image = [contactPhoto resizeTo:MGMABPhotoSize];
 			[contactPhoto release];
 			contactPhoto = nil;
 		}
 	}
 	for (int p=0; p<[phones count]; p++) {
 		if (shouldStop) break;
-		NSXMLElement *phone = [phones objectAtIndex:p];
+		MGMXMLElement *phone = [phones objectAtIndex:p];
 		NSMutableDictionary *contact = [NSMutableDictionary dictionary];
 		[contact setObject:name forKey:MGMCName];
 		[contact setObject:company forKey:MGMCCompany];
@@ -196,9 +197,9 @@ const BOOL MGMGoogleContactsInvisible = YES;
 		else
 			[contact setObject:[[phone stringValue] phoneFormat] forKey:MGMCNumber];
 		NSString *label = @"";
-		NSXMLNode *labelXML = [phone attributeForName:@"label"];
+		MGMXMLNode *labelXML = [phone attributeForName:@"label"];
 		if (labelXML==nil) {
-			NSXMLNode *rel = [phone attributeForName:@"rel"];
+			MGMXMLNode *rel = [phone attributeForName:@"rel"];
 			if (rel!=nil) {
 				NSString *string = [rel stringValue];
 				NSRange range = [string rangeOfString:@"#"];
@@ -219,13 +220,13 @@ const BOOL MGMGoogleContactsInvisible = YES;
 - (void)continueContacts {
 	for (; contactsIndex<[contactEntries count]; contactsIndex++) {
 		if (shouldStop) break;
-		NSXMLElement *entry = [contactEntries objectAtIndex:contactsIndex];
+		MGMXMLElement *entry = [contactEntries objectAtIndex:contactsIndex];
 		NSArray *phones = [entry elementsForName:@"gd:phoneNumber"];
 		if ([phones count]!=0) {
 			NSArray *links = [entry elementsForName:@"link"];
 			BOOL loadingPhoto = NO;
 			for (int i=0; i<[links count]; i++) {
-				NSXMLNode *rel = [[links objectAtIndex:i] attributeForName:@"rel"];
+				MGMXMLNode *rel = [(MGMXMLElement *)[links objectAtIndex:i] attributeForName:@"rel"];
 				if (rel!=nil) {
 					if ([[rel stringValue] containsString:@"#photo"]) {
 						NSString *url = [[[links objectAtIndex:i] attributeForName:@"href"] stringValue];
@@ -296,7 +297,7 @@ const BOOL MGMGoogleContactsInvisible = YES;
 	NSLog(@"MGMGoogleContacts Error: %@", theError);
 }
 - (void)groupsDidFinish:(NSDictionary *)theInfo {
-	NSXMLElement *XML = [[[[NSXMLDocument alloc] initWithData:[theInfo objectForKey:MGMConnectionData] options:NSXMLDocumentTidyXML error:nil] autorelease] rootElement];
+	MGMXMLElement *XML = [(MGMXMLDocument *)[[[MGMXMLDocument alloc] initWithData:[theInfo objectForKey:MGMConnectionData] options:MGMXMLDocumentTidyXML error:nil] autorelease] rootElement];
 	NSLog(@"%@", XML);
 	gettingGroups = NO;
 }

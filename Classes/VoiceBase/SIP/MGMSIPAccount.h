@@ -7,7 +7,11 @@
 //
 
 #if MGMSIPENABLED
+#if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+#else
 #import <Cocoa/Cocoa.h>
+#endif
 
 extern NSString * const MGMSIPAccountFullName;
 extern NSString * const MGMSIPAccountUserName;

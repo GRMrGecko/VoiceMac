@@ -204,12 +204,10 @@ NSString * const MGMNoAuthor = @"No Author Found";
 	}
 	[self reload:soundName];
 }
-- (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finishedPlaying {
-	if (finishedPlaying) {
-		if (soundPlayer!=nil) {
-			[soundPlayer release];
-			soundPlayer = nil;
-		}
+- (void)soundDidFinishPlaying:(MGMSound *)theSound {
+	if (soundPlayer!=nil) {
+		[soundPlayer release];
+		soundPlayer = nil;
 	}
 }
 - (IBAction)stopSound:(id)sender {

@@ -9,6 +9,7 @@
 #import "MGMInbox.h"
 #import "MGMInstance.h"
 #import "MGMAddons.h"
+#import "MGMXML.h"
 #import <MGMUsers/MGMUsers.h>
 
 NSString * const MGMIDelegate = @"delegate";
@@ -252,15 +253,15 @@ const BOOL MGMInboxInvisible = YES;
 	}
 }
 - (void)requestDidFinish:(NSDictionary *)theInfo {
-	NSXMLElement *XML = [[[[NSXMLDocument alloc] initWithData:[theInfo objectForKey:MGMConnectionData] options:NSXMLDocumentTidyXML error:nil] autorelease] rootElement];
+	MGMXMLElement *XML = [(MGMXMLDocument *)[[[MGMXMLDocument alloc] initWithData:[theInfo objectForKey:MGMConnectionData] options:MGMXMLDocumentTidyXML error:nil] autorelease] rootElement];
 	NSDictionary *infoDic = [[[[XML elementsForName:@"json"] objectAtIndex:0] stringValue] parseJSON];
 	NSDictionary *messagesInfo = [infoDic objectForKey:@"messages"];
 	NSArray *messagesInfoKeys = [messagesInfo allKeys];
-	NSXMLElement *html = [[[[NSXMLDocument alloc] initWithXMLString:[[[XML elementsForName:@"html"] objectAtIndex:0] stringValue] options:NSXMLDocumentTidyHTML error:nil] autorelease] rootElement];
-	NSArray *messages = [(NSXMLElement *)[html childAtIndex:1] elementsForName:@"div"];
+	MGMXMLElement *html = [(MGMXMLDocument *)[[[MGMXMLDocument alloc] initWithXMLString:[[[XML elementsForName:@"html"] objectAtIndex:0] stringValue] options:MGMXMLDocumentTidyHTML error:nil] autorelease] rootElement];
+	NSArray *messages = [(MGMXMLElement *)[html childAtIndex:0] elementsForName:@"div"];
 	NSMutableArray *info = [NSMutableArray array];
 	for (unsigned int i=0; i<[messages count]; i++) {
-		NSXMLElement *message = [messages objectAtIndex:i];
+		MGMXMLElement *message = [messages objectAtIndex:i];
 		NSString *messageID = [[message attributeForName:MGMIID] stringValue];
 		if (messageID) {
 			for (unsigned int m=0; m<[messagesInfoKeys count]; m++) {
@@ -291,7 +292,7 @@ const BOOL MGMInboxInvisible = YES;
 								[messagesArray addObject:[self parseMessageWithHTML:messageString info:thisInfo]];
 							} else {
 								m++;
-								NSArray *moreMessages = [(NSXMLElement *)[messagesXML objectAtIndex:m] elementsForName:@"div"];
+								NSArray *moreMessages = [(MGMXMLElement *)[messagesXML objectAtIndex:m] elementsForName:@"div"];
 								for (unsigned int ms=0; ms<[moreMessages count]; ms++) {
 									NSAutoreleasePool *pool = [NSAutoreleasePool new];
 									NSString *messageString = [[moreMessages objectAtIndex:ms] XMLString];

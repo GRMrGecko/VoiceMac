@@ -7,7 +7,11 @@
 //
 
 #if MGMSIPENABLED
+#if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+#else
 #import <Cocoa/Cocoa.h>
+#endif
 #import <pjsua-lib/pjsua.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
@@ -97,7 +101,9 @@ typedef enum {
 	
 	NSMutableArray *accounts;
 	NSMutableArray *restartAccounts;
+#if !TARGET_OS_IPHONE
 	NSArray *audioDevices;
+#endif
 	
 	int ringbackCount;
 	
@@ -143,10 +149,12 @@ typedef enum {
 - (float)micVolume;
 - (void)setMicVolume:(float)theVolume;
 
+#if !TARGET_OS_IPHONE
 - (BOOL)setInputSoundDevice:(int)theInputDevice outputSoundDevice:(int)theOutputDevice;
 - (BOOL)stopSound;
 - (void)updateAudioDevices;
 - (NSArray *)audioDevices;
+#endif
 
 - (void)receivedNewCall:(MGMSIPCall *)theCall;
 - (void)startingNewCall:(MGMSIPCall *)theCall;

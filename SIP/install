@@ -24,17 +24,78 @@ X86_64LDFLAGS="-arch x86_64"
 FINALPATH="${PWD}/opt"
 
 if [ "$1" = "clean" ]; then
-	echo "Cleaning PjProject"
-	rm -fR pjproject-i386 pjproject-x86_64 pjproject-ppc
+	echo "Cleaning PJProject"
+	rm -fR pjproject-i386 pjproject-x86_64 pjproject-ppc pjproject-ios pjproject-simulator
+fi
+if [ "$1" = "ios" ]; then
+	IOSCFLAGS="-miphoneos-version-min=3.1"
+	IOSPATH="${PWD}/opt-ios"
+	SIMULATORPATH="${PWD}/opt-simulator"
+	
+	echo "Copying PJProject"
+	PJPROJECTNAME="pjproject"
+	cp -R ${PJPROJECTNAME} ${PJPROJECTNAME}-ios
+	echo "#define PJ_CONFIG_IPHONE 1" > ${PJPROJECTNAME}-ios/pjlib/include/pj/config_site.h
+	echo "#include <pj/config_site_sample.h>" >> ${PJPROJECTNAME}-ios/pjlib/include/pj/config_site.h
+	
+	OLDDIR="${PWD}"
+	cd ${PJPROJECTNAME}-ios
+	patch -p0 < "${OLDDIR}/mips_test.patch"
+	cd "${OLDDIR}"
+	cp -R ${PJPROJECTNAME}-ios ${PJPROJECTNAME}-simulator
+	
+	echo "Configuring PJProject"
+	cd ${PJPROJECTNAME}-ios
+	CFLAGS="${IOSCFLAGS}" CFLAGS="${IOSCFLAGS}" ./configure-iphone --prefix="${IOSPATH}"
+	cd ../${PJPROJECTNAME}-simulator
+	DEVPATH="/Developer/Platforms/iPhoneSimulator.platform/Developer" CC="/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.0" CFLAGS="${IOSCFLAGS}" CFLAGS="${IOSCFLAGS}" ./configure-iphone --prefix="${SIMULATORPATH}"
+	cd ../
+	
+	echo "Compiling PJProject"
+	cd ${PJPROJECTNAME}-ios
+	make dep
+	make
+	cd ../${PJPROJECTNAME}-simulator
+	make dep
+	make
+	cd ../
+	
+	echo "Installing PJProject"
+	cd ${PJPROJECTNAME}-ios
+	make install
+	cd ../${PJPROJECTNAME}-simulator
+	make install
+	cd ../
+	
+	echo "Making PJProject Universal"
+	mkdir -p "${FINALPATH}/lib/pkgconfig"
+	cp -R "${PPCPATH}/include" "${FINALPATH}/include"
+	lipo -create "${IOSPATH}/lib/libg7221codec-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libg7221codec-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libg7221codec-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libgsmcodec-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libgsmcodec-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libgsmcodec-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libilbccodec-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libilbccodec-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libilbccodec-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libmilenage-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libmilenage-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libmilenage-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libpj-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libpj-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libpj-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libpjlib-util-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libpjlib-util-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libpjlib-util-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libpjmedia-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libpjmedia-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libpjmedia-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libpjmedia-audiodev-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libpjmedia-audiodev-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libpjmedia-audiodev-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libpjmedia-codec-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libpjmedia-codec-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libpjmedia-codec-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libpjnath-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libpjnath-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libpjnath-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libpjsip-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libpjsip-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libpjsip-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libpjsip-simple-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libpjsip-simple-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libpjsip-simple-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libpjsip-ua-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libpjsip-ua-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libpjsip-ua-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libpjsua-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libpjsua-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libpjsua-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libresample-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libresample-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libresample-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libspeex-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libspeex-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libspeex-ios-universal.a"
+	lipo -create "${IOSPATH}/lib/libsrtp-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libsrtp-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libsrtp-ios-universal.a"
 fi
 if [ "$1" = "" ]; then
-	echo "Copying PjProject"
+	echo "Copying PJProject"
 	PJPROJECTNAME="pjproject"
 	cp -R ${PJPROJECTNAME} ${PJPROJECTNAME}-ppc
 	cp -R ${PJPROJECTNAME}-ppc ${PJPROJECTNAME}-i386
 	cp -R ${PJPROJECTNAME}-ppc ${PJPROJECTNAME}-x86_64
 	
-	echo "Configuring PjProject"
+	echo "Configuring PJProject"
 	cd ${PJPROJECTNAME}-ppc
 	LDFLAGS="${PPCLDFLAGS}" CFLAGS="${PPCFLAGS}" CXXFLAGS="${PPCFLAGS}" ./configure --prefix="${PPCPATH}" --host="${PPCHOST}" --disable-shared --enable-static
 	cd ../${PJPROJECTNAME}-i386
@@ -43,7 +104,7 @@ if [ "$1" = "" ]; then
 	LDFLAGS="${X86_64LDFLAGS}" CFLAGS="${X86_64FLAGS}" CXXFLAGS="${X86_64FLAGS}" ./configure --prefix="${X86_64PATH}" --host="${X86_64HOST}" --disable-shared --enable-static
 	cd ../
 	
-	echo "Compiling PjProject"
+	echo "Compiling PJProject"
 	cd ${PJPROJECTNAME}-ppc
 	make dep
 	make
@@ -55,7 +116,7 @@ if [ "$1" = "" ]; then
 	make
 	cd ../
 	
-	echo "Installing PjProject"
+	echo "Installing PJProject"
 	cd ${PJPROJECTNAME}-ppc
 	make install
 	cd ../${PJPROJECTNAME}-i386
@@ -64,7 +125,7 @@ if [ "$1" = "" ]; then
 	make install
 	cd ../
 	
-	echo "Making PjProject Universal"
+	echo "Making PJProject Universal"
 	mkdir -p "${FINALPATH}/lib/pkgconfig"
 	cp -R "${PPCPATH}/include" "${FINALPATH}/include"
 	lipo -create "${PPCPATH}/lib/libg7221codec-powerpc-apple-darwin8.a" "${I386PATH}/lib/libg7221codec-i386-apple-darwin8.a" "${X86_64PATH}/lib/libg7221codec-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libg7221codec-universal.a"

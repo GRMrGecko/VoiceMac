@@ -7,7 +7,7 @@
 //
 
 #if TARGET_OS_IPHONE
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #else
 #import <Cocoa/Cocoa.h>
 #endif
@@ -26,7 +26,12 @@ extern NSString * const MGMCContactID;
 
 extern NSString * const MGMCGoogleContactsUser;
 
-extern const int MGMABPhotoSize;
+extern const float MGMABPhotoSizePX;
+#if TARGET_OS_IPHONE
+#define MGMABPhotoSize CGSizeMake(MGMABPhotoSizePX, MGMABPhotoSizePX)
+#else
+#define MGMABPhotoSize NSMakeSize(MGMABPhotoSizePX, MGMABPhotoSizePX)
+#endif
 
 @class MGMUser;
 

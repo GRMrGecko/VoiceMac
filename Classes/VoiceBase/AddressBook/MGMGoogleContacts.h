@@ -6,7 +6,11 @@
 //  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
 //
 
+#if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+#else
 #import <Cocoa/Cocoa.h>
+#endif
 
 @class MGMUser, MGMURLConnectionManager;
 @protocol MGMContactsDelegate, MGMContactsOwnerDelegate;

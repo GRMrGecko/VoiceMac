@@ -7,7 +7,7 @@
 //
 
 #if TARGET_OS_IPHONE
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #else
 #import <Cocoa/Cocoa.h>
 #endif
@@ -18,9 +18,7 @@
 @interface NSString (MGMAddons)
 + (NSString *)stringWithSeconds:(int)theSeconds;
 
-#if !TARGET_OS_IPHONE
 - (NSString *)flattenHTML;
-#endif
 - (NSString *)replace:(NSString *)targetString with:(NSString *)replaceString;
 - (BOOL)containsString:(NSString *)string;
 
@@ -40,11 +38,11 @@
 
 - (NSString *)addPercentEscapes;
 
-- (NSString *)truncateForWidth:(double)theWidth attributes:(NSDictionary *)theAttributes;
-
 #if !TARGET_OS_IPHONE
-NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *context);
+- (NSString *)truncateForWidth:(double)theWidth attributes:(NSDictionary *)theAttributes;
 #endif
+
+NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *context);
 
 - (BOOL)isIPAddress;
 
@@ -56,7 +54,7 @@ NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *cont
 
 @interface NSData (MGMAddons)
 #if TARGET_OS_IPHONE
-
+- (NSData *)resizeTo:(CGSize)theSize;
 #else
 - (NSData *)resizeTo:(NSSize)theSize;
 #endif

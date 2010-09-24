@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <MGMUsers/MGMUsers.h>
 
-@class MGMThemeManager, WebView;
+@class MGMSound, MGMThemeManager, WebView;
 
 @interface MGMSoundsPane : MGMPreferencesPane {
 	MGMThemeManager *themeManager;
@@ -37,7 +37,7 @@
 	IBOutlet NSPopUpButton *SIPSound5PopUp;
 	IBOutlet NSButton *SIPSound5AuthorButton;
 	NSMutableDictionary *sounds;
-	NSSound *soundPlayer;
+	MGMSound *soundPlayer;
 	
 	IBOutlet NSWindow *browserWindow;
 	IBOutlet WebView *browser;

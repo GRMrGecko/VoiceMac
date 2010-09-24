@@ -63,21 +63,21 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 }
 - (void)dealloc {
 	[super dealloc];
+	if (calls!=nil) {
+		[calls removeAllObjects];
+		[calls release];
+	}
+	if (account!=nil) {
+		[account setDelegate:nil];
+		[account logout];
+		[account release];
+	}
 	if (contacts!=nil) {
 		[contacts stop];
 		[contacts release];
 	}
 	if (user!=nil)
 		[user release];
-	if (account!=nil) {
-		[account setDelegate:nil];
-		[account logout];
-		[account release];
-	}
-	if (calls!=nil) {
-		[calls removeAllObjects];
-		[calls release];
-	}
 }
 
 - (void)registerSettings {

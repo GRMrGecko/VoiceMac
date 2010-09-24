@@ -12,7 +12,9 @@
 #import "MGMSIPCall.h"
 #import "MGMAddons.h"
 #import <SystemConfiguration/SystemConfiguration.h>
+#if !TARGET_OS_IPHONE
 #import <CoreAudio/CoreAudio.h>
+#endif
 
 NSString * const MGMSIPCopyright = @"Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/";
 
@@ -206,6 +208,7 @@ static void MGMSIPDetectedNAT(const pj_stun_nat_detect_result *result) {
 	[pool drain];
 }
 
+#if !TARGET_OS_IPHONE
 static void MGMNetworkNotification(SCDynamicStoreRef store, NSArray *changedKeys, void *info) {
 	for (int i=0; i<[changedKeys count]; ++i) {
 		NSString *key = [changedKeys objectAtIndex:i];
@@ -228,6 +231,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	[pool drain];
 	return noErr;
 }
+#endif
 
 @interface MGMSIP (MGMPrivate)
 
@@ -249,6 +253,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		accounts = [NSMutableArray new];
 		shouldRestart = NO;
 		
+#if !TARGET_OS_IPHONE
 		store = SCDynamicStoreCreate(kCFAllocatorDefault, CFBundleGetIdentifier(CFBundleGetMainBundle()), (SCDynamicStoreCallBack)MGMNetworkNotification, NULL);
 		if (!store) {
 			NSLog(@"Unable to create store for system configuration %s", SCErrorString(SCError()));
@@ -264,6 +269,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 				CFRelease(storeRunLoop);
 			}
 		}
+#endif
 	}
 	return self;
 }
@@ -359,8 +365,6 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		[pool drain];
 		return;
 	}
-	pj_thread_desc PJThreadDesc;
-	[self registerThread:&PJThreadDesc];
 	
 	PJPool = pjsua_pool_create("MGMSIP-pjsua", 1000, 1000);
 	
@@ -393,6 +397,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	
 	sipConfig.max_calls = MGMSIPMaxCalls;
 	
+#if !TARGET_OS_IPHONE
 	if ([defaults boolForKey:MGMSIPNameServersEnabled]) {
 		SCDynamicStoreRef dynamicStore = SCDynamicStoreCreate(NULL, CFBundleGetIdentifier(CFBundleGetMainBundle()), NULL, NULL);
 		CFPropertyListRef DNSSettings = SCDynamicStoreCopyValue(dynamicStore, CFSTR("State:/Network/Global/DNS"));
@@ -409,6 +414,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 				sipConfig.nameserver[i] = [[nameServers objectAtIndex:i] PJString];
 		}
 	}
+#endif
 	
 	if ([defaults objectForKey:MGMSIPOutboundProxy]!=nil && ![[defaults objectForKey:MGMSIPOutboundProxy] isEqual:@""]) {
 		sipConfig.outbound_proxy_cnt = 1;
@@ -428,7 +434,6 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	status = pjsua_init(&sipConfig, &loggingConfig, &mediaConfig);
 	if (status!=PJ_SUCCESS) {
 		NSLog(@"Error initializing PJSUA");
-		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 		[self stop];
 		[lock unlock];
 		[pool drain];
@@ -440,7 +445,6 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	status = pjmedia_tonegen_create2(PJPool, &name, mediaConfig.clock_rate, mediaConfig.channel_count, samplesPerFrame, 16, PJMEDIA_TONEGEN_LOOP, &ringbackPort);
 	if (status!=PJ_SUCCESS) {
 		NSLog(@"Error creating ringback tones");
-		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 		[self stop];
 		[lock unlock];
 		[pool drain];
@@ -459,7 +463,6 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	status = pjsua_conf_add_port(PJPool, ringbackPort, &ringbackSlot);
 	if (status!=PJ_SUCCESS) {
 		NSLog(@"Error adding ringback tone");
-		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 		[self stop];
 		[lock unlock];
 		[pool drain];
@@ -474,7 +477,6 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	status = pjsua_transport_create(PJSIP_TRANSPORT_UDP, &transportConfig, &UDPTransport);
 	if (status!=PJ_SUCCESS) {
 		NSLog(@"Error creating transport");
-		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 		[self stop];
 		[lock unlock];
 		[pool drain];
@@ -497,7 +499,6 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	status = pjsua_start();
 	if (status!=PJ_SUCCESS) {
 		NSLog(@"Error starting PJSUA");
-		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 		[self stop];
 		[lock unlock];
 		[pool drain];
@@ -508,10 +509,12 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	
 	pjsua_conf_adjust_tx_level(0, [defaults floatForKey:MGMSIPVolume]);
 	pjsua_conf_adjust_rx_level(0, [defaults floatForKey:MGMSIPMicVolume]);
+#if !TARGET_OS_IPHONE
 	AudioHardwareAddPropertyListener(kAudioHardwarePropertyDevices, &MGMAudioDevicesChanged, self);
 	AudioHardwareAddPropertyListener(kAudioHardwarePropertyDefaultInputDevice, &MGMAudioDevicesChanged, self);
 	AudioHardwareAddPropertyListener(kAudioHardwarePropertyDefaultOutputDevice, &MGMAudioDevicesChanged, self);
 	[self updateAudioDevices];
+#endif
 	
 	[accounts makeObjectsPerformSelector:@selector(login)];
 	
@@ -519,7 +522,6 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	
 	NSLog(@"MGMSIP Started");
 	
-	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	[lock unlock];
 	[pool drain];
 }
@@ -563,9 +565,11 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	
 	state = MGMSIPStoppedState;
 	
+#if !TARGET_OS_IPHONE
 	AudioHardwareRemovePropertyListener(kAudioHardwarePropertyDevices, &MGMAudioDevicesChanged);
 	AudioHardwareRemovePropertyListener(kAudioHardwarePropertyDefaultInputDevice, &MGMAudioDevicesChanged);
 	AudioHardwareRemovePropertyListener(kAudioHardwarePropertyDefaultOutputDevice, &MGMAudioDevicesChanged);
+#endif
 	
 	if (delegate!=nil && [delegate respondsToSelector:@selector(SIPStopped)]) [delegate SIPStopped];
 	
@@ -767,6 +771,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 
+#if !TARGET_OS_IPHONE
 - (BOOL)setInputSoundDevice:(int)theInputDevice outputSoundDevice:(int)theOutputDevice {
 	if (state!=MGMSIPStartedState)
 		return NO;
@@ -958,6 +963,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 - (NSArray *)audioDevices {
 	return audioDevices;
 }
+#endif
 
 - (void)receivedNewCall:(MGMSIPCall *)theCall {
 	if (delegate!=nil && [delegate respondsToSelector:@selector(receivedNewCall:)]) [delegate receivedNewCall:theCall];

@@ -41,6 +41,72 @@
 		2A11730912456C4F00D119B5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A11730812456C4F00D119B5 /* AudioToolbox.framework */; };
 		2A11730D12456C5F00D119B5 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A11730C12456C5F00D119B5 /* AudioUnit.framework */; };
 		2A11731112456C6D00D119B5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A11731012456C6D00D119B5 /* SystemConfiguration.framework */; };
+		2A1E9723124D174200D3BEAE /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1E9722124D174200D3BEAE /* CoreAudio.framework */; };
+		2A1E9754124D187500D3BEAE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1E9753124D187500D3BEAE /* SystemConfiguration.framework */; };
+		2A487CA0124BE0AB00E8EE4E /* MGMXMLAddons.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C93124BE0AB00E8EE4E /* MGMXMLAddons.h */; };
+		2A487CA1124BE0AB00E8EE4E /* MGMXMLAddons.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C94124BE0AB00E8EE4E /* MGMXMLAddons.m */; };
+		2A487CA2124BE0AB00E8EE4E /* MGMXMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C95124BE0AB00E8EE4E /* MGMXMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CA3124BE0AB00E8EE4E /* MGMXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C96124BE0AB00E8EE4E /* MGMXMLDocument.m */; };
+		2A487CA4124BE0AB00E8EE4E /* MGMXMLDTD.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C97124BE0AB00E8EE4E /* MGMXMLDTD.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CA5124BE0AB00E8EE4E /* MGMXMLDTD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C98124BE0AB00E8EE4E /* MGMXMLDTD.m */; };
+		2A487CA6124BE0AB00E8EE4E /* MGMXMLDTDNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C99124BE0AB00E8EE4E /* MGMXMLDTDNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CA7124BE0AB00E8EE4E /* MGMXMLDTDNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C9A124BE0AB00E8EE4E /* MGMXMLDTDNode.m */; };
+		2A487CA8124BE0AB00E8EE4E /* MGMXMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9B124BE0AB00E8EE4E /* MGMXMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CA9124BE0AB00E8EE4E /* MGMXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C9C124BE0AB00E8EE4E /* MGMXMLElement.m */; };
+		2A487CAA124BE0AB00E8EE4E /* MGMXMLNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9D124BE0AB00E8EE4E /* MGMXMLNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CAB124BE0AB00E8EE4E /* MGMXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C9E124BE0AB00E8EE4E /* MGMXMLNode.m */; };
+		2A487CAC124BE0AB00E8EE4E /* MGMXMLNodeOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9F124BE0AB00E8EE4E /* MGMXMLNodeOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CAF124BE0C400E8EE4E /* MGMXML.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487CAE124BE0C400E8EE4E /* MGMXML.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CB9124BE1E600E8EE4E /* MGMXMLAddons.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C94124BE0AB00E8EE4E /* MGMXMLAddons.m */; };
+		2A487CBA124BE1E600E8EE4E /* MGMXMLDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C96124BE0AB00E8EE4E /* MGMXMLDocument.m */; };
+		2A487CBB124BE1E600E8EE4E /* MGMXMLDTD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C98124BE0AB00E8EE4E /* MGMXMLDTD.m */; };
+		2A487CBC124BE1E600E8EE4E /* MGMXMLDTDNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C9A124BE0AB00E8EE4E /* MGMXMLDTDNode.m */; };
+		2A487CBD124BE1E600E8EE4E /* MGMXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C9C124BE0AB00E8EE4E /* MGMXMLElement.m */; };
+		2A487CBE124BE1E600E8EE4E /* MGMXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C9E124BE0AB00E8EE4E /* MGMXMLNode.m */; };
+		2A487CC1124BE22E00E8EE4E /* MGMAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171A51245676A00D119B5 /* MGMAddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC2124BE22E00E8EE4E /* MGMContacts.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171A71245676A00D119B5 /* MGMContacts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC3124BE22E00E8EE4E /* MGMContactsProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171A91245676A00D119B5 /* MGMContactsProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC4124BE22E00E8EE4E /* MGMGoogleContacts.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171AB1245676A00D119B5 /* MGMGoogleContacts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC5124BE22E00E8EE4E /* MGMAddons.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171AD1245676A00D119B5 /* MGMAddons.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC6124BE22E00E8EE4E /* MGMInbox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171AF1245676A00D119B5 /* MGMInbox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC7124BE22E00E8EE4E /* MGMInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B11245676A00D119B5 /* MGMInstance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC8124BE22E00E8EE4E /* MGMThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B31245676A00D119B5 /* MGMThemeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC9124BE22E00E8EE4E /* MGMSIP.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B61245676A00D119B5 /* MGMSIP.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CCA124BE22E00E8EE4E /* MGMSIPAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B81245676A00D119B5 /* MGMSIPAccount.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CCB124BE22E00E8EE4E /* MGMSIPCall.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BA1245676A00D119B5 /* MGMSIPCall.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CCC124BE22E00E8EE4E /* MGMSIPURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BC1245676A00D119B5 /* MGMSIPURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CCD124BE22E00E8EE4E /* MGMXML.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487CAE124BE0C400E8EE4E /* MGMXML.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CCE124BE22E00E8EE4E /* MGMXMLAddons.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C93124BE0AB00E8EE4E /* MGMXMLAddons.h */; };
+		2A487CCF124BE22E00E8EE4E /* MGMXMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C95124BE0AB00E8EE4E /* MGMXMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CD0124BE22E00E8EE4E /* MGMXMLDTD.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C97124BE0AB00E8EE4E /* MGMXMLDTD.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CD1124BE22E00E8EE4E /* MGMXMLDTDNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C99124BE0AB00E8EE4E /* MGMXMLDTDNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CD2124BE22E00E8EE4E /* MGMXMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9B124BE0AB00E8EE4E /* MGMXMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CD3124BE22E00E8EE4E /* MGMXMLNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9D124BE0AB00E8EE4E /* MGMXMLNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CD4124BE22E00E8EE4E /* MGMXMLNodeOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9F124BE0AB00E8EE4E /* MGMXMLNodeOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CD5124BE22E00E8EE4E /* VoiceBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BE1245676A00D119B5 /* VoiceBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487D0D124BE40700E8EE4E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A487CF0124BE3E600E8EE4E /* libxml2.dylib */; };
+		2A487D0F124BE41B00E8EE4E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A487D0E124BE41B00E8EE4E /* libxml2.dylib */; };
+		2A77133C124C4CE200D68042 /* MGMSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A77133A124C4CE200D68042 /* MGMSound.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A77133D124C4CE200D68042 /* MGMSound.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A77133B124C4CE200D68042 /* MGMSound.m */; };
+		2A771340124C4D2800D68042 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A77133F124C4D2800D68042 /* AudioToolbox.framework */; };
+		2A771344124C4F9A00D68042 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A771343124C4F9A00D68042 /* AVFoundation.framework */; };
+		2A7713BD124C6A4900D68042 /* MGMSound.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A77133B124C4CE200D68042 /* MGMSound.m */; };
+		2A7713BF124C6A5B00D68042 /* MGMSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A77133A124C4CE200D68042 /* MGMSound.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2AE6EE621249DA790006B5AC /* MGMAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171A61245676A00D119B5 /* MGMAddressBook.m */; };
+		2AE6EE631249DA790006B5AC /* MGMContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171A81245676A00D119B5 /* MGMContacts.m */; };
+		2AE6EE641249DA790006B5AC /* MGMContactsProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171AA1245676A00D119B5 /* MGMContactsProtocol.m */; };
+		2AE6EE651249DA790006B5AC /* MGMGoogleContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171AC1245676A00D119B5 /* MGMGoogleContacts.m */; };
+		2AE6EE661249DA790006B5AC /* MGMAddons.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171AE1245676A00D119B5 /* MGMAddons.m */; };
+		2AE6EE671249DA790006B5AC /* MGMInbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171B01245676A00D119B5 /* MGMInbox.m */; };
+		2AE6EE681249DA790006B5AC /* MGMInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171B21245676A00D119B5 /* MGMInstance.m */; };
+		2AE6EE691249DA790006B5AC /* MGMThemeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171B41245676A00D119B5 /* MGMThemeManager.m */; };
+		2AE6EE6A1249DA790006B5AC /* MGMSIP.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171B71245676A00D119B5 /* MGMSIP.m */; };
+		2AE6EE6B1249DA790006B5AC /* MGMSIPAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171B91245676A00D119B5 /* MGMSIPAccount.m */; };
+		2AE6EE6C1249DA790006B5AC /* MGMSIPCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171BB1245676A00D119B5 /* MGMSIPCall.m */; };
+		2AE6EE6D1249DA790006B5AC /* MGMSIPURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171BD1245676A00D119B5 /* MGMSIPURL.m */; };
+		2AE6EE701249DA870006B5AC /* libMGMUsers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE6EE0F1249D70F0006B5AC /* libMGMUsers.a */; };
+		2AE6EE761249DB2F0006B5AC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE6EE751249DB2F0006B5AC /* CoreGraphics.framework */; };
+		2AE6EE7A1249DB2F0006B5AC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE6EE791249DB2F0006B5AC /* UIKit.framework */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -84,11 +150,55 @@
 		2A11730812456C4F00D119B5 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		2A11730C12456C5F00D119B5 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		2A11731012456C6D00D119B5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		2A1E9722124D174200D3BEAE /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		2A1E9753124D187500D3BEAE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		2A487C93124BE0AB00E8EE4E /* MGMXMLAddons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMXMLAddons.h; sourceTree = "<group>"; };
+		2A487C94124BE0AB00E8EE4E /* MGMXMLAddons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMXMLAddons.m; sourceTree = "<group>"; };
+		2A487C95124BE0AB00E8EE4E /* MGMXMLDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMXMLDocument.h; sourceTree = "<group>"; };
+		2A487C96124BE0AB00E8EE4E /* MGMXMLDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMXMLDocument.m; sourceTree = "<group>"; };
+		2A487C97124BE0AB00E8EE4E /* MGMXMLDTD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMXMLDTD.h; sourceTree = "<group>"; };
+		2A487C98124BE0AB00E8EE4E /* MGMXMLDTD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMXMLDTD.m; sourceTree = "<group>"; };
+		2A487C99124BE0AB00E8EE4E /* MGMXMLDTDNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMXMLDTDNode.h; sourceTree = "<group>"; };
+		2A487C9A124BE0AB00E8EE4E /* MGMXMLDTDNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMXMLDTDNode.m; sourceTree = "<group>"; };
+		2A487C9B124BE0AB00E8EE4E /* MGMXMLElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMXMLElement.h; sourceTree = "<group>"; };
+		2A487C9C124BE0AB00E8EE4E /* MGMXMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMXMLElement.m; sourceTree = "<group>"; };
+		2A487C9D124BE0AB00E8EE4E /* MGMXMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMXMLNode.h; sourceTree = "<group>"; };
+		2A487C9E124BE0AB00E8EE4E /* MGMXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMXMLNode.m; sourceTree = "<group>"; };
+		2A487C9F124BE0AB00E8EE4E /* MGMXMLNodeOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMXMLNodeOptions.h; sourceTree = "<group>"; };
+		2A487CAE124BE0C400E8EE4E /* MGMXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMXML.h; sourceTree = "<group>"; };
+		2A487CF0124BE3E600E8EE4E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		2A487D0E124BE41B00E8EE4E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		2A77133A124C4CE200D68042 /* MGMSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSound.h; sourceTree = "<group>"; };
+		2A77133B124C4CE200D68042 /* MGMSound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSound.m; sourceTree = "<group>"; };
+		2A77133F124C4D2800D68042 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		2A771343124C4F9A00D68042 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		2AE6EE0F1249D70F0006B5AC /* libMGMUsers.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMGMUsers.a; path = Libraries/lib/libMGMUsers.a; sourceTree = "<group>"; };
+		2AE6EE531249DA0B0006B5AC /* libVoiceBase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libVoiceBase.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		2AE6EE731249DB2F0006B5AC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		2AE6EE751249DB2F0006B5AC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		2AE6EE771249DB2F0006B5AC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		2AE6EE791249DB2F0006B5AC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2AE6EF191249DBA70006B5AC /* VoiceBaseTouch_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoiceBaseTouch_Prefix.pch; path = Classes/VoiceBase/VoiceBaseTouch_Prefix.pch; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* VoiceBase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VoiceBase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2AE6EE511249DA0B0006B5AC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2AE6EE701249DA870006B5AC /* libMGMUsers.a in Frameworks */,
+				2AE6EE761249DB2F0006B5AC /* CoreGraphics.framework in Frameworks */,
+				2AE6EE7A1249DB2F0006B5AC /* UIKit.framework in Frameworks */,
+				2A487D0F124BE41B00E8EE4E /* libxml2.dylib in Frameworks */,
+				2A771340124C4D2800D68042 /* AudioToolbox.framework in Frameworks */,
+				2A771344124C4F9A00D68042 /* AVFoundation.framework in Frameworks */,
+				2A1E9723124D174200D3BEAE /* CoreAudio.framework in Frameworks */,
+				2A1E9754124D187500D3BEAE /* SystemConfiguration.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8DC2EF560486A6940098B216 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -98,6 +208,7 @@
 				2A1172BB124569AC00D119B5 /* AddressBook.framework in Frameworks */,
 				2A1172F312456BFA00D119B5 /* libssl.dylib in Frameworks */,
 				2A1172FA12456C2B00D119B5 /* libcrypto.dylib in Frameworks */,
+				2A487D0D124BE40700E8EE4E /* libxml2.dylib in Frameworks */,
 				2A1172FE12456C3800D119B5 /* CoreAudio.framework in Frameworks */,
 				2A11730912456C4F00D119B5 /* AudioToolbox.framework in Frameworks */,
 				2A11730D12456C5F00D119B5 /* AudioUnit.framework in Frameworks */,
@@ -112,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				8DC2EF5B0486A6940098B216 /* VoiceBase.framework */,
+				2AE6EE531249DA0B0006B5AC /* libVoiceBase.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -131,6 +243,9 @@
 		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				2AE6EC281249C2C70006B5AC /* Linked Libraries Touch */,
+				2AE6EC2A1249C2D50006B5AC /* Linked Frameworks Touch */,
+				2AE6EC2B1249C2E20006B5AC /* Other Frameworks Touch */,
 				2A1172F612456C0600D119B5 /* Linked Libraries */,
 				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
 				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
@@ -172,9 +287,12 @@
 				2A1171B01245676A00D119B5 /* MGMInbox.m */,
 				2A1171B11245676A00D119B5 /* MGMInstance.h */,
 				2A1171B21245676A00D119B5 /* MGMInstance.m */,
+				2A77133A124C4CE200D68042 /* MGMSound.h */,
+				2A77133B124C4CE200D68042 /* MGMSound.m */,
 				2A1171B31245676A00D119B5 /* MGMThemeManager.h */,
 				2A1171B41245676A00D119B5 /* MGMThemeManager.m */,
 				2A1171B51245676A00D119B5 /* SIP */,
+				2A487C92124BE0AB00E8EE4E /* XML */,
 				2A1171BE1245676A00D119B5 /* VoiceBase.h */,
 			);
 			name = Classes;
@@ -226,13 +344,67 @@
 			children = (
 				2A1172F212456BFA00D119B5 /* libssl.dylib */,
 				2A1172F912456C2B00D119B5 /* libcrypto.dylib */,
+				2A487CF0124BE3E600E8EE4E /* libxml2.dylib */,
 			);
 			name = "Linked Libraries";
+			sourceTree = "<group>";
+		};
+		2A487C92124BE0AB00E8EE4E /* XML */ = {
+			isa = PBXGroup;
+			children = (
+				2A487CAE124BE0C400E8EE4E /* MGMXML.h */,
+				2A487C93124BE0AB00E8EE4E /* MGMXMLAddons.h */,
+				2A487C94124BE0AB00E8EE4E /* MGMXMLAddons.m */,
+				2A487C95124BE0AB00E8EE4E /* MGMXMLDocument.h */,
+				2A487C96124BE0AB00E8EE4E /* MGMXMLDocument.m */,
+				2A487C97124BE0AB00E8EE4E /* MGMXMLDTD.h */,
+				2A487C98124BE0AB00E8EE4E /* MGMXMLDTD.m */,
+				2A487C99124BE0AB00E8EE4E /* MGMXMLDTDNode.h */,
+				2A487C9A124BE0AB00E8EE4E /* MGMXMLDTDNode.m */,
+				2A487C9B124BE0AB00E8EE4E /* MGMXMLElement.h */,
+				2A487C9C124BE0AB00E8EE4E /* MGMXMLElement.m */,
+				2A487C9D124BE0AB00E8EE4E /* MGMXMLNode.h */,
+				2A487C9E124BE0AB00E8EE4E /* MGMXMLNode.m */,
+				2A487C9F124BE0AB00E8EE4E /* MGMXMLNodeOptions.h */,
+			);
+			path = XML;
+			sourceTree = "<group>";
+		};
+		2AE6EC281249C2C70006B5AC /* Linked Libraries Touch */ = {
+			isa = PBXGroup;
+			children = (
+				2AE6EE0F1249D70F0006B5AC /* libMGMUsers.a */,
+				2A487D0E124BE41B00E8EE4E /* libxml2.dylib */,
+			);
+			name = "Linked Libraries Touch";
+			sourceTree = "<group>";
+		};
+		2AE6EC2A1249C2D50006B5AC /* Linked Frameworks Touch */ = {
+			isa = PBXGroup;
+			children = (
+				2AE6EE751249DB2F0006B5AC /* CoreGraphics.framework */,
+				2AE6EE791249DB2F0006B5AC /* UIKit.framework */,
+				2A77133F124C4D2800D68042 /* AudioToolbox.framework */,
+				2A771343124C4F9A00D68042 /* AVFoundation.framework */,
+				2A1E9722124D174200D3BEAE /* CoreAudio.framework */,
+				2A1E9753124D187500D3BEAE /* SystemConfiguration.framework */,
+			);
+			name = "Linked Frameworks Touch";
+			sourceTree = "<group>";
+		};
+		2AE6EC2B1249C2E20006B5AC /* Other Frameworks Touch */ = {
+			isa = PBXGroup;
+			children = (
+				2AE6EE731249DB2F0006B5AC /* CoreData.framework */,
+				2AE6EE771249DB2F0006B5AC /* Foundation.framework */,
+			);
+			name = "Other Frameworks Touch";
 			sourceTree = "<group>";
 		};
 		32C88DFF0371C24200C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				2AE6EF191249DBA70006B5AC /* VoiceBaseTouch_Prefix.pch */,
 				2A1171BF1245676A00D119B5 /* VoiceBase_Prefix.pch */,
 			);
 			name = "Other Sources";
@@ -241,6 +413,35 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		2AE6EE4F1249DA0B0006B5AC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2A487CC1124BE22E00E8EE4E /* MGMAddressBook.h in Headers */,
+				2A487CC2124BE22E00E8EE4E /* MGMContacts.h in Headers */,
+				2A487CC3124BE22E00E8EE4E /* MGMContactsProtocol.h in Headers */,
+				2A487CC4124BE22E00E8EE4E /* MGMGoogleContacts.h in Headers */,
+				2A487CC5124BE22E00E8EE4E /* MGMAddons.h in Headers */,
+				2A487CC6124BE22E00E8EE4E /* MGMInbox.h in Headers */,
+				2A487CC7124BE22E00E8EE4E /* MGMInstance.h in Headers */,
+				2A487CC8124BE22E00E8EE4E /* MGMThemeManager.h in Headers */,
+				2A487CCD124BE22E00E8EE4E /* MGMXML.h in Headers */,
+				2A487CCE124BE22E00E8EE4E /* MGMXMLAddons.h in Headers */,
+				2A487CCF124BE22E00E8EE4E /* MGMXMLDocument.h in Headers */,
+				2A487CD0124BE22E00E8EE4E /* MGMXMLDTD.h in Headers */,
+				2A487CD1124BE22E00E8EE4E /* MGMXMLDTDNode.h in Headers */,
+				2A487CD2124BE22E00E8EE4E /* MGMXMLElement.h in Headers */,
+				2A487CD3124BE22E00E8EE4E /* MGMXMLNode.h in Headers */,
+				2A487CD4124BE22E00E8EE4E /* MGMXMLNodeOptions.h in Headers */,
+				2A487CC9124BE22E00E8EE4E /* MGMSIP.h in Headers */,
+				2A487CCA124BE22E00E8EE4E /* MGMSIPAccount.h in Headers */,
+				2A487CCB124BE22E00E8EE4E /* MGMSIPCall.h in Headers */,
+				2A487CCC124BE22E00E8EE4E /* MGMSIPURL.h in Headers */,
+				2A487CD5124BE22E00E8EE4E /* VoiceBase.h in Headers */,
+				2A77133C124C4CE200D68042 /* MGMSound.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8DC2EF500486A6940098B216 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -252,18 +453,44 @@
 				2A1171C81245676A00D119B5 /* MGMAddons.h in Headers */,
 				2A1171CA1245676A00D119B5 /* MGMInbox.h in Headers */,
 				2A1171CC1245676A00D119B5 /* MGMInstance.h in Headers */,
+				2A7713BF124C6A5B00D68042 /* MGMSound.h in Headers */,
 				2A1171CE1245676A00D119B5 /* MGMThemeManager.h in Headers */,
 				2A1171D01245676A00D119B5 /* MGMSIP.h in Headers */,
 				2A1171D21245676A00D119B5 /* MGMSIPAccount.h in Headers */,
 				2A1171D41245676A00D119B5 /* MGMSIPCall.h in Headers */,
 				2A1171D61245676A00D119B5 /* MGMSIPURL.h in Headers */,
 				2A1171D81245676A00D119B5 /* VoiceBase.h in Headers */,
+				2A487CA0124BE0AB00E8EE4E /* MGMXMLAddons.h in Headers */,
+				2A487CA2124BE0AB00E8EE4E /* MGMXMLDocument.h in Headers */,
+				2A487CA4124BE0AB00E8EE4E /* MGMXMLDTD.h in Headers */,
+				2A487CA6124BE0AB00E8EE4E /* MGMXMLDTDNode.h in Headers */,
+				2A487CA8124BE0AB00E8EE4E /* MGMXMLElement.h in Headers */,
+				2A487CAA124BE0AB00E8EE4E /* MGMXMLNode.h in Headers */,
+				2A487CAC124BE0AB00E8EE4E /* MGMXMLNodeOptions.h in Headers */,
+				2A487CAF124BE0C400E8EE4E /* MGMXML.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		2AE6EE521249DA0B0006B5AC /* VoiceBase Touch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2AE6EE611249DA770006B5AC /* Build configuration list for PBXNativeTarget "VoiceBase Touch" */;
+			buildPhases = (
+				2AE6EE4F1249DA0B0006B5AC /* Headers */,
+				2AE6EE501249DA0B0006B5AC /* Sources */,
+				2AE6EE511249DA0B0006B5AC /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "VoiceBase Touch";
+			productName = "VoiceBase Touch";
+			productReference = 2AE6EE531249DA0B0006B5AC /* libVoiceBase.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		8DC2EF4F0486A6940098B216 /* VoiceBase */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1DEB91AD08733DA50010E9CD /* Build configuration list for PBXNativeTarget "VoiceBase" */;
@@ -300,6 +527,7 @@
 			projectRoot = "";
 			targets = (
 				8DC2EF4F0486A6940098B216 /* VoiceBase */,
+				2AE6EE521249DA0B0006B5AC /* VoiceBase Touch */,
 			);
 		};
 /* End PBXProject section */
@@ -316,6 +544,32 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2AE6EE501249DA0B0006B5AC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2AE6EE621249DA790006B5AC /* MGMAddressBook.m in Sources */,
+				2AE6EE631249DA790006B5AC /* MGMContacts.m in Sources */,
+				2AE6EE641249DA790006B5AC /* MGMContactsProtocol.m in Sources */,
+				2AE6EE651249DA790006B5AC /* MGMGoogleContacts.m in Sources */,
+				2AE6EE661249DA790006B5AC /* MGMAddons.m in Sources */,
+				2AE6EE671249DA790006B5AC /* MGMInbox.m in Sources */,
+				2AE6EE681249DA790006B5AC /* MGMInstance.m in Sources */,
+				2AE6EE691249DA790006B5AC /* MGMThemeManager.m in Sources */,
+				2A487CB9124BE1E600E8EE4E /* MGMXMLAddons.m in Sources */,
+				2A487CBA124BE1E600E8EE4E /* MGMXMLDocument.m in Sources */,
+				2A487CBB124BE1E600E8EE4E /* MGMXMLDTD.m in Sources */,
+				2A487CBC124BE1E600E8EE4E /* MGMXMLDTDNode.m in Sources */,
+				2A487CBD124BE1E600E8EE4E /* MGMXMLElement.m in Sources */,
+				2A487CBE124BE1E600E8EE4E /* MGMXMLNode.m in Sources */,
+				2AE6EE6A1249DA790006B5AC /* MGMSIP.m in Sources */,
+				2AE6EE6B1249DA790006B5AC /* MGMSIPAccount.m in Sources */,
+				2AE6EE6C1249DA790006B5AC /* MGMSIPCall.m in Sources */,
+				2AE6EE6D1249DA790006B5AC /* MGMSIPURL.m in Sources */,
+				2A77133D124C4CE200D68042 /* MGMSound.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8DC2EF540486A6940098B216 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -327,11 +581,18 @@
 				2A1171C91245676A00D119B5 /* MGMAddons.m in Sources */,
 				2A1171CB1245676A00D119B5 /* MGMInbox.m in Sources */,
 				2A1171CD1245676A00D119B5 /* MGMInstance.m in Sources */,
+				2A7713BD124C6A4900D68042 /* MGMSound.m in Sources */,
 				2A1171CF1245676A00D119B5 /* MGMThemeManager.m in Sources */,
 				2A1171D11245676A00D119B5 /* MGMSIP.m in Sources */,
 				2A1171D31245676A00D119B5 /* MGMSIPAccount.m in Sources */,
 				2A1171D51245676A00D119B5 /* MGMSIPCall.m in Sources */,
 				2A1171D71245676A00D119B5 /* MGMSIPURL.m in Sources */,
+				2A487CA1124BE0AB00E8EE4E /* MGMXMLAddons.m in Sources */,
+				2A487CA3124BE0AB00E8EE4E /* MGMXMLDocument.m in Sources */,
+				2A487CA5124BE0AB00E8EE4E /* MGMXMLDTD.m in Sources */,
+				2A487CA7124BE0AB00E8EE4E /* MGMXMLDTDNode.m in Sources */,
+				2A487CA9124BE0AB00E8EE4E /* MGMXMLElement.m in Sources */,
+				2A487CAB124BE0AB00E8EE4E /* MGMXMLNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,8 +628,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = VoiceBase;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -389,8 +652,10 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = VoiceBase;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -409,6 +674,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
@@ -428,6 +694,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
@@ -447,7 +714,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/include\"";
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"\"$(SRCROOT)/SIP/opt/include\"",
+				);
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/lib\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				ONLY_ACTIVE_ARCH = YES;
@@ -479,26 +749,29 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
-					"-lpjsua-universal",
-					"-lpjsip-ua-universal",
-					"-lpjsip-simple-universal",
-					"-lpjsip-universal",
+					"-lg7221codec-universal",
+					"-lgsmcodec-universal",
+					"-lilbccodec-universal",
+					"-lmilenage-universal",
+					"-lpj-universal",
+					"-lpjlib-util-universal",
+					"-lpjmedia-audiodev-universal",
 					"-lpjmedia-codec-universal",
 					"-lpjmedia-universal",
-					"-lpjmedia-audiodev-universal",
 					"-lpjnath-universal",
-					"-lpjlib-util-universal",
-					"-lresample-universal",
-					"-lmilenage-universal",
-					"-lsrtp-universal",
-					"-lgsmcodec-universal",
-					"-lspeex-universal",
-					"-lilbccodec-universal",
+					"-lpjsip-simple-universal",
+					"-lpjsip-ua-universal",
+					"-lpjsip-universal",
+					"-lpjsua-universal",
 					"-lportaudio-universal",
-					"-lpj-universal",
+					"-lresample-universal",
+					"-lspeex-universal",
+					"-lsrtp-universal",
 				);
 				PRODUCT_NAME = VoiceBase;
 				WRAPPER_EXTENSION = framework;
@@ -517,7 +790,10 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/include\"";
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"\"$(SRCROOT)/SIP/opt/include\"",
+				);
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/lib\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				OTHER_CFLAGS = (
@@ -545,29 +821,173 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
+				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
-					"-lpjsua-universal",
-					"-lpjsip-ua-universal",
-					"-lpjsip-simple-universal",
-					"-lpjsip-universal",
+					"-lg7221codec-universal",
+					"-lgsmcodec-universal",
+					"-lilbccodec-universal",
+					"-lmilenage-universal",
+					"-lpj-universal",
+					"-lpjlib-util-universal",
+					"-lpjmedia-audiodev-universal",
 					"-lpjmedia-codec-universal",
 					"-lpjmedia-universal",
-					"-lpjmedia-audiodev-universal",
 					"-lpjnath-universal",
-					"-lpjlib-util-universal",
-					"-lresample-universal",
-					"-lmilenage-universal",
-					"-lsrtp-universal",
-					"-lgsmcodec-universal",
-					"-lspeex-universal",
-					"-lilbccodec-universal",
+					"-lpjsip-simple-universal",
+					"-lpjsip-ua-universal",
+					"-lpjsip-universal",
+					"-lpjsua-universal",
 					"-lportaudio-universal",
-					"-lpj-universal",
+					"-lresample-universal",
+					"-lspeex-universal",
+					"-lsrtp-universal",
 				);
 				PRODUCT_NAME = VoiceBase;
 				WRAPPER_EXTENSION = framework;
+			};
+			name = "Release SIP";
+		};
+		2AE6EE541249DA0E0006B5AC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBaseTouch_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libraries/include\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libraries/lib\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = VoiceBase;
+				SDKROOT = iphoneos4.0;
+			};
+			name = Debug;
+		};
+		2AE6EE551249DA0E0006B5AC /* Debug SIP */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBaseTouch_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libraries/include\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libraries/lib\"",
+				);
+				OTHER_LDFLAGS = (
+					"-lg7221codec-ios-universal",
+					"-lgsmcodec-ios-universal",
+					"-lilbccodec-ios-universal",
+					"-lmilenage-ios-universal",
+					"-lpj-ios-universal",
+					"-lpjlib-util-ios-universal",
+					"-lpjmedia-audiodev-ios-universal",
+					"-lpjmedia-codec-ios-universal",
+					"-lpjmedia-ios-universal",
+					"-lpjnath-ios-universal",
+					"-lpjsip-ios-universal",
+					"-lpjsip-simple-ios-universal",
+					"-lpjsip-ua-ios-universal",
+					"-lpjsua-ios-universal",
+					"-lresample-ios-universal",
+					"-lspeex-ios-universal",
+					"-lsrtp-ios-universal",
+					"-ObjC",
+					"-all_load",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = VoiceBase;
+				SDKROOT = iphoneos4.0;
+			};
+			name = "Debug SIP";
+		};
+		2AE6EE561249DA0E0006B5AC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBaseTouch_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libraries/include\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libraries/lib\"",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = VoiceBase;
+				SDKROOT = iphoneos4.0;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		2AE6EE571249DA0E0006B5AC /* Release SIP */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBaseTouch_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libraries/include\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libraries/lib\"",
+				);
+				OTHER_LDFLAGS = (
+					"-lg7221codec-ios-universal",
+					"-lgsmcodec-ios-universal",
+					"-lilbccodec-ios-universal",
+					"-lmilenage-ios-universal",
+					"-lpj-ios-universal",
+					"-lpjlib-util-ios-universal",
+					"-lpjmedia-audiodev-ios-universal",
+					"-lpjmedia-codec-ios-universal",
+					"-lpjmedia-ios-universal",
+					"-lpjnath-ios-universal",
+					"-lpjsip-ios-universal",
+					"-lpjsip-simple-ios-universal",
+					"-lpjsip-ua-ios-universal",
+					"-lpjsua-ios-universal",
+					"-lresample-ios-universal",
+					"-lspeex-ios-universal",
+					"-lsrtp-ios-universal",
+					"-ObjC",
+					"-all_load",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = VoiceBase;
+				SDKROOT = iphoneos4.0;
 			};
 			name = "Release SIP";
 		};
@@ -592,6 +1012,17 @@
 				2A1172E612456A6700D119B5 /* Debug SIP */,
 				1DEB91B308733DA50010E9CD /* Release */,
 				2A1172E812456A6C00D119B5 /* Release SIP */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2AE6EE611249DA770006B5AC /* Build configuration list for PBXNativeTarget "VoiceBase Touch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2AE6EE541249DA0E0006B5AC /* Debug */,
+				2AE6EE551249DA0E0006B5AC /* Debug SIP */,
+				2AE6EE561249DA0E0006B5AC /* Release */,
+				2AE6EE571249DA0E0006B5AC /* Release SIP */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

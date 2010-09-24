@@ -7,7 +7,7 @@
 //
 
 #if TARGET_OS_IPHONE
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #else
 #import <Cocoa/Cocoa.h>
 #endif
@@ -70,7 +70,6 @@ extern NSString * const MGMUCVoicemail;
 	
 	int webLoginTries;
 	BOOL loggedIn;
-	NSString *GALX;
 	
 	NSString *XPCURL;
 	NSString *XPCCD;
@@ -113,7 +112,6 @@ extern NSString * const MGMUCVoicemail;
 - (NSArray *)userPhoneNumbers;
 - (NSDictionary *)unreadCounts;
 
-- (void)login;
 - (BOOL)isLoggedIn;
 - (void)checkTimer;
 - (void)creditTimer;

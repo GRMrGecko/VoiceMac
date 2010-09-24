@@ -16,8 +16,7 @@
 NSString * const MGMVoiceBaseCopyright = @"Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/";
 
 NSString * const MGMVoiceIndexURL = @"https://www.google.com/voice/#inbox";
-NSString * const MGMLoginURL = @"https://www.google.com/accounts/ServiceLoginAuth?service=grandcentral";
-NSString * const MGMLoginBody = @"ltmpl=bluebar&continue=https://www.google.com/voice/account/signin&GALX=%@&Email=%@&Passwd=%@&PersistentCookie=yes&rmShown=1";
+NSString * const MGMLoginURL = @"https://www.google.com/accounts/ServiceLoginAuth";
 NSString * const MGMXPCPath = @"/voice/xpc/?xpc=%7B%22cn%22%3A%22i70avDIMsA%22%2C%22tp%22%3Anull%2C%22pru%22%3A%22https%3A%2F%2Fwww.google.com%2Fvoice%2Fxpc%2Frelay%22%2C%22ppu%22%3A%22https%3A%2F%2Fwww.google.com%2Fvoice%2Fxpc%2Fblank%2F%22%2C%22lpu%22%3A%22https%3A%2F%2Fclients4.google.com%2Fvoice%2Fxpc%2Fblank%2F%22%7D";
 NSString * const MGMCheckPath = @"/voice/xpc/checkMessages?r=%@";
 NSString * const MGMCreditURL = @"https://www.google.com/voice/settings/billingcredit/";
@@ -88,8 +87,6 @@ const BOOL MGMInstanceInvisible = YES;
 		[inbox release];
 	if (contacts!=nil)
 		[contacts release];
-	if (GALX!=nil)
-		[GALX release];
 	if (XPCURL!=nil)
 		[XPCURL release];
 	if (XPCCD!=nil)
@@ -210,7 +207,36 @@ const BOOL MGMInstanceInvisible = YES;
 }
 - (void)indexDidFinish:(NSDictionary *)theInfo {
 	NSString *returnedString = [[[NSString alloc] initWithData:[theInfo objectForKey:MGMConnectionData] encoding:NSUTF8StringEncoding] autorelease];
-	if ([returnedString containsString:@"<div id=\"gaia_loginbox\">"]) {
+	if ([returnedString containsString:@"<title>Redirecting</title>"]) {
+		NSRange range;
+		NSString *redirectURL = MGMVoiceIndexURL;
+		range = [returnedString rangeOfString:@"http-equiv="];
+		if (range.location!=NSNotFound) {
+			NSString *string = [returnedString substringFromIndex:range.location + range.length];
+			range = [string rangeOfString:@"url="];
+			if (range.location==NSNotFound) {
+				NSLog(@"failed 683476");
+			} else {
+				string = [string substringFromIndex:range.location + range.length];
+				range = [string rangeOfString:@"\""];
+				if (range.location==NSNotFound) {
+					range = [string rangeOfString:@"'"];
+				}
+				if (range.location==NSNotFound) {
+					NSLog(@"failed 683476");
+				} else {
+					string = [string substringWithRange:NSMakeRange(0, range.location)];
+					string = [string flattenHTML];
+					string = [string replace:@"\"" with:@""];
+					string = [string replace:@"'" with:@""];
+					//string = [string stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+					redirectURL = [string replace:@"&amp;amp;" with:@"&"];
+				}
+			}
+		}
+		//NSLog(@"Redirecting to %@", redirectURL);
+		[connectionManager connectionWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:redirectURL]] delegate:self didFailWithError:@selector(index:didFailWithError:) didFinish:@selector(indexDidFinish:) invisible:MGMInstanceInvisible object:nil];
+	} else if ([returnedString containsString:@"<div id=\"gaia_loginbox\">"]) {
 		if (webLoginTries>2) {
 			NSError *error = [NSError errorWithDomain:@"com.MrGeckosMedia.MGMInstance.Login" code:1 userInfo:[NSDictionary dictionaryWithObject:@"Unable to login. Please check your Credentials." forKey:NSLocalizedDescriptionKey]];
 			if ([delegate respondsToSelector:@selector(loginError:)]) {
@@ -220,19 +246,68 @@ const BOOL MGMInstanceInvisible = YES;
 			}
 			return;
 		}
-		NSRange range = [returnedString rangeOfString:@"name=\"GALX\""];
-		if (range.location!=NSNotFound) {
-			NSString *string = [returnedString substringFromIndex:range.location+range.length];
-			
-			range = [string rangeOfString:@"value=\""];
-			if (range.location==NSNotFound) NSLog(@"failed 243");
-			string = [string substringFromIndex:range.location+range.length];
-			range = [string rangeOfString:@"\" />"];
-			if (range.location==NSNotFound) NSLog(@"failed 532");
-			if (GALX!=nil) [GALX release];
-			GALX = [[string substringWithRange:NSMakeRange(0, range.location)] copy];
+		webLoginTries++;
+		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMLoginURL]];
+		[request setHTTPMethod:MGMPostMethod];
+		[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
+		NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+		[parameters setObject:(webLoginTries==2 ? [[user settingForKey:MGMUserName] stringByAppendingString:@"@gmail.com"] : [user settingForKey:MGMUserName]) forKey:@"Email"];
+		[parameters setObject:[user password] forKey:@"Passwd"];
+		[parameters setObject:@"yes" forKey:@"PersistentCookie"];
+		NSString *nameValue = @"name=\"%@\"";
+		NSString *valueStart = @"value=\"";
+		NSString *valueEnd = @"\"";
+		NSString *valueStartQ = @"value='";
+		NSString *valueEndQ = @"'";
+		NSArray *names = [NSArray arrayWithObjects:@"ltmpl", @"continue", @"followup", @"service", @"dsh", @"GALX", @"rmShown", nil];
+		for (int i=0; i<[names count]; i++) {
+			NSAutoreleasePool *pool = [NSAutoreleasePool new];
+			NSString *nameString = [NSString stringWithFormat:nameValue, [names objectAtIndex:i]];
+			NSRange range = [returnedString rangeOfString:nameString];
+			if (range.location==NSNotFound) {
+				nameString = [nameString replace:@"\"" with:@"'"];
+				range = [returnedString rangeOfString:nameString];
+			}
+			if (range.location==NSNotFound) {
+				NSLog(@"Unable to find %@", [names objectAtIndex:i]);
+			} else {
+				NSString *string = [returnedString substringFromIndex:range.location+range.length];
+				range = [string rangeOfString:valueStart];
+				if (range.location==NSNotFound) {
+					range = [string rangeOfString:valueStartQ];
+					if (range.location==NSNotFound) {
+						NSLog(@"Unable to find value for %@", [names objectAtIndex:i]);
+						[pool drain];
+						continue;
+					}
+					string = [string substringFromIndex:range.location+range.length];
+					range = [string rangeOfString:valueEndQ];
+				} else {
+					string = [string substringFromIndex:range.location+range.length];
+					range = [string rangeOfString:valueEnd];
+				}
+				if (range.location==NSNotFound) NSLog(@"failed 532");
+				[parameters setObject:[[[string substringWithRange:NSMakeRange(0, range.location)] copy] autorelease] forKey:[names objectAtIndex:i]];
+			}
+			[pool drain];
 		}
-		[self login];
+		
+#if MGMInstanceDebug
+		NSMutableDictionary *parametersDebug = [[parameters mutableCopy] autorelease];
+		[parametersDebug removeObjectForKey:@"Passwd"];
+		NSLog(@"%@", parametersDebug);
+#endif
+		
+		NSArray *parametersKeys = [parameters allKeys];
+		NSMutableString *bodyString = [NSMutableString string];
+		for (int i=0; i<[parametersKeys count]; i++) {
+			if (i!=0)
+				[bodyString appendString:@"&"];
+			[bodyString appendFormat:@"%@=%@", [[parametersKeys objectAtIndex:i] addPercentEscapes], [[parameters objectForKey:[parametersKeys objectAtIndex:i]] addPercentEscapes]];
+		}
+		
+		[request setHTTPBody:[bodyString dataUsingEncoding:NSUTF8StringEncoding]];
+		[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(index:didFailWithError:) didFinish:@selector(indexDidFinish:) invisible:MGMInstanceInvisible object:nil];
 	} else {
 		NSString *string, *guser = @"", *phonesInfo = @"";
 		NSRange range;
@@ -415,14 +490,6 @@ const BOOL MGMInstanceInvisible = YES;
 			[creditTimer fire];
 		}
 	}
-}
-- (void)login {
-	webLoginTries++;
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMLoginURL]];
-	[request setHTTPMethod:MGMPostMethod];
-	[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
-	[request setHTTPBody:[[NSString stringWithFormat:MGMLoginBody, GALX, [(webLoginTries==2 ? [[user settingForKey:MGMUserName] stringByAppendingString:@"@gmail.com"] : [user settingForKey:MGMUserName]) addPercentEscapes], [[user password] addPercentEscapes]] dataUsingEncoding:NSUTF8StringEncoding]];
-	[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(index:didFailWithError:) didFinish:@selector(indexDidFinish:) invisible:MGMInstanceInvisible object:nil];
 }
 - (BOOL)isLoggedIn {
 	return loggedIn;

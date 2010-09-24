@@ -131,6 +131,13 @@
 			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = VoiceBase;
 		};
+		2AE6EE591249DA2D0006B5AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A1175EE1245700300D119B5 /* VoiceBase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2AE6EE531249DA0B0006B5AC;
+			remoteInfo = "VoiceBase Touch";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -591,6 +598,7 @@
 			isa = PBXGroup;
 			children = (
 				2A1175F31245700300D119B5 /* VoiceBase.framework */,
+				2AE6EE5A1249DA2D0006B5AC /* libVoiceBase.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -650,6 +658,13 @@
 			fileType = wrapper.framework;
 			path = VoiceBase.framework;
 			remoteRef = 2A1175F21245700300D119B5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2AE6EE5A1249DA2D0006B5AC /* libVoiceBase.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libVoiceBase.a;
+			remoteRef = 2AE6EE591249DA2D0006B5AC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -949,6 +964,10 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceMac/VoiceMac_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"\"$(SRCROOT)/SIP/opt/include\"",
+				);
 				INFOPLIST_FILE = Resources/VoiceMac/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = VoiceMac;
@@ -992,6 +1011,10 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceMac/VoiceMac_Prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"\"$(SRCROOT)/SIP/opt/include\"",
+				);
 				INFOPLIST_FILE = Resources/VoiceMac/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = VoiceMac;
@@ -1013,6 +1036,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceMac/VoiceMac_Prefix.pch;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Resources/VoiceMac/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = VoiceMac;
@@ -1031,6 +1055,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceMac/VoiceMac_Prefix.pch;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Resources/VoiceMac/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = VoiceMac;

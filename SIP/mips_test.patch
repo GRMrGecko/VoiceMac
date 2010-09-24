@@ -1,0 +1,165 @@
+### Eclipse Workspace Patch 1.0 From http://siphon.googlecode.com/files/patch-mips_test.txt
+#P pjproject
+Index: pjproject-ios/pjmedia/src/test/mips_test.c
+===================================================================
+--- pjmedia/src/test/mips_test.c	(revision 2913)
++++ pjmedia/src/test/mips_test.c	(working copy)
+@@ -794,6 +794,7 @@
+ }
+ 
+ /* G.711 benchmark */
++#if defined(PJMEDIA_HAS_G711_CODEC) && PJMEDIA_HAS_G711_CODEC !=0
+ static pjmedia_port* g711_encode_decode(  pj_pool_t *pool,
+ 					  unsigned clock_rate,
+ 					  unsigned channel_count,
+@@ -806,8 +807,10 @@
+ 			       clock_rate, channel_count,
+ 			       samples_per_frame, flags, te);
+ }
++#endif
+ 
+ /* GSM benchmark */
++#if defined(PJMEDIA_HAS_GSM_CODEC) && PJMEDIA_HAS_GSM_CODEC !=0
+ static pjmedia_port* gsm_encode_decode(  pj_pool_t *pool,
+ 					 unsigned clock_rate,
+ 					 unsigned channel_count,
+@@ -820,7 +823,9 @@
+ 			       clock_rate, channel_count,
+ 			       samples_per_frame, flags, te);
+ }
++#endif
+ 
++#if defined(PJMEDIA_HAS_ILBC_CODEC) && PJMEDIA_HAS_ILBC_CODEC !=0
+ static pj_status_t ilbc_init(pjmedia_endpt *endpt)
+ {
+     return pjmedia_codec_ilbc_init(endpt, 20);
+@@ -839,8 +844,10 @@
+ 			       &pjmedia_codec_ilbc_deinit, clock_rate, 
+ 			       channel_count, samples_per_frame, flags, te);
+ }
++#endif
+ 
+ /* Speex narrowband benchmark */
++#if defined(PJMEDIA_HAS_SPEEX_CODEC) && PJMEDIA_HAS_SPEEX_CODEC !=0
+ static pjmedia_port* speex8_encode_decode(pj_pool_t *pool,
+ 					  unsigned clock_rate,
+ 					  unsigned channel_count,
+@@ -869,8 +876,10 @@
+ 			       clock_rate, channel_count,
+ 			       samples_per_frame, flags, te);
+ }
++#endif
+ 
+ /* G.722 benchmark benchmark */
++#if defined(PJMEDIA_HAS_G722_CODEC) && PJMEDIA_HAS_G722_CODEC !=0
+ static pjmedia_port* g722_encode_decode(pj_pool_t *pool,
+ 					unsigned clock_rate,
+ 					unsigned channel_count,
+@@ -883,8 +892,9 @@
+ 			       clock_rate, channel_count,
+ 			       samples_per_frame, flags, te);
+ }
++#endif
+ 
+-#if PJMEDIA_HAS_G7221_CODEC
++#if defined(PJMEDIA_HAS_G7221_CODEC) && PJMEDIA_HAS_G7221_CODEC!=0
+ /* G.722.1 benchmark benchmark */
+ static pjmedia_port* g7221_encode_decode(pj_pool_t *pool,
+ 					 unsigned clock_rate,
+@@ -1726,6 +1736,7 @@
+     if (status != PJ_SUCCESS)
+ 	return NULL;
+ 
++#if defined(PJMEDIA_HAS_SRTP) && (PJMEDIA_HAS_SRTP != 0)
+     if (srtp_enabled) {
+ 	pjmedia_srtp_setting opt;
+ 	pjmedia_srtp_crypto crypto;
+@@ -1758,6 +1769,9 @@
+ 
+ 	sp->transport = srtp;
+     }
++#else
++    PJ_UNUSED_ARG(srtp_enabled);
++#endif
+ 
+     /* Create stream */
+     status = pjmedia_stream_create(sp->endpt, pool, &si, sp->transport, NULL, 
+@@ -1852,6 +1866,7 @@
+ 			 samples_per_frame, flags, te);
+ }
+ 
++#if defined(PJMEDIA_HAS_GSM_CODEC) && PJMEDIA_HAS_GSM_CODEC !=0
+ /* GSM stream */
+ static pjmedia_port* create_stream_gsm(  pj_pool_t *pool,
+ 					 unsigned clock_rate,
+@@ -1926,8 +1941,10 @@
+ 			 clock_rate, channel_count,
+ 			 samples_per_frame, flags, te);
+ }
++#endif
+ 
+ /* G722 stream */
++#if defined(PJMEDIA_HAS_G722_CODEC) && PJMEDIA_HAS_G722_CODEC !=0
+ static pjmedia_port* create_stream_g722( pj_pool_t *pool,
+ 					 unsigned clock_rate,
+ 					 unsigned channel_count,
+@@ -1941,6 +1958,7 @@
+ 			 clock_rate, channel_count,
+ 			 samples_per_frame, flags, te);
+ }
++#endif
+ 
+ /* G722.1 stream */
+ #if PJMEDIA_HAS_G7221_CODEC
+@@ -2344,41 +2362,41 @@
+ 	{ "echo suppressor 800ms tail len", OP_GET_PUT, K8|K16, &es_create_800},
+ 	{ "tone generator with single freq", OP_GET, K8|K16, &create_tonegen1},
+ 	{ "tone generator with dual freq", OP_GET, K8|K16, &create_tonegen2},
+-#if PJMEDIA_HAS_G711_CODEC
++#if defined(PJMEDIA_HAS_G711_CODEC) && PJMEDIA_HAS_G711_CODEC !=0
+ 	{ "codec encode/decode - G.711", OP_PUT, K8, &g711_encode_decode},
+ #endif
+-#if PJMEDIA_HAS_G722_CODEC
++#if defined(PJMEDIA_HAS_G722_CODEC) && PJMEDIA_HAS_G722_CODEC !=0
+ 	{ "codec encode/decode - G.722", OP_PUT, K16, &g722_encode_decode},
+ #endif
+-#if PJMEDIA_HAS_GSM_CODEC
++#if defined(PJMEDIA_HAS_GSM_CODEC) && PJMEDIA_HAS_GSM_CODEC !=0
+ 	{ "codec encode/decode - GSM", OP_PUT, K8, &gsm_encode_decode},
+ #endif
+-#if PJMEDIA_HAS_ILBC_CODEC
++#if defined(PJMEDIA_HAS_ILBC_CODEC) && PJMEDIA_HAS_ILBC_CODEC !=0
+ 	{ "codec encode/decode - iLBC", OP_PUT, K8, &ilbc_encode_decode},
+ #endif
+-#if PJMEDIA_HAS_SPEEX_CODEC
++#if defined(PJMEDIA_HAS_SPEEX_CODEC) && PJMEDIA_HAS_SPEEX_CODEC !=0
+ 	{ "codec encode/decode - Speex 8Khz", OP_PUT, K8, &speex8_encode_decode},
+ 	{ "codec encode/decode - Speex 16Khz", OP_PUT, K16, &speex16_encode_decode},
+ #endif
+-#if PJMEDIA_HAS_G7221_CODEC
++#if defined(PJMEDIA_HAS_G7221_CODEC) && PJMEDIA_HAS_G7221_CODEC!=0
+ 	{ "codec encode/decode - G.722.1", OP_PUT, K16, &g7221_encode_decode},
+ 	{ "codec encode/decode - G.722.1c", OP_PUT, K32, &g7221c_encode_decode},
+ #endif
+-#if PJMEDIA_HAS_L16_CODEC
++#if defined(PJMEDIA_HAS_L16_CODEC) && PJMEDIA_HAS_L16_CODEC!=0
+ 	{ "codec encode/decode - L16/8000/1", OP_PUT, K8, &l16_8_encode_decode},
+ 	{ "codec encode/decode - L16/16000/1", OP_PUT, K16, &l16_16_encode_decode},
+ #endif
+-#if PJMEDIA_HAS_G711_CODEC
++#if defined(PJMEDIA_HAS_G711_CODEC) && PJMEDIA_HAS_G711_CODEC !=0
+ 	{ "stream TX/RX - G.711", OP_PUT_GET, K8, &create_stream_pcmu},
+ 	{ "stream TX/RX - G.711 SRTP 32bit", OP_PUT_GET, K8, &create_stream_pcmu_srtp32_no_auth},
+ 	{ "stream TX/RX - G.711 SRTP 32bit +auth", OP_PUT_GET, K8, &create_stream_pcmu_srtp32_with_auth},
+ 	{ "stream TX/RX - G.711 SRTP 80bit", OP_PUT_GET, K8, &create_stream_pcmu_srtp80_no_auth},
+ 	{ "stream TX/RX - G.711 SRTP 80bit +auth", OP_PUT_GET, K8, &create_stream_pcmu_srtp80_with_auth},
+ #endif
+-#if PJMEDIA_HAS_G722_CODEC
++#if defined(PJMEDIA_HAS_G722_CODEC) && PJMEDIA_HAS_G722_CODEC !=0
+ 	{ "stream TX/RX - G.722", OP_PUT_GET, K16, &create_stream_g722},
+ #endif
+-#if PJMEDIA_HAS_GSM_CODEC
++#if defined(PJMEDIA_HAS_GSM_CODEC) && PJMEDIA_HAS_GSM_CODEC !=0
+ 	{ "stream TX/RX - GSM", OP_PUT_GET, K8, &create_stream_gsm},
+ 	{ "stream TX/RX - GSM SRTP 32bit", OP_PUT_GET, K8, &create_stream_gsm_srtp32_no_auth},
+ 	{ "stream TX/RX - GSM SRTP 32bit + auth", OP_PUT_GET, K8, &create_stream_gsm_srtp32_with_auth},

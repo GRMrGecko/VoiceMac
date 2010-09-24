@@ -9,6 +9,7 @@
 #import "MGMThemeManager.h"
 #import "MGMInbox.h"
 #import "MGMAddons.h"
+#import "MGMSound.h"
 #import <MGMUsers/MGMUsers.h>
 
 NSString * const MGMTThemeChangedNotification = @"MGMTThemeChangedNotification";
@@ -159,9 +160,11 @@ NSString * const MGMM4AExt = @"m4a";
 	NSString *supportPath = [[MGMUser applicationSupportPath] stringByAppendingPathComponent:MGMTSoundsFolder];
 	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
 	if (![manager fileExistsAtPath:supportPath]) {
+#if !TARGET_OS_IPHONE
 		if ([manager respondsToSelector:@selector(createDirectoryAtPath:attributes:)])
 			[manager createDirectoryAtPath:supportPath attributes:nil];
 		else
+#endif
 			[manager createDirectoryAtPath:supportPath withIntermediateDirectories:YES attributes:nil error:nil];
 	}
 	return supportPath;
@@ -293,29 +296,30 @@ NSString * const MGMM4AExt = @"m4a";
 	[[NSNotificationCenter defaultCenter] postNotificationName:MGMTSoundChangedNotification object:theSoundName];
 	return YES;
 }
-- (NSSound *)playSound:(NSString *)theSoundName {
-	NSSound *sound = nil;
+- (MGMSound *)playSound:(NSString *)theSoundName {
+	MGMSound *sound = nil;
 	NSFileManager *manager = [NSFileManager defaultManager];
 	NSString *path = [self currentSoundPath:theSoundName];
 	if ([manager fileExistsAtPath:path]) {
-		sound = [[NSSound alloc] initWithContentsOfFile:path byReference:YES];
+		sound = [[MGMSound alloc] initWithContentsOfFile:path];
 		[sound setDelegate:self];
-		[sound play];
+		[sound performSelectorOnMainThread:@selector(play) withObject:nil waitUntilDone:NO];
 	}
 	return sound;
 }
-- (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finishedPlaying {
-	if (finishedPlaying)
-		[sound release];
+- (void)soundDidFinishPlaying:(MGMSound *)theSound {
+	[theSound release];
 }
 
 - (NSString *)themesFolderPath {
 	NSString *supportPath = [[MGMUser applicationSupportPath] stringByAppendingPathComponent:MGMTThemeFolder];
 	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
 	if (![manager fileExistsAtPath:supportPath]) {
+#if !TARGET_OS_IPHONE
 		if ([manager respondsToSelector:@selector(createDirectoryAtPath:attributes:)])
 			[manager createDirectoryAtPath:supportPath attributes:nil];
 		else
+#endif
 			[manager createDirectoryAtPath:supportPath withIntermediateDirectories:YES attributes:nil error:nil];
 	}
 	return supportPath;

@@ -6,9 +6,15 @@
 //  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
 //
 
+#if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+#else
 #import <Cocoa/Cocoa.h>
+#endif
 
 #define MGMThemeManagerDebug 0
+
+@class MGMSound;
 
 extern NSString * const MGMTThemeChangedNotification;
 extern NSString * const MGMTUpdatedSMSThemeNotification;
@@ -81,7 +87,7 @@ extern NSString * const MGMM4AExt;
 - (NSString *)currentSoundPath:(NSString *)theSoundName;
 - (NSString *)nameOfSound:(NSString *)theSoundName;
 - (BOOL)setSound:(NSString *)theSoundName withPath:(NSString *)thePath;
-- (NSSound *)playSound:(NSString *)theSoundName;
+- (MGMSound *)playSound:(NSString *)theSoundName;
 
 - (NSString *)themesFolderPath;
 - (BOOL)setupCurrentTheme;

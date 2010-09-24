@@ -93,18 +93,18 @@
 		int phonesCount = ABMultiValueGetCount(phones);
 		NSData *image = [(NSData *)ABPersonCopyImageData(person) autorelease];
 		if (phonesCount>0) {
-			//if (image!=nil)
-			//	image = [image resizeTo:NSMakeSize(MGMABPhotoSize, MGMABPhotoSize)];
+			if (image!=nil)
+				image = [image resizeTo:MGMABPhotoSize];
 		}
 		for (int p=0; p<phonesCount; p++) {
 			if (shouldStop) break;
 			NSMutableDictionary *contact = [NSMutableDictionary dictionary];
-			[contact setObject:name forKey:MGMABName];
-			[contact setObject:company forKey:MGMABCompany];
+			[contact setObject:name forKey:MGMCName];
+			[contact setObject:company forKey:MGMCCompany];
 			if (delegate!=nil)
-				[contact setObject:[[(NSString *)ABMultiValueCopyValueAtIndex(phones, p) autorelease] phoneFormatWithAreaCode:[delegate areaCode]] forKey:MGMABNumber];
+				[contact setObject:[[(NSString *)ABMultiValueCopyValueAtIndex(phones, p) autorelease] phoneFormatWithAreaCode:[delegate areaCode]] forKey:MGMCNumber];
 			else
-				[contact setObject:[[(NSString *)ABMultiValueCopyValueAtIndex(phones, p) autorelease] phoneFormat] forKey:MGMABNumber];
+				[contact setObject:[[(NSString *)ABMultiValueCopyValueAtIndex(phones, p) autorelease] phoneFormat] forKey:MGMCNumber];
 			NSString *label = [(NSString *)ABMultiValueCopyLabelAtIndex(phones, p) autorelease];
 			NSRange range = [label rangeOfString:@"<"];
 			if (range.location!=NSNotFound) {
@@ -116,9 +116,9 @@
 					label = [string substringWithRange:NSMakeRange(0, range.location)];
 				}
 			}
-			[contact setObject:[label capitalizedString] forKey:MGMABLabel];
+			[contact setObject:[label capitalizedString] forKey:MGMCLabel];
 			if (image!=nil)
-				[contact setObject:image forKey:MGMABPhoto];
+				[contact setObject:image forKey:MGMCPhoto];
 			if ([contactsSender respondsToSelector:@selector(gotContact:)]) [contactsSender gotContact:contact];
 		}
 		CFRelease(phones);
@@ -143,7 +143,7 @@
 			NSData *image = [person imageData];
 			if ([phones count]>0) {
 				if (image!=nil)
-					image = [image resizeTo:NSMakeSize(MGMABPhotoSize, MGMABPhotoSize)];
+					image = [image resizeTo:MGMABPhotoSize];
 			}
 			for (int p=0; p<[phones count]; p++) {
 				if (shouldStop) break;

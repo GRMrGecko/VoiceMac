@@ -8,6 +8,7 @@
 
 #import "MGMAddons.h"
 #import "MGMInbox.h"
+#import "MGMXML.h"
 
 @implementation NSString (MGMAddons)
 + (NSString *)stringWithSeconds:(int)theSeconds {
@@ -29,14 +30,11 @@
 	return string;
 }
 
-#if !TARGET_OS_IPHONE
 - (NSString *)flattenHTML {
 	NSString *xml = [NSString stringWithFormat:@"<d>%@</d>", self];
-	NSXMLElement *xmlElement = [[[NSXMLElement alloc] initWithXMLString:xml error:nil] autorelease];
+	MGMXMLElement *xmlElement = [[[MGMXMLElement alloc] initWithXMLString:xml error:nil] autorelease];
 	return [xmlElement stringValue];
 }
-#endif
-
 - (NSString *)replace:(NSString *)targetString with:(NSString *)replaceString {
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	NSMutableString *temp = [NSMutableString new];
@@ -1280,6 +1278,7 @@
 	return result;
 }
 
+#if !TARGET_OS_IPHONE
 - (NSString *)truncateForWidth:(double)theWidth attributes:(NSDictionary *)theAttributes {
 	NSString *endString = @"…";
 	NSString *truncatedString = self;
@@ -1299,8 +1298,8 @@
 	
 	return truncatedString;
 }
+#endif
 
-#if !TARGET_OS_IPHONE
 NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *context) {
 	NSComparisonResult result = [[info1 objectForKey:MGMITime] compare:[info2 objectForKey:MGMITime]];
 	if (result==NSOrderedAscending) {
@@ -1310,7 +1309,6 @@ NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *cont
 	}
 	return result;
 }
-#endif
 
 - (BOOL)isIPAddress {
 	NSArray *components = [self componentsSeparatedByString:@"."];
@@ -1343,17 +1341,27 @@ NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *cont
 
 @implementation NSData (MGMAddons)
 #if TARGET_OS_IPHONE
-
+- (NSData *)resizeTo:(CGSize)theSize {
+	UIImage *image = [[UIImage alloc] initWithData:self];
 #else
 - (NSData *)resizeTo:(NSSize)theSize {
 	NSImage *image = [[NSImage alloc] initWithData:self];
+#endif
 	if (image!=nil) {
+#if TARGET_OS_IPHONE
+		CGSize size = [image size];
+#else
 		NSSize size = [image size];
+#endif
 		float scaleFactor = 0.0;
 		float scaledWidth = theSize.width;
 		float scaledHeight = theSize.height;
 		
+#if TARGET_OS_IPHONE
+		if (!CGSizeEqualToSize(size, theSize)) {
+#else
 		if (!NSEqualSizes(size, theSize)) {
+#endif
 			float widthFactor = theSize.width / size.width;
 			float heightFactor = theSize.height / size.height;
 			
@@ -1364,10 +1372,22 @@ NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *cont
 			
 			scaledWidth = size.width * scaleFactor;
 			scaledHeight = size.height * scaleFactor;
+#if TARGET_OS_IPHONE
 		}
-		
+#else
+		}
+#endif
+#if TARGET_OS_IPHONE
+		NSAutoreleasePool *pool = [NSAutoreleasePool new];
+		UIGraphicsBeginImageContext(CGSizeMake(scaledWidth, scaledHeight));
+		[image drawInRect:CGRectMake(0, 0, scaledWidth, scaledHeight)];
+		UIImage *newImage = [UIGraphicsGetImageFromCurrentImageContext() retain];
+		UIGraphicsEndImageContext();
+		[pool drain];
+		NSData *scaledData = UIImagePNGRepresentation(newImage);
+		[newImage release];
+#else
 		NSImage *newImage = [[NSImage alloc] initWithSize:NSMakeSize(scaledWidth, scaledHeight)];
-		
 		[newImage lockFocus];
 		NSGraphicsContext *graphicsContext = [NSGraphicsContext currentContext];
 		[graphicsContext setImageInterpolation:NSImageInterpolationHigh];
@@ -1376,10 +1396,14 @@ NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *cont
 		[newImage unlockFocus];
 		NSData *scaledData = [newImage TIFFRepresentation];
 		[newImage release];
+#endif
 		[image release];
 		return scaledData;
 	}
 	return nil;
+#if TARGET_OS_IPHONE
+}
+#else
 }
 #endif
 @end

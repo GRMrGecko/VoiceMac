@@ -1,5 +1,5 @@
 Contributing to VoiceMac.
-Contributing to MGMSIP is exactly the same as VoiceMac. However there may not be an about box.If you want to contribute to VoiceMac, here is what I will do:1. Add your name (and email if provided) to the change describing what you changed.2. Add your name (and email/website if provided) to the contributors section.
+Contributing to MGMSIP and MGMXML is exactly the same as VoiceMac. However there may not be an about box.If you want to contribute to VoiceMac, here is what I will do:1. Add your name (and email if provided) to the change describing what you changed.2. Add your name (and email/website if provided) to the contributors section.
 
 Terms for adding:
 1. The patch must not disrupt up the functionality of VoiceMac.2. The patch must provide useful changes.
