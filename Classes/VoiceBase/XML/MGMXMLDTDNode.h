@@ -8,10 +8,11 @@
 
 #if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#import <MGMXMLNode.h>
 #else
 #import <Cocoa/Cocoa.h>
-#endif
 #import <VoiceBase/MGMXMLNode.h>
+#endif
 
 @interface MGMXMLDTDNode : MGMXMLNode {
 

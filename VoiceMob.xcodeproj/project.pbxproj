@@ -15,6 +15,21 @@
 		2A1E97D9124D261E00D3BEAE /* MGMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1E97D8124D261E00D3BEAE /* MGMController.m */; };
 		2A1E9826124D2B3D00D3BEAE /* MainWindow_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A1E9825124D2B3D00D3BEAE /* MainWindow_iPhone.xib */; };
 		2A1E9838124D2B7200D3BEAE /* MainWindow_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A1E9837124D2B7200D3BEAE /* MainWindow_iPad.xib */; };
+		2A1E991F124D499800D3BEAE /* MGMVMAddons.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1E991E124D499800D3BEAE /* MGMVMAddons.m */; };
+		2A1E993E124D4CC400D3BEAE /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1E993D124D4CC400D3BEAE /* AddressBook.framework */; };
+		2A1E9944124D4CD100D3BEAE /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1E9943124D4CD100D3BEAE /* libxml2.dylib */; };
+		2A1E9948124D4CEC00D3BEAE /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1E9947124D4CEC00D3BEAE /* AVFoundation.framework */; };
+		2A1E996D124D4DD100D3BEAE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1E996C124D4DD100D3BEAE /* Security.framework */; };
+		2A1E997C124D69DE00D3BEAE /* AccountSetup_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A1E997B124D69DE00D3BEAE /* AccountSetup_iPhone.xib */; };
+		2A1E99A2124D70A500D3BEAE /* Radio.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1E99A0124D70A500D3BEAE /* Radio.png */; };
+		2A1E99A3124D70A500D3BEAE /* RadioSelected.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1E99A1124D70A500D3BEAE /* RadioSelected.png */; };
+		2A1E99A6124D77F900D3BEAE /* MGMAccountSetup.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1E99A5124D77F900D3BEAE /* MGMAccountSetup.m */; };
+		2A1E9A0F124D827B00D3BEAE /* VoiceMob Setup.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1E9A0E124D827B00D3BEAE /* VoiceMob Setup.png */; };
+		2A1E9AEC124DA3CC00D3BEAE /* MGMSIPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1E9AEB124DA3CC00D3BEAE /* MGMSIPUser.m */; };
+		2A1E9B0F124DA4CB00D3BEAE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1E9B0E124DA4CB00D3BEAE /* AudioToolbox.framework */; };
+		2A1E9B13124DA4D700D3BEAE /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1E9B12124DA4D700D3BEAE /* CoreAudio.framework */; };
+		2A1E9B45124DA63C00D3BEAE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1E9B44124DA63C00D3BEAE /* CFNetwork.framework */; };
+		2A1E9BA6124DB1AE00D3BEAE /* VoiceMob.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1E9BA5124DB1AE00D3BEAE /* VoiceMob.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +69,24 @@
 		2A1E97D8124D261E00D3BEAE /* MGMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMController.m; sourceTree = "<group>"; };
 		2A1E9825124D2B3D00D3BEAE /* MainWindow_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow_iPhone.xib; sourceTree = "<group>"; };
 		2A1E9837124D2B7200D3BEAE /* MainWindow_iPad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow_iPad.xib; sourceTree = "<group>"; };
+		2A1E991D124D499800D3BEAE /* MGMVMAddons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMVMAddons.h; sourceTree = "<group>"; };
+		2A1E991E124D499800D3BEAE /* MGMVMAddons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMVMAddons.m; sourceTree = "<group>"; };
+		2A1E993D124D4CC400D3BEAE /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		2A1E9943124D4CD100D3BEAE /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		2A1E9947124D4CEC00D3BEAE /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		2A1E996C124D4DD100D3BEAE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		2A1E997B124D69DE00D3BEAE /* AccountSetup_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountSetup_iPhone.xib; sourceTree = "<group>"; };
+		2A1E99A0124D70A500D3BEAE /* Radio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Radio.png; sourceTree = "<group>"; };
+		2A1E99A1124D70A500D3BEAE /* RadioSelected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RadioSelected.png; sourceTree = "<group>"; };
+		2A1E99A4124D77F900D3BEAE /* MGMAccountSetup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMAccountSetup.h; sourceTree = "<group>"; };
+		2A1E99A5124D77F900D3BEAE /* MGMAccountSetup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMAccountSetup.m; sourceTree = "<group>"; };
+		2A1E9A0E124D827B00D3BEAE /* VoiceMob Setup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VoiceMob Setup.png"; sourceTree = "<group>"; };
+		2A1E9AEA124DA3CC00D3BEAE /* MGMSIPUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSIPUser.h; sourceTree = "<group>"; };
+		2A1E9AEB124DA3CC00D3BEAE /* MGMSIPUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSIPUser.m; sourceTree = "<group>"; };
+		2A1E9B0E124DA4CB00D3BEAE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		2A1E9B12124DA4D700D3BEAE /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		2A1E9B44124DA63C00D3BEAE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		2A1E9BA5124DB1AE00D3BEAE /* VoiceMob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VoiceMob.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +98,13 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
+				2A1E993E124D4CC400D3BEAE /* AddressBook.framework in Frameworks */,
+				2A1E9944124D4CD100D3BEAE /* libxml2.dylib in Frameworks */,
+				2A1E9948124D4CEC00D3BEAE /* AVFoundation.framework in Frameworks */,
+				2A1E996D124D4DD100D3BEAE /* Security.framework in Frameworks */,
+				2A1E9B0F124DA4CB00D3BEAE /* AudioToolbox.framework in Frameworks */,
+				2A1E9B13124DA4D700D3BEAE /* CoreAudio.framework in Frameworks */,
+				2A1E9B45124DA63C00D3BEAE /* CFNetwork.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -107,6 +147,13 @@
 				1DF5F4DF0D08C38300B7A737 /* UIKit.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
+				2A1E993D124D4CC400D3BEAE /* AddressBook.framework */,
+				2A1E9943124D4CD100D3BEAE /* libxml2.dylib */,
+				2A1E9947124D4CEC00D3BEAE /* AVFoundation.framework */,
+				2A1E996C124D4DD100D3BEAE /* Security.framework */,
+				2A1E9B0E124DA4CB00D3BEAE /* AudioToolbox.framework */,
+				2A1E9B44124DA63C00D3BEAE /* CFNetwork.framework */,
+				2A1E9B12124DA4D700D3BEAE /* CoreAudio.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -114,8 +161,14 @@
 		2A1E97BC124D22A900D3BEAE /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				2A1E991D124D499800D3BEAE /* MGMVMAddons.h */,
+				2A1E991E124D499800D3BEAE /* MGMVMAddons.m */,
 				2A1E97D7124D261E00D3BEAE /* MGMController.h */,
 				2A1E97D8124D261E00D3BEAE /* MGMController.m */,
+				2A1E99A4124D77F900D3BEAE /* MGMAccountSetup.h */,
+				2A1E99A5124D77F900D3BEAE /* MGMAccountSetup.m */,
+				2A1E9AEA124DA3CC00D3BEAE /* MGMSIPUser.h */,
+				2A1E9AEB124DA3CC00D3BEAE /* MGMSIPUser.m */,
 			);
 			name = Classes;
 			path = Classes/VoiceMob;
@@ -124,9 +177,14 @@
 		2A1E97C0124D22DA00D3BEAE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2A1E9BA5124DB1AE00D3BEAE /* VoiceMob.png */,
+				2A1E9A0E124D827B00D3BEAE /* VoiceMob Setup.png */,
 				2A1E97C1124D22DA00D3BEAE /* Info.plist */,
 				2A1E9825124D2B3D00D3BEAE /* MainWindow_iPhone.xib */,
 				2A1E9837124D2B7200D3BEAE /* MainWindow_iPad.xib */,
+				2A1E997B124D69DE00D3BEAE /* AccountSetup_iPhone.xib */,
+				2A1E99A0124D70A500D3BEAE /* Radio.png */,
+				2A1E99A1124D70A500D3BEAE /* RadioSelected.png */,
 			);
 			name = Resources;
 			path = Resources/VoiceMob;
@@ -209,6 +267,11 @@
 			files = (
 				2A1E9826124D2B3D00D3BEAE /* MainWindow_iPhone.xib in Resources */,
 				2A1E9838124D2B7200D3BEAE /* MainWindow_iPad.xib in Resources */,
+				2A1E997C124D69DE00D3BEAE /* AccountSetup_iPhone.xib in Resources */,
+				2A1E99A2124D70A500D3BEAE /* Radio.png in Resources */,
+				2A1E99A3124D70A500D3BEAE /* RadioSelected.png in Resources */,
+				2A1E9A0F124D827B00D3BEAE /* VoiceMob Setup.png in Resources */,
+				2A1E9BA6124DB1AE00D3BEAE /* VoiceMob.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,6 +284,9 @@
 			files = (
 				2A1E97BF124D22A900D3BEAE /* main.m in Sources */,
 				2A1E97D9124D261E00D3BEAE /* MGMController.m in Sources */,
+				2A1E991F124D499800D3BEAE /* MGMVMAddons.m in Sources */,
+				2A1E99A6124D77F900D3BEAE /* MGMAccountSetup.m in Sources */,
+				2A1E9AEC124DA3CC00D3BEAE /* MGMSIPUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -245,6 +311,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceMob/VoiceMob_Prefix.pch;
 				INFOPLIST_FILE = Resources/VoiceMob/Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libraries/lib\"",
+				);
 				PRODUCT_NAME = VoiceMob;
 			};
 			name = Debug;
@@ -257,10 +327,104 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = VoiceMob_Prefix.pch;
 				INFOPLIST_FILE = "VoiceMob-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libraries/lib\"",
+				);
 				PRODUCT_NAME = VoiceMob;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
+		};
+		2A1E9928124D4C3000D3BEAE /* Debug SIP */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"\"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/usr/local/include\"",
+					"\"$(SRCROOT)/Libraries/include\"",
+					"\"$(SRCROOT)/SIP/opt/include\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
+				OTHER_CFLAGS = (
+					"-fblocks",
+					"-DMGMSIPENABLED=1",
+				);
+				OTHER_LDFLAGS = "-all_load";
+				PREBINDING = NO;
+				SDKROOT = iphoneos4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug SIP";
+		};
+		2A1E9929124D4C3000D3BEAE /* Debug SIP */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Classes/VoiceMob/VoiceMob_Prefix.pch;
+				INFOPLIST_FILE = Resources/VoiceMob/Info.plist;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libraries/lib\"",
+				);
+				PRODUCT_NAME = VoiceMob;
+			};
+			name = "Debug SIP";
+		};
+		2A1E992A124D4C3600D3BEAE /* Release SIP */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"\"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/usr/local/include\"",
+					"\"$(SRCROOT)/Libraries/include\"",
+					"\"$(SRCROOT)/SIP/opt/include\"",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"-fblocks",
+					"-DMGMSIPENABLED=1",
+				);
+				OTHER_LDFLAGS = "-all_load";
+				PREBINDING = NO;
+				SDKROOT = iphoneos4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Release SIP";
+		};
+		2A1E992B124D4C3600D3BEAE /* Release SIP */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = VoiceMob_Prefix.pch;
+				INFOPLIST_FILE = "VoiceMob-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Libraries/lib\"",
+				);
+				PRODUCT_NAME = VoiceMob;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Release SIP";
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -272,11 +436,13 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
 					"\"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/usr/local/include\"",
 					"\"$(SRCROOT)/Libraries/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				OTHER_CFLAGS = "-fblocks";
+				OTHER_LDFLAGS = "-all_load";
 				PREBINDING = NO;
 				SDKROOT = iphoneos4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -293,6 +459,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
 					"\"$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/usr/local/include\"",
 					"\"$(SRCROOT)/Libraries/include\"",
 				);
@@ -301,6 +468,7 @@
 					"-DNS_BLOCK_ASSERTIONS=1",
 					"-fblocks",
 				);
+				OTHER_LDFLAGS = "-all_load";
 				PREBINDING = NO;
 				SDKROOT = iphoneos4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -314,7 +482,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
+				2A1E9929124D4C3000D3BEAE /* Debug SIP */,
 				1D6058950D05DD3E006BFB54 /* Release */,
+				2A1E992B124D4C3600D3BEAE /* Release SIP */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -323,7 +493,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
+				2A1E9928124D4C3000D3BEAE /* Debug SIP */,
 				C01FCF5008A954540054247B /* Release */,
+				2A1E992A124D4C3600D3BEAE /* Release SIP */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -87,7 +87,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 			[continueButton setEnabled:YES];
 			break;
 		case 2:
-			[titleField setStringValue:@"Account Set Up"];
+			[titleField setStringValue:@"Account Setup"];
 			if (isAttached)
 				[backButton setTitle:MGMSCancel];
 			else
@@ -163,7 +163,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 			break;
 		}
 		case 9: {
-			[titleField setStringValue:@"Set Up Successful"];
+			[titleField setStringValue:@"Setup Successful"];
 			NSString *type = nil;
 			if (accountType==0)
 				type = MGMSGoogleVoice;
@@ -176,11 +176,11 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 			[backButton setEnabled:NO];
 			[continueButton setTitle:MGMSDone];
 			[continueButton setEnabled:YES];
-			[S9MessageField setStringValue:[NSString stringWithFormat:@"You have sucessfully set up your %@ account. You may continue to the Application or you add another account by pressing \"Add Another Account\". If you are confused about VoiceMac, please read the documentation which explains how you use it and all you can do with it.", type]];
+			[S9MessageField setStringValue:[NSString stringWithFormat:@"You have sucessfully set up your %@ account. You may continue to the Application or add another account by pressing \"Add Another Account\". If you are confused about VoiceMac, please read the documentation which explains all you can do with it.", type]];
 			break;
 		}
 	}
-	[stepView selectTabViewItemAtIndex:step-1];	
+	[stepView selectTabViewItemAtIndex:step-1];
 }
 
 - (IBAction)back:(id)sender {

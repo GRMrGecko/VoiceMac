@@ -82,14 +82,6 @@
 					</object>
 					<int key="connectionID">8</int>
 				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">rootViewController</string>
-						<reference key="source" ref="380026005"/>
-						<reference key="destination" ref="455002292"/>
-					</object>
-					<int key="connectionID">9</int>
-				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">

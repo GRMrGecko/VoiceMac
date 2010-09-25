@@ -87,7 +87,6 @@
 		2A1174CE12456F2700D119B5 /* n7.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11741D12456F2600D119B5 /* n7.png */; };
 		2A1174D012456F2700D119B5 /* n8.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11741F12456F2600D119B5 /* n8.png */; };
 		2A1174D212456F2700D119B5 /* n9.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11742112456F2600D119B5 /* n9.png */; };
-		2A1174D312456F2700D119B5 /* NumberOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A11742212456F2600D119B5 /* NumberOptions.xib */; };
 		2A1174D512456F2700D119B5 /* Accounts.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11742512456F2600D119B5 /* Accounts.png */; };
 		2A1174D812456F2700D119B5 /* SIP.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11742812456F2600D119B5 /* SIP.png */; };
 		2A1174DB12456F2700D119B5 /* SMSThemes.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11742B12456F2600D119B5 /* SMSThemes.png */; };
@@ -112,6 +111,7 @@
 		2A1176681245725C00D119B5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1176671245725B00D119B5 /* QuartzCore.framework */; };
 		2A117685124573D600D119B5 /* VoiceMac.icns in Resources */ = {isa = PBXBuildFile; fileRef = 2A117684124573D600D119B5 /* VoiceMac.icns */; };
 		2A11770412458C8A00D119B5 /* blankicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11770312458C8A00D119B5 /* blankicon.png */; };
+		2A1E9986124D69F300D3BEAE /* NumberOptions.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A1E9985124D69F300D3BEAE /* NumberOptions.xib */; };
 		2A91A3F61247D6B900013B43 /* AccountsPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A91A3F81247D6B900013B43 /* AccountsPane.xib */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -265,7 +265,7 @@
 		2A11741D12456F2600D119B5 /* n7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = n7.png; sourceTree = "<group>"; };
 		2A11741F12456F2600D119B5 /* n8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = n8.png; sourceTree = "<group>"; };
 		2A11742112456F2600D119B5 /* n9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = n9.png; sourceTree = "<group>"; };
-		2A11742212456F2600D119B5 /* NumberOptions.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NumberOptions.xib; sourceTree = "<group>"; };
+		2A11742212456F2600D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/NumberOptions.xib; sourceTree = "<group>"; };
 		2A11742512456F2600D119B5 /* Accounts.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Accounts.png; sourceTree = "<group>"; };
 		2A11742812456F2600D119B5 /* SIP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SIP.png; sourceTree = "<group>"; };
 		2A11742912456F2600D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SIPPane.xib; sourceTree = "<group>"; };
@@ -511,7 +511,7 @@
 				2A11740712456F2600D119B5 /* micVolume.png */,
 				2A03CC791247D46D00730F0C /* MultiSMS.xib */,
 				2A11740912456F2600D119B5 /* Number Pad */,
-				2A11742212456F2600D119B5 /* NumberOptions.xib */,
+				2A1E9985124D69F300D3BEAE /* NumberOptions.xib */,
 				2A11742312456F2600D119B5 /* Preferences */,
 				2A03CC7B1247D47400730F0C /* RecordedView.xib */,
 				2A03CC7D1247D47A00730F0C /* SIPCallWindow.xib */,
@@ -712,7 +712,7 @@
 				2A1174CE12456F2700D119B5 /* n7.png in Resources */,
 				2A1174D012456F2700D119B5 /* n8.png in Resources */,
 				2A1174D212456F2700D119B5 /* n9.png in Resources */,
-				2A1174D312456F2700D119B5 /* NumberOptions.xib in Resources */,
+				2A1E9986124D69F300D3BEAE /* NumberOptions.xib in Resources */,
 				2A1174D512456F2700D119B5 /* Accounts.png in Resources */,
 				2A91A3F61247D6B900013B43 /* AccountsPane.xib in Resources */,
 				2A1174D812456F2700D119B5 /* SIP.png in Resources */,
@@ -909,6 +909,14 @@
 				2A11740012456F2600D119B5 /* English */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		2A1E9985124D69F300D3BEAE /* NumberOptions.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2A11742212456F2600D119B5 /* English */,
+			);
+			name = NumberOptions.xib;
 			sourceTree = "<group>";
 		};
 		2A91A3F81247D6B900013B43 /* AccountsPane.xib */ = {
