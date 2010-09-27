@@ -83,7 +83,7 @@ NSString * const MGMLogout = @"Logout";
 	if ([[tableColumn identifier] isEqual:@"username"]) {
 #if MGMSIPENABLED
 		NSArray *users = [MGMUser users];
-		if ([users count]>=row)
+		if ([users count]<=row)
 			return nil;
 		MGMUser *user = [MGMUser userWithID:[users objectAtIndex:row]];
 		if ([[user settingForKey:MGMSAccountType] isEqual:MGMSSIP]) {
@@ -94,7 +94,7 @@ NSString * const MGMLogout = @"Logout";
 		return [[MGMUser userNames] objectAtIndex:row];
 	} else if ([[tableColumn identifier] isEqual:@"state"]) {
 		NSDictionary *users = [MGMUser usersPlist];
-		if ([[users allKeys] count]>=row)
+		if ([[users allKeys] count]<=row)
 			return nil;
 		return ([[users objectForKey:[[users allKeys] objectAtIndex:row]] boolValue] ? @"✓" : @"");
 	}

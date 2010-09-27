@@ -60,6 +60,10 @@
 	NSString *prefix = [[self class] prefixForName:name];
 	NSString *uri = nil;
 	if (prefix!=nil) {
+		if (MGMXMLNodePtr->doc==NULL) {
+			NSLog(@"You may not search for elements with a namespace if there is no document.");
+			return nil;
+		}
 		xmlNsPtr namespace = xmlSearchNs(MGMXMLNodePtr->doc, MGMXMLNodePtr, [prefix xmlString]);
 		if (namespace!=NULL)
 			uri = [NSString stringWithXMLString:namespace->href];

@@ -41,7 +41,7 @@
 
 - (void)sendNotifications;
 
-- (void)updateWithMessages:(NSArray *)theMessages messageInfo:(NSDictionary *)theMessageInfo;
+- (BOOL)updateWithMessages:(NSArray *)theMessages messageInfo:(NSDictionary *)theMessageInfo;
 
 - (void)buildHTML;
 - (void)addMessage:(NSDictionary *)theMessage;

@@ -62,6 +62,11 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 	}
 }
 - (void)dealloc {
+	if (progressFadeAnimation!=nil) {
+		[progressFadeAnimation stopAnimation];
+		[progressFadeAnimation release];
+		progressFadeAnimation = nil;
+	}
 	[super dealloc];
 	if (calls!=nil) {
 		[calls removeAllObjects];

@@ -153,7 +153,7 @@ typedef enum {
 
 #if !TARGET_OS_IPHONE
 - (BOOL)setInputSoundDevice:(int)theInputDevice outputSoundDevice:(int)theOutputDevice;
-- (BOOL)stopSound;
+- (BOOL)stopAudio;
 - (void)updateAudioDevices;
 - (NSArray *)audioDevices;
 #endif

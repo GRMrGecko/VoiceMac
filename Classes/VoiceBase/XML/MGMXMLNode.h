@@ -71,6 +71,7 @@ struct _xmlCom {
 	xmlNsPtr namespaceXML;
 	xmlNodePtr parentNode;
 	MGMXMLNodeKind type;
+	MGMXMLNode *documentNode;
 }
 + (id)nodeWithTypeXMLPtr:(xmlTypPtr)theXMLPtr;
 - (id)initWithTypeXMLPtr:(xmlTypPtr)theXMLPtr;
@@ -81,6 +82,7 @@ struct _xmlCom {
 + (void)removeChildrenFromNode:(xmlNodePtr)theNode;
 + (void)freeNode:(xmlNodePtr)theNode;
 - (void)setTypeXMLPtr:(xmlTypPtr)theXMLPtr;
+- (void)releaseDocument;
 + (BOOL)isNode:(MGMXMLNodeKind)theType;
 - (BOOL)isNode;
 + (NSError *)lastError;

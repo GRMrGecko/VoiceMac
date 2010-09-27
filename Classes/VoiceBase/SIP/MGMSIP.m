@@ -617,19 +617,20 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 
 - (void)computerSleep {
 	restartAccounts = [accounts copy];
-	[self stopBackground];
+	[accounts makeObjectsPerformSelector:@selector(logout)];
+#if !TARGET_OS_IPHONE
+	[self stopAudio];
+#endif
 }
 - (void)computerWake {
+#if !TARGET_OS_IPHONE
+	[self updateAudioDevices];
+#endif
 	if (restartAccounts!=nil) {
-		for (int i=0; i<[restartAccounts count]; i++) {
-			if (![accounts containsObject:[restartAccounts objectAtIndex:i]])
-				[accounts addObject:[restartAccounts objectAtIndex:i]];
-		}
+		[restartAccounts makeObjectsPerformSelector:@selector(login)];
 		[restartAccounts release];
 		restartAccounts = nil;
 	}
-	
-	[self start];
 }
 
 - (void)registerThread:(pj_thread_desc *)thePJThreadDesc {
@@ -845,7 +846,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	return (status==PJ_SUCCESS);
 }
-- (BOOL)stopSound {
+- (BOOL)stopAudio {
 	if (state!=MGMSIPStartedState)
 		return NO;
 	

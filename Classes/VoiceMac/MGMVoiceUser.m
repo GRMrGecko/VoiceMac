@@ -60,6 +60,11 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 	}
 }
 - (void)dealloc {
+	if (progressFadeAnimation!=nil) {
+		[progressFadeAnimation stopAnimation];
+		[progressFadeAnimation release];
+		progressFadeAnimation = nil;
+	}
 	[super dealloc];
 	if (instance!=nil) {
 		[instance setDelegate:nil];

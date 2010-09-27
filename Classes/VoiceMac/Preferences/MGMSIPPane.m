@@ -61,7 +61,7 @@
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	if (shouldRestart) {
-		/*NSAlert *alert = [[NSAlert new] autorelease];
+		NSAlert *alert = [[NSAlert new] autorelease];
 		[alert setMessageText:@"Restart Required"];
 		[alert setInformativeText:@"You have changed some settings that requires you to restart VoiceMac for them to take place, do you want to restart VoiceMac now?"];
 		[alert addButtonWithTitle:@"Yes"];
@@ -73,8 +73,8 @@
 			NSString *relaunchPath = [[[NSBundle bundleWithIdentifier:@"org.andymatuschak.Sparkle"] resourcePath] stringByAppendingPathComponent:@"relaunch"];
 			[NSTask launchedTaskWithLaunchPath:relaunchPath arguments:[NSArray arrayWithObjects:pathToRelaunch, [NSString stringWithFormat:@"%d", [[NSProcessInfo processInfo] processIdentifier]], nil]];
 			[[NSApplication sharedApplication] terminate:self];
-		}*/
-		[[MGMSIP sharedSIP] restart];
+		}
+		//[[MGMSIP sharedSIP] restart];
 	}
 	if (mainView!=nil)
 		[mainView release];

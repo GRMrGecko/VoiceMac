@@ -144,6 +144,7 @@ const float updateTimeInterval = 300.0;
 	}
 	NSDate *newestDate = [NSDate distantPast];
 	BOOL newMessage = NO;
+	BOOL newTab = NO;
 	for (unsigned int i=0; i<[theMessages count]; i++) {
 		if ([lastDates objectForKey:[theInstance userNumber]]==nil || (![[lastDates objectForKey:[theInstance userNumber]] isEqual:[[theMessages objectAtIndex:i] objectForKey:MGMITime]] && [[lastDates objectForKey:[theInstance userNumber]] earlierDate:[[theMessages objectAtIndex:i] objectForKey:MGMITime]]==[lastDates objectForKey:[theInstance userNumber]])) {
 			NSMutableDictionary *messageInfo = [NSMutableDictionary dictionaryWithDictionary:[theMessages objectAtIndex:i]];
@@ -151,16 +152,18 @@ const float updateTimeInterval = 300.0;
 			[messageInfo removeObjectForKey:MGMIMessages];
 			[messageInfo setObject:[[theInstance contacts] nameForNumber:[messageInfo objectForKey:MGMIPhoneNumber]] forKey:MGMTInName];
 			[messageInfo setObject:[theInstance userNumber] forKey:MGMTUserNumber];
-			BOOL window = NO;
+			BOOL tab = NO;
 			for (unsigned int m=0; m<[SMSMessages count]; m++) {
 				if ([[[[SMSMessages objectAtIndex:m] messageInfo] objectForKey:MGMIPhoneNumber] isEqual:[messageInfo objectForKey:MGMIPhoneNumber]] && ([[[[SMSMessages objectAtIndex:m] messageInfo] objectForKey:MGMIID] isEqual:[messageInfo objectForKey:MGMIID]] || [[[[SMSMessages objectAtIndex:m] messageInfo] objectForKey:MGMIID] isEqual:@""]) && [[SMSMessages objectAtIndex:m] instance]==theInstance) {
-					window = YES;
-					[[SMSMessages objectAtIndex:m] updateWithMessages:messages messageInfo:messageInfo];
+					tab = YES;
+					if ([[SMSMessages objectAtIndex:m] updateWithMessages:messages messageInfo:messageInfo])
+						newMessage = YES;
 					break;
 				}
 			}
-			if (!window && ![[[theMessages objectAtIndex:i] objectForKey:MGMIRead] boolValue]) {
+			if (!tab && ![[[theMessages objectAtIndex:i] objectForKey:MGMIRead] boolValue]) {
 				newMessage = YES;
+				newTab = YES;
 				[SMSMessages addObject:[MGMSMSMessageView viewWithManager:self messages:messages messageInfo:messageInfo instance:theInstance]];
 			}
 			if ([newestDate earlierDate:[[theMessages objectAtIndex:i] objectForKey:MGMITime]]==newestDate)
@@ -168,10 +171,12 @@ const float updateTimeInterval = 300.0;
 		}
 	}
 	if (newMessage) {
-		[self loadWindow];
 		[lastDates setObject:newestDate forKey:[theInstance userNumber]];
-		[self reloadData];
 		[[controller themeManager] playSound:MGMTSSMSMessage];
+	}
+	if (newTab) {
+		[self loadWindow];
+		[self reloadData];
 		[SMSWindow makeKeyAndOrderFront:self];
 	}
 }

@@ -84,6 +84,8 @@ static void MGMXMLErrorHandler(void *userData, xmlErrorPtr error) {
 		parentNode = NULL;
 	}
 	if (commonXML!=NULL) {
+		if (type!=MGMXMLDocumentKind)
+			[self releaseDocument];
 		commonXML->_private = NULL;
 		
 		if (commonXML->parent==NULL) {
@@ -91,7 +93,7 @@ static void MGMXMLErrorHandler(void *userData, xmlErrorPtr error) {
 				xmlNodePtr child = commonXML->children;
 				while (child!=NULL) {
 					xmlNodePtr nextChild = child->next;
-					if (child->type == XML_ELEMENT_NODE) {
+					if (child->type==MGMXMLElementKind) {
 						if (child->prev!=NULL)
 							child->prev->next = child->next;
 						if (child->next!=NULL)
@@ -199,7 +201,10 @@ static void MGMXMLErrorHandler(void *userData, xmlErrorPtr error) {
 			theNode->parent = NULL;
 			theNode->prev = NULL;
 			theNode->next = NULL;
-			if (theNode->doc!=NULL) [self stripDocumentFromNode:theNode];
+			if (theNode->doc!=NULL) {
+				[(MGMXMLNode *)theNode->_private releaseDocument];
+				[self stripDocumentFromNode:theNode];
+			}
 		}
 	}
 }
@@ -219,6 +224,14 @@ static void MGMXMLErrorHandler(void *userData, xmlErrorPtr error) {
 			self->isa = [MGMXMLDocument class];
 		else if (type==MGMXMLElementKind && [self isMemberOfClass:[MGMXMLNode class]])
 			self->isa = [MGMXMLElement class];
+		if (type!=MGMXMLDocumentKind)
+			documentNode = [[MGMXMLNode alloc] initWithTypeXMLPtr:(xmlTypPtr)commonXML->doc];
+	}
+}
+- (void)releaseDocument {
+	if (documentNode!=nil) {
+		[documentNode release];
+		documentNode = nil;
 	}
 }
 + (BOOL)isNode:(MGMXMLNodeKind)theType {

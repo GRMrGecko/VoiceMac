@@ -97,27 +97,30 @@
 	}
 }
 
-- (void)updateWithMessages:(NSArray *)theMessages messageInfo:(NSDictionary *)theMessageInfo {
+- (BOOL)updateWithMessages:(NSArray *)theMessages messageInfo:(NSDictionary *)theMessageInfo {
+	BOOL newIncomingMessages = NO;
 	if (![[theMessageInfo objectForKey:MGMITime] isEqual:[messageInfo objectForKey:MGMITime]]) {
 		if (messageInfo!=nil) [messageInfo release];
 		messageInfo = [theMessageInfo mutableCopy];
-		BOOL read = [[messageInfo objectForKey:MGMIRead] boolValue];
-		[self setRead:read];
+		[self setRead:[[messageInfo objectForKey:MGMIRead] boolValue]];
 		
 		BOOL rebuild = [[[[manager themeManager] variant] objectForKey:MGMTRebuild] boolValue];
 		BOOL newMessages = NO;
 		for (unsigned int i=[messages count]; i<[theMessages count]; i++) {
 			newMessages = YES;
 			[messages addObject:[theMessages objectAtIndex:i]];
+			if (![[[theMessages objectAtIndex:i] objectForKey:MGMIYou] boolValue])
+				newIncomingMessages = YES;
 			if (!rebuild)
 				[self addMessage:[messages lastObject]];
 		}
 		
 		if (newMessages && rebuild)
 			[self buildHTML];
-		if (!read)
+		if (newIncomingMessages)
 			[self sendNotifications];
 	}
+	return newIncomingMessages;
 }
 
 - (void)updatedTheme:(NSNotification *)theNotification {
