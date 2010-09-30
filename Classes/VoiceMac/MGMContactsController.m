@@ -117,7 +117,7 @@ NSString *MGMContactsWindowOpen = @"MGMContactsWindowOpen";
 		[(MGMViewCell *)cell addSubview:[contactViews objectAtIndex:row-contactsVisible.location]];
 	}
 	@catch (NSException *e) {
-		NSLog(@"Contact error, ignoreing. %@", e);
+		NSLog(@"Contact error, ignoring. %@", e);
 	}
 	[filterLock unlock];
 }

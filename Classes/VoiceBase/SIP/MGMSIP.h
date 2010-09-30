@@ -11,9 +11,9 @@
 #import <UIKit/UIKit.h>
 #else
 #import <Cocoa/Cocoa.h>
+#import <SystemConfiguration/SystemConfiguration.h>
 #endif
 #import <pjsua-lib/pjsua.h>
-#import <SystemConfiguration/SystemConfiguration.h>
 
 @class MGMSIPAccount, MGMSIPCall;
 
@@ -107,8 +107,10 @@ typedef enum {
 	
 	int ringbackCount;
 	
+#if !TARGET_OS_IPHONE
 	SCDynamicStoreRef store;
 	CFRunLoopSourceRef storeRunLoop;
+#endif
 }
 + (MGMSIP *)sharedSIP;
 

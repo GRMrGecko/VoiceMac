@@ -279,12 +279,12 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 - (void)dealloc {
 #if !TARGET_OS_IPHONE
 	[[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self];
-#endif
 	[self stop];
 	if (storeRunLoop!=NULL)
 		CFRunLoopRemoveSource(CFRunLoopGetCurrent(), storeRunLoop, kCFRunLoopDefaultMode);
 	if (store!=NULL)
 		CFRelease(store);
+#endif
 	if (lock!=nil)
 		[lock release];
 	if (accounts!=nil)

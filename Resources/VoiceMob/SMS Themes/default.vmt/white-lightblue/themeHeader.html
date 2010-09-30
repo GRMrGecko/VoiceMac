@@ -1,0 +1,160 @@
+<html>
+<head>
+<style type="text/css">
+.ttl {
+	background: url("%THEME%/images/ttl.png") no-repeat top left;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+.utl {
+	background: url("%THEME%/images/utl.png") no-repeat top left;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+
+.ttm {
+	background: url("%THEME%/images/ttm.png") repeat-x top;
+	height:14px;
+	font-size:0pt;
+}
+.utm {
+	background: url("%THEME%/images/utm.png") repeat-x top;
+	height:14px;
+	font-size:0pt;
+}
+
+.ttr {
+	background: url("%THEME%/images/ttr.png") no-repeat top right;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+.utr {
+	background: url("%THEME%/images/utr.png") no-repeat top right;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+
+.tml {
+	background: url("%THEME%/images/tml.png") repeat-y bottom left;
+	width:21px;
+	font-size:0pt;
+}
+.uml {
+	background: url("%THEME%/images/uml.png") repeat-y bottom left;
+	width:21px;
+	font-size:0pt;
+}
+
+.tmm {
+	background: url("%THEME%/images/tmm.png") repeat bottom;
+}
+.umm {
+	background: url("%THEME%/images/umm.png") repeat bottom;
+}
+
+.tmr {
+	background: url("%THEME%/images/tmr.png") repeat-y bottom left;
+	width:21px;
+	font-size:0pt;
+}
+.umr {
+	background: url("%THEME%/images/umr.png") repeat-y bottom left;
+	width:21px;
+	font-size:0pt;
+}
+
+.tbl {
+	background: url("%THEME%/images/tbl.png") no-repeat bottom left;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+.ubl {
+	background: url("%THEME%/images/ubl.png") no-repeat bottom left;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+
+.tbm {
+	background: url("%THEME%/images/tbm.png") repeat-x bottom;
+	height:14px;
+	font-size:0pt;
+}
+.ubm {
+	background: url("%THEME%/images/ubm.png") repeat-x bottom;
+	height:14px;
+	font-size:0pt;
+}
+
+.tbr {
+	background: url("%THEME%/images/tbr.png") no-repeat bottom left;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+.ubr {
+	background: url("%THEME%/images/ubr.png") no-repeat bottom left;
+	width:21px;
+	height:14px;
+	font-size:0pt;
+}
+td.pname {
+	font-size:9pt;
+	color:#999999;
+	text-align:center;
+}
+
+#inContext {
+	display: none;
+}
+#inNextContext {
+	display: none;
+}
+#outContext {
+	display: none;
+}
+#outNextContext {
+	display: none;
+}
+.inContent .inNextContent .outContent .outNextContent {
+	display: block;
+}
+</style>
+<script type="text/javascript">
+function newMessage(text, photourl, time, id, name, number, lastdate, type) {
+	var template = null;
+	if (type==1) {
+		template = document.getElementById("outContext").cloneNode(true);
+		template.setAttribute("class", "outContent");
+	} else if (type==2) {
+		template = document.getElementById("outNextContext").cloneNode(true);
+		template.setAttribute("class", "outNextContent");
+	} else if (type==3) {
+		template = document.getElementById("inContext").cloneNode(true);
+		template.setAttribute("class", "inContent");
+	} else if (type==4) {
+		template = document.getElementById("inNextContext").cloneNode(true);
+		template.setAttribute("class", "inNextContent");
+	}	
+	template.removeAttribute("id");
+	template.innerHTML = template.innerHTML.replace(/%TEXT%/g, text);
+	template.innerHTML = template.innerHTML.replace(/%PHOTO%/g, photourl);
+	template.innerHTML = template.innerHTML.replace(/%TIME%/g, time);
+	template.innerHTML = template.innerHTML.replace(/%MESSAGEID%/g, id);
+	template.innerHTML = template.innerHTML.replace(/%NAME%/g, name);
+	template.innerHTML = template.innerHTML.replace(/%NUMBER%/g, number);
+	document.getElementById("content").appendChild(template);
+}
+function scrollToBottom() {
+	window.scrollTo(0, document.body.scrollHeight);
+}
+</script>
+</head>
+<body>
+%HEADER%
+<div id="content">

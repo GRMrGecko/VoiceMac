@@ -136,7 +136,8 @@
 	number = [number replace:@"-" with:@""];
 	number = [number replace:@")" with:@""];
 	number = [number replace:@"(" with:@""];
-	number = [number replace:@"+" with:@""];
+	number = [number replace:@"+1" with:@"1"];
+	number = [number replace:@"+" with:@"011"];
 	number = [number replace:@"." with:@""];
 	return number;
 }
@@ -195,15 +196,30 @@
 - (NSString *)readableNumber {
 	NSString *number = [[self removePhoneWhiteSpace] littersToNumbers];
 	if (![number hasPrefix:@"011"]) {
-		if ([number length]>7) {
-			if ([number hasPrefix:@"1"])
-				number = [number substringFromIndex:1];
+		if ([number length]==10) {
 			NSString *areaCode = [number substringToIndex:3];
 			number = [number substringFromIndex:3];
 			NSString *firstNumbers = [number substringToIndex:3];
 			number = [number substringFromIndex:3];
 			number = [NSString stringWithFormat:@"(%@) %@-%@", areaCode, firstNumbers, number];
+		} else if ([number length]==11 && [number hasPrefix:@"1"]) {
+			number = [number substringFromIndex:1];
+			NSString *areaCode = [number substringToIndex:3];
+			number = [number substringFromIndex:3];
+			NSString *firstNumbers = [number substringToIndex:3];
+			number = [number substringFromIndex:3];
+			if ([areaCode isEqual:@"800"])
+				number = [NSString stringWithFormat:@"1 (%@) %@-%@", areaCode, firstNumbers, number];
+			else
+				number = [NSString stringWithFormat:@"(%@) %@-%@", areaCode, firstNumbers, number];
+		} else if ([number length]>=7 && [number length]<=10) {
+			NSString *firstNumbers = [number substringToIndex:3];
+			number = [number substringFromIndex:3];
+			number = [NSString stringWithFormat:@"%@-%@", firstNumbers, number];
 		}
+	} else {
+		number = [number substringFromIndex:3];
+		number = [@"+" stringByAppendingString:number];
 	}
 	return number;
 }
@@ -1404,7 +1420,8 @@ NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *cont
 			[graphicsContext setShouldAntialias:YES];
 			[image drawInRect:NSMakeRect(0, 0, scaledWidth, scaledHeight) fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
 			[newImage unlockFocus];
-			scaledData = [newImage TIFFRepresentation];
+			NSBitmapImageRep *imageRep = [NSBitmapImageRep imageRepWithData:[newImage TIFFRepresentation]];
+			scaledData = [imageRep representationUsingType:NSPNGFileType properties:nil];
 			[newImage release];
 		}
 #endif

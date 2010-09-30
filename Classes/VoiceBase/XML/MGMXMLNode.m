@@ -84,9 +84,9 @@ static void MGMXMLErrorHandler(void *userData, xmlErrorPtr error) {
 		parentNode = NULL;
 	}
 	if (commonXML!=NULL) {
+		commonXML->_private = NULL;
 		if (type!=MGMXMLDocumentKind)
 			[self releaseDocument];
-		commonXML->_private = NULL;
 		
 		if (commonXML->parent==NULL) {
 			if (type==MGMXMLDocumentKind) {
@@ -225,7 +225,7 @@ static void MGMXMLErrorHandler(void *userData, xmlErrorPtr error) {
 		else if (type==MGMXMLElementKind && [self isMemberOfClass:[MGMXMLNode class]])
 			self->isa = [MGMXMLElement class];
 		if (type!=MGMXMLDocumentKind)
-			documentNode = [[MGMXMLNode alloc] initWithTypeXMLPtr:(xmlTypPtr)commonXML->doc];
+			documentNode = [[MGMXMLDocument alloc] initWithTypeXMLPtr:(xmlTypPtr)commonXML->doc];
 	}
 }
 - (void)releaseDocument {

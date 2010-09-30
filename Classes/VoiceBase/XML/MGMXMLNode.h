@@ -8,10 +8,11 @@
 
 #if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
+#import <MGMXMLNodeOptions.h>
 #else
 #import <Cocoa/Cocoa.h>
-#endif
 #import <VoiceBase/MGMXMLNodeOptions.h>
+#endif
 #import <libxml/parser.h>
 #import <libxml/tree.h>
 #import <libxml/xpath.h>
@@ -71,7 +72,7 @@ struct _xmlCom {
 	xmlNsPtr namespaceXML;
 	xmlNodePtr parentNode;
 	MGMXMLNodeKind type;
-	MGMXMLNode *documentNode;
+	MGMXMLDocument *documentNode;
 }
 + (id)nodeWithTypeXMLPtr:(xmlTypPtr)theXMLPtr;
 - (id)initWithTypeXMLPtr:(xmlTypPtr)theXMLPtr;

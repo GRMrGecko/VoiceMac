@@ -7,6 +7,7 @@
 //
 
 #import "MGMAccountSetup.h"
+#import "MGMController.h"
 #import "MGMSIPUser.h"
 #import "MGMVMAddons.h"
 #import <VoiceBase.h>
@@ -33,16 +34,20 @@ NSString * const MGMS7SIPWaiting = @"Waiting for Registration Status.";
 NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 
 @implementation MGMAccountSetup
-- (id)init {
+- (id)initWithController:(MGMController *)theController {
 	if (self = [super init]) {
 		if (![[NSBundle mainBundle] loadNibNamed:[[UIDevice currentDevice] appendDeviceSuffixToString:@"AccountSetup"] owner:self options:nil]) {
 			NSLog(@"Unable to load Account Setup");
+			[self release];
+			self = nil;
 		} else {
+			controller = theController;
+			
 			displaying = NO;
 			needsDisplay = NO;
 			goingBack = NO;
-			step = 1;
-			accountType = 1;
+			[self setSetupOnly:NO];
+			accountType = 0;
 			accountsCreated = [NSMutableArray new];
 			S7ConnectionManager = [[MGMURLConnectionManager managerWithCookieStorage:nil] retain];
 			setupRect = [setupView frame];
@@ -55,6 +60,24 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 - (void)dealloc {
 	if (setupView!=nil)
 		[setupView release];
+	if (S1View!=nil)
+		[S1View release];
+	if (S2View!=nil)
+		[S2View release];
+	if (S3View!=nil)
+		[S3View release];
+	if (S4View!=nil)
+		[S4View release];
+	if (S5View!=nil)
+		[S5View release];
+	if (S6View!=nil)
+		[S6View release];
+	if (S7View!=nil)
+		[S7View release];
+	if (S8View!=nil)
+		[S8View release];
+	if (S9View!=nil)
+		[S9View release];
 	if (accountsCreated!=nil)
 		[accountsCreated release];
 	if (S7CheckUser!=nil)
@@ -73,6 +96,8 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 }
 
 - (UIView *)view {
+	if (lastView==nil)
+		[self displayStep];
 	return setupView;
 }
 
@@ -80,6 +105,13 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	
 }
 
+- (void)setSetupOnly:(BOOL)isSetupOnly {
+	setupOnly = isSetupOnly;
+	if (setupOnly)
+		step = 2;
+	else
+		step = 1;
+}
 - (void)setStep:(int)theStep {
 	step = theStep;
 }
@@ -100,7 +132,10 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 		case 2:
 			nextView = S2View;
 			[titleField setText:@"Account Setup"];
-			[backButton setTitle:MGMSGoBack];
+			if (setupOnly)
+				[backButton setTitle:MGMSCancel];
+			else
+				[backButton setTitle:MGMSGoBack];
 			[backButton setEnabled:YES];
 			[continueButton setTitle:MGMSContinue];
 			[continueButton setEnabled:YES];
@@ -205,22 +240,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 		displaying = YES;
 		if (goingBack) {
 			CGRect inViewFrame = [nextView frame];
-			inViewFrame.origin.x = -inViewFrame.size.width;
-			[nextView setFrame:inViewFrame];
-			[view addSubview:nextView];
-			[UIView beginAnimations:@"push" context:nil];
-			[UIView setAnimationDuration:0.5];
-			[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-			[UIView setAnimationDelegate:self];
-			[UIView setAnimationDidStopSelector:@selector(displayAnimationDidStop:finished:context:)];
-			[nextView setFrame:[lastView frame]];
-			CGRect outViewFrame = [lastView frame];
-			outViewFrame.origin.x = outViewFrame.size.width;
-			[lastView  setFrame:outViewFrame];
-			[UIView commitAnimations];
-		} else {
-			CGRect inViewFrame = [nextView frame];
-			inViewFrame.origin.x = inViewFrame.size.width;
+			inViewFrame.origin.x -= inViewFrame.size.width;
 			[nextView setFrame:inViewFrame];
 			[view addSubview:nextView];
 			[UIView beginAnimations:nil context:nil];
@@ -230,7 +250,22 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 			[UIView setAnimationDidStopSelector:@selector(displayAnimationDidStop:finished:context:)];
 			[nextView setFrame:[lastView frame]];
 			CGRect outViewFrame = [lastView frame];
-			outViewFrame.origin.x = -outViewFrame.size.width;
+			outViewFrame.origin.x += outViewFrame.size.width;
+			[lastView  setFrame:outViewFrame];
+			[UIView commitAnimations];
+		} else {
+			CGRect inViewFrame = [nextView frame];
+			inViewFrame.origin.x += inViewFrame.size.width;
+			[nextView setFrame:inViewFrame];
+			[view addSubview:nextView];
+			[UIView beginAnimations:nil context:nil];
+			[UIView setAnimationDuration:0.5];
+			[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+			[UIView setAnimationDelegate:self];
+			[UIView setAnimationDidStopSelector:@selector(displayAnimationDidStop:finished:context:)];
+			[nextView setFrame:[lastView frame]];
+			CGRect outViewFrame = [lastView frame];
+			outViewFrame.origin.x -= outViewFrame.size.width;
 			[lastView setFrame:outViewFrame];
 			[UIView commitAnimations];
 		}
@@ -252,6 +287,11 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 - (IBAction)back:(id)sender {
 	switch (step) {
 		case 2:
+			if (setupOnly) {
+				[accountsCreated makeObjectsPerformSelector:@selector(start)];
+				[controller dismissAccountSetup:self];
+				return;
+			}
 			step--;
 			break;
 		case 4:
@@ -297,7 +337,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 					UIAlertView *theAlert = [[UIAlertView new] autorelease];
 					[theAlert setTitle:@"Unable to Add Account"];
 					[theAlert setMessage:@"MGMSIP is not compiled with VoiceMob, you can not add a SIP account without first compiling with MGMSIP."];
-					[theAlert addButtonWithTitle:@"Ok"];
+					[theAlert addButtonWithTitle:MGMOkButtonTitle];
 					[theAlert show];
 					return;
 #endif
@@ -326,7 +366,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 				UIAlertView *theAlert = [[UIAlertView new] autorelease];
 				[theAlert setTitle:@"Missing Information"];
 				[theAlert setMessage:@"It appears as if you did not fill the required fields, please fill out the required fields and then continue."];
-				[theAlert addButtonWithTitle:@"Ok"];
+				[theAlert addButtonWithTitle:MGMOkButtonTitle];
 				[theAlert show];
 				return;
 			}
@@ -335,7 +375,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 		}
 		case 9:
 			[accountsCreated makeObjectsPerformSelector:@selector(start)];
-			[self release];
+			[controller dismissAccountSetup:self];
 			return;
 		default:
 			step++;
@@ -595,7 +635,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 //Step 9
 - (IBAction)S9AddAnotherAccount:(id)sender {
 	goingBack = YES;
-	step = 2;
+	[self setSetupOnly:YES];
 	[self displayStep];
 }
 @end

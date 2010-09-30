@@ -8,9 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
-@class MGMUser, MGMInstance, MGMURLConnectionManager, MGMSIPAccount;
+extern NSString * const MGMSGoogleVoice;
+extern NSString * const MGMSGoogleContacts;
+extern NSString * const MGMSSIP;
+extern NSString * const MGMSAccountType;
+
+extern NSString * const MGMSIPDefaultDomain;
+
+@class MGMController, MGMUser, MGMInstance, MGMURLConnectionManager, MGMSIPAccount;
 
 @interface MGMAccountSetup : NSObject {
+	MGMController *controller;
+	BOOL setupOnly;
+	
 	IBOutlet UIView *setupView;
 	CGRect setupRect;
 	CGRect setupKeyboardRect;
@@ -83,10 +93,14 @@
 	IBOutlet UIView *S9View;
 	IBOutlet UITextView *S9MessageField;
 }
+- (id)initWithController:(MGMController *)theController;
+
 - (UIView *)view;
 
 - (IBAction)closeKeyboard:(id)sender;
 
+- (void)setSetupOnly:(BOOL)isSetupOnly;
+- (void)setStep:(int)theStep;
 - (void)displayStep;
 - (IBAction)back:(id)sender;
 - (IBAction)continue:(id)sender;

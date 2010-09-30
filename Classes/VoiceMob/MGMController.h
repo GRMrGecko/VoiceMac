@@ -8,8 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class MGMThemeManager, MGMAccountController, MGMAccountSetup;
+
 @interface MGMController : UIViewController {
 	IBOutlet UIWindow *mainWindow;
+	
+	MGMThemeManager *themeManager;
+	MGMAccountController *accountController;
 }
+- (MGMThemeManager *)themeManager;
 
+- (void)showAccountSetup;
+- (void)dismissAccountSetup:(MGMAccountSetup *)theAccountSetup;
 @end

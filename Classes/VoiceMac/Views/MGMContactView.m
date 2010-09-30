@@ -63,20 +63,18 @@
 - (void)setContact:(NSDictionary *)theContact {
 	if (contact!=nil) [contact release];
 	contact = [theContact mutableCopy];
-	if ([contact objectForKey:MGMCPhoto]==nil || [[contact objectForKey:MGMCPhoto] isKindOfClass:[NSNull class]]) {
+	if ([contact objectForKey:MGMCPhoto]==nil || [[contact objectForKey:MGMCPhoto] isKindOfClass:[NSNull class]])
 		[photoView setImage:[[[NSImage alloc] initWithContentsOfFile:[themeManager incomingIconPath]] autorelease]];
-	} else {
+	else
 		[photoView setImage:[[[NSImage alloc] initWithData:[contact objectForKey:MGMCPhoto]] autorelease]];
-	}
 	if ([[contact objectForKey:MGMCName] isEqual:@""])
 		[nameField setStringValue:[contact objectForKey:MGMCCompany]];
 	else
 		[nameField setStringValue:[contact objectForKey:MGMCName]];
-	if ([[contact objectForKey:MGMCLabel] isEqual:@""]) {
+	if ([[contact objectForKey:MGMCLabel] isEqual:@""])
 		[phoneField setStringValue:[[contact objectForKey:MGMCNumber] readableNumber]];
-	} else {
+	else
 		[phoneField setStringValue:[NSString stringWithFormat:@"%@ %@", [[contact objectForKey:MGMCNumber] readableNumber], [contact objectForKey:MGMCLabel]]];
-	}
 }
 
 - (void)setFontColor:(NSColor *)theColor {
