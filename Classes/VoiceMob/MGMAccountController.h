@@ -40,6 +40,9 @@
 
 - (MGMController *)controller;
 - (UIView *)view;
+- (UIToolbar *)toolbar;
+- (NSArray *)accountsItems;
+- (NSArray *)accountItems;
 
 - (BOOL)isCurrent:(id)theUser;
 - (void)setTitle:(NSString *)theTitle;

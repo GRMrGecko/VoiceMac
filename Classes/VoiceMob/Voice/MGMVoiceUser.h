@@ -48,6 +48,8 @@
 - (NSString *)areaCode;
 
 - (UIView *)view;
+- (UIView *)tabView;
+- (UITabBar *)tabBar;
 - (void)releaseView;
 
 - (void)loginSuccessful;

@@ -30,12 +30,14 @@
 }
 
 - (UIView *)view {
-	if (![[NSBundle mainBundle] loadNibNamed:[[UIDevice currentDevice] appendDeviceSuffixToString:@"VoiceContacts"] owner:self options:nil]) {
-		NSLog(@"Unable to load Voice Contacts");
-		[self release];
-		self = nil;
-	} else {
-		[super awakeFromNib];
+	if (view==nil) {
+		if (![[NSBundle mainBundle] loadNibNamed:[[UIDevice currentDevice] appendDeviceSuffixToString:@"VoiceContacts"] owner:self options:nil]) {
+			NSLog(@"Unable to load Voice Contacts");
+			[self release];
+			self = nil;
+		} else {
+			[super awakeFromNib];
+		}
 	}
 	return view;
 }

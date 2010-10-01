@@ -9,6 +9,8 @@
 #import "MGMVoiceUser.h"
 #import "MGMVoicePad.h"
 #import "MGMVoiceContacts.h"
+#import "MGMVoiceSMS.h"
+#import "MGMVoiceInbox.h"
 #import "MGMProgressView.h"
 #import "MGMAccountController.h"
 #import "MGMVMAddons.h"
@@ -23,13 +25,16 @@
 	if (self = [super init]) {
 		accountController = theAccountController;
 		user = [theUser retain];
+		
+		if ([user isStarted])
+			instance = [[MGMInstance instanceWithUser:user delegate:self] retain];
+		
 		currentTab = 0;
 		tabObjects = [NSMutableArray new];
 		[tabObjects addObject:[MGMVoicePad tabWithVoiceUser:self]];
 		[tabObjects addObject:[MGMVoiceContacts tabWithVoiceUser:self]];
-		
-		if ([user isStarted])
-			instance = [[MGMInstance instanceWithUser:user delegate:self] retain];
+		[tabObjects addObject:[MGMVoiceSMS tabWithVoiceUser:self]];
+		[tabObjects addObject:[MGMVoiceInbox tabWithVoiceUser:self]];
 	}
 	return self;
 }
@@ -82,6 +87,12 @@
 		}
 	}
 	return view;
+}
+- (UIView *)tabView {
+	return tabView;
+}
+- (UITabBar *)tabBar {
+	return tabBar;
 }
 - (void)releaseView {
 	if (view!=nil) {
@@ -202,6 +213,10 @@
 	int tabIndex = [[tabBar items] indexOfObject:item];
 	if (tabIndex==currentTab)
 		return;
+	if ([[accountController toolbar] items]!=[accountController accountItems]) {
+		[[accountController toolbar] setItems:[accountController accountItems] animated:YES];
+	}
+	
 	id tab = [tabObjects objectAtIndex:currentTab];
 	currentTab = tabIndex;
 	id newTab = [tabObjects objectAtIndex:currentTab];

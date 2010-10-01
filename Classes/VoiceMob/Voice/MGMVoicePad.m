@@ -34,15 +34,17 @@
 }
 
 - (UIView *)view {
-	if (![[NSBundle mainBundle] loadNibNamed:[[UIDevice currentDevice] appendDeviceSuffixToString:@"VoicePad"] owner:self options:nil]) {
-		NSLog(@"Unable to load Voice Pad");
-		[self release];
-		self = nil;
-	} else {
-		if (numberString!=nil)
-			[numberView setNumber:numberString];
-		else
-			[numberView setNumber:@""];
+	if (view==nil) {
+		if (![[NSBundle mainBundle] loadNibNamed:[[UIDevice currentDevice] appendDeviceSuffixToString:@"VoicePad"] owner:self options:nil]) {
+			NSLog(@"Unable to load Voice Pad");
+			[self release];
+			self = nil;
+		} else {
+			if (numberString!=nil)
+				[numberView setNumber:numberString];
+			else
+				[numberView setNumber:@""];
+		}
 	}
 	return view;
 }

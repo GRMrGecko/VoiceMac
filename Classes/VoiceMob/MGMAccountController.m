@@ -97,6 +97,15 @@ NSString * const MGMAccountsTitle = @"Accounts";
 - (UIView *)view {
 	return view;
 }
+- (UIToolbar *)toolbar {
+	return toolbar;
+}
+- (NSArray *)accountsItems {
+	return accountsItems;
+}
+- (NSArray *)accountItems {
+	return accountItems;
+}
 
 - (BOOL)isCurrent:(id)theUser {
 	return ([contactsControllers indexOfObject:theUser]==currentContactsController);

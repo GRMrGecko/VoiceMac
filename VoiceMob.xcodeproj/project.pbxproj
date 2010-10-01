@@ -46,6 +46,11 @@
 		2A90693C1254CF040008461E /* SMS Themes in Resources */ = {isa = PBXBuildFile; fileRef = 2A9069071254CF040008461E /* SMS Themes */; };
 		2A90693D1254CF040008461E /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = 2A9069321254CF040008461E /* Sounds */; };
 		2A906A041254D4BB0008461E /* blankicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A906A031254D4BB0008461E /* blankicon.png */; };
+		2A906BEF125522800008461E /* MGMVoiceSMS.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A906BEE125522800008461E /* MGMVoiceSMS.m */; };
+		2A906BF6125522D10008461E /* MGMVoiceInbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A906BF5125522D10008461E /* MGMVoiceInbox.m */; };
+		2A906BFD1255231F0008461E /* VoiceSMS_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A906BFC1255231F0008461E /* VoiceSMS_iPhone.xib */; };
+		2A906BFF1255232E0008461E /* VoiceInbox_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A906BFE1255232E0008461E /* VoiceInbox_iPhone.xib */; };
+		2A906CBA12554DA40008461E /* MGMInboxMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A906CB912554DA40008461E /* MGMInboxMessageView.m */; };
 		2ABD37AE1250D448004AAE00 /* AccountController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ABD37AD1250D448004AAE00 /* AccountController_iPhone.xib */; };
 		2ABD380412513B26004AAE00 /* MGMAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ABD380312513B26004AAE00 /* MGMAccountController.m */; };
 /* End PBXBuildFile section */
@@ -129,6 +134,14 @@
 		2A9069071254CF040008461E /* SMS Themes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "SMS Themes"; sourceTree = "<group>"; };
 		2A9069321254CF040008461E /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
 		2A906A031254D4BB0008461E /* blankicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blankicon.png; sourceTree = "<group>"; };
+		2A906BED125522800008461E /* MGMVoiceSMS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMVoiceSMS.h; sourceTree = "<group>"; };
+		2A906BEE125522800008461E /* MGMVoiceSMS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMVoiceSMS.m; sourceTree = "<group>"; };
+		2A906BF4125522D10008461E /* MGMVoiceInbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMVoiceInbox.h; sourceTree = "<group>"; };
+		2A906BF5125522D10008461E /* MGMVoiceInbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMVoiceInbox.m; sourceTree = "<group>"; };
+		2A906BFC1255231F0008461E /* VoiceSMS_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoiceSMS_iPhone.xib; sourceTree = "<group>"; };
+		2A906BFE1255232E0008461E /* VoiceInbox_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoiceInbox_iPhone.xib; sourceTree = "<group>"; };
+		2A906CB812554DA40008461E /* MGMInboxMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMInboxMessageView.h; sourceTree = "<group>"; };
+		2A906CB912554DA40008461E /* MGMInboxMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMInboxMessageView.m; sourceTree = "<group>"; };
 		2ABD37AD1250D448004AAE00 /* AccountController_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountController_iPhone.xib; sourceTree = "<group>"; };
 		2ABD380212513B25004AAE00 /* MGMAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMAccountController.h; sourceTree = "<group>"; };
 		2ABD380312513B26004AAE00 /* MGMAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMAccountController.m; sourceTree = "<group>"; };
@@ -276,6 +289,10 @@
 				2A3170A612539BFA009998B6 /* MGMVoicePad.m */,
 				2A9067C9125430DA0008461E /* MGMVoiceContacts.h */,
 				2A9067CA125430DA0008461E /* MGMVoiceContacts.m */,
+				2A906BED125522800008461E /* MGMVoiceSMS.h */,
+				2A906BEE125522800008461E /* MGMVoiceSMS.m */,
+				2A906BF4125522D10008461E /* MGMVoiceInbox.h */,
+				2A906BF5125522D10008461E /* MGMVoiceInbox.m */,
 			);
 			path = Voice;
 			sourceTree = "<group>";
@@ -294,6 +311,8 @@
 				2A316C48125296A5009998B6 /* VoiceUser_iPhone.xib */,
 				2A31708B1253987F009998B6 /* VoicePad_iPhone.xib */,
 				2A9067C61254302E0008461E /* VoiceContacts_iPhone.xib */,
+				2A906BFC1255231F0008461E /* VoiceSMS_iPhone.xib */,
+				2A906BFE1255232E0008461E /* VoiceInbox_iPhone.xib */,
 			);
 			path = Voice;
 			sourceTree = "<group>";
@@ -307,6 +326,8 @@
 				2A316F0F1252FBED009998B6 /* MGMNumberView.m */,
 				2A90683E125436120008461E /* MGMContactView.h */,
 				2A90683F125436120008461E /* MGMContactView.m */,
+				2A906CB812554DA40008461E /* MGMInboxMessageView.h */,
+				2A906CB912554DA40008461E /* MGMInboxMessageView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -393,6 +414,8 @@
 				2A90693C1254CF040008461E /* SMS Themes in Resources */,
 				2A90693D1254CF040008461E /* Sounds in Resources */,
 				2A906A041254D4BB0008461E /* blankicon.png in Resources */,
+				2A906BFD1255231F0008461E /* VoiceSMS_iPhone.xib in Resources */,
+				2A906BFF1255232E0008461E /* VoiceInbox_iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,6 +440,9 @@
 				2A9067CB125430DA0008461E /* MGMVoiceContacts.m in Sources */,
 				2A9067CE125431010008461E /* MGMContactsController.m in Sources */,
 				2A906840125436130008461E /* MGMContactView.m in Sources */,
+				2A906BEF125522800008461E /* MGMVoiceSMS.m in Sources */,
+				2A906BF6125522D10008461E /* MGMVoiceInbox.m in Sources */,
+				2A906CBA12554DA40008461E /* MGMInboxMessageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
