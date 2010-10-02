@@ -8,11 +8,10 @@
 
 #if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
-#import <MGMXMLNodeOptions.h>
 #else
 #import <Cocoa/Cocoa.h>
-#import <VoiceBase/MGMXMLNodeOptions.h>
 #endif
+#import <VoiceBase/MGMXMLNodeOptions.h>
 #import <libxml/parser.h>
 #import <libxml/tree.h>
 #import <libxml/xpath.h>

@@ -206,15 +206,16 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="882170606">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="IBUITextView" id="174950381">
 						<reference key="NSNextResponder" ref="882170606"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrameSize">{320, 116}</string>
+						<string key="NSFrameSize">{320, 136}</string>
 						<reference key="NSSuperview" ref="882170606"/>
+						<reference key="NSWindow"/>
 						<reference key="IBUIBackgroundColor" ref="815808359"/>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
@@ -222,7 +223,6 @@
 						<bool key="IBUIScrollEnabled">NO</bool>
 						<bool key="IBUIEditable">NO</bool>
 						<string key="IBUIText">Choose an account type to set up and press continue. When you set up a Google Voice account, it will automatically add a second account for Google Contacts to receive contacts from that account.</string>
-						<reference key="IBUITextColor" ref="815808359"/>
 						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Helvetica</string>
 							<double key="NSSize">16</double>
@@ -236,8 +236,9 @@
 					<object class="IBUIButton" id="989292267">
 						<reference key="NSNextResponder" ref="882170606"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 124}, {29, 29}}</string>
+						<string key="NSFrame">{{20, 144}, {29, 29}}</string>
 						<reference key="NSSuperview" ref="882170606"/>
+						<reference key="NSWindow"/>
 						<reference key="IBUIBackgroundColor" ref="815808359"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUITag">1</int>
@@ -266,8 +267,9 @@
 					<object class="IBUIButton" id="365343775">
 						<reference key="NSNextResponder" ref="882170606"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 161}, {29, 29}}</string>
+						<string key="NSFrame">{{20, 181}, {29, 29}}</string>
 						<reference key="NSSuperview" ref="882170606"/>
+						<reference key="NSWindow"/>
 						<reference key="IBUIBackgroundColor" ref="815808359"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUITag">2</int>
@@ -289,8 +291,9 @@
 					<object class="IBUIButton" id="580254480">
 						<reference key="NSNextResponder" ref="882170606"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 198}, {29, 29}}</string>
+						<string key="NSFrame">{{20, 218}, {29, 29}}</string>
 						<reference key="NSSuperview" ref="882170606"/>
+						<reference key="NSWindow"/>
 						<reference key="IBUIBackgroundColor" ref="815808359"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUITag">3</int>
@@ -309,8 +312,9 @@
 					<object class="IBUIButton" id="330324968">
 						<reference key="NSNextResponder" ref="882170606"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{57, 127}, {242, 21}}</string>
+						<string key="NSFrame">{{57, 147}, {242, 21}}</string>
 						<reference key="NSSuperview" ref="882170606"/>
+						<reference key="NSWindow"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUITag">1</int>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -331,8 +335,9 @@
 					<object class="IBUIButton" id="385142519">
 						<reference key="NSNextResponder" ref="882170606"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{58, 165}, {242, 21}}</string>
+						<string key="NSFrame">{{58, 185}, {242, 21}}</string>
 						<reference key="NSSuperview" ref="882170606"/>
+						<reference key="NSWindow"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUITag">2</int>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -346,8 +351,9 @@
 					<object class="IBUIButton" id="206235771">
 						<reference key="NSNextResponder" ref="882170606"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{58, 202}, {242, 21}}</string>
+						<string key="NSFrame">{{58, 222}, {242, 21}}</string>
 						<reference key="NSSuperview" ref="882170606"/>
+						<reference key="NSWindow"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUITag">3</int>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -360,6 +366,8 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{320, 373}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="IBUIBackgroundColor" ref="815808359"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
@@ -1581,9 +1589,9 @@
 							<reference ref="989292267"/>
 							<reference ref="365343775"/>
 							<reference ref="580254480"/>
+							<reference ref="330324968"/>
 							<reference ref="385142519"/>
 							<reference ref="206235771"/>
-							<reference ref="330324968"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Account Type</string>

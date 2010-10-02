@@ -7,7 +7,7 @@
 //
 
 #import "MGMInboxMessageView.h"
-#import <VoiceBase.h>
+#import <VoiceBase/VoiceBase.h>
 
 @implementation MGMInboxMessageView
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {

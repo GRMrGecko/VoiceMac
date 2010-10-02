@@ -419,6 +419,7 @@ NSString * const MGMLoading = @"Loading...";
 	[[NSNotificationCenter defaultCenter] postNotificationName:MGMContactsControllersChangedNotification object:self];
 }
 - (void)contactsControllerBecameCurrent:(MGMContactsController *)theContactsController {
+	if (quitting) return;
 	if ([contactsControllers containsObject:theContactsController])
 		currentContactsController = [contactsControllers indexOfObject:theContactsController];
 	else

@@ -7,7 +7,7 @@
 //
 
 #import "MGMContactView.h"
-#import <VoiceBase.h>
+#import <VoiceBase/VoiceBase.h>
 
 @implementation MGMContactView
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {

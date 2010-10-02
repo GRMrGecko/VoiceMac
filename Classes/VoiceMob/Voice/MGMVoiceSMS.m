@@ -9,7 +9,7 @@
 #import "MGMVoiceSMS.h"
 #import "MGMVoiceUser.h"
 #import "MGMVMAddons.h"
-#import <VoiceBase.h>
+#import <VoiceBase/VoiceBase.h>
 
 @implementation MGMVoiceSMS
 + (id)tabWithVoiceUser:(MGMVoiceUser *)theVoiceUser {
@@ -31,7 +31,7 @@
 }
 
 - (UIView *)view {
-	if (view==nil) {
+	if (messageView==nil) {
 		if (![[NSBundle mainBundle] loadNibNamed:[[UIDevice currentDevice] appendDeviceSuffixToString:@"VoiceSMS"] owner:self options:nil]) {
 			NSLog(@"Unable to load Voice SMS");
 			[self release];
@@ -40,12 +40,12 @@
 			
 		}
 	}
-	return view;
+	return messageView;
 }
 - (void)releaseView {
-	if (view!=nil) {
-		[view release];
-		view = nil;
+	if (messageView!=nil) {
+		[messageView release];
+		messageView = nil;
 	}
 }
 @end

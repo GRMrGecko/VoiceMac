@@ -11,7 +11,7 @@
 #import "MGMAccountSetup.h"
 #import "MGMVMAddons.h"
 #import <MGMUsers/MGMUsers.h>
-#import <VoiceBase.h>
+#import <VoiceBase/VoiceBase.h>
 
 NSString * const MGMAccountCellIdentifier = @"MGMAccountCellIdentifier";
 

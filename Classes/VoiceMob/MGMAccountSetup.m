@@ -10,7 +10,7 @@
 #import "MGMController.h"
 #import "MGMSIPUser.h"
 #import "MGMVMAddons.h"
-#import <VoiceBase.h>
+#import <VoiceBase/VoiceBase.h>
 #import <MGMUsers/MGMUsers.h>
 
 NSString * const MGMRadioButton = @"Radio";

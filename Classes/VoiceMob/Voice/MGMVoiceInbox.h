@@ -12,11 +12,11 @@
 
 @interface MGMVoiceInbox : NSObject {
 	MGMVoiceUser *voiceUser;
-	MGMInstance *instance;
 	
 	IBOutlet UITableView *inboxesTable;
 	IBOutlet UITableView *messagesTable;
 	MGMProgressView *progressView;
+	int currentView;
 	
 	NSArray *inboxItems;
 	NSArray *messagesItems;
@@ -45,5 +45,6 @@
 - (void)stopProgress;
 
 - (void)loadInbox;
+- (void)addData:(NSArray *)theData;
 - (int)currentInbox;
 @end

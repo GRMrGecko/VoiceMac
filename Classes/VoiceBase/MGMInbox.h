@@ -14,7 +14,7 @@
 
 @class MGMInstance, MGMURLConnectionManager;
 
-#define MGMInboxDebug 1
+#define MGMInboxDebug 0
 
 extern NSString * const MGMIDelegate;
 extern NSString * const MGMIDidReceiveInfo;

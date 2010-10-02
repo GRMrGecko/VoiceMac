@@ -7,6 +7,7 @@
 //
 
 #import "MGMNumberView.h"
+#import "MGMPath.h"
 
 NSString * const MGMFontName = @"Helvetica";
 
@@ -105,51 +106,31 @@ NSString * const MGMFontName = @"Helvetica";
 	[self setTouching:NO];
 }
 
-- (void)drawRect:(CGRect)rect {
-	CGContextRef currentContext = UIGraphicsGetCurrentContext();
-	CGContextSaveGState(currentContext);
-	CGMutablePathRef path = CGPathCreateMutable();
-	CGRect bounds = [self bounds];
-	CGPathAddRect(path, NULL, bounds);
-	CGContextAddPath(currentContext, path);
-	CGContextClip(currentContext);
-	
-	CGColorRef colorsRef[2];
+- (void)drawRect:(CGRect)frameRect {
+	UIColor *startColor = nil;
+	UIColor *endColor = nil;
 	if (touching) {
-		colorsRef[0] = [[UIColor colorWithRed:0.5 green:0.5 blue:1.0 alpha:1.0] CGColor];
-		colorsRef[1] = [[UIColor colorWithRed:0.1 green:0.1 blue:0.5 alpha:1.0] CGColor];
+		startColor = [UIColor colorWithRed:0.5 green:0.5 blue:1.0 alpha:1.0];
+		endColor = [UIColor colorWithRed:0.1 green:0.1 blue:0.5 alpha:1.0];
 	} else {
 		if ([self tag]==13) {
-			colorsRef[0] = [[UIColor colorWithRed:0.5 green:1.0 blue:0.5 alpha:1.0] CGColor];
-			colorsRef[1] = [[UIColor colorWithRed:0.1 green:0.5 blue:0.1 alpha:1.0] CGColor];
+			startColor = [UIColor colorWithRed:0.5 green:1.0 blue:0.5 alpha:1.0];
+			endColor = [UIColor colorWithRed:0.1 green:0.5 blue:0.1 alpha:1.0];
 		} else if ([self tag]==14) {
-			colorsRef[0] = [[UIColor colorWithRed:1.0 green:0.5 blue:0.5 alpha:1.0] CGColor];
-			colorsRef[1] = [[UIColor colorWithRed:0.5 green:0.1 blue:0.1 alpha:1.0] CGColor];
+			startColor = [UIColor colorWithRed:1.0 green:0.5 blue:0.5 alpha:1.0];
+			endColor = [UIColor colorWithRed:0.5 green:0.1 blue:0.1 alpha:1.0];
 		} else {
-			colorsRef[0] = [[UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0] CGColor];
-			colorsRef[1] = [[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1.0] CGColor];
+			startColor = [UIColor colorWithRed:0.5 green:0.5 blue:0.5 alpha:1.0];
+			endColor = [UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1.0];
 		}
 	}
-	CFArrayRef colors = CFArrayCreate(NULL, (const void **)colorsRef, sizeof(colorsRef) / sizeof(CGColorRef), &kCFTypeArrayCallBacks);
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGGradientRef gradient = CGGradientCreateWithColors(colorSpace, colors, NULL);
-	CFRelease(colorSpace);
-	CFRelease(colors);
 	
-	CGPoint start = bounds.origin;
-	bounds.origin.y += bounds.size.height;
-	CGPoint end = bounds.origin;
-	CGContextDrawLinearGradient(currentContext, gradient, start, end, 0);
-	
-	CFRelease(gradient);
-	CFRelease(path);
-	
-	CGRect strokeRect = bounds;
-	strokeRect.origin.x = 0;
-	strokeRect.origin.y = 0;
-	CGContextSetStrokeColorWithColor(currentContext, [[UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0] CGColor]);
-	CGContextStrokeRectWithWidth(currentContext, strokeRect, 2.0);
-	CGContextRestoreGState(currentContext);
+	CGRect bounds = [self bounds];
+	MGMPath *path = [MGMPath pathWithRect:bounds];
+	[path setLineWidth:2.0];
+	[[UIColor colorWithWhite:1.0 alpha:1.0] setStroke];
+	[path fillGradientFrom:startColor to:endColor];
+	[path stroke];
 	
 	[[UIColor whiteColor] set];
 	if ([self number]!=nil) {

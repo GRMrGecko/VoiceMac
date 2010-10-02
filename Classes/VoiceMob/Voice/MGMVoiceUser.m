@@ -15,7 +15,7 @@
 #import "MGMAccountController.h"
 #import "MGMVMAddons.h"
 #import <MGMUsers/MGMUsers.h>
-#import <VoiceBase.h>
+#import <VoiceBase/VoiceBase.h>
 
 @implementation MGMVoiceUser
 + (id)voiceUser:(MGMUser *)theUser accountController:(MGMAccountController *)theAccountController {
@@ -26,15 +26,15 @@
 		accountController = theAccountController;
 		user = [theUser retain];
 		
-		if ([user isStarted])
-			instance = [[MGMInstance instanceWithUser:user delegate:self] retain];
-		
-		currentTab = 0;
+		currentTab = 2;
 		tabObjects = [NSMutableArray new];
 		[tabObjects addObject:[MGMVoicePad tabWithVoiceUser:self]];
 		[tabObjects addObject:[MGMVoiceContacts tabWithVoiceUser:self]];
 		[tabObjects addObject:[MGMVoiceSMS tabWithVoiceUser:self]];
 		[tabObjects addObject:[MGMVoiceInbox tabWithVoiceUser:self]];
+		
+		//if ([user isStarted])
+			//instance = [[MGMInstance instanceWithUser:user delegate:self] retain];
 	}
 	return self;
 }
@@ -74,7 +74,7 @@
 		} else {
 			[tabView addSubview:[[tabObjects objectAtIndex:currentTab] view]];
 			[tabBar setSelectedItem:[[tabBar items] objectAtIndex:currentTab]];
-			if (![instance isLoggedIn]) {
+			/*if (![instance isLoggedIn]) {
 				CGSize contentSize = [view frame].size;
 				progressView = [[MGMProgressView alloc] initWithFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
 				[progressView setProgressTitle:@"Logging In"];
@@ -83,7 +83,7 @@
 				[progressView becomeFirstResponder];
 			} else {
 				[self setInstanceInfo];
-			}
+			}*/
 		}
 	}
 	return view;

@@ -13,7 +13,7 @@
 @interface MGMVoiceSMS : NSObject {
 	MGMVoiceUser *voiceUser;
 	
-	IBOutlet UIView *view;
+	IBOutlet UIView *messageView;
 }
 + (id)tabWithVoiceUser:(MGMVoiceUser *)theVoiceUser;
 - (id)initWithVoiceUser:(MGMVoiceUser *)theVoiceUser;

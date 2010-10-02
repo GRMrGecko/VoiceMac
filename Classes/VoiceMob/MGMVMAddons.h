@@ -12,3 +12,7 @@
 - (BOOL)isPad;
 - (NSString *)appendDeviceSuffixToString:(NSString *)theString;
 @end
+
+@interface UIColor (MGMVMAddons)
+- (UIColor *)colorWithDifference:(CGFloat)theDifference;
+@end

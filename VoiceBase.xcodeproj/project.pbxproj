@@ -63,30 +63,30 @@
 		2A487CBC124BE1E600E8EE4E /* MGMXMLDTDNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C9A124BE0AB00E8EE4E /* MGMXMLDTDNode.m */; };
 		2A487CBD124BE1E600E8EE4E /* MGMXMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C9C124BE0AB00E8EE4E /* MGMXMLElement.m */; };
 		2A487CBE124BE1E600E8EE4E /* MGMXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A487C9E124BE0AB00E8EE4E /* MGMXMLNode.m */; };
-		2A487CC1124BE22E00E8EE4E /* MGMAddressBook.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171A51245676A00D119B5 /* MGMAddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CC2124BE22E00E8EE4E /* MGMContacts.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171A71245676A00D119B5 /* MGMContacts.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CC3124BE22E00E8EE4E /* MGMContactsProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171A91245676A00D119B5 /* MGMContactsProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CC4124BE22E00E8EE4E /* MGMGoogleContacts.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171AB1245676A00D119B5 /* MGMGoogleContacts.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CC5124BE22E00E8EE4E /* MGMAddons.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171AD1245676A00D119B5 /* MGMAddons.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CC6124BE22E00E8EE4E /* MGMInbox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171AF1245676A00D119B5 /* MGMInbox.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CC7124BE22E00E8EE4E /* MGMInstance.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B11245676A00D119B5 /* MGMInstance.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CC8124BE22E00E8EE4E /* MGMThemeManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B31245676A00D119B5 /* MGMThemeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CC9124BE22E00E8EE4E /* MGMSIP.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B61245676A00D119B5 /* MGMSIP.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CCA124BE22E00E8EE4E /* MGMSIPAccount.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B81245676A00D119B5 /* MGMSIPAccount.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CCB124BE22E00E8EE4E /* MGMSIPCall.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BA1245676A00D119B5 /* MGMSIPCall.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CCC124BE22E00E8EE4E /* MGMSIPURL.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BC1245676A00D119B5 /* MGMSIPURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CCD124BE22E00E8EE4E /* MGMXML.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487CAE124BE0C400E8EE4E /* MGMXML.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CCE124BE22E00E8EE4E /* MGMXMLAddons.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C93124BE0AB00E8EE4E /* MGMXMLAddons.h */; };
-		2A487CCF124BE22E00E8EE4E /* MGMXMLDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C95124BE0AB00E8EE4E /* MGMXMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CD0124BE22E00E8EE4E /* MGMXMLDTD.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C97124BE0AB00E8EE4E /* MGMXMLDTD.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CD1124BE22E00E8EE4E /* MGMXMLDTDNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C99124BE0AB00E8EE4E /* MGMXMLDTDNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CD2124BE22E00E8EE4E /* MGMXMLElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9B124BE0AB00E8EE4E /* MGMXMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CD3124BE22E00E8EE4E /* MGMXMLNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9D124BE0AB00E8EE4E /* MGMXMLNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CD4124BE22E00E8EE4E /* MGMXMLNodeOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9F124BE0AB00E8EE4E /* MGMXMLNodeOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CD5124BE22E00E8EE4E /* VoiceBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BE1245676A00D119B5 /* VoiceBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC1124BE22E00E8EE4E /* MGMAddressBook.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171A51245676A00D119B5 /* MGMAddressBook.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC2124BE22E00E8EE4E /* MGMContacts.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171A71245676A00D119B5 /* MGMContacts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC3124BE22E00E8EE4E /* MGMContactsProtocol.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171A91245676A00D119B5 /* MGMContactsProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC4124BE22E00E8EE4E /* MGMGoogleContacts.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171AB1245676A00D119B5 /* MGMGoogleContacts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC5124BE22E00E8EE4E /* MGMAddons.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171AD1245676A00D119B5 /* MGMAddons.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC6124BE22E00E8EE4E /* MGMInbox.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171AF1245676A00D119B5 /* MGMInbox.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC7124BE22E00E8EE4E /* MGMInstance.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B11245676A00D119B5 /* MGMInstance.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC8124BE22E00E8EE4E /* MGMThemeManager.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B31245676A00D119B5 /* MGMThemeManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CC9124BE22E00E8EE4E /* MGMSIP.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B61245676A00D119B5 /* MGMSIP.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CCA124BE22E00E8EE4E /* MGMSIPAccount.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171B81245676A00D119B5 /* MGMSIPAccount.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CCB124BE22E00E8EE4E /* MGMSIPCall.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BA1245676A00D119B5 /* MGMSIPCall.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CCC124BE22E00E8EE4E /* MGMSIPURL.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BC1245676A00D119B5 /* MGMSIPURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CCD124BE22E00E8EE4E /* MGMXML.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487CAE124BE0C400E8EE4E /* MGMXML.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CCE124BE22E00E8EE4E /* MGMXMLAddons.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487C93124BE0AB00E8EE4E /* MGMXMLAddons.h */; };
+		2A487CCF124BE22E00E8EE4E /* MGMXMLDocument.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487C95124BE0AB00E8EE4E /* MGMXMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CD0124BE22E00E8EE4E /* MGMXMLDTD.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487C97124BE0AB00E8EE4E /* MGMXMLDTD.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CD1124BE22E00E8EE4E /* MGMXMLDTDNode.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487C99124BE0AB00E8EE4E /* MGMXMLDTDNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CD2124BE22E00E8EE4E /* MGMXMLElement.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9B124BE0AB00E8EE4E /* MGMXMLElement.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CD3124BE22E00E8EE4E /* MGMXMLNode.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9D124BE0AB00E8EE4E /* MGMXMLNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CD4124BE22E00E8EE4E /* MGMXMLNodeOptions.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9F124BE0AB00E8EE4E /* MGMXMLNodeOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A487CD5124BE22E00E8EE4E /* VoiceBase.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BE1245676A00D119B5 /* VoiceBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A487D0D124BE40700E8EE4E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A487CF0124BE3E600E8EE4E /* libxml2.dylib */; };
 		2A487D0F124BE41B00E8EE4E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A487D0E124BE41B00E8EE4E /* libxml2.dylib */; };
-		2A77133C124C4CE200D68042 /* MGMSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A77133A124C4CE200D68042 /* MGMSound.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A77133C124C4CE200D68042 /* MGMSound.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A77133A124C4CE200D68042 /* MGMSound.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A77133D124C4CE200D68042 /* MGMSound.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A77133B124C4CE200D68042 /* MGMSound.m */; };
 		2A771340124C4D2800D68042 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A77133F124C4D2800D68042 /* AudioToolbox.framework */; };
 		2A771344124C4F9A00D68042 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A771343124C4F9A00D68042 /* AVFoundation.framework */; };
@@ -109,6 +109,41 @@
 		2AE6EE7A1249DB2F0006B5AC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE6EE791249DB2F0006B5AC /* UIKit.framework */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2AAFDB9C12569EE200475472 /* Copy Headers */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/usr/local/include/VoiceBase";
+			dstSubfolderSpec = 0;
+			files = (
+				2A487CC1124BE22E00E8EE4E /* MGMAddressBook.h in Copy Headers */,
+				2A487CC2124BE22E00E8EE4E /* MGMContacts.h in Copy Headers */,
+				2A487CC3124BE22E00E8EE4E /* MGMContactsProtocol.h in Copy Headers */,
+				2A487CC4124BE22E00E8EE4E /* MGMGoogleContacts.h in Copy Headers */,
+				2A487CC5124BE22E00E8EE4E /* MGMAddons.h in Copy Headers */,
+				2A487CC6124BE22E00E8EE4E /* MGMInbox.h in Copy Headers */,
+				2A487CC7124BE22E00E8EE4E /* MGMInstance.h in Copy Headers */,
+				2A487CC8124BE22E00E8EE4E /* MGMThemeManager.h in Copy Headers */,
+				2A487CCD124BE22E00E8EE4E /* MGMXML.h in Copy Headers */,
+				2A487CCE124BE22E00E8EE4E /* MGMXMLAddons.h in Copy Headers */,
+				2A487CCF124BE22E00E8EE4E /* MGMXMLDocument.h in Copy Headers */,
+				2A487CD0124BE22E00E8EE4E /* MGMXMLDTD.h in Copy Headers */,
+				2A487CD1124BE22E00E8EE4E /* MGMXMLDTDNode.h in Copy Headers */,
+				2A487CD2124BE22E00E8EE4E /* MGMXMLElement.h in Copy Headers */,
+				2A487CD3124BE22E00E8EE4E /* MGMXMLNode.h in Copy Headers */,
+				2A487CD4124BE22E00E8EE4E /* MGMXMLNodeOptions.h in Copy Headers */,
+				2A487CC9124BE22E00E8EE4E /* MGMSIP.h in Copy Headers */,
+				2A487CCA124BE22E00E8EE4E /* MGMSIPAccount.h in Copy Headers */,
+				2A487CCB124BE22E00E8EE4E /* MGMSIPCall.h in Copy Headers */,
+				2A487CCC124BE22E00E8EE4E /* MGMSIPURL.h in Copy Headers */,
+				2A487CD5124BE22E00E8EE4E /* VoiceBase.h in Copy Headers */,
+				2A77133C124C4CE200D68042 /* MGMSound.h in Copy Headers */,
+			);
+			name = "Copy Headers";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -413,35 +448,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		2AE6EE4F1249DA0B0006B5AC /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2A487CC1124BE22E00E8EE4E /* MGMAddressBook.h in Headers */,
-				2A487CC2124BE22E00E8EE4E /* MGMContacts.h in Headers */,
-				2A487CC3124BE22E00E8EE4E /* MGMContactsProtocol.h in Headers */,
-				2A487CC4124BE22E00E8EE4E /* MGMGoogleContacts.h in Headers */,
-				2A487CC5124BE22E00E8EE4E /* MGMAddons.h in Headers */,
-				2A487CC6124BE22E00E8EE4E /* MGMInbox.h in Headers */,
-				2A487CC7124BE22E00E8EE4E /* MGMInstance.h in Headers */,
-				2A487CC8124BE22E00E8EE4E /* MGMThemeManager.h in Headers */,
-				2A487CCD124BE22E00E8EE4E /* MGMXML.h in Headers */,
-				2A487CCE124BE22E00E8EE4E /* MGMXMLAddons.h in Headers */,
-				2A487CCF124BE22E00E8EE4E /* MGMXMLDocument.h in Headers */,
-				2A487CD0124BE22E00E8EE4E /* MGMXMLDTD.h in Headers */,
-				2A487CD1124BE22E00E8EE4E /* MGMXMLDTDNode.h in Headers */,
-				2A487CD2124BE22E00E8EE4E /* MGMXMLElement.h in Headers */,
-				2A487CD3124BE22E00E8EE4E /* MGMXMLNode.h in Headers */,
-				2A487CD4124BE22E00E8EE4E /* MGMXMLNodeOptions.h in Headers */,
-				2A487CC9124BE22E00E8EE4E /* MGMSIP.h in Headers */,
-				2A487CCA124BE22E00E8EE4E /* MGMSIPAccount.h in Headers */,
-				2A487CCB124BE22E00E8EE4E /* MGMSIPCall.h in Headers */,
-				2A487CCC124BE22E00E8EE4E /* MGMSIPURL.h in Headers */,
-				2A487CD5124BE22E00E8EE4E /* VoiceBase.h in Headers */,
-				2A77133C124C4CE200D68042 /* MGMSound.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		8DC2EF500486A6940098B216 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -478,7 +484,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2AE6EE611249DA770006B5AC /* Build configuration list for PBXNativeTarget "VoiceBase Touch" */;
 			buildPhases = (
-				2AE6EE4F1249DA0B0006B5AC /* Headers */,
+				2AAFDB9C12569EE200475472 /* Copy Headers */,
 				2AE6EE501249DA0B0006B5AC /* Sources */,
 				2AE6EE511249DA0B0006B5AC /* Frameworks */,
 			);
@@ -1000,7 +1006,9 @@
 					"-all_load",
 				);
 				PREBINDING = NO;
+				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/VoiceBase;
 				PRODUCT_NAME = VoiceBase;
+				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/VoiceBase;
 				SDKROOT = iphoneos4.0;
 			};
 			name = "Release SIP";

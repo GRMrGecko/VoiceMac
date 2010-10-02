@@ -9,7 +9,7 @@
 #import "MGMSIPUser.h"
 #import "MGMVMAddons.h"
 #import <MGMUsers/MGMUsers.h>
-#import <VoiceBase.h>
+#import <VoiceBase/VoiceBase.h>
 
 NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 

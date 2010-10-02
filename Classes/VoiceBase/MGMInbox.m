@@ -280,7 +280,14 @@ const BOOL MGMInboxInvisible = YES;
 					int type = [[thisInfo objectForKey:MGMIType] intValue];
 					if (type==MGMIVoicemailType) {
 						[thisInfo setObject:[NSNumber numberWithBool:[[message XMLString] containsString:@"gc-message-transcript-rate-up-active"]] forKey:MGMIUseful];
-						NSString *transcript = [[[[[message childAtIndex:0] nodesForXPath:[NSString stringWithFormat:@"/html[1]/body[1]/div[%d]/div[1]/div[2]/table[1]/tr[1]/td[3]/div[1]/table[1]/tr[2]/td[2]/table[1]/tr[2]/td[1]/div[1]/div[1]/table[1]/tr[1]/td[2]/div[1]/div[1]/table[1]/tr[1]/td[1]/div[1]", i+1] error:nil] objectAtIndex:0] stringValue] flattenHTML];
+						NSMutableString *transcript = [NSMutableString string];
+						NSArray *words = [[[[message childAtIndex:0] nodesForXPath:[NSString stringWithFormat:@"/html[1]/body[1]/div[%d]/div[1]/div[2]/table[1]/tr[1]/td[3]/div[1]/table[1]/tr[2]/td[2]/table[1]/tr[2]/td[1]/div[1]/div[1]/table[1]/tr[1]/td[2]/div[1]/div[1]/table[1]/tr[1]/td[1]/div[1]", i+1] error:nil] objectAtIndex:0] elementsForName:@"span"];
+						for (unsigned int w=0; w<[words count]; w++) {
+							if (w==0)
+								[transcript appendString:[[words objectAtIndex:w] stringValue]];
+							else
+								[transcript appendFormat:@" %@", [[words objectAtIndex:w] stringValue]];
+						}
 						[thisInfo setObject:transcript forKey:MGMIText];
 					} else if (type==MGMISMSIn || type==MGMISMSOut) {
 						NSArray *messagesXML = [[message childAtIndex:0] nodesForXPath:[NSString stringWithFormat:@"/html[1]/body[1]/div[%d]/div[1]/div[2]/table[1]/tr[1]/td[3]/div[1]/table[1]/tr[2]/td[2]/table[1]/tr[2]/td[1]/div[1]/div[1]/table[1]/tr[1]/td[2]/div[1]/div[1]/div[1]/div", i+1] error:nil];

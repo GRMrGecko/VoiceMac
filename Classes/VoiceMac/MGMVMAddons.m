@@ -36,20 +36,21 @@ const float MGMHLEBlue = 0.607843;
     float controlY = theRadiusY * ellipse;
     NSRect edges = NSInsetRect(theRect, theRadiusX, theRadiusY);
     
-    // bottom right corner
     [path moveToPoint:NSMakePoint(edges.origin.x, theRect.origin.y)];
+    
+	// top right corner
     [path lineToPoint:NSMakePoint(NSMaxX(edges), theRect.origin.y)];
     [path curveToPoint:NSMakePoint(NSMaxX(theRect), edges.origin.y) controlPoint1:NSMakePoint(NSMaxX(edges) + controlX, theRect.origin.y) controlPoint2:NSMakePoint(NSMaxX(theRect), edges.origin.y - controlY)];
     
-    // top right corner
+    // bottom right corner
     [path lineToPoint:NSMakePoint(NSMaxX(theRect), NSMaxY(edges))];
     [path curveToPoint:NSMakePoint(NSMaxX(edges), NSMaxY(theRect)) controlPoint1:NSMakePoint(NSMaxX(theRect), NSMaxY(edges) + controlY) controlPoint2:NSMakePoint(NSMaxX(edges) + controlX, NSMaxY(theRect))];
     
-    // top left corner
+    // bottom left corner
     [path lineToPoint:NSMakePoint(edges.origin.x, NSMaxY(theRect))];
     [path curveToPoint:NSMakePoint(theRect.origin.x, NSMaxY(edges)) controlPoint1:NSMakePoint(edges.origin.x - controlX, NSMaxY(theRect)) controlPoint2:NSMakePoint(theRect.origin.x, NSMaxY(edges) + controlY)];
     
-    // bottom left corner
+    // top left corner
     [path lineToPoint:NSMakePoint(theRect.origin.x, edges.origin.y)];
     [path curveToPoint:NSMakePoint(edges.origin.x, theRect.origin.y) controlPoint1:NSMakePoint(theRect.origin.x, edges.origin.y - controlY) controlPoint2:NSMakePoint(edges.origin.x - controlX, theRect.origin.y)];
     

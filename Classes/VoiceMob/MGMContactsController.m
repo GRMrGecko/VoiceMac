@@ -10,7 +10,7 @@
 #import "MGMContactView.h"
 #import "MGMAccountController.h"
 #import "MGMController.h"
-#import <VoiceBase.h>
+#import <VoiceBase/VoiceBase.h>
 
 NSString * const MGMContactViewCellIdentifier = @"MGMContactViewCellIdentifier";
 

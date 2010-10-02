@@ -14,7 +14,7 @@
 #import "MGMVMAddons.h"
 #import "MGMAccountSetup.h"
 #import <MGMUsers/MGMUsers.h>
-#import <VoiceBase.h>
+#import <VoiceBase/VoiceBase.h>
 
 NSString * const MGMLastContactsController = @"MGMLastContactsController";
 

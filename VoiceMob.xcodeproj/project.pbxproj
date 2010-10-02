@@ -28,7 +28,6 @@
 		2A1E9B0F124DA4CB00D3BEAE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1E9B0E124DA4CB00D3BEAE /* AudioToolbox.framework */; };
 		2A1E9B13124DA4D700D3BEAE /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1E9B12124DA4D700D3BEAE /* CoreAudio.framework */; };
 		2A1E9B45124DA63C00D3BEAE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1E9B44124DA63C00D3BEAE /* CFNetwork.framework */; };
-		2A1E9BA6124DB1AE00D3BEAE /* VoiceMob.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A1E9BA5124DB1AE00D3BEAE /* VoiceMob.png */; };
 		2A316C3412529555009998B6 /* MGMSIPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A316C3212529555009998B6 /* MGMSIPUser.m */; };
 		2A316C3712529567009998B6 /* MGMVoiceUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A316C3612529567009998B6 /* MGMVoiceUser.m */; };
 		2A316C49125296A5009998B6 /* SIPUser_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A316C46125296A5009998B6 /* SIPUser_iPhone.xib */; };
@@ -51,6 +50,14 @@
 		2A906BFD1255231F0008461E /* VoiceSMS_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A906BFC1255231F0008461E /* VoiceSMS_iPhone.xib */; };
 		2A906BFF1255232E0008461E /* VoiceInbox_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A906BFE1255232E0008461E /* VoiceInbox_iPhone.xib */; };
 		2A906CBA12554DA40008461E /* MGMInboxMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A906CB912554DA40008461E /* MGMInboxMessageView.m */; };
+		2A98E8111256324400D37C0B /* MGMSMSTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A98E8101256324400D37C0B /* MGMSMSTextView.m */; };
+		2A98EAF412567FAF00D37C0B /* MGMPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A98EAF312567FAF00D37C0B /* MGMPath.m */; };
+		2A98EBF81256903700D37C0B /* MGMSMSBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A98EBF71256903700D37C0B /* MGMSMSBottomView.m */; };
+		2AAFDBFA1256A63300475472 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AAFDBF61256A63300475472 /* Icon-Small.png */; };
+		2AAFDBFB1256A63300475472 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AAFDBF71256A63300475472 /* Icon-Small@2x.png */; };
+		2AAFDBFC1256A63300475472 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AAFDBF81256A63300475472 /* icon.png */; };
+		2AAFDBFD1256A63300475472 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AAFDBF91256A63300475472 /* icon@2x.png */; };
+		2AAFDC051256ABF600475472 /* MGMGradientButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2AAFDC041256ABF600475472 /* MGMGradientButton.m */; };
 		2ABD37AE1250D448004AAE00 /* AccountController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2ABD37AD1250D448004AAE00 /* AccountController_iPhone.xib */; };
 		2ABD380412513B26004AAE00 /* MGMAccountController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2ABD380312513B26004AAE00 /* MGMAccountController.m */; };
 /* End PBXBuildFile section */
@@ -107,7 +114,6 @@
 		2A1E9B0E124DA4CB00D3BEAE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		2A1E9B12124DA4D700D3BEAE /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		2A1E9B44124DA63C00D3BEAE /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		2A1E9BA5124DB1AE00D3BEAE /* VoiceMob.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VoiceMob.png; sourceTree = SOURCE_ROOT; };
 		2A316C3112529555009998B6 /* MGMSIPUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSIPUser.h; sourceTree = "<group>"; };
 		2A316C3212529555009998B6 /* MGMSIPUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSIPUser.m; sourceTree = "<group>"; };
 		2A316C3512529567009998B6 /* MGMVoiceUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMVoiceUser.h; sourceTree = "<group>"; };
@@ -142,6 +148,18 @@
 		2A906BFE1255232E0008461E /* VoiceInbox_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VoiceInbox_iPhone.xib; sourceTree = "<group>"; };
 		2A906CB812554DA40008461E /* MGMInboxMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMInboxMessageView.h; sourceTree = "<group>"; };
 		2A906CB912554DA40008461E /* MGMInboxMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMInboxMessageView.m; sourceTree = "<group>"; };
+		2A98E80F1256324400D37C0B /* MGMSMSTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSMSTextView.h; sourceTree = "<group>"; };
+		2A98E8101256324400D37C0B /* MGMSMSTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSMSTextView.m; sourceTree = "<group>"; };
+		2A98EAF212567FAF00D37C0B /* MGMPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMPath.h; sourceTree = "<group>"; };
+		2A98EAF312567FAF00D37C0B /* MGMPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMPath.m; sourceTree = "<group>"; };
+		2A98EBF61256903700D37C0B /* MGMSMSBottomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSMSBottomView.h; sourceTree = "<group>"; };
+		2A98EBF71256903700D37C0B /* MGMSMSBottomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSMSBottomView.m; sourceTree = "<group>"; };
+		2AAFDBF61256A63300475472 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		2AAFDBF71256A63300475472 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		2AAFDBF81256A63300475472 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		2AAFDBF91256A63300475472 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		2AAFDC031256ABF600475472 /* MGMGradientButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMGradientButton.h; sourceTree = "<group>"; };
+		2AAFDC041256ABF600475472 /* MGMGradientButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMGradientButton.m; sourceTree = "<group>"; };
 		2ABD37AD1250D448004AAE00 /* AccountController_iPhone.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountController_iPhone.xib; sourceTree = "<group>"; };
 		2ABD380212513B25004AAE00 /* MGMAccountController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMAccountController.h; sourceTree = "<group>"; };
 		2ABD380312513B26004AAE00 /* MGMAccountController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMAccountController.m; sourceTree = "<group>"; };
@@ -231,6 +249,8 @@
 				2ABD380312513B26004AAE00 /* MGMAccountController.m */,
 				2A354CDA1251830F00454A75 /* MGMAccounts.h */,
 				2A354CDB1251830F00454A75 /* MGMAccounts.m */,
+				2A98EAF212567FAF00D37C0B /* MGMPath.h */,
+				2A98EAF312567FAF00D37C0B /* MGMPath.m */,
 				2A316C3012529555009998B6 /* SIP */,
 				2A316C3312529555009998B6 /* Voice */,
 				2A316DE41252C8BA009998B6 /* Views */,
@@ -242,7 +262,10 @@
 		2A1E97C0124D22DA00D3BEAE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2A1E9BA5124DB1AE00D3BEAE /* VoiceMob.png */,
+				2AAFDBF61256A63300475472 /* Icon-Small.png */,
+				2AAFDBF71256A63300475472 /* Icon-Small@2x.png */,
+				2AAFDBF81256A63300475472 /* icon.png */,
+				2AAFDBF91256A63300475472 /* icon@2x.png */,
 				2A906A031254D4BB0008461E /* blankicon.png */,
 				2A1E9A0E124D827B00D3BEAE /* VoiceMob Setup.png */,
 				2A1E97C1124D22DA00D3BEAE /* Info.plist */,
@@ -328,6 +351,12 @@
 				2A90683F125436120008461E /* MGMContactView.m */,
 				2A906CB812554DA40008461E /* MGMInboxMessageView.h */,
 				2A906CB912554DA40008461E /* MGMInboxMessageView.m */,
+				2A98EBF61256903700D37C0B /* MGMSMSBottomView.h */,
+				2A98EBF71256903700D37C0B /* MGMSMSBottomView.m */,
+				2A98E80F1256324400D37C0B /* MGMSMSTextView.h */,
+				2A98E8101256324400D37C0B /* MGMSMSTextView.m */,
+				2AAFDC031256ABF600475472 /* MGMGradientButton.h */,
+				2AAFDC041256ABF600475472 /* MGMGradientButton.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -404,7 +433,6 @@
 				2A1E99A2124D70A500D3BEAE /* Radio.png in Resources */,
 				2A1E99A3124D70A500D3BEAE /* RadioSelected.png in Resources */,
 				2A1E9A0F124D827B00D3BEAE /* VoiceMob Setup.png in Resources */,
-				2A1E9BA6124DB1AE00D3BEAE /* VoiceMob.png in Resources */,
 				2ABD37AE1250D448004AAE00 /* AccountController_iPhone.xib in Resources */,
 				2A354CD81251820C00454A75 /* Accounts_iPhone.xib in Resources */,
 				2A316C49125296A5009998B6 /* SIPUser_iPhone.xib in Resources */,
@@ -416,6 +444,10 @@
 				2A906A041254D4BB0008461E /* blankicon.png in Resources */,
 				2A906BFD1255231F0008461E /* VoiceSMS_iPhone.xib in Resources */,
 				2A906BFF1255232E0008461E /* VoiceInbox_iPhone.xib in Resources */,
+				2AAFDBFA1256A63300475472 /* Icon-Small.png in Resources */,
+				2AAFDBFB1256A63300475472 /* Icon-Small@2x.png in Resources */,
+				2AAFDBFC1256A63300475472 /* icon.png in Resources */,
+				2AAFDBFD1256A63300475472 /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +475,10 @@
 				2A906BEF125522800008461E /* MGMVoiceSMS.m in Sources */,
 				2A906BF6125522D10008461E /* MGMVoiceInbox.m in Sources */,
 				2A906CBA12554DA40008461E /* MGMInboxMessageView.m in Sources */,
+				2A98E8111256324400D37C0B /* MGMSMSTextView.m in Sources */,
+				2A98EAF412567FAF00D37C0B /* MGMPath.m in Sources */,
+				2A98EBF81256903700D37C0B /* MGMSMSBottomView.m in Sources */,
+				2AAFDC051256ABF600475472 /* MGMGradientButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

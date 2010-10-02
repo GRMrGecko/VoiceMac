@@ -7,24 +7,6 @@
  *
  */
 
-#if TARGET_OS_IPHONE
-#import <MGMAddons.h>
-#import <MGMInstance.h>
-#import <MGMInbox.h>
-#import <MGMContactsProtocol.h>
-#import <MGMContacts.h>
-#import <MGMAddressBook.h>
-#import <MGMGoogleContacts.h>
-#import <MGMSound.h>
-#import <MGMThemeManager.h>
-#import <MGMXML.h>
-
-//MGMSIP Stuff
-#import <MGMSIP.h>
-#import <MGMSIPAccount.h>
-#import <MGMSIPCall.h>
-#import <MGMSIPURL.h>
-#else
 #import <VoiceBase/MGMAddons.h>
 #import <VoiceBase/MGMInstance.h>
 #import <VoiceBase/MGMInbox.h>
@@ -41,4 +23,3 @@
 #import <VoiceBase/MGMSIPAccount.h>
 #import <VoiceBase/MGMSIPCall.h>
 #import <VoiceBase/MGMSIPURL.h>
-#endif

@@ -10,7 +10,7 @@
 #import "MGMVoiceUser.h"
 #import "MGMNumberView.h"
 #import "MGMVMAddons.h"
-#import <VoiceBase.h>
+#import <VoiceBase/VoiceBase.h>
  
 @implementation MGMVoicePad
 + (id)tabWithVoiceUser:(MGMVoiceUser *)theVoiceUser {

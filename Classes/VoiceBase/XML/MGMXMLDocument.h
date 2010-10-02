@@ -8,11 +8,10 @@
 
 #if TARGET_OS_IPHONE
 #import <UIKit/UIKit.h>
-#import <MGMXMLNode.h>
 #else
 #import <Cocoa/Cocoa.h>
-#import <VoiceBase/MGMXMLNode.h>
 #endif
+#import <VoiceBase/MGMXMLNode.h>
 
 #define MGMXMLDocPtr (xmlDocPtr)commonXML
 
