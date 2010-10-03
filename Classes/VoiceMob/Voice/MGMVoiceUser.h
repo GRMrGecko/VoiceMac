@@ -10,6 +10,11 @@
 
 @class MGMVoiceUser, MGMAccountController, MGMUser, MGMInstance, MGMProgressView;
 
+extern const int MGMKeypadTabIndex;
+extern const int MGMContactsTabIndex;
+extern const int MGMSMSTabIndex;
+extern const int MGMInboxTabIndex;
+
 @protocol MGMVoiceUserTabProtocol <NSObject>
 + (id)tabWithVoiceUser:(MGMVoiceUser *)theVoiceUser;
 - (id)initWithVoiceUser:(MGMVoiceUser *)theVoiceUser;
@@ -19,7 +24,6 @@
 - (UIView *)view;
 - (void)releaseView;
 @end
-
 
 @interface MGMVoiceUser : NSObject {
 	MGMAccountController *accountController;
@@ -48,6 +52,7 @@
 - (NSString *)areaCode;
 
 - (UIView *)view;
+- (NSArray *)tabObjects;
 - (UIView *)tabView;
 - (UITabBar *)tabBar;
 - (void)releaseView;
@@ -57,4 +62,6 @@
 
 - (BOOL)isPlacingCall;
 - (void)call:(NSString *)theNumber;
+
+- (void)tabBar:(UITabBar *)theTabBar didSelectItem:(UITabBarItem *)item;
 @end

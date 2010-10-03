@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface MGMSMSTextView : UITextView {
-	
+	CGFloat lastHeight;
 }
 
 @end

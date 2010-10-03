@@ -38,7 +38,7 @@ NSString * const MGMTestTTPhoto = @"tPhoto";
 			[testMessages addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"That sounds good.", MGMIText, @"6:06 PM", MGMITime, [NSNumber numberWithBool:YES], MGMIYou, nil]];
 			[testMessages addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Great, meet you then.", MGMIText, @"6:07 PM", MGMITime, [NSNumber numberWithBool:NO], MGMIYou, nil]];
 			testMessageInfo = [NSMutableDictionary new];
-			[testMessageInfo setObject:[NSDate dateWithNaturalLanguageString:@"8/31/20 6:07:25 PM"] forKey:MGMITime];
+			[testMessageInfo setObject:[NSDate dateWithTimeIntervalSince1970:1598915245] forKey:MGMITime];
 			[testMessageInfo setObject:@"Noah Jonson" forKey:MGMTInName];
 			[testMessageInfo setObject:@"+15555555555" forKey:MGMIPhoneNumber];
 			[testMessageInfo setObject:@"+17204325686" forKey:MGMTUserNumber];

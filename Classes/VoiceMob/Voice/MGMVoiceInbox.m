@@ -9,6 +9,7 @@
 #import "MGMVoiceInbox.h"
 #import "MGMVoiceUser.h"
 #import "MGMAccountController.h"
+#import "MGMVoiceSMS.h"
 #import "MGMInboxMessageView.h"
 #import "MGMProgressView.h"
 #import "MGMVMAddons.h"
@@ -48,7 +49,6 @@ NSString * const MGMInboxMessageLoadCellIdentifier = @"MGMInboxMessageLoadCellId
 		maxResults = 10;
 		start = 0;
 		resultsCount = 0;
-		inboxItems = [[NSArray arrayWithObjects:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL] autorelease], [[[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:[voiceUser accountController] action:@selector(showSettings:)] autorelease], nil] retain];
 		messagesItems = [[NSArray arrayWithObjects:[[[UIBarButtonItem alloc] initWithTitle:@"Inboxes" style:UIBarButtonItemStyleBordered target:self action:@selector(showInboxes:)] autorelease], [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL] autorelease], [[[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:[voiceUser accountController] action:@selector(showSettings:)] autorelease], nil] retain];
 		currentData = [NSMutableArray new];
 	}
@@ -79,9 +79,10 @@ NSString * const MGMInboxMessageLoadCellIdentifier = @"MGMInboxMessageLoadCellId
 			[progressView setProgressTitle:@"Loading..."];
 			[progressView setHidden:(progressStartCount<=0)];
 			if (currentView==1)
-				[[[voiceUser accountController] toolbar] setItems:messagesItems animated:YES];
+				[[voiceUser accountController] setItems:messagesItems animated:YES];
 			else
-				[[[voiceUser accountController] toolbar] setItems:inboxItems animated:YES];
+				[[voiceUser accountController] setItems:[[voiceUser accountController] accountItems] animated:YES];
+
 		}
 	}
 	if (currentView==1)
@@ -124,7 +125,7 @@ NSString * const MGMInboxMessageLoadCellIdentifier = @"MGMInboxMessageLoadCellId
 
 - (IBAction)showInboxes:(id)sender {
 	CGRect inViewFrame = [inboxesTable frame];
-	inViewFrame.origin.x -= inViewFrame.size.width;
+	inViewFrame.origin.x = -inViewFrame.size.width;
 	[inboxesTable setFrame:inViewFrame];
 	[[voiceUser tabView] addSubview:inboxesTable];
 	[UIView beginAnimations:nil context:nil];
@@ -134,10 +135,10 @@ NSString * const MGMInboxMessageLoadCellIdentifier = @"MGMInboxMessageLoadCellId
 	[UIView setAnimationDidStopSelector:@selector(inboxesAnimationDidStop:finished:context:)];
 	[inboxesTable setFrame:[messagesTable frame]];
 	CGRect outViewFrame = [messagesTable frame];
-	outViewFrame.origin.x += outViewFrame.size.width;
+	outViewFrame.origin.x = +outViewFrame.size.width;
 	[messagesTable setFrame:outViewFrame];
 	[UIView commitAnimations];
-	[[[voiceUser accountController] toolbar] setItems:inboxItems animated:YES];
+	[[voiceUser accountController] setItems:[[voiceUser accountController] accountItems] animated:YES];
 	currentView = 0;
 }
 - (void)inboxesAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
@@ -147,7 +148,6 @@ NSString * const MGMInboxMessageLoadCellIdentifier = @"MGMInboxMessageLoadCellId
 	resultsCount = 0;
 	[currentData removeAllObjects];
 	[messagesTable reloadData];
-	[[messagesItems objectAtIndex:1] setEnabled:YES];
 }
 
 - (NSInteger)tableView:(UITableView *)theTableView numberOfRowsInSection:(NSInteger)section {
@@ -211,11 +211,11 @@ NSString * const MGMInboxMessageLoadCellIdentifier = @"MGMInboxMessageLoadCellId
 - (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (theTableView==inboxesTable) {
 		currentInbox = [[[MGMInboxItems objectAtIndex:[indexPath indexAtPosition:1]] objectForKey:MGMSID] intValue];
-		[[messagesItems objectAtIndex:1] setEnabled:NO];
-		[[[voiceUser accountController] toolbar] setItems:messagesItems animated:YES];
+		[[messagesItems objectAtIndex:0] setEnabled:NO];
+		[[voiceUser accountController] setItems:messagesItems animated:YES];
 		
 		CGRect inViewFrame = [messagesTable frame];
-		inViewFrame.origin.x += inViewFrame.size.width;
+		inViewFrame.origin.x = +inViewFrame.size.width;
 		[messagesTable setFrame:inViewFrame];
 		[[voiceUser tabView] addSubview:messagesTable];
 		[UIView beginAnimations:nil context:nil];
@@ -225,7 +225,7 @@ NSString * const MGMInboxMessageLoadCellIdentifier = @"MGMInboxMessageLoadCellId
 		[UIView setAnimationDidStopSelector:@selector(messagesAnimationDidStop:finished:context:)];
 		[messagesTable setFrame:[inboxesTable frame]];
 		CGRect outViewFrame = [inboxesTable frame];
-		outViewFrame.origin.x -= outViewFrame.size.width;
+		outViewFrame.origin.x = -outViewFrame.size.width;
 		[inboxesTable setFrame:outViewFrame];
 		[UIView commitAnimations];
 		currentView = 1;
@@ -235,14 +235,27 @@ NSString * const MGMInboxMessageLoadCellIdentifier = @"MGMInboxMessageLoadCellId
 			start += maxResults;
 			[self loadInbox];
 		} else {
-			
+			NSDictionary *data = [currentData objectAtIndex:[indexPath indexAtPosition:1]];
+			int type = [[data objectForKey:MGMIType] intValue];
+			if (type==MGMIVoicemailType) {
+				
+			} else if (type==MGMIRecordedType) {
+				
+			} else if (type==MGMISMSIn || type==MGMISMSOut) {
+				[[[voiceUser tabObjects] objectAtIndex:MGMSMSTabIndex] messageWithData:data instance:[voiceUser instance]];
+			} else {
+				
+			}
+			if (![[data objectForKey:MGMIRead] boolValue]) {
+				
+			}
 		}
 	}
 }
 - (void)messagesAnimationDidStop:(NSString *)animationID finished:(NSNumber *)finished context:(void *)context {
 	[inboxesTable removeFromSuperview];
 	[inboxesTable deselectRowAtIndexPath:[inboxesTable indexPathForSelectedRow] animated:NO];
-	[[messagesItems objectAtIndex:1] setEnabled:YES];
+	[[messagesItems objectAtIndex:0] setEnabled:YES];
 }
 
 - (void)loadInbox {
@@ -291,11 +304,10 @@ NSString * const MGMInboxMessageLoadCellIdentifier = @"MGMInboxMessageLoadCellId
 	[self stopProgress];
 }
 - (void)inboxGotInfo:(NSArray *)theInfo instance:(MGMInstance *)theInstance {
-	if (theInfo!=nil) {
+	if (theInfo!=nil)
 		[self addData:theInfo];
-	} else {
+	else
 		NSLog(@"Error 234554: Hold on, this should never happen.");
-	}
 	[self stopProgress];
 }
 - (void)addData:(NSArray *)theData {

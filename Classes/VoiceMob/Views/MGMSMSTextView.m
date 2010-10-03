@@ -12,7 +12,33 @@
 @implementation MGMSMSTextView
 - (void)awakeFromNib {
 	[self setBackgroundColor:[UIColor clearColor]];
-	[self setContentInset:UIEdgeInsetsMake(-6.0, 3.0, 0.0, -3.0)];
+	[self setContentInset:UIEdgeInsetsMake(-6.0, 3.0, -6.0, -3.0)];
+}
+
+- (void)setContentOffset:(CGPoint)theOffset {
+	if ([self isTracking] || [self isDecelerating]) {
+		if ([self contentSize].height>=130.0) {
+			[self setContentInset:UIEdgeInsetsMake(-6.0, 3.0, -4.0, -3.0)];
+		} else {
+			[self setContentInset:UIEdgeInsetsMake(-6.0, 3.0, -6.0, -3.0)];
+		}
+		[super setContentOffset:theOffset];
+	} else {
+		[super setContentOffset:theOffset];
+		if ([self contentSize].height>=130.0) {
+			[self setScrollEnabled:YES];
+			[self setContentInset:UIEdgeInsetsMake(-6.0, 3.0, -2.0, -3.0)];
+			if (lastHeight!=[self contentSize].height) {
+				lastHeight = [self contentSize].height;
+				[self scrollRectToVisible:CGRectMake(0, [self contentSize].height-10, 320, 10) animated:NO];
+				[self flashScrollIndicators];
+			}
+		} else {
+			lastHeight = 0;
+			[self setScrollEnabled:NO];
+			[self setContentInset:UIEdgeInsetsMake(-6.0, 3.0, -6.0, -3.0)];
+		}
+	}
 }
 
 - (void)drawRect:(CGRect)theRect {

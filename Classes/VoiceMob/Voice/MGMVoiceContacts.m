@@ -8,6 +8,7 @@
 
 #import "MGMVoiceContacts.h"
 #import "MGMVoiceUser.h"
+#import "MGMVoiceSMS.h"
 #import "MGMVMAddons.h"
 #import <VoiceBase/VoiceBase.h>
 
@@ -64,6 +65,8 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
 	if (buttonIndex==0) {
 		[voiceUser call:[selectedContact objectForKey:MGMCNumber]];
+	} else if (buttonIndex==1) {
+		[[[voiceUser tabObjects] objectAtIndex:MGMSMSTabIndex] messageWithNumber:[selectedContact objectForKey:MGMCNumber] instance:[voiceUser instance]];
 	}
 	selectedContact = nil;
 	[contactsTable deselectRowAtIndexPath:[contactsTable indexPathForSelectedRow] animated:YES];

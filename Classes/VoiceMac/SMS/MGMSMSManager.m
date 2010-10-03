@@ -161,10 +161,12 @@ const float updateTimeInterval = 300.0;
 					break;
 				}
 			}
-			if (!tab && ![[[theMessages objectAtIndex:i] objectForKey:MGMIRead] boolValue]) {
+			if (![[[theMessages objectAtIndex:i] objectForKey:MGMIRead] boolValue]) {
 				newMessage = YES;
-				newTab = YES;
-				[SMSMessages addObject:[MGMSMSMessageView viewWithManager:self messages:messages messageInfo:messageInfo instance:theInstance]];
+				if (!tab) {
+					newTab = YES;
+					[SMSMessages addObject:[MGMSMSMessageView viewWithManager:self messages:messages messageInfo:messageInfo instance:theInstance]];
+				}
 			}
 			if ([newestDate earlierDate:[[theMessages objectAtIndex:i] objectForKey:MGMITime]]==newestDate)
 				newestDate = [[theMessages objectAtIndex:i] objectForKey:MGMITime];

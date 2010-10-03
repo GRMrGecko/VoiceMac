@@ -17,6 +17,11 @@
 #import <MGMUsers/MGMUsers.h>
 #import <VoiceBase/VoiceBase.h>
 
+const int MGMKeypadTabIndex = 0;
+const int MGMContactsTabIndex = 1;
+const int MGMSMSTabIndex = 2;
+const int MGMInboxTabIndex = 3;
+
 @implementation MGMVoiceUser
 + (id)voiceUser:(MGMUser *)theUser accountController:(MGMAccountController *)theAccountController {
 	return [[[self alloc] initWithUser:theUser accountController:theAccountController] autorelease];
@@ -26,15 +31,15 @@
 		accountController = theAccountController;
 		user = [theUser retain];
 		
-		currentTab = 2;
+		currentTab = 0;
 		tabObjects = [NSMutableArray new];
 		[tabObjects addObject:[MGMVoicePad tabWithVoiceUser:self]];
 		[tabObjects addObject:[MGMVoiceContacts tabWithVoiceUser:self]];
 		[tabObjects addObject:[MGMVoiceSMS tabWithVoiceUser:self]];
 		[tabObjects addObject:[MGMVoiceInbox tabWithVoiceUser:self]];
 		
-		//if ([user isStarted])
-			//instance = [[MGMInstance instanceWithUser:user delegate:self] retain];
+		if ([user isStarted])
+			instance = [[MGMInstance instanceWithUser:user delegate:self] retain];
 	}
 	return self;
 }
@@ -74,7 +79,7 @@
 		} else {
 			[tabView addSubview:[[tabObjects objectAtIndex:currentTab] view]];
 			[tabBar setSelectedItem:[[tabBar items] objectAtIndex:currentTab]];
-			/*if (![instance isLoggedIn]) {
+			if (![instance isLoggedIn]) {
 				CGSize contentSize = [view frame].size;
 				progressView = [[MGMProgressView alloc] initWithFrame:CGRectMake(0, 0, contentSize.width, contentSize.height)];
 				[progressView setProgressTitle:@"Logging In"];
@@ -83,10 +88,13 @@
 				[progressView becomeFirstResponder];
 			} else {
 				[self setInstanceInfo];
-			}*/
+			}
 		}
 	}
 	return view;
+}
+- (NSArray *)tabObjects {
+	return tabObjects;
 }
 - (UIView *)tabView {
 	return tabView;
@@ -149,7 +157,10 @@
 }
 
 - (void)updatedContacts {
-	[[tabObjects objectAtIndex:1] updatedContacts];
+	[[tabObjects objectAtIndex:MGMContactsTabIndex] updatedContacts];
+}
+- (void)updateSMS {
+	[[tabObjects objectAtIndex:MGMSMSTabIndex] checkSMSMessages];
 }
 
 - (BOOL)isPlacingCall {
@@ -213,9 +224,8 @@
 	int tabIndex = [[tabBar items] indexOfObject:item];
 	if (tabIndex==currentTab)
 		return;
-	if ([[accountController toolbar] items]!=[accountController accountItems]) {
-		[[accountController toolbar] setItems:[accountController accountItems] animated:YES];
-	}
+	if (tabIndex!=MGMSMSTabIndex && tabIndex!=MGMInboxTabIndex)
+		[accountController setItems:[accountController accountItems] animated:YES];
 	
 	id tab = [tabObjects objectAtIndex:currentTab];
 	currentTab = tabIndex;

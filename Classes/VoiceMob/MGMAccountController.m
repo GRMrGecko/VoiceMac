@@ -52,12 +52,12 @@ NSString * const MGMAccountsTitle = @"Accounts";
 			accountsItems = [[NSArray arrayWithObjects:[[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL] autorelease], [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addAccount:)] autorelease], nil] retain];
 			accountItems = [[toolbar items] copy];
 			if ([contactsControllers count]==0 || currentContactsController==-1) {
-				[toolbar setItems:accountsItems animated:NO];
+				[self setItems:accountsItems animated:NO];
 				[contentView addSubview:[accounts view]];
 				[self setTitle:MGMAccountsTitle];
 			} else {
 				id<MGMAccountProtocol> contactsController = [contactsControllers objectAtIndex:currentContactsController];
-				[toolbar setItems:accountItems animated:NO];
+				[self setItems:accountItems animated:NO];
 				[contentView addSubview:[contactsController view]];
 				
 				[self setTitle:[contactsController title]];
@@ -100,6 +100,10 @@ NSString * const MGMAccountsTitle = @"Accounts";
 - (UIToolbar *)toolbar {
 	return toolbar;
 }
+- (void)setItems:(NSArray *)theItems animated:(BOOL)isAnimated {
+	if ([toolbar items]!=theItems)
+		[toolbar setItems:theItems animated:isAnimated];
+}
 - (NSArray *)accountsItems {
 	return accountsItems;
 }
@@ -122,10 +126,10 @@ NSString * const MGMAccountsTitle = @"Accounts";
 	id contactsController = [contactsControllers objectAtIndex:currentContactsController];
 	currentContactsController = -1;
 	[[NSUserDefaults standardUserDefaults] setInteger:currentContactsController forKey:MGMLastContactsController];
-	[toolbar setItems:accountsItems animated:YES];
+	[self setItems:accountsItems animated:YES];
 	[self setTitle:MGMAccountsTitle];
 	CGRect inViewFrame = [[accounts view] frame];
-	inViewFrame.origin.x -= inViewFrame.size.width;
+	inViewFrame.origin.x = -inViewFrame.size.width;
 	[[accounts view] setFrame:inViewFrame];
 	[contentView addSubview:[accounts view]];
 	[UIView beginAnimations:nil context:contactsController];
@@ -135,7 +139,7 @@ NSString * const MGMAccountsTitle = @"Accounts";
 	[UIView setAnimationDidStopSelector:@selector(contactsControllerAnimationDidStop:finished:contactsController:)];
 	[[accounts view] setFrame:[[contactsController view] frame]];
 	CGRect outViewFrame = [[contactsController view] frame];
-	outViewFrame.origin.x += outViewFrame.size.width;
+	outViewFrame.origin.x = +outViewFrame.size.width;
 	[[contactsController view] setFrame:outViewFrame];
 	[UIView commitAnimations];
 }
@@ -210,11 +214,11 @@ NSString * const MGMAccountsTitle = @"Accounts";
 		currentContactsController = [contactsControllers indexOfObject:contactsController];
 		[[NSUserDefaults standardUserDefaults] setInteger:currentContactsController forKey:MGMLastContactsController];	
 	}
-	[toolbar setItems:nil animated:YES];
+	[self setItems:nil animated:YES];
 	[self setTitle:[contactsController title]];
 	
 	CGRect inViewFrame = [[contactsController view] frame];
-	inViewFrame.origin.x += inViewFrame.size.width;
+	inViewFrame.origin.x = +inViewFrame.size.width;
 	[[contactsController view] setFrame:inViewFrame];
 	[contentView addSubview:[contactsController view]];
 	[UIView beginAnimations:nil context:accounts];
@@ -224,7 +228,7 @@ NSString * const MGMAccountsTitle = @"Accounts";
 	[UIView setAnimationDidStopSelector:@selector(contactsControllerAnimationDidStop:finished:contactsController:)];
 	[[contactsController view] setFrame:[[accounts view] frame]];
 	CGRect outViewFrame = [[accounts view] frame];
-	outViewFrame.origin.x -= outViewFrame.size.width;
+	outViewFrame.origin.x = -outViewFrame.size.width;
 	[[accounts view] setFrame:outViewFrame];
 	[UIView commitAnimations];
 }
@@ -232,7 +236,7 @@ NSString * const MGMAccountsTitle = @"Accounts";
 	[[theContactsController view] removeFromSuperview];
 	[theContactsController releaseView];
 	if ([theContactsController isKindOfClass:[MGMAccounts class]]) {
-		[toolbar setItems:accountItems animated:YES];
+		[self setItems:accountItems animated:YES];
 	} else {
 		if (![[theContactsController user] isStarted])
 			[contactsControllers removeObject:theContactsController];

@@ -103,6 +103,8 @@ typedef enum {
 	NSMutableArray *restartAccounts;
 #if !TARGET_OS_IPHONE
 	NSArray *audioDevices;
+	int lastInputDevice;
+	int lastOutputDevice;
 #endif
 	
 	int ringbackCount;

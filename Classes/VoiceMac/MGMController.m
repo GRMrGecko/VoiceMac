@@ -619,6 +619,10 @@ NSString * const MGMLoading = @"Loading...";
 	}
 #endif
 	if (response==NSTerminateNow) {
+		while ([[SMSManager SMSMessages] count]>=1) {
+			[SMSManager closeSMSMessage:[[SMSManager SMSMessages] lastObject]];
+		}
+		
 		quitting = YES;
 		[contactsControllers removeAllObjects];
 	}

@@ -355,7 +355,10 @@ const BOOL MGMInboxInvisible = YES;
 		
 		range = [string rangeOfString:@"</span>"];
 		if (range.location==NSNotFound) NSLog(@"failed 0011");
-		[message setObject:[[string substringWithRange:NSMakeRange(0, range.location)] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] forKey:MGMIText];
+		NSString *messageText = [[string substringWithRange:NSMakeRange(0, range.location)] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+		messageText = [messageText replace:@"\n" with:@"<br />"];
+		messageText = [messageText replace:@"\r" with:@""];
+		[message setObject:messageText forKey:MGMIText];
 	}
 	range = [theHTML rangeOfString:@"<span class=\"gc-message-sms-time\">"];
 	if (range.location!=NSNotFound) {

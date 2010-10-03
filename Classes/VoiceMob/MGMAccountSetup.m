@@ -240,7 +240,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 		displaying = YES;
 		if (goingBack) {
 			CGRect inViewFrame = [nextView frame];
-			inViewFrame.origin.x -= inViewFrame.size.width;
+			inViewFrame.origin.x = -inViewFrame.size.width;
 			[nextView setFrame:inViewFrame];
 			[view addSubview:nextView];
 			[UIView beginAnimations:nil context:nil];
@@ -250,12 +250,12 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 			[UIView setAnimationDidStopSelector:@selector(displayAnimationDidStop:finished:context:)];
 			[nextView setFrame:[lastView frame]];
 			CGRect outViewFrame = [lastView frame];
-			outViewFrame.origin.x += outViewFrame.size.width;
+			outViewFrame.origin.x = +outViewFrame.size.width;
 			[lastView  setFrame:outViewFrame];
 			[UIView commitAnimations];
 		} else {
 			CGRect inViewFrame = [nextView frame];
-			inViewFrame.origin.x += inViewFrame.size.width;
+			inViewFrame.origin.x = +inViewFrame.size.width;
 			[nextView setFrame:inViewFrame];
 			[view addSubview:nextView];
 			[UIView beginAnimations:nil context:nil];
@@ -265,7 +265,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 			[UIView setAnimationDidStopSelector:@selector(displayAnimationDidStop:finished:context:)];
 			[nextView setFrame:[lastView frame]];
 			CGRect outViewFrame = [lastView frame];
-			outViewFrame.origin.x -= outViewFrame.size.width;
+			outViewFrame.origin.x = -outViewFrame.size.width;
 			[lastView setFrame:outViewFrame];
 			[UIView commitAnimations];
 		}

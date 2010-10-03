@@ -426,9 +426,8 @@ NSString * const MGMSID = @"id";
 	} else {
 		[(MGMVoiceUser *)[instance delegate] runAction:sender];
 	}
-	if (![[data objectForKey:MGMIRead] boolValue]) {
+	if (![[data objectForKey:MGMIRead] boolValue])
 		[self markRead:self];
-	}
 }
 
 - (float)splitView:(NSSplitView *)sender constrainMinCoordinate:(float)proposedMin ofSubviewAt:(int)offset {

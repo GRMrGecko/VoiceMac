@@ -251,6 +251,8 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		state = MGMSIPStoppedState;
 		NATType = MGMSIPNATUnknownType;
 		accounts = [NSMutableArray new];
+		lastInputDevice = -1;
+		lastOutputDevice = -1;
 		shouldRestart = NO;
 		
 #if !TARGET_OS_IPHONE
@@ -513,6 +515,14 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	
 	state = MGMSIPStartedState;
 	
+	[accounts makeObjectsPerformSelector:@selector(login)];
+	
+	if (delegate!=nil && [delegate respondsToSelector:@selector(SIPStarted)]) [delegate SIPStarted];
+	
+	NSLog(@"MGMSIP Started");
+	
+	[lock unlock];
+	
 	pjsua_conf_adjust_tx_level(0, [defaults floatForKey:MGMSIPVolume]);
 	pjsua_conf_adjust_rx_level(0, [defaults floatForKey:MGMSIPMicVolume]);
 #if !TARGET_OS_IPHONE
@@ -522,13 +532,6 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	[self updateAudioDevices];
 #endif
 	
-	[accounts makeObjectsPerformSelector:@selector(login)];
-	
-	if (delegate!=nil && [delegate respondsToSelector:@selector(SIPStarted)]) [delegate SIPStarted];
-	
-	NSLog(@"MGMSIP Started");
-	
-	[lock unlock];
 	[pool drain];
 }
 - (void)stop {
@@ -841,6 +844,9 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	pj_thread_desc PJThreadDesc;
 	[self registerThread:&PJThreadDesc];
 	
+	lastInputDevice = theInputDevice;
+	lastOutputDevice = theOutputDevice;
+	
 	pjsua_set_null_snd_dev();
 	pj_status_t status = pjsua_set_snd_dev(theInputDevice, theOutputDevice);
 	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
@@ -862,6 +868,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		return;
 	
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	[lock lock];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
 	OSStatus error = noErr;
@@ -876,6 +883,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	error = AudioHardwareGetPropertyInfo(kAudioHardwarePropertyDevices, &size, &writable);
 	if (error!=noErr) {
 		[pool drain];
+		[lock unlock];
 		return;
 	}
 	
@@ -904,16 +912,22 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	
 	int currentInput = -1;
 	int currentOutput = -1;
+	int defaultInputIndex = -1;
+	int defaultOutputIndex = -1;
 	
 	for (int d=0; d<deviceCount; d++) {
 		NSMutableDictionary *deviceInfo = [NSMutableDictionary dictionary];
 		[deviceInfo setObject:[NSNumber numberWithUnsignedLong:devices[d]] forKey:MGMSIPADeviceIdentifier];
 		[deviceInfo setObject:[NSNumber numberWithInt:d] forKey:MGMSIPADeviceIndex];
 		
-		if (devices[d]==defaultInput)
+		if (devices[d]==defaultInput) {
+			defaultInputIndex = d;
 			[deviceInfo setObject:[NSNumber numberWithBool:YES] forKey:MGMSIPADeviceIsDefaultInput];
-		if (devices[d]==defaultOutput)
+		}
+		if (devices[d]==defaultOutput) {
+			defaultOutputIndex = d;
 			[deviceInfo setObject:[NSNumber numberWithBool:YES] forKey:MGMSIPADeviceIsDefaultOutput];
+		}
 		
 		CFStringRef UIDString = NULL;
 		size = sizeof(CFStringRef);
@@ -972,17 +986,21 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	if (audioDevices!=nil) [audioDevices release];
 	audioDevices = [devicesArray copy];
 	
-	pj_thread_desc PJThreadDesc;
-	[self registerThread:&PJThreadDesc];
-	
-	pjsua_set_null_snd_dev();
-	pjmedia_snd_deinit();
-	pjmedia_snd_init(pjsua_get_pool_factory());
-	
-	[self setInputSoundDevice:currentInput outputSoundDevice:currentOutput];
+	if ((currentInput==-1 ? defaultInputIndex!=lastInputDevice : currentInput!=lastInputDevice) && (currentOutput==-1 ? defaultOutputIndex!=lastOutputDevice : currentOutput!=lastOutputDevice)) {
+		pj_thread_desc PJThreadDesc;
+		[self registerThread:&PJThreadDesc];
+		
+		pjsua_set_null_snd_dev();
+		pjmedia_snd_deinit();
+		pjmedia_snd_init(pjsua_get_pool_factory());
+		
+		[self setInputSoundDevice:currentInput outputSoundDevice:currentOutput];
+		bzero(&PJThreadDesc, sizeof(pj_thread_desc));	
+	}
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:MGMSIPAudioChangedNotification object:audioDevices];
-	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
+	
+	[lock unlock];
 	[pool drain];
 }
 - (NSArray *)audioDevices {

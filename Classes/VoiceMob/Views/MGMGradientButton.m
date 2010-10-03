@@ -43,6 +43,10 @@
 	[super touchesCancelled:touches withEvent:event];
 	[self setTouching:NO];
 }
+- (void)setEnabled:(BOOL)isEnabled {
+	[super setEnabled:isEnabled];
+	[self setNeedsDisplay];
+}
 
 - (UIEdgeInsets)titleEdgeInsets {
 	return UIEdgeInsetsMake(-2.0, 0.0, 0.0, 0.0);

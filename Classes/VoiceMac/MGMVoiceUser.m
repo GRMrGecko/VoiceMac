@@ -66,14 +66,14 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 		progressFadeAnimation = nil;
 	}
 	[super dealloc];
+	if (inboxWindow!=nil) {
+		[inboxWindow closeWindow];
+		[inboxWindow release];
+	}
 	if (instance!=nil) {
 		[instance setDelegate:nil];
 		[instance stop];
 		[instance release];
-	}
-	if (inboxWindow!=nil) {
-		[inboxWindow closeWindow];
-		[inboxWindow release];
 	}
 	if (progressView!=nil) {
 		[progressView removeFromSuperview];

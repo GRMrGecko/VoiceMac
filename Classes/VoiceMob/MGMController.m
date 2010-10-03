@@ -34,7 +34,7 @@
 	MGMAccountSetup *accountSetup = [[MGMAccountSetup alloc] initWithController:self];
 	[accountSetup setSetupOnly:YES];
 	CGRect inViewFrame = [[accountSetup view] frame];
-	inViewFrame.origin.y += inViewFrame.size.height;
+	inViewFrame.origin.y = +inViewFrame.size.height;
 	[[accountSetup view] setFrame:inViewFrame];
 	[[self view] addSubview:[accountSetup view]];
 	[UIView beginAnimations:nil context:nil];
@@ -52,7 +52,7 @@
 	[UIView setAnimationDelegate:self];
 	[UIView setAnimationDidStopSelector:@selector(dismissAnimationDidStop:finished:accountSetup:)];
 	CGRect outViewFrame = [[theAccountSetup view] frame];
-	outViewFrame.origin.y += outViewFrame.size.height;
+	outViewFrame.origin.y = +outViewFrame.size.height;
 	[[theAccountSetup view] setFrame:outViewFrame];
 	[UIView commitAnimations];
 }

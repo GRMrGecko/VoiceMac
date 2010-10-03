@@ -41,6 +41,7 @@
 - (MGMController *)controller;
 - (UIView *)view;
 - (UIToolbar *)toolbar;
+- (void)setItems:(NSArray *)theItems animated:(BOOL)isAnimated;
 - (NSArray *)accountsItems;
 - (NSArray *)accountItems;
 

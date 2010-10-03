@@ -18,7 +18,6 @@
 	MGMProgressView *progressView;
 	int currentView;
 	
-	NSArray *inboxItems;
 	NSArray *messagesItems;
 	
 	int progressStartCount;

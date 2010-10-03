@@ -43,35 +43,34 @@
 				<int key="NSvFlags">274</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="IBUIView" id="545711008">
+					<object class="IBUIView" id="1046088304">
 						<reference key="NSNextResponder" ref="355112807"/>
 						<int key="NSvFlags">266</int>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBUITextView" id="826280752">
-								<reference key="NSNextResponder" ref="545711008"/>
+							<object class="IBUITextView" id="388287938">
+								<reference key="NSNextResponder" ref="1046088304"/>
 								<int key="NSvFlags">274</int>
 								<string key="NSFrame">{{7, 8}, {238, 26}}</string>
-								<reference key="NSSuperview" ref="545711008"/>
-								<object class="NSColor" key="IBUIBackgroundColor" id="136061801">
+								<reference key="NSSuperview" ref="1046088304"/>
+								<object class="NSColor" key="IBUIBackgroundColor" id="527773708">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MSAxIDEAA</bytes>
 								</object>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<bool key="IBUIMultipleTouchEnabled">YES</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-								<bool key="IBUIScrollEnabled">NO</bool>
 								<string key="IBUIText"/>
 								<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 									<int key="IBUIAutocapitalizationType">2</int>
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								</object>
 							</object>
-							<object class="IBUIButton" id="853973562">
-								<reference key="NSNextResponder" ref="545711008"/>
+							<object class="IBUIButton" id="786956623">
+								<reference key="NSNextResponder" ref="1046088304"/>
 								<int key="NSvFlags">265</int>
 								<string key="NSFrame">{{252, 8}, {61, 26}}</string>
-								<reference key="NSSuperview" ref="545711008"/>
+								<reference key="NSSuperview" ref="1046088304"/>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
 									<bytes key="NSRGB">MC4xMTc2NDcwNTkzIDAuMzgwMzkyMTY0IDAuNzg0MzEzNzM4MwA</bytes>
@@ -86,21 +85,21 @@
 									<int key="NSfFlags">16</int>
 								</object>
 								<string key="IBUINormalTitle">Send</string>
-								<object class="NSColor" key="IBUIHighlightedTitleColor" id="338535607">
+								<object class="NSColor" key="IBUIHighlightedTitleColor" id="780412671">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MQA</bytes>
 								</object>
-								<reference key="IBUINormalTitleColor" ref="338535607"/>
+								<reference key="IBUINormalTitleColor" ref="780412671"/>
 								<object class="NSColor" key="IBUINormalTitleShadowColor">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MCAwAA</bytes>
 								</object>
 							</object>
-							<object class="IBUILabel" id="1055111431">
-								<reference key="NSNextResponder" ref="545711008"/>
-								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{265, -21}, {29, 21}}</string>
-								<reference key="NSSuperview" ref="545711008"/>
+							<object class="IBUILabel" id="383414162">
+								<reference key="NSNextResponder" ref="1046088304"/>
+								<int key="NSvFlags">265</int>
+								<string key="NSFrame">{{252, -14}, {60, 21}}</string>
+								<reference key="NSSuperview" ref="1046088304"/>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
@@ -119,9 +118,10 @@
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
 								<float key="IBUIMinimumFontSize">10</float>
+								<int key="IBUITextAlignment">2</int>
 							</object>
 						</object>
-						<string key="NSFrame">{{0, 329}, {320, 40}}</string>
+						<string key="NSFrame">{{0, 327}, {320, 40}}</string>
 						<reference key="NSSuperview" ref="355112807"/>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -132,28 +132,28 @@
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
-					<object class="IBUIWebView" id="394150452">
+					<object class="IBUIWebView" id="320314397">
 						<reference key="NSNextResponder" ref="355112807"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrameSize">{320, 329}</string>
+						<string key="NSFrameSize">{320, 327}</string>
 						<reference key="NSSuperview" ref="355112807"/>
-						<reference key="IBUIBackgroundColor" ref="136061801"/>
+						<reference key="IBUIBackgroundColor" ref="527773708"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIDataDetectorTypes">1</int>
 						<bool key="IBUIDetectsPhoneNumbers">YES</bool>
 					</object>
 				</object>
-				<string key="NSFrameSize">{320, 369}</string>
+				<string key="NSFrameSize">{320, 367}</string>
 				<reference key="NSSuperview"/>
-				<reference key="IBUIBackgroundColor" ref="338535607"/>
+				<reference key="IBUIBackgroundColor" ref="780412671"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
-			<object class="IBUITableView" id="908766037">
+			<object class="IBUITableView" id="134583931">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
-				<string key="NSFrameSize">{320, 369}</string>
+				<string key="NSFrameSize">{320, 367}</string>
 				<reference key="NSSuperview"/>
-				<reference key="IBUIBackgroundColor" ref="338535607"/>
+				<reference key="IBUIBackgroundColor" ref="780412671"/>
 				<bool key="IBUIClipsSubviews">YES</bool>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<bool key="IBUIAlwaysBounceVertical">YES</bool>
@@ -173,6 +173,87 @@
 						<reference key="destination" ref="355112807"/>
 					</object>
 					<int key="connectionID">14</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">SMSView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="320314397"/>
+					</object>
+					<int key="connectionID">21</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">messagesTable</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="134583931"/>
+					</object>
+					<int key="connectionID">22</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="388287938"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">23</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">SMSTextView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="388287938"/>
+					</object>
+					<int key="connectionID">24</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">SMSBottomView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="1046088304"/>
+					</object>
+					<int key="connectionID">25</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">SMSTextCountField</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="383414162"/>
+					</object>
+					<int key="connectionID">28</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">dataSource</string>
+						<reference key="source" ref="134583931"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">29</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="134583931"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">30</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">sendMessage:</string>
+						<reference key="source" ref="786956623"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">31</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">SMSSendButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="786956623"/>
+					</object>
+					<int key="connectionID">32</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -200,48 +281,48 @@
 						<reference key="object" ref="355112807"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="545711008"/>
-							<reference ref="394150452"/>
+							<reference ref="1046088304"/>
+							<reference ref="320314397"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Message View</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">5</int>
-						<reference key="object" ref="908766037"/>
+						<reference key="object" ref="134583931"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">SMS Messages</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">15</int>
-						<reference key="object" ref="545711008"/>
+						<reference key="object" ref="1046088304"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="826280752"/>
-							<reference ref="853973562"/>
-							<reference ref="1055111431"/>
+							<reference ref="388287938"/>
+							<reference ref="786956623"/>
+							<reference ref="383414162"/>
 						</object>
 						<reference key="parent" ref="355112807"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">12</int>
-						<reference key="object" ref="826280752"/>
-						<reference key="parent" ref="545711008"/>
+						<reference key="object" ref="388287938"/>
+						<reference key="parent" ref="1046088304"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">16</int>
-						<reference key="object" ref="853973562"/>
-						<reference key="parent" ref="545711008"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">19</int>
-						<reference key="object" ref="394150452"/>
-						<reference key="parent" ref="355112807"/>
+						<reference key="object" ref="786956623"/>
+						<reference key="parent" ref="1046088304"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">20</int>
-						<reference key="object" ref="1055111431"/>
-						<reference key="parent" ref="545711008"/>
+						<reference key="object" ref="383414162"/>
+						<reference key="parent" ref="1046088304"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">19</int>
+						<reference key="object" ref="320314397"/>
+						<reference key="parent" ref="355112807"/>
 					</object>
 				</object>
 			</object>
@@ -276,9 +357,9 @@
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{525, 192}, {320, 369}}</string>
+					<string>{{525, 194}, {320, 367}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-					<string>{{177, 335}, {320, 369}}</string>
+					<string>{{177, 337}, {320, 367}}</string>
 					<string>com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				</object>
 			</object>
@@ -298,7 +379,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">20</int>
+			<int key="maxID">32</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -330,15 +411,103 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">MGMVoiceSMS</string>
 					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>sendMessage:</string>
+							<string>showMessages:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>sendMessage:</string>
+							<string>showMessages:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBActionInfo">
+								<string key="name">sendMessage:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">showMessages:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+						</object>
+					</object>
 					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">messageView</string>
-						<string key="NS.object.0">UIView</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>SMSBottomView</string>
+							<string>SMSSendButton</string>
+							<string>SMSTextCountField</string>
+							<string>SMSTextView</string>
+							<string>SMSView</string>
+							<string>messageView</string>
+							<string>messagesTable</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>UIView</string>
+							<string>UIButton</string>
+							<string>UILabel</string>
+							<string>MGMSMSTextView</string>
+							<string>UIWebView</string>
+							<string>UIView</string>
+							<string>UITableView</string>
+						</object>
 					</object>
 					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">messageView</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">messageView</string>
-							<string key="candidateClassName">UIView</string>
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>SMSBottomView</string>
+							<string>SMSSendButton</string>
+							<string>SMSTextCountField</string>
+							<string>SMSTextView</string>
+							<string>SMSView</string>
+							<string>messageView</string>
+							<string>messagesTable</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<object class="IBToOneOutletInfo">
+								<string key="name">SMSBottomView</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">SMSSendButton</string>
+								<string key="candidateClassName">UIButton</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">SMSTextCountField</string>
+								<string key="candidateClassName">UILabel</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">SMSTextView</string>
+								<string key="candidateClassName">MGMSMSTextView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">SMSView</string>
+								<string key="candidateClassName">UIWebView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">messageView</string>
+								<string key="candidateClassName">UIView</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">messagesTable</string>
+								<string key="candidateClassName">UITableView</string>
+							</object>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">

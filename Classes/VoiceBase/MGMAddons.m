@@ -70,6 +70,8 @@
 - (NSString *)escapeSMS {
 	NSString *escaped = [self replace:@"\\" with:@"\\\\"];
 	escaped = [escaped replace:@"'" with:@"\\'"];
+	escaped = [escaped replace:@"\n" with:@"<br />"];
+	escaped = [escaped replace:@"\r" with:@""];
 	return escaped;
 }
 
