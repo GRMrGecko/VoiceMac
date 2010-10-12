@@ -40,6 +40,19 @@
 			
 			incoming = (state==MGMSIPCallIncomingState);
 			muted = NO;
+			
+			pjsua_media_config mediaConfig = [[MGMSIP sharedSIP] mediaConfig];
+			unsigned int samplesPerFrame = mediaConfig.audio_frame_ptime * mediaConfig.clock_rate * mediaConfig.channel_count / 1000;
+			pj_status_t status = pjmedia_tonegen_create([[MGMSIP sharedSIP] PJPool], mediaConfig.clock_rate, mediaConfig.channel_count, samplesPerFrame, 16, 0, &toneGenPort);
+			if (status!=PJ_SUCCESS) {
+				NSLog(@"Error creating tone generator");
+			} else {
+				status = pjsua_conf_add_port([[MGMSIP sharedSIP] PJPool], toneGenPort, &toneGenSlot);
+				if (status!=PJ_SUCCESS)
+					NSLog(@"Error adding tone generator");
+				else
+					pjsua_conf_connect(toneGenSlot, 0);
+			}
 		}
 		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	}
@@ -61,6 +74,11 @@
 		[transferStatusText release];
 	if (holdMusicPath!=nil)
 		[holdMusicPath release];
+	if (toneGenPort!=NULL) {
+		pjsua_conf_remove_port(toneGenSlot);
+		pjmedia_port_destroy(toneGenPort);
+		toneGenPort = NULL;
+	}
 	[super dealloc];
 }
 
@@ -318,12 +336,15 @@
 	if (identifier==PJSUA_INVALID_ID || state!=MGMSIPCallConfirmedState)
 		return;
 	
+	BOOL sendSuccessful = NO;
+	
 	pj_thread_desc PJThreadDesc;
 	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	pj_str_t digits = [theDigits PJString];
 	pj_status_t status = pjsua_call_dial_dtmf(identifier, &digits);
-	if (status!=PJ_SUCCESS) {
+	sendSuccessful = (status==PJ_SUCCESS);
+	if (!sendSuccessful) {
 		const pj_str_t INFO = pj_str("INFO");
 		for (unsigned int i=0; i<[theDigits length]; i++) {
 			pjsua_msg_data messageData;
@@ -332,10 +353,46 @@
 			messageData.msg_body = [[NSString stringWithFormat:@"Signal=%C\r\nDuration=300", [theDigits characterAtIndex:i]] PJString];
 			
 			status = pjsua_call_send_request(identifier, &INFO, &messageData);
-			if (status!=PJ_SUCCESS)
-				NSLog(@"Unable to send DTMF with status %d.", status);
+			sendSuccessful = (status==PJ_SUCCESS);
 		}
 	}
+	if (!sendSuccessful)
+		pjsua_conf_connect(toneGenSlot, pjsua_call_get_conf_port(identifier));
+	for (unsigned int i=0; i<[theDigits length]; i++) {
+		pjmedia_tonegen_stop(toneGenPort);
+		
+		pjmedia_tone_digit digit[1];
+		digit[0].digit = [theDigits characterAtIndex:i];
+		digit[0].on_msec = 100;
+		digit[0].off_msec = 100; 
+		digit[0].volume = 16383;
+		
+		pjmedia_tonegen_play_digits(toneGenPort, 1, digit, 0);
+		if ([theDigits length]!=1 && (i+1)<[theDigits length]) [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
+	}
+	if (!sendSuccessful)
+		pjsua_conf_disconnect(toneGenSlot, pjsua_call_get_conf_port(identifier));
+	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
+}
+- (void)receivedDTMFDigit:(int)theDigit {
+	if (identifier==PJSUA_INVALID_ID || state!=MGMSIPCallConfirmedState)
+		return;
+	
+	if (delegate!=nil && [delegate respondsToSelector:@selector(receivedDMTFDigit:)]) [delegate receivedDMTFDigit:theDigit];
+	
+	pj_thread_desc PJThreadDesc;
+	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
+	
+	pjmedia_tonegen_stop(toneGenPort);
+	
+	pjmedia_tone_digit digit[1];
+	digit[0].digit = theDigit;
+	digit[0].on_msec = 100;
+	digit[0].off_msec = 100; 
+	digit[0].volume = 16383;
+	
+	pjmedia_tonegen_play_digits(toneGenPort, 1, digit, 0);
+	
 	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 

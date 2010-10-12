@@ -85,7 +85,7 @@
 }
 
 - (void)play {
-	[sound play];
+	[sound performSelectorOnMainThread:@selector(play) withObject:nil waitUntilDone:NO];
 }
 - (void)pause {
 	[sound pause];

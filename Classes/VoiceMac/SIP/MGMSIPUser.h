@@ -41,7 +41,7 @@ extern NSString * const MGMSIPUserAreaCode;
 - (void)removeLoginProgress;
 - (void)loginErrored;
 
-- (BOOL)autoAnswer;
+- (NSString *)phoneCalling;
 - (void)gotNewCall:(MGMSIPCall *)theCall;
 - (void)callDone:(MGMSIPCallWindow *)theCall;
 @end

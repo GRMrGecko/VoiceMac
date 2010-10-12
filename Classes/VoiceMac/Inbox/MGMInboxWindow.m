@@ -371,7 +371,11 @@ NSString * const MGMSID = @"id";
 	if ([identifier isEqual:@"read"]) {
 		return ([[data objectForKey:MGMIRead] boolValue] ? @"" : @"•");
 	} else if ([identifier isEqual:@"name"]) {
-		return [[instance contacts] nameForNumber:[data objectForKey:MGMIPhoneNumber]];
+		NSString *name = [[instance contacts] nameForNumber:[data objectForKey:MGMIPhoneNumber]];
+		NSString *number = [[data objectForKey:MGMIPhoneNumber] readableNumber];
+		if ([name isEqual:number])
+			return number;
+		return [NSString stringWithFormat:@"%@ (%@)", name, number];
 	} else if ([identifier isEqual:@"text"]) {
 		int type = [[data objectForKey:MGMIType] intValue];
 		if (type==MGMIVoicemailType) {

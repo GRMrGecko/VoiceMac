@@ -159,7 +159,8 @@
 
 - (void)drawWithFrame:(NSRect)cellFrame inView:(NSView*)controlView {
 	[super drawWithFrame:cellFrame inView:controlView];
-	[clearButton drawWithFrame:[self clearButtonRectForBounds:cellFrame] inView:controlView];
+	if ([[self stringValue] length]>0)
+		[clearButton drawWithFrame:[self clearButtonRectForBounds:cellFrame] inView:controlView];
 }
 
 - (void)resetCursorRect:(NSRect)cellFrame inView:(NSView *)controlView {

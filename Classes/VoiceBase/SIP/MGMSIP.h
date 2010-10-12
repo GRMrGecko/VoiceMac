@@ -90,6 +90,7 @@ typedef enum {
 	
 	pj_pool_t *PJPool;
 	int port;
+	pjsua_media_config mediaConfig;
 	pjmedia_port *ringbackPort;
 	pjsua_conf_port_id ringbackSlot;
 	pjsua_transport_id UDPTransport;
@@ -126,6 +127,7 @@ typedef enum {
 - (pj_pool_t *)PJPool;
 - (int)port;
 - (void)setPort:(int)thePort;
+- (pjsua_media_config)mediaConfig;
 - (pjmedia_port *)ringbackPort;
 - (pjsua_conf_port_id)ringbackSlot;
 - (MGMSIPNATType)NATType;

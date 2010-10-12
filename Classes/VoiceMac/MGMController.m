@@ -297,9 +297,8 @@ NSString * const MGMLoading = @"Loading...";
 		}
 		query = [NSDictionary dictionaryWithDictionary:dataDic];
 	}*/
-	if ([data hasPrefix:@"//"]) {
+	if ([data hasPrefix:@"//"])
 		data = [data substringFromIndex:2];
-	}
 	if ([scheme isEqualToString:@"tel"] || [scheme isEqualToString:@"callto"] || [scheme isEqualToString:@"telephone"] || [scheme isEqualToString:@"phone"] || [scheme isEqualToString:@"phonenumber"]) {
 		if (currentContactsController==-1)
 			return;
@@ -568,13 +567,20 @@ NSString * const MGMLoading = @"Loading...";
 		[RLPhoneNumber setStringValue:@""];
 	}
 	
-	if ([theInfo objectForKey:MGMWPAddress]) {
-		[[RLMap windowScriptObject] callWebScriptMethod:@"showAddress" withArguments:[NSArray arrayWithObjects:[NSString stringWithFormat:@"%@, %@", [theInfo objectForKey:MGMWPAddress], [theInfo objectForKey:MGMWPZip]], [NSNumber numberWithInt:15], nil]];
-	} else if ([theInfo objectForKey:MGMWPZip]) {
-		[[RLMap windowScriptObject] callWebScriptMethod:@"showAddress" withArguments:[NSArray arrayWithObjects:[theInfo objectForKey:MGMWPZip], [NSNumber numberWithInt:13], nil]];
-	} else if ([theInfo objectForKey:MGMWPLocation]) {
-		[[RLMap windowScriptObject] callWebScriptMethod:@"showAddress" withArguments:[NSArray arrayWithObjects:[theInfo objectForKey:MGMWPLocation], [NSNumber numberWithInt:13], nil]];
+	int zoom = 0;
+	NSString *address = nil;
+	if ([theInfo objectForKey:MGMWPAddress]!=nil) {
+		address = [NSString stringWithFormat:@"%@, %@", [theInfo objectForKey:MGMWPAddress], [theInfo objectForKey:MGMWPZip]];
+		zoom = 15;
+	} else if ([theInfo objectForKey:MGMWPZip]!=nil) {
+		address = [theInfo objectForKey:MGMWPZip];
+		zoom = 13;
+	} else if ([theInfo objectForKey:MGMWPLocation]!=nil) {
+		address = [theInfo objectForKey:MGMWPLocation];
+		zoom = 13;
 	}
+	if (address!=nil)
+		[RLMap stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"showAddress('%@', %d);", [address javascriptEscape], zoom]];
 }
 
 - (IBAction)donate:(id)sender {

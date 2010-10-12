@@ -28,6 +28,7 @@
 - (void)localPlacedHold:(MGMSIPCall *)theCall;
 - (void)remotePlacedHold:(MGMSIPCall *)theCall;
 - (void)transferStatusCahgned:(MGMSIPCall *)theCall;
+- (void)receivedDMTFDigit:(int)theDigit;
 @end
 
 typedef enum {
@@ -60,6 +61,9 @@ typedef enum {
 	BOOL onHold;
 	pjsua_player_id holdMusicPlayer;
 	pjsua_recorder_id recorderID;
+	
+	pjmedia_port *toneGenPort;
+	pjsua_conf_port_id toneGenSlot;
 	
 	BOOL isRingbackOn;
 }
@@ -108,6 +112,7 @@ typedef enum {
 - (void)stopRingback;
 
 - (void)sendDTMFDigits:(NSString *)theDigits;
+- (void)receivedDTMFDigit:(int)theDigit;
 
 - (void)playSound:(NSString *)theFile;
 - (pjsua_player_id)playSoundMain:(NSString *)theFile loop:(BOOL)shouldLoop;

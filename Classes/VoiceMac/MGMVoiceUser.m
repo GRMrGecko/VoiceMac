@@ -200,6 +200,9 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 - (BOOL)isPlacingCall {
 	return (callTimer!=nil);
 }
+- (void)donePlacingCall {
+	[callTimer fire];
+}
 - (IBAction)runAction:(id)sender {
 	if ([[user settingForKey:MGMSContactsActionKey] intValue]==0) {
 		[self call:sender];
@@ -209,6 +212,7 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 }
 - (IBAction)call:(id)sender {
 	if (callTimer!=nil) {
+		placingCall = NO;
 		[callTimer invalidate];
 		[callTimer release];
 		callTimer = nil;
@@ -265,17 +269,11 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 }
 
 - (IBAction)sms:(id)sender {
-	NSString *phoneNumber = nil;
-	if (![[phoneField stringValue] isPhoneComplete]) {
-		if ([contactViews count]>0) {
-			[self selectFirstContact];
-		} else {
-			return;
-			NSBeep();
-		}
+	NSString *phoneNumber = [controller currentPhoneNumber];
+	if (phoneNumber==nil || [phoneNumber isEqual:@""]) {
+		NSBeep();
+		return;
 	}
-	if (phoneNumber==nil)
-		phoneNumber = [[phoneField stringValue] phoneFormatWithAreaCode:[instance userAreaCode]];
 	
 	[[controller SMSManager] messageWithNumber:phoneNumber instance:instance];
 }

@@ -69,9 +69,9 @@
 }
 
 - (void)request:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
-	NSLog(@"Starting Voicemail Error: %@", theError);
+	NSLog(@"Starting Audio Error: %@", theError);
 	NSAlert *theAlert = [[NSAlert new] autorelease];
-	[theAlert setMessageText:@"Error loading voicemail"];
+	[theAlert setMessageText:@"Error loading audio"];
 	[theAlert setInformativeText:[theError localizedDescription]];
 	[theAlert runModal];
 }

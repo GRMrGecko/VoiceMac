@@ -208,6 +208,14 @@ static void MGMSIPDetectedNAT(const pj_stun_nat_detect_result *result) {
 	[pool drain];
 }
 
+static void MGMSIPDTMFReceived(pjsua_call_id callIdentifier, int dtmfDigit) {
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	MGMSIPCall *call = [[MGMSIP sharedSIP] callWithIdentifier:callIdentifier];
+	[call receivedDTMFDigit:dtmfDigit];
+	PJ_LOG(3, (THIS_FILE, "Received DTMF on call %d: %c", callIdentifier, dtmfDigit));
+	[pool drain];
+}
+
 #if !TARGET_OS_IPHONE
 static void MGMNetworkNotification(SCDynamicStoreRef store, NSArray *changedKeys, void *info) {
 	for (int i=0; i<[changedKeys count]; ++i) {
@@ -251,8 +259,10 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		state = MGMSIPStoppedState;
 		NATType = MGMSIPNATUnknownType;
 		accounts = [NSMutableArray new];
+#if !TARGET_OS_IPHONE
 		lastInputDevice = -1;
 		lastOutputDevice = -1;
+#endif
 		shouldRestart = NO;
 		
 #if !TARGET_OS_IPHONE
@@ -332,6 +342,9 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 - (void)setPort:(int)thePort {
 	port = thePort;
 }
+- (pjsua_media_config)mediaConfig {
+	return mediaConfig;
+}
 - (pjmedia_port *)ringbackPort {
 	return ringbackPort;
 }
@@ -383,7 +396,6 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	loggingConfig.level = [defaults integerForKey:MGMSIPLogLevel];
 	loggingConfig.console_level = [defaults integerForKey:MGMSIPConsoleLogLevel];
 	
-	pjsua_media_config mediaConfig;
 	pjsua_media_config_default(&mediaConfig);
 	mediaConfig.no_vad = ![defaults boolForKey:MGMSIPVoiceActivityDetection];
 	mediaConfig.enable_ice = [defaults boolForKey:MGMSIPInteractiveConnectivityEstablishment];
@@ -402,6 +414,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	sipConfig.cb.on_call_transfer_status = &MGMSIPCallTransferStatusChanged;
 	sipConfig.cb.on_reg_state = &MGMSIPAccountRegistrationStateChanged;
 	sipConfig.cb.on_nat_detect = &MGMSIPDetectedNAT;
+	sipConfig.cb.on_dtmf_digit = &MGMSIPDTMFReceived;
 	
 	sipConfig.max_calls = MGMSIPMaxCalls;
 	

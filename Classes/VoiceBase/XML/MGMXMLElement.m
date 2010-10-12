@@ -12,6 +12,7 @@
 
 @implementation MGMXMLElement
 - (id)initWithXMLString:(NSString *)string error:(NSError **)error {
+	[super release];
 	MGMXMLDocument *document = [[MGMXMLDocument alloc] initWithXMLString:string options:0 error:error];
 	MGMXMLElement *element = nil;
 	if (document!=nil) {

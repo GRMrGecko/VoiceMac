@@ -45,9 +45,11 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 			[incomingWindow setLevel:NSStatusWindowLevel];
 			[incomingWindow setExcludedFromWindowsMenu:YES];
 			
-			BOOL autoAnswer = [SIPUser autoAnswer];
+			NSString *phoneCalling = [SIPUser phoneCalling];
+			if (phoneCalling!=nil)
+				[[call remoteURL] setUserName:phoneCalling];
 			
-			if ([call isIncoming] && !autoAnswer) {
+			if ([call isIncoming] && phoneCalling==nil) {
 				if ([[[call remoteURL] userName] isPhone]) {
 					NSString *number = [[[call remoteURL] userName] phoneFormat];
 					phoneNumber = [[number readableNumber] copy];
@@ -73,7 +75,12 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 				}
 				[incomingWindow makeKeyAndOrderFront:self];
 				[call sendRingingNotification];
-				[self performSelectorOnMainThread:@selector(startRingtone) withObject:nil waitUntilDone:NO];
+				NSString *ringtonePath = [[[SIPUser controller] themeManager] currentSoundPath:MGMTSSIPRingtone];
+				if (![ringtonePath isEqual:MGMTNoSound]) {
+					ringtone = [[MGMSound alloc] initWithContentsOfFile:ringtonePath];
+					[ringtone setLoops:YES];
+					[ringtone play];
+				}
 			} else {
 				if ([[[call remoteURL] userName] isPhone]) {
 					NSString *number = [[[call remoteURL] userName] phoneFormat];
@@ -91,7 +98,7 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 						fullName = [[[call remoteURL] fullName] copy];
 				}
 				[self fillCallWindow];
-				if (autoAnswer)
+				if (phoneCalling!=nil)
 					[call answer];
 				[callWindow makeKeyAndOrderFront:self];
 			}
@@ -132,20 +139,6 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 		[durationUpdater release];
 	}
 	[super dealloc];
-}
-
-- (void)startRingtone {
-	NSString *ringtonePath = [[[SIPUser controller] themeManager] currentSoundPath:MGMTSSIPRingtone];
-	if (![ringtonePath isEqual:MGMTNoSound]) {
-		ringtone = [[NSSound alloc] initWithContentsOfFile:ringtonePath byReference:YES];
-		[ringtone setDelegate:self];
-		[ringtone play];
-	}
-}
-
-- (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finishedPlaying {
-	if (finishedPlaying && sound==ringtone)
-		[ringtone play];
 }
 
 - (void)disconnected:(MGMSIPCall *)theCall {
@@ -232,6 +225,7 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 		ringtone = nil;
 	}
 	[incomingWindow close];
+	[SIPUser callDone:self];
 }
 
 - (void)updateDuration {
@@ -337,41 +331,31 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 	[call playSound:soundFile];
 	[[[SIPUser controller] themeManager] performSelector:@selector(playSound:) withObject:soundName afterDelay:0.2]; // The phone has a delay, so why not delay this so you hear it at the same time?
 }
-- (IBAction)n1:(id)sender {
-	[call sendDTMFDigits:@"1"];
-}
-- (IBAction)n2:(id)sender {
-	[call sendDTMFDigits:@"2"];
-}
-- (IBAction)n3:(id)sender {
-	[call sendDTMFDigits:@"3"];
-}
-- (IBAction)n4:(id)sender {
-	[call sendDTMFDigits:@"4"];
-}
-- (IBAction)n5:(id)sender {
-	[call sendDTMFDigits:@"5"];
-}
-- (IBAction)n6:(id)sender {
-	[call sendDTMFDigits:@"6"];
-}
-- (IBAction)n7:(id)sender {
-	[call sendDTMFDigits:@"7"];
-}
-- (IBAction)n8:(id)sender {
-	[call sendDTMFDigits:@"8"];
-}
-- (IBAction)n9:(id)sender {
-	[call sendDTMFDigits:@"9"];
-}
-- (IBAction)n0:(id)sender {
-	[call sendDTMFDigits:@"0"];
-}
-- (IBAction)nStar:(id)sender {
-	[call sendDTMFDigits:@"*"];
-}
-- (IBAction)nPound:(id)sender {
-	[call sendDTMFDigits:@"#"];
+- (IBAction)dial:(id)sender {
+	if (sender==n1Button)
+		[call sendDTMFDigits:@"1"];
+	else if (sender==n2Button)
+		[call sendDTMFDigits:@"2"];
+	else if (sender==n3Button)
+		[call sendDTMFDigits:@"3"];
+	else if (sender==n4Button)
+		[call sendDTMFDigits:@"4"];
+	else if (sender==n5Button)
+		[call sendDTMFDigits:@"5"];
+	else if (sender==n6Button)
+		[call sendDTMFDigits:@"6"];
+	else if (sender==n7Button)
+		[call sendDTMFDigits:@"7"];
+	else if (sender==n8Button)
+		[call sendDTMFDigits:@"8"];
+	else if (sender==n9Button)
+		[call sendDTMFDigits:@"9"];
+	else if (sender==nStarButton)
+		[call sendDTMFDigits:@"*"];
+	else if (sender==n0Button)
+		[call sendDTMFDigits:@"0"];
+	else if (sender==nPoundButton)
+		[call sendDTMFDigits:@"#"];
 }
 
 - (void)reverseLookupDidFindInfo:(NSDictionary *)theInfo forRequest:(NSDictionary *)theRequest {

@@ -22,7 +22,7 @@
 - (NSString *)replace:(NSString *)targetString with:(NSString *)replaceString;
 - (BOOL)containsString:(NSString *)string;
 
-- (NSString *)escapeSMS;
+- (NSString *)javascriptEscape;
 - (NSString *)filePath;
 
 - (NSString *)littersToNumbers;

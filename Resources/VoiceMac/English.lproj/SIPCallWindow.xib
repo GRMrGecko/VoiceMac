@@ -12,9 +12,9 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="201"/>
-			<integer value="15"/>
 			<integer value="3"/>
+			<integer value="201"/>
+			<integer value="16"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -231,7 +231,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="1065347165">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">4195328</int>
-								<string key="NSContents">00:00:00</string>
+								<string key="NSContents">0:00:00</string>
 								<object class="NSFont" key="NSSupport" id="779016805">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">13</double>
@@ -397,7 +397,7 @@
 							<object class="NSTextFieldCell" key="NSCell" id="16951803">
 								<int key="NSCellFlags">68288064</int>
 								<int key="NSCellFlags2">4195328</int>
-								<string key="NSContents">Status Message</string>
+								<string key="NSContents">Disconnected</string>
 								<reference key="NSSupport" ref="779016805"/>
 								<reference key="NSControlView" ref="717085855"/>
 								<reference key="NSBackgroundColor" ref="693930386"/>
@@ -1231,102 +1231,6 @@
 					<int key="connectionID">224</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">n1:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="698319772"/>
-					</object>
-					<int key="connectionID">230</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">n2:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="758933209"/>
-					</object>
-					<int key="connectionID">231</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">n3:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="811735183"/>
-					</object>
-					<int key="connectionID">232</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">n4:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="181872348"/>
-					</object>
-					<int key="connectionID">233</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">n5:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="432131395"/>
-					</object>
-					<int key="connectionID">234</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">n6:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="65218013"/>
-					</object>
-					<int key="connectionID">235</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">n7:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="798981467"/>
-					</object>
-					<int key="connectionID">236</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">n8:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="819368832"/>
-					</object>
-					<int key="connectionID">237</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">n9:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="693176110"/>
-					</object>
-					<int key="connectionID">238</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">nStar:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="667173404"/>
-					</object>
-					<int key="connectionID">239</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">nPound:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="92905949"/>
-					</object>
-					<int key="connectionID">240</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">n0:</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="632346904"/>
-					</object>
-					<int key="connectionID">241</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">showPadButton</string>
 						<reference key="source" ref="1001"/>
@@ -1413,6 +1317,102 @@
 						<reference key="destination" ref="650232941"/>
 					</object>
 					<int key="connectionID">255</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dial:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="698319772"/>
+					</object>
+					<int key="connectionID">256</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dial:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="758933209"/>
+					</object>
+					<int key="connectionID">257</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dial:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="811735183"/>
+					</object>
+					<int key="connectionID">258</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dial:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="181872348"/>
+					</object>
+					<int key="connectionID">259</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dial:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="432131395"/>
+					</object>
+					<int key="connectionID">260</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dial:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="65218013"/>
+					</object>
+					<int key="connectionID">261</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dial:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="798981467"/>
+					</object>
+					<int key="connectionID">262</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dial:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="819368832"/>
+					</object>
+					<int key="connectionID">263</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dial:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="693176110"/>
+					</object>
+					<int key="connectionID">264</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dial:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="667173404"/>
+					</object>
+					<int key="connectionID">265</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dial:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="632346904"/>
+					</object>
+					<int key="connectionID">266</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">dial:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="92905949"/>
+					</object>
+					<int key="connectionID">267</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2214,7 +2214,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">255</int>
+			<int key="maxID">267</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2235,24 +2235,13 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>answer:</string>
+							<string>dial:</string>
 							<string>hangUp:</string>
 							<string>hold:</string>
 							<string>ignore:</string>
 							<string>micVolume:</string>
 							<string>muteMicrophone:</string>
 							<string>muteSpeakers:</string>
-							<string>n0:</string>
-							<string>n1:</string>
-							<string>n2:</string>
-							<string>n3:</string>
-							<string>n4:</string>
-							<string>n5:</string>
-							<string>n6:</string>
-							<string>n7:</string>
-							<string>n8:</string>
-							<string>n9:</string>
-							<string>nPound:</string>
-							<string>nStar:</string>
 							<string>showPad:</string>
 							<string>sound:</string>
 							<string>startRecording:</string>
@@ -2260,17 +2249,6 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -2290,24 +2268,13 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>answer:</string>
+							<string>dial:</string>
 							<string>hangUp:</string>
 							<string>hold:</string>
 							<string>ignore:</string>
 							<string>micVolume:</string>
 							<string>muteMicrophone:</string>
 							<string>muteSpeakers:</string>
-							<string>n0:</string>
-							<string>n1:</string>
-							<string>n2:</string>
-							<string>n3:</string>
-							<string>n4:</string>
-							<string>n5:</string>
-							<string>n6:</string>
-							<string>n7:</string>
-							<string>n8:</string>
-							<string>n9:</string>
-							<string>nPound:</string>
-							<string>nStar:</string>
 							<string>showPad:</string>
 							<string>sound:</string>
 							<string>startRecording:</string>
@@ -2317,6 +2284,10 @@
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBActionInfo">
 								<string key="name">answer:</string>
+								<string key="candidateClassName">id</string>
+							</object>
+							<object class="IBActionInfo">
+								<string key="name">dial:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -2341,54 +2312,6 @@
 							</object>
 							<object class="IBActionInfo">
 								<string key="name">muteSpeakers:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">n0:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">n1:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">n2:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">n3:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">n4:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">n5:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">n6:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">n7:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">n8:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">n9:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">nPound:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">nStar:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
@@ -2799,13 +2722,6 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AddressBook.framework/Headers/ABActions.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSAccessibility.h</string>
 					</object>
 				</object>
@@ -3051,13 +2967,6 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">Growl.framework/Headers/GrowlApplicationBridge.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">QTKit.framework/Headers/QTCaptureDecompressedAudioOutput.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3357,7 +3266,7 @@
 			<integer value="3000" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
-		<string key="IBDocument.LastKnownRelativeProjectPath">../../VoiceMac.xcodeproj</string>
+		<string key="IBDocument.LastKnownRelativeProjectPath">../../../VoiceMac.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<bool key="EncodedWithXMLCoder">YES</bool>

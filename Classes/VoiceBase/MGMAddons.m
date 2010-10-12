@@ -67,7 +67,7 @@
 	return ([[self lowercaseString] rangeOfString:[string lowercaseString]].location != NSNotFound);
 }
 
-- (NSString *)escapeSMS {
+- (NSString *)javascriptEscape {
 	NSString *escaped = [self replace:@"\\" with:@"\\\\"];
 	escaped = [escaped replace:@"'" with:@"\\'"];
 	escaped = [escaped replace:@"\n" with:@"<br />"];

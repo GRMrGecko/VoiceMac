@@ -190,7 +190,6 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 	[theAlert setMessageText:@"Error logging out"];
 	[theAlert setInformativeText:[account lastError]];
 	[theAlert runModal];
-	
 }
 - (void)animationDidEnd:(NSAnimation *)animation {
 	if (progressFadeAnimation!=nil) {
@@ -229,12 +228,15 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 	[account makeCallToNumber:phoneNumber];
 }
 
-- (BOOL)autoAnswer {
+- (NSString *)phoneCalling {
 	for (int i=0; i<[[controller contactsControllers] count]; i++) {
-		if ([[[controller contactsControllers] objectAtIndex:i] isKindOfClass:[MGMVoiceUser class]] && [[[controller contactsControllers] objectAtIndex:i] isPlacingCall])
-				return YES;
+		if ([[[controller contactsControllers] objectAtIndex:i] isKindOfClass:[MGMVoiceUser class]] && [[[controller contactsControllers] objectAtIndex:i] isPlacingCall]) {
+			MGMVoiceUser *voiceUser = [[controller contactsControllers] objectAtIndex:i];
+			[voiceUser donePlacingCall];
+			return [voiceUser currentPhoneNumber];
+		}
 	}
-	return NO;
+	return nil;
 }
 - (void)gotNewCall:(MGMSIPCall *)theCall {
 	[calls addObject:[MGMSIPCallWindow windowWithCall:theCall SIPUser:self]];

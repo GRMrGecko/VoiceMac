@@ -179,7 +179,7 @@
 	}
 	NSDateFormatter *formatter = [[NSDateFormatter new] autorelease];
 	[formatter setDateFormat:[[[manager themeManager] variant] objectForKey:MGMTDate]];
-	[SMSView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"newMessage('%@', '%@', '%@', %@, '%@', '%@', '%@', %d);", [[message objectForKey:MGMIText] escapeSMS], [[message objectForKey:MGMTPhoto] escapeSMS], [[message objectForKey:MGMITime] escapeSMS], [message objectForKey:MGMIID], [[message objectForKey:MGMTName] escapeSMS], [[[message objectForKey:MGMIPhoneNumber] readableNumber] escapeSMS], [formatter stringFromDate:[messageInfo objectForKey:MGMITime]], type]];
+	[SMSView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"newMessage('%@', '%@', '%@', %@, '%@', '%@', '%@', %d);", [[message objectForKey:MGMIText] javascriptEscape], [[message objectForKey:MGMTPhoto] javascriptEscape], [[message objectForKey:MGMITime] javascriptEscape], [message objectForKey:MGMIID], [[message objectForKey:MGMTName] javascriptEscape], [[[message objectForKey:MGMIPhoneNumber] readableNumber] javascriptEscape], [formatter stringFromDate:[messageInfo objectForKey:MGMITime]], type]];
 	[SMSView stringByEvaluatingJavaScriptFromString:@"scrollToBottom();"];
 }
 

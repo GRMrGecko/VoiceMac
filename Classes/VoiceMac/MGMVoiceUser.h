@@ -43,6 +43,7 @@ extern NSString *MGMLastUserPhoneKey;
 - (void)setInstanceInfo;
 
 - (BOOL)isPlacingCall;
+- (void)donePlacingCall;
 
 - (IBAction)sms:(id)sender;
 

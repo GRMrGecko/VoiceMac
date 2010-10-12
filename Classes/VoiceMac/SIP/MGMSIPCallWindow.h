@@ -9,7 +9,7 @@
 #if MGMSIPENABLED
 #import <Cocoa/Cocoa.h>
 
-@class MGMSIPCall, MGMSIPAccount, MGMSIPUser, MGMWhitePages, QTMovie;
+@class MGMSIPCall, MGMSIPAccount, MGMSIPUser, MGMWhitePages, MGMSound;
 
 @interface MGMSIPCallWindow : NSObject {
 	MGMSIPCall *call;
@@ -25,7 +25,7 @@
 	NSString *fullName;
 	NSString *phoneNumber;
 	
-	NSSound *ringtone;
+	MGMSound *ringtone;
 	
 	NSDate *startTime;
 	NSTimer *durationUpdater;
@@ -85,17 +85,6 @@
 - (IBAction)muteMicrophone:(id)sender;
 - (IBAction)muteSpeakers:(id)sender;
 - (IBAction)sound:(id)sender;
-- (IBAction)n1:(id)sender;
-- (IBAction)n2:(id)sender;
-- (IBAction)n3:(id)sender;
-- (IBAction)n4:(id)sender;
-- (IBAction)n5:(id)sender;
-- (IBAction)n6:(id)sender;
-- (IBAction)n7:(id)sender;
-- (IBAction)n8:(id)sender;
-- (IBAction)n9:(id)sender;
-- (IBAction)n0:(id)sender;
-- (IBAction)nStar:(id)sender;
-- (IBAction)nPound:(id)sender;
+- (IBAction)dial:(id)sender;
 @end
 #endif
