@@ -10,7 +10,9 @@
 #import "MGMSIP.h"
 #import "MGMSIPAccount.h"
 #import "MGMSIPCall.h"
+#import "MGMSIPURL.h"
 #import "MGMAddons.h"
+#include <pjsua-lib/pjsua_internal.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 #if !TARGET_OS_IPHONE
 #import <CoreAudio/CoreAudio.h>
@@ -20,6 +22,7 @@ NSString * const MGMSIPCopyright = @"Copyright (c) 2010 Mr. Gecko's Media (James
 
 const int MGMSIPMaxCalls = 8;
 const int MGMSIPDefaultOutboundProxyPort = 5060;
+const int MGMSIPDefaultOutboundPort = 5060;
 const int MGMSIPDefaultSTUNPort = 3478;
 
 NSString * const MGMSIPOutboundProxy = @"MGMSIPOutboundProxy";
@@ -64,7 +67,17 @@ static MGMSIP *MGMSIPSingleton = nil;
 
 static void MGMSIPIncomingCallReceived(pjsua_acc_id accountIdentifier, pjsua_call_id callIdentifier, pjsip_rx_data *messageData) {
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	PJ_LOG(3, (THIS_FILE, "Incoming call for account %d!", accountIdentifier));
+	PJ_LOG(3, (THIS_FILE, "Incoming call %d for account %d", callIdentifier, accountIdentifier));
+	
+	if (accountIdentifier==[[MGMSIP sharedSIP] UDPAccount] || accountIdentifier==[[MGMSIP sharedSIP] TCPAccount]) {
+		pjsua_call_info callInfo;
+		pj_status_t status = pjsua_call_get_info(callIdentifier, &callInfo);
+		if (status==PJ_SUCCESS) {
+			MGMSIPURL *localURL = [MGMSIPURL URLWithSIPID:[NSString stringWithPJString:callInfo.local_info]];
+			accountIdentifier = [[MGMSIP sharedSIP] accountIDForUserName:[localURL userName]];
+		}
+	}
+	
 	MGMSIPAccount *account = [[MGMSIP sharedSIP] accountWithIdentifier:accountIdentifier];
 	MGMSIPCall *call = [account addCallWithIdentifier:callIdentifier];
 	[[MGMSIP sharedSIP] receivedNewCall:call];
@@ -193,7 +206,7 @@ static void MGMSIPCallTransferStatusChanged(pjsua_call_id callIdentifier, int st
 static void MGMSIPAccountRegistrationStateChanged(pjsua_acc_id accountIdentifier) {
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	MGMSIPAccount *account = [[MGMSIP sharedSIP] accountWithIdentifier:accountIdentifier];
-	if ([account delegate]!=nil && [[account delegate] respondsToSelector:@selector(registrationChanged)]) [[account delegate] registrationChanged];
+	if ([account delegate]!=nil && [[account delegate] respondsToSelector:@selector(registrationChanged)]) [(NSObject *)[account delegate] performSelectorOnMainThread:@selector(registrationChanged) withObject:nil waitUntilDone:NO];
 	[pool drain];
 }
 
@@ -351,6 +364,18 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 - (pjsua_conf_port_id)ringbackSlot {
 	return ringbackSlot;
 }
+- (pjsua_transport_id)UDPTransport {
+	return UDPTransport;
+}
+- (pjsua_acc_id)UDPAccount {
+	return UDPAccount;
+}
+- (pjsua_transport_id)TCPTransport {
+	return TCPTransport;
+}
+- (pjsua_acc_id)TCPAccount {
+	return TCPAccount;
+}
 - (MGMSIPNATType)NATType {
 	return NATType;
 }
@@ -503,7 +528,8 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		[pool drain];
 		return;
 	}
-	if (port == 0) {
+	pjsua_acc_add_local(UDPTransport, PJ_TRUE, &UDPAccount);
+	if (port==0) {
 		pjsua_transport_info transportInfo;
 		status = pjsua_transport_get_info(UDPTransport, &transportInfo);
 		if (status!=PJ_SUCCESS)
@@ -514,8 +540,12 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	}
 	
 	status = pjsua_transport_create(PJSIP_TRANSPORT_TCP, &transportConfig, &TCPTransport);
-	if (status!=PJ_SUCCESS)
+	if (status!=PJ_SUCCESS) {
 		NSLog(@"Error creating TCP transport");
+	} else {
+		pjsua_acc_add_local(TCPTransport, PJ_TRUE, &TCPAccount);
+		pjsua_acc_set_online_status(pjsua_acc_get_default(), PJ_TRUE);
+	}
 	
 	status = pjsua_start();
 	if (status!=PJ_SUCCESS) {
@@ -649,6 +679,22 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	}
 }
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
+- (void)keepAlive {
+	if (state==MGMSIPStartedState) {
+		pj_thread_desc PJThreadDesc;
+		[self registerThread:&PJThreadDesc];
+		
+		for (int i=0; i<(int)pjsua_acc_get_count(); ++i) {
+			if (!pjsua_acc_is_valid(i))
+				continue;
+			pjsua_acc_set_registration(i, PJ_TRUE);
+		}
+		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
+	}
+}
+#endif
+
 - (void)registerThread:(pj_thread_desc *)thePJThreadDesc {
 	if (!pj_thread_is_registered()) {
 		pj_thread_t *PJThread;
@@ -697,7 +743,8 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		accountConfig.id = [[NSString stringWithFormat:@"%@ <sip:%@>", [theAccount fullName], [theAccount SIPAddress]] PJString];
 	else
 		accountConfig.id = [[NSString stringWithFormat:@"<sip:%@>", [theAccount SIPAddress]] PJString];
-	accountConfig.reg_uri = [[NSString stringWithFormat:@"sip:%@", [theAccount registrar]] PJString];
+	NSString *registerURI = [NSString stringWithFormat:@"sip:%@", [theAccount registrar]];
+	accountConfig.reg_uri = [[registerURI stringByAppendingString:@";transport=tcp"] PJString];
 	
 	if ([theAccount proxy]!=nil && ![[theAccount proxy] isEqual:@""]) {
 		accountConfig.proxy_cnt = 1;
@@ -715,13 +762,17 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	pjsua_acc_id identifier;
 	pj_status_t status = pjsua_acc_add(&accountConfig, PJ_FALSE, &identifier);
 	if (status!=PJ_SUCCESS) {
-		[theAccount setLastError:[NSString stringWithFormat:@"Unable to login with status %d.", status]];
-		[theAccount loginErrored];
-		NSLog(@"Error With Account %@: %@", theAccount, [theAccount lastError]);
-		[accounts removeObject:theAccount];
-		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
-		[pool drain];
-		return;
+		accountConfig.reg_uri = [registerURI PJString];
+		pj_status_t status = pjsua_acc_add(&accountConfig, PJ_FALSE, &identifier);
+		if (status!=PJ_SUCCESS) {
+			[theAccount setLastError:[NSString stringWithFormat:@"Unable to login with status %d.", status]];
+			[theAccount loginErrored];
+			NSLog(@"Error With Account %@: %@", theAccount, [theAccount lastError]);
+			[accounts removeObject:theAccount];
+			bzero(&PJThreadDesc, sizeof(pj_thread_desc));
+			[pool drain];
+			return;
+		}
 	}
 	[theAccount setIdentifier:identifier];
 	[theAccount setOnline:YES];
@@ -744,6 +795,8 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	pj_thread_desc PJThreadDesc;
 	[self registerThread:&PJThreadDesc];
 	
+	[theAccount setOnline:NO];
+	
 	pj_status_t status = pjsua_acc_del([theAccount identifier]);
 	if (status!=PJ_SUCCESS) {
 		[theAccount setLastError:[NSString stringWithFormat:@"Unable to logout with status %d.", status]];
@@ -753,8 +806,8 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		return;
 	}
 	[theAccount setIdentifier:PJSUA_INVALID_ID];
+	//if ([theAccount delegate]!=nil && [[theAccount delegate] respondsToSelector:@selector(loggedOut)]) [[theAccount delegate] loggedOut];
 	if (delegate!=nil && [delegate respondsToSelector:@selector(accountLoggedOut:)]) [delegate accountLoggedOut:theAccount];
-	if ([theAccount delegate]!=nil && [[theAccount delegate] respondsToSelector:@selector(loggedOut)]) [[theAccount delegate] loggedOut];
 	[accounts removeObject:theAccount];
 	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	[pool drain];
@@ -763,7 +816,31 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 - (NSArray *)accounts {
 	return accounts;
 }
-- (MGMSIPAccount *)accountWithIdentifier:(int)theIdentifier {
+- (pjsua_acc_id)accountIDForUserName:(NSString *)theUserName {
+	for (int i=0; i<[accounts count]; i++) {
+		MGMSIPAccount *account = [accounts objectAtIndex:i];
+		if ([[[account userName] lowercaseString] isEqual:[theUserName lowercaseString]])
+			return [account identifier];
+		
+		if ([[account userName] isPhone] && [[[account userName] phoneFormat] isEqual:[theUserName phoneFormat]])
+			return [account identifier];
+		
+		pjsua_acc_info info;
+		pj_status_t status = pjsua_acc_get_info([account identifier], &info);
+		if (status==PJ_SUCCESS) {
+			MGMSIPURL *url = [MGMSIPURL URLWithSIPID:[NSString stringWithPJString:info.acc_uri]];
+			if ([[[url userName] lowercaseString] isEqual:[theUserName lowercaseString]])
+				return [account identifier];
+			
+			if ([[url userName] isPhone] && [[[url userName] phoneFormat] isEqual:[theUserName phoneFormat]])
+				return [account identifier];
+		}
+	}
+	if ([accounts count]<=1)
+		return [[accounts objectAtIndex:0] identifier];
+	return PJSUA_INVALID_ID;
+}
+- (MGMSIPAccount *)accountWithIdentifier:(pjsua_acc_id)theIdentifier {
 	for (int i=0; i<[accounts count]; i++) {
 		if ([(MGMSIPAccount *)[accounts objectAtIndex:i] identifier]==theIdentifier)
 			return [accounts objectAtIndex:i];
@@ -999,7 +1076,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	if (audioDevices!=nil) [audioDevices release];
 	audioDevices = [devicesArray copy];
 	
-	if ((currentInput==-1 ? defaultInputIndex!=lastInputDevice : currentInput!=lastInputDevice) && (currentOutput==-1 ? defaultOutputIndex!=lastOutputDevice : currentOutput!=lastOutputDevice)) {
+	//if ((currentInput==-1 ? defaultInputIndex!=lastInputDevice : currentInput!=lastInputDevice) && (currentOutput==-1 ? defaultOutputIndex!=lastOutputDevice : currentOutput!=lastOutputDevice)) {
 		pj_thread_desc PJThreadDesc;
 		[self registerThread:&PJThreadDesc];
 		
@@ -1009,7 +1086,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		
 		[self setInputSoundDevice:currentInput outputSoundDevice:currentOutput];
 		bzero(&PJThreadDesc, sizeof(pj_thread_desc));	
-	}
+	//}
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:MGMSIPAudioChangedNotification object:audioDevices];
 	
@@ -1033,7 +1110,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		[calls addObjectsFromArray:[[accounts objectAtIndex:i] calls]];
 	return calls;
 }
-- (MGMSIPCall *)callWithIdentifier:(int)theIdentifier {
+- (MGMSIPCall *)callWithIdentifier:(pjsua_call_id)theIdentifier {
 	for (int i=0; i<[accounts count]; i++) {
 		MGMSIPCall *call = [[accounts objectAtIndex:i] callWithIdentifier:theIdentifier];
 		if (call!=nil)

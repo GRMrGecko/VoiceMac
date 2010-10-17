@@ -83,8 +83,8 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	return self;
 }
 - (void)dealloc {
+	NSLog(@"Releasing SIP Account");
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[self logout];
 	if (calls!=nil)
 		[calls release];
 	if (fullName!=nil)
@@ -180,10 +180,10 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	else
 		reregisterTimeout = theReregisterTimeout;
 }
-- (int)identifier {
+- (pjsua_acc_id)identifier {
 	return identifier;
 }
-- (void)setIdentifier:(int)theIdentifier {
+- (void)setIdentifier:(pjsua_acc_id)theIdentifier {
 	identifier = theIdentifier;
 }
 - (NSString *)password {
@@ -355,7 +355,11 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	return call;
 }
 - (MGMSIPCall *)makeCallToNumber:(NSString *)theNumber {
-	MGMSIPURL *SIPURL = [MGMSIPURL URLWithFullName:nil userName:theNumber host:domain];
+	MGMSIPURL *SIPURL = [MGMSIPURL URLWithSIPAddress:theNumber];
+	if ([[SIPURL host] isEqual:theNumber]) {
+		[SIPURL setHost:domain];
+		[SIPURL setUserName:theNumber];
+	}
 	return [self makeCallToSIPURL:SIPURL];
 }
 - (MGMSIPCall *)makeCallToSIPURL:(MGMSIPURL *)theURL {

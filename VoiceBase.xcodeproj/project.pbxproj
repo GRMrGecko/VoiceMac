@@ -523,6 +523,7 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "VoiceBase" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
@@ -874,14 +875,17 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/lib\"",
 				);
-				OTHER_CFLAGS = "-fblocks";
+				OTHER_CFLAGS = (
+					"-D__IPHONE_OS_VERSION_MIN_REQUIRED=030000",
+					"-fblocks",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = VoiceBase;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 			};
 			name = Debug;
 		};
@@ -901,6 +905,7 @@
 					"\"$(SRCROOT)/Libraries/lib\"",
 				);
 				OTHER_CFLAGS = (
+					"-D__IPHONE_OS_VERSION_MIN_REQUIRED=030000",
 					"-fblocks",
 					"-DPJ_AUTOCONF=1",
 					"-DNDEBUG",
@@ -929,7 +934,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = VoiceBase;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 			};
 			name = "Debug SIP";
 		};
@@ -951,14 +956,17 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/lib\"",
 				);
-				OTHER_CFLAGS = "-fblocks";
+				OTHER_CFLAGS = (
+					"-D__IPHONE_OS_VERSION_MIN_REQUIRED=030000",
+					"-fblocks",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = VoiceBase;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -979,6 +987,7 @@
 					"\"$(SRCROOT)/Libraries/lib\"",
 				);
 				OTHER_CFLAGS = (
+					"-D__IPHONE_OS_VERSION_MIN_REQUIRED=030000",
 					"-fblocks",
 					"-DPJ_AUTOCONF=1",
 					"-DNDEBUG",
@@ -1009,7 +1018,7 @@
 				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/VoiceBase;
 				PRODUCT_NAME = VoiceBase;
 				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/VoiceBase;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos4.1;
 			};
 			name = "Release SIP";
 		};

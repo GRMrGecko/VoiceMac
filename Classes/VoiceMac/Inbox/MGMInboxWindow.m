@@ -380,7 +380,7 @@ NSString * const MGMSID = @"id";
 		int type = [[data objectForKey:MGMIType] intValue];
 		if (type==MGMIVoicemailType) {
 			return [data objectForKey:MGMIText];
-		} else if (type==MGMISMSIn || type==MGMISMSOut) {
+		} else if (type==MGMISMSInType || type==MGMISMSOutType) {
 			return [[[[data objectForKey:MGMIMessages] lastObject] objectForKey:MGMIText] flattenHTML];
 		} else {
 			return [[[data objectForKey:MGMIPhoneNumber] areaCode] areaCodeLocation];
@@ -425,7 +425,7 @@ NSString * const MGMSID = @"id";
 		rowRect.origin.x += ((rowRect.size.width-[playWindow frame].size.width)/2);
 		[playWindow setFrameOrigin:rowRect.origin];
 		[playWindow makeKeyAndOrderFront:self];
-	} else if (type==MGMISMSIn || type==MGMISMSOut) {
+	} else if (type==MGMISMSInType || type==MGMISMSOutType) {
 		[[[(MGMVoiceUser *)[instance delegate] controller] SMSManager] messageWithData:data instance:instance];
 	} else {
 		[(MGMVoiceUser *)[instance delegate] runAction:sender];

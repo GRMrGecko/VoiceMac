@@ -46,9 +46,9 @@ extern const int MGMIMissedType;
 extern const int MGMIReceivedType;
 extern const int MGMIVoicemailType;
 extern const int MGMIRecordedType;
-extern const int MGMIPlaced;
-extern const int MGMISMSIn;
-extern const int MGMISMSOut;
+extern const int MGMIPlacedType;
+extern const int MGMISMSInType;
+extern const int MGMISMSOutType;
 
 @interface MGMInbox : NSObject {
 	MGMInstance *instance;

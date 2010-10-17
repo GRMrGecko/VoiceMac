@@ -60,9 +60,9 @@ const int MGMIMissedType = 0;
 const int MGMIReceivedType = 1;
 const int MGMIVoicemailType = 2;
 const int MGMIRecordedType = 4;
-const int MGMIPlaced = 8;
-const int MGMISMSIn = 10;
-const int MGMISMSOut = 11;
+const int MGMIPlacedType = 8;
+const int MGMISMSInType = 10;
+const int MGMISMSOutType = 11;
 
 NSString * const MGMIPage = @"%@?page=p%d";
 
@@ -289,7 +289,7 @@ const BOOL MGMInboxInvisible = YES;
 								[transcript appendFormat:@" %@", [[words objectAtIndex:w] stringValue]];
 						}
 						[thisInfo setObject:transcript forKey:MGMIText];
-					} else if (type==MGMISMSIn || type==MGMISMSOut) {
+					} else if (type==MGMISMSInType || type==MGMISMSOutType) {
 						NSArray *messagesXML = [[message childAtIndex:0] nodesForXPath:[NSString stringWithFormat:@"/html[1]/body[1]/div[%d]/div[1]/div[2]/table[1]/tr[1]/td[3]/div[1]/table[1]/tr[2]/td[2]/table[1]/tr[2]/td[1]/div[1]/div[1]/table[1]/tr[1]/td[2]/div[1]/div[1]/div[1]/div", i+1] error:nil];
 						NSMutableArray *messagesArray = [NSMutableArray array];
 						for (unsigned int m=0; m<[messagesXML count]; m++) {

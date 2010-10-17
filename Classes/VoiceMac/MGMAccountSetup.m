@@ -437,6 +437,9 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	return [S7CheckUser password];
 }
 - (void)registrationChanged {
+	[self performSelector:@selector(S7RegistrationChanged) withObject:nil afterDelay:0.5];
+}
+- (void)S7RegistrationChanged {
 #if MGMSIPENABLED
 	if (S7SIPRegistrationTimeout!=nil) {
 		[S7SIPRegistrationTimeout invalidate];

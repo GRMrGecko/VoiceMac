@@ -44,7 +44,7 @@ typedef enum {
 @interface MGMSIPCall : NSObject {
 	id<MGMSIPCallDelegate> delegate;
 	MGMSIPAccount *account;
-	int identifier;
+	pjsua_call_id identifier;
 	
 	MGMSIPURL *remoteURL;
 	MGMSIPURL *localURL;
@@ -57,6 +57,7 @@ typedef enum {
 	BOOL incoming;
 	BOOL muted;
 	BOOL micMuted;
+	BOOL speaker;
 	NSString *holdMusicPath;
 	BOOL onHold;
 	pjsua_player_id holdMusicPlayer;
@@ -72,8 +73,8 @@ typedef enum {
 - (id<MGMSIPCallDelegate>)delegate;
 - (void)setDelegate:(id)theDelegate;
 - (MGMSIPAccount *)account;
-- (int)identifier;
-- (void)setIdentifier:(int)theIdentifier;
+- (pjsua_call_id)identifier;
+- (void)setIdentifier:(pjsua_call_id)theIdentifier;
 
 - (MGMSIPURL *)remoteURL;
 - (MGMSIPURL *)localURL;
@@ -126,5 +127,10 @@ typedef enum {
 - (void)mute;
 - (BOOL)isMicMuted;
 - (void)muteMic;
+
+#if TARGET_OS_IPHONE
+- (BOOL)isOnSpeaker;
+- (void)speaker;
+#endif
 @end
 #endif

@@ -12,9 +12,10 @@
 #import "MGMSIPURL.h"
 #import "MGMSIP.h"
 #import "MGMAddons.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 @implementation MGMSIPCall
-- (id)initWithIdentifier:(int)theIdentifier account:(MGMSIPAccount *)theAccount {
+- (id)initWithIdentifier:(pjsua_call_id)theIdentifier account:(MGMSIPAccount *)theAccount {
 	if (self = [super init]) {
 		account = theAccount;
 		identifier = theIdentifier;
@@ -40,19 +41,8 @@
 			
 			incoming = (state==MGMSIPCallIncomingState);
 			muted = NO;
-			
-			pjsua_media_config mediaConfig = [[MGMSIP sharedSIP] mediaConfig];
-			unsigned int samplesPerFrame = mediaConfig.audio_frame_ptime * mediaConfig.clock_rate * mediaConfig.channel_count / 1000;
-			pj_status_t status = pjmedia_tonegen_create([[MGMSIP sharedSIP] PJPool], mediaConfig.clock_rate, mediaConfig.channel_count, samplesPerFrame, 16, 0, &toneGenPort);
-			if (status!=PJ_SUCCESS) {
-				NSLog(@"Error creating tone generator");
-			} else {
-				status = pjsua_conf_add_port([[MGMSIP sharedSIP] PJPool], toneGenPort, &toneGenSlot);
-				if (status!=PJ_SUCCESS)
-					NSLog(@"Error adding tone generator");
-				else
-					pjsua_conf_connect(toneGenSlot, 0);
-			}
+			speaker = NO;
+			toneGenSlot = PJSUA_INVALID_ID;
 		}
 		bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 	}
@@ -74,7 +64,7 @@
 		[transferStatusText release];
 	if (holdMusicPath!=nil)
 		[holdMusicPath release];
-	if (toneGenPort!=NULL) {
+	if (toneGenSlot!=PJSUA_INVALID_ID) {
 		pjsua_conf_remove_port(toneGenSlot);
 		pjmedia_port_destroy(toneGenPort);
 		toneGenPort = NULL;
@@ -95,10 +85,10 @@
 - (MGMSIPAccount *)account {
 	return account;
 }
-- (int)identifier {
+- (pjsua_call_id)identifier {
 	return identifier;
 }
-- (void)setIdentifier:(int)theIdentifier {
+- (void)setIdentifier:(pjsua_call_id)theIdentifier {
 	identifier = theIdentifier;
 }
 
@@ -114,6 +104,11 @@
 }
 - (void)setState:(MGMSIPCallState)theState {
 	if (theState==MGMSIPCallDisconnectedState) {
+#if TARGET_OS_IPHONE
+		if (speaker) [self speaker];
+#endif
+		if (isRingbackOn)
+			[self stopRingback];
 		if (holdMusicPlayer!=PJSUA_INVALID_ID)
 			[self performSelectorOnMainThread:@selector(stopHoldMusic) withObject:nil waitUntilDone:NO];
 		if (recorderID!=PJSUA_INVALID_ID)
@@ -296,7 +291,7 @@
 }
 
 - (void)startRingback {
-	if (identifier==PJSUA_INVALID_ID || state==MGMSIPCallDisconnectedState)
+	if (identifier==PJSUA_INVALID_ID)
 		return;
 	
 	if (isRingbackOn)
@@ -312,7 +307,7 @@
 	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 - (void)stopRingback {
-	if (identifier==PJSUA_INVALID_ID || state==MGMSIPCallDisconnectedState)
+	if (identifier==PJSUA_INVALID_ID)
 		return;
 	
 	if (!isRingbackOn)
@@ -323,7 +318,7 @@
 	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
 	int ringbackCount = [[MGMSIP sharedSIP] ringbackCount];
-	if (ringbackCount<0) return;
+	if (ringbackCount<=0) return;
 	[[MGMSIP sharedSIP] setRingbackCount:ringbackCount-1];
 	if ([[MGMSIP sharedSIP] ringbackSlot]!=PJSUA_INVALID_ID) {
 		pjsua_conf_disconnect([[MGMSIP sharedSIP] ringbackSlot], 0);
@@ -354,6 +349,21 @@
 			
 			status = pjsua_call_send_request(identifier, &INFO, &messageData);
 			sendSuccessful = (status==PJ_SUCCESS);
+		}
+	}
+	
+	if (toneGenSlot==PJSUA_INVALID_ID) {
+		pjsua_media_config mediaConfig = [[MGMSIP sharedSIP] mediaConfig];
+		unsigned int samplesPerFrame = mediaConfig.audio_frame_ptime * mediaConfig.clock_rate * mediaConfig.channel_count / 1000;
+		pj_status_t status = pjmedia_tonegen_create([[MGMSIP sharedSIP] PJPool], mediaConfig.clock_rate, mediaConfig.channel_count, samplesPerFrame, 16, 0, &toneGenPort);
+		if (status!=PJ_SUCCESS) {
+			NSLog(@"Error creating tone generator");
+		} else {
+			status = pjsua_conf_add_port([[MGMSIP sharedSIP] PJPool], toneGenPort, &toneGenSlot);
+			if (status!=PJ_SUCCESS)
+				NSLog(@"Error adding tone generator");
+			else
+				pjsua_conf_connect(toneGenSlot, 0);
 		}
 	}
 	if (!sendSuccessful)
@@ -520,5 +530,17 @@
 		micMuted = !micMuted;
 	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
+
+#if TARGET_OS_IPHONE
+- (BOOL)isOnSpeaker {
+	return speaker;
+}
+- (void)speaker {
+	speaker = !speaker;
+	UInt32 route = (speaker ? kAudioSessionOverrideAudioRoute_Speaker : kAudioSessionOverrideAudioRoute_None);
+	if (AudioSessionSetProperty(kAudioSessionProperty_OverrideAudioRoute, sizeof(route), &route)!=noErr)
+		speaker = !speaker;
+}
+#endif
 @end
 #endif

@@ -12,6 +12,7 @@
 #else
 #import <Cocoa/Cocoa.h>
 #endif
+#import <pjsua-lib/pjsua.h>
 
 extern NSString * const MGMSIPAccountFullName;
 extern NSString * const MGMSIPAccountUserName;
@@ -49,7 +50,7 @@ extern const int MGMSIPAccountDefaultProxyPort;
 	int reregisterTimeout;
 	NSTimer *reregisterTimer;
 	
-	int identifier;
+	pjsua_acc_id identifier;
 	
 	NSMutableArray *calls;
 	
@@ -78,8 +79,8 @@ extern const int MGMSIPAccountDefaultProxyPort;
 - (void)setProxyPort:(int)theProxyPort;
 - (int)reregisterTimeout;
 - (void)setReregisterTimeout:(int)theReregisterTimeout;
-- (int)identifier;
-- (void)setIdentifier:(int)theIdentifier;
+- (pjsua_acc_id)identifier;
+- (void)setIdentifier:(pjsua_acc_id)theIdentifier;
 - (NSString *)password;
 - (NSDictionary *)settings;
 

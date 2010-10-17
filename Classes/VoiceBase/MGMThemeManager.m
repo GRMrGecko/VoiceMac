@@ -22,7 +22,7 @@ NSString * const MGMTCurrentThemePath = @"MGMTCurrentThemePath";
 NSString * const MGMTCurrentThemeVariant = @"MGMTCurrentThemeVariant";
 NSString * const MGMTShowHeader = @"MGMTShowHeader";
 NSString * const MGMTShowFooter = @"MGMTShowFooter";
-NSString * const MGMTInfoPlist = @"info.plist";
+NSString * const MGMTInfoPlist = @"Info.plist";
 
 NSString * const MGMTPResource = @"%RESOURCE%";
 NSString * const MGMTPThemes = @"%THEMES%";

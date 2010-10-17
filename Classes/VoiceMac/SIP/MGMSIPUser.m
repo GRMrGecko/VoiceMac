@@ -67,6 +67,14 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 		[progressFadeAnimation release];
 		progressFadeAnimation = nil;
 	}
+	if (progressView!=nil) {
+		[progressView stopProgess];
+		[progressView release];
+	}
+	if (SIPRegistrationTimeout!=nil) {
+		[SIPRegistrationTimeout invalidate];
+		[SIPRegistrationTimeout release];
+	}
 	[super dealloc];
 	if (calls!=nil) {
 		[calls removeAllObjects];
@@ -217,6 +225,19 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 }
 - (IBAction)runAction:(id)sender {
 	[self call:sender];
+}
+- (NSString *)currentPhoneNumber {
+	NSString *phoneNumber = nil;
+	if (phoneNumber==nil && ![[phoneField stringValue] isPhoneComplete]) {
+		if ([contactViews count]>0) {
+			[self selectFirstContact];
+		} else {
+			return [phoneField stringValue];
+		}
+	}
+	if (phoneNumber==nil)
+		phoneNumber = [[phoneField stringValue] phoneFormatWithAreaCode:[self areaCode]];
+	return phoneNumber;
 }
 - (IBAction)call:(id)sender {
 	NSString *phoneNumber = [controller currentPhoneNumber];

@@ -42,6 +42,7 @@
 }
 - (void)dealloc {
 	if (sound!=nil) {
+		[sound setDelegate:nil];
 		[sound stop];
 		[sound release];
 	}

@@ -94,7 +94,9 @@ typedef enum {
 	pjmedia_port *ringbackPort;
 	pjsua_conf_port_id ringbackSlot;
 	pjsua_transport_id UDPTransport;
+	pjsua_acc_id UDPAccount;
 	pjsua_transport_id TCPTransport;
+	pjsua_acc_id TCPAccount;
 	MGMSIPNATType NATType;
 	
 	BOOL shouldRestart;
@@ -130,6 +132,10 @@ typedef enum {
 - (pjsua_media_config)mediaConfig;
 - (pjmedia_port *)ringbackPort;
 - (pjsua_conf_port_id)ringbackSlot;
+- (pjsua_transport_id)UDPTransport;
+- (pjsua_acc_id)UDPAccount;
+- (pjsua_transport_id)TCPTransport;
+- (pjsua_acc_id)TCPAccount;
 - (MGMSIPNATType)NATType;
 - (void)setNATType:(MGMSIPNATType)theNATType;
 
@@ -139,13 +145,18 @@ typedef enum {
 - (void)computerSleep;
 - (void)computerWake;
 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_4_0
+- (void)keepAlive;
+#endif
+
 - (void)registerThread:(pj_thread_desc *)thePJThreadDesc;
 
 - (void)loginToAccount:(MGMSIPAccount *)theAccount;
 - (void)logoutOfAccount:(MGMSIPAccount *)theAccount;
 
 - (NSArray *)accounts;
-- (MGMSIPAccount *)accountWithIdentifier:(int)theIdentifier;
+- (pjsua_acc_id)accountIDForUserName:(NSString *)theUserName;
+- (MGMSIPAccount *)accountWithIdentifier:(pjsua_acc_id)theIdentifier;
 
 - (int)ringbackCount;
 - (void)setRingbackCount:(int)theRingbackCount;
@@ -167,6 +178,6 @@ typedef enum {
 - (void)receivedNewCall:(MGMSIPCall *)theCall;
 - (void)startingNewCall:(MGMSIPCall *)theCall;
 - (NSArray *)calls;
-- (MGMSIPCall *)callWithIdentifier:(int)theIdentifier;
+- (MGMSIPCall *)callWithIdentifier:(pjsua_call_id)theIdentifier;
 @end
 #endif

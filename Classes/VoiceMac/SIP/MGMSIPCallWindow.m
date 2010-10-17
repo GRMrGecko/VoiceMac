@@ -76,7 +76,7 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 				[incomingWindow makeKeyAndOrderFront:self];
 				[call sendRingingNotification];
 				NSString *ringtonePath = [[[SIPUser controller] themeManager] currentSoundPath:MGMTSSIPRingtone];
-				if (![ringtonePath isEqual:MGMTNoSound]) {
+				if (ringtonePath!=nil && ![ringtonePath isEqual:MGMTNoSound]) {
 					ringtone = [[MGMSound alloc] initWithContentsOfFile:ringtonePath];
 					[ringtone setLoops:YES];
 					[ringtone play];
@@ -101,6 +101,14 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 				if (phoneCalling!=nil)
 					[call answer];
 				[callWindow makeKeyAndOrderFront:self];
+			}
+			
+			if ([call state]==MGMSIPCallDisconnectedState) {
+				if (ringtone!=nil) {
+					[ringtone stop];
+					[ringtone release];
+					ringtone = nil;
+				}
 			}
 			
 			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
