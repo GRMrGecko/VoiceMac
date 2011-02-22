@@ -17,6 +17,7 @@ extern NSString * const MGMUserDoneNotification;
 extern NSString * const MGMUserUpdatedNotification;
 extern NSString * const MGMUserID;
 extern NSString * const MGMUserName;
+extern NSString * const MGMUserPassword;
 
 @class MGMUser, MGMKeychainItem, MGMHTTPCookieStorage;
 

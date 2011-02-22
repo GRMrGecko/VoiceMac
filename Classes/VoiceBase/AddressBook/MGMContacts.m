@@ -42,7 +42,7 @@ const int MGMCMaxResults = 10;
 	return [[[self alloc] initWithClass:theClass delegate:theDelegate] autorelease];
 }
 - (id)initWithClass:(Class)theClass delegate:(id)theDelegate {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		maxResults = MGMCMaxResults;
 		delegate = theDelegate;
 		user = [delegate user];
@@ -71,22 +71,15 @@ const int MGMCMaxResults = 10;
 }
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if (updateLock!=nil) {
-		[updateLock lock];
-		[updateLock unlock];
-		[updateLock release];
-	}
-	if (contactsLock!=nil) {
-		[contactsLock lock];
-		[contactsLock unlock];
-		[contactsLock release];
-	}
-	if (contactsConnection!=nil)
-		[contactsConnection release];
-	if (updateConnection!=nil)
-		[updateConnection release];
-	if (contacts!=nil)
-		[contacts release];
+	[updateLock lock];
+	[updateLock unlock];
+	[updateLock release];
+	[contactsLock lock];
+	[contactsLock unlock];
+	[contactsLock release];
+	[contactsConnection release];
+	[updateConnection release];
+	[contacts release];
 	[super dealloc];
 }
 
@@ -103,10 +96,8 @@ const int MGMCMaxResults = 10;
 		[contacts stop];
 		[updateLock lock];
 		[updateLock unlock];
-		if (updateConnection!=nil) {
-			[updateConnection release];
-			updateConnection = nil;
-		}
+		[updateConnection release];
+		updateConnection = nil;
 		isUpdating = NO;
 		stopingUpdate = NO;
 	}
@@ -117,7 +108,7 @@ const int MGMCMaxResults = 10;
 	if ([theUser isEqual:user] && (![[theUser settingForKey:MGMSContactsSourceKey] isEqual:NSStringFromClass([contacts class])] || ([contacts isKindOfClass:[MGMGoogleContacts class]] && ![[[(MGMGoogleContacts *)contacts user] settingForKey:MGMUserID] isEqual:[theUser settingForKey:MGMCGoogleContactsUser]]))) {
 		if (stopingUpdate) return;
 		[self stop];
-		if (contacts!=nil) [contacts release];
+		[contacts release];
 		contacts = [[NSClassFromString([theUser settingForKey:MGMSContactsSourceKey]) alloc] initWithDelegate:delegate];
 		[self updateContacts];
 	}
@@ -135,7 +126,7 @@ const int MGMCMaxResults = 10;
 }
 - (void)setContactsConnection:(MGMLiteConnection *)theConnection {
 	[contactsLock lock];
-	if (contactsConnection!=nil) [contactsConnection release];
+	[contactsConnection release];
 	contactsConnection = [theConnection retain];
 	[contactsLock unlock];
 }
@@ -202,9 +193,8 @@ const int MGMCMaxResults = 10;
 		long long int groupID = [updateConnection insertId];
 		for (unsigned int i=0; i<[theMembers count]; i++) {
 			NSDictionary *result = [[updateConnection query:@"SELECT docid, * FROM contacts WHERE number = %@", [theMembers objectAtIndex:i]] nextRow];
-			if (result!=nil) {
+			if (result!=nil)
 				[updateConnection query:@"INSERT INTO groupMembers (groupid, contactid) VALUES (%qi, %@)", groupID, [result objectForKey:MGMCDocID]];
-			}
 		}
 	}
 	[updateLock unlock];
@@ -481,7 +471,7 @@ const int MGMCMaxResults = 10;
 		else if (![[contact objectForKey:MGMCCompany] isEqual:@""])
 			return [contact objectForKey:MGMCCompany];
 	}
-	if ([theNumber isPhone])
+	if ([theNumber isPhoneComplete])
 		return [theNumber readableNumber];
 	return theNumber;
 }
@@ -533,9 +523,8 @@ const int MGMCMaxResults = 10;
 	NSDictionary *member = nil;
 	while ((member=[result nextRow])!=nil) {
 		NSDictionary *contact = [self contactWithID:[member objectForKey:MGMCContactID]];
-		if (contact!=nil) {
+		if (contact!=nil)
 			[memebersArray addObject:contact];
-		}
 	}
 	[contactsLock unlock];
 	[pool drain];

@@ -138,6 +138,14 @@ NSString * const MGMLoading = @"Loading...";
 			[[MGMAccountSetup new] showSetupWindow:self]; // This is not a leak, it'll auto release it self when done.
 		else
 			[self preferences:self];
+	} else {
+		BOOL windows = NO;
+		for (int i=0; i<[contactsControllers count]; i++) {
+			if ([[(MGMUser *)[[contactsControllers objectAtIndex:i] user] settingForKey:MGMContactsWindowOpen] boolValue])
+				windows = YES;
+		}
+		if (!windows)
+			[contactsControllers makeObjectsPerformSelector:@selector(showContactsWindow)];
 	}
 	
 	[[RLMap mainFrame] loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"map" ofType:@"html"]]]];
@@ -150,24 +158,17 @@ NSString * const MGMLoading = @"Loading...";
 }
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if (contactsControllers!=nil)
-		[contactsControllers release];
-	if (multipleSMS!=nil)
-		[multipleSMS release];
-	if (preferences!=nil)
-		[preferences release];
-	if (taskManager!=nil)
-		[taskManager release];
-	if (whitePages!=nil)
-		[whitePages release];
-	if (themeManager!=nil)
-		[themeManager release];
-	if (SMSManager!=nil)
-		[SMSManager release];
-	if (badge!=nil)
-		[badge release];
-	if (badgeValues!=nil)
-		[badgeValues release];
+	[contactsControllers release];
+	[multipleSMS release];
+	[preferences release];
+	[taskManager release];
+	[whitePages release];
+	[themeManager release];
+	[SMSManager release];
+	[badge release];
+	[badgeValues release];
+	[aboutWindow release];
+	[RLWindow release];
 	[super dealloc];
 }
 
@@ -323,9 +324,9 @@ NSString * const MGMLoading = @"Loading...";
 		[[contactsController phoneField] setStringValue:[phoneNumber readableNumber]];
 		[self sms:self];
 	} else if ([scheme isEqualToString:@"vmtheme"]) {
-		[taskManager addTask:nil withURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", data]]];
+		[taskManager addTask:nil withURL:[NSURL URLWithString:[@"http://" stringByAppendingString:data]]];
 	} else if ([scheme isEqualToString:@"vmsound"]) {
-		[taskManager addTask:nil withURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://%@", data]]];
+		[taskManager addTask:nil withURL:[NSURL URLWithString:[@"http://" stringByAppendingString:data]]];
 	}
 }
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames {

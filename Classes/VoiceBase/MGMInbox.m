@@ -73,17 +73,15 @@ const BOOL MGMInboxInvisible = YES;
 	return [[[self alloc] initWithInstance:theInstance] autorelease];
 }
 - (id)initWithInstance:(MGMInstance *)theInstance {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		instance = theInstance;
 		connectionManager = [[MGMURLConnectionManager managerWithCookieStorage:[theInstance cookieStorage]] retain];
 	}
 	return self;
 }
 - (void)dealloc {
-	if (connectionManager!=nil) {
-		[connectionManager cancelAll];
-		[connectionManager release];
-	}
+	[connectionManager cancelAll];
+	[connectionManager release];
 	[super dealloc];
 }
 

@@ -32,7 +32,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 
 @implementation MGMAccountSetup
 - (id)init {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		if (![NSBundle loadNibNamed:@"AccountSetup" owner:self]) {
 			NSLog(@"Unable to load Account Set Up!");
 			[self release];
@@ -49,22 +49,15 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	return self;
 }
 - (void)dealloc {
-	if (setupWindow!=nil)
-		[setupWindow release];
-	if (accountsCreated!=nil)
-		[accountsCreated release];
-	if (S7CheckUser!=nil)
-		[S7CheckUser release];
-	if (S7CheckInstance!=nil)
-		[S7CheckInstance release];
-	if (S7ConnectionManager!=nil)
-		[S7ConnectionManager release];
+	[setupWindow release];
+	[accountsCreated release];
+	[S7CheckUser release];
+	[S7CheckInstance release];
+	[S7ConnectionManager release];
 #if MGMSIPENABLED
-	if (S7CheckSIPAccount!=nil)
-		[S7CheckSIPAccount release];
+	[S7CheckSIPAccount release];
 #endif
-	if (S8Message!=nil)
-		[S8Message release];
+	[S8Message release];
 	[super dealloc];
 }
 
@@ -155,10 +148,8 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 			[continueButton setTitle:MGMSContinue];
 			[continueButton setEnabled:NO];
 			[S8MessageField setStringValue:[NSString stringWithFormat:@"Unable to set up your %@ account, the error we receviced was \"%@\" Please go back and correct the problem.", type, S8Message]];
-			if (S8Message!=nil) {
-				[S8Message release];
-				S8Message = nil;
-			}
+			[S8Message release];
+			S8Message = nil;
 			NSBeep();
 			break;
 		}
@@ -324,15 +315,11 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	S7CheckInstance = [[MGMInstance instanceWithUser:S7CheckUser delegate:self isCheck:YES] retain];
 }
 - (void)loginError:(NSError *)theError {
-	if (S7CheckUser!=nil) {
-		[S7CheckUser remove];
-		[S7CheckUser release];
-		S7CheckUser = nil;
-	}
-	if (S7CheckInstance!=nil) {
-		[S7CheckInstance release];
-		S7CheckInstance = nil;
-	}
+	[S7CheckUser remove];
+	[S7CheckUser release];
+	S7CheckUser = nil;
+	[S7CheckInstance release];
+	S7CheckInstance = nil;
 	NSLog(@"Login Failed %@", theError);
 	S8Message = [[theError localizedDescription] copy];
 	step = 8;
@@ -347,10 +334,8 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 		[S7CheckUser release];
 		S7CheckUser = nil;
 	}
-	if (S7CheckInstance!=nil) {
-		[S7CheckInstance release];
-		S7CheckInstance = nil;
-	}
+	[S7CheckInstance release];
+	S7CheckInstance = nil;
 	[self S4Reset];
 	step = 9;
 	[self displayStep];
@@ -373,13 +358,10 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	[S7ConnectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(authentication:didFailWithError:) didFinish:@selector(authenticationDidFinish:) invisible:NO object:nil];
 }
 - (void)authentication:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
-	if (S7CheckUser!=nil) {
-		[S7CheckUser remove];
-		[S7CheckUser release];
-		S7CheckUser = nil;
-	}
-	if (S7ConnectionManager!=nil)
-		[S7ConnectionManager setCookieStorage:nil];
+	[S7CheckUser remove];
+	[S7CheckUser release];
+	S7CheckUser = nil;
+	[S7ConnectionManager setCookieStorage:nil];
 	NSLog(@"Login Failed %@", theError);
 	S8Message = [[theError localizedDescription] copy];
 	step = 8;
@@ -387,22 +369,19 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 }
 - (void)authenticationDidFinish:(NSDictionary *)theInfo {
 	NSDictionary *info = [MGMGoogleContacts dictionaryWithData:[theInfo objectForKey:MGMConnectionData]];
-	if (S7ConnectionManager!=nil)
-		[S7ConnectionManager setCookieStorage:nil];
-	if (S7CheckUser!=nil) {
-		if ([info objectForKey:@"Error"]!=nil) {
-			[S7CheckUser remove];
-			[S7CheckUser release];
-			S7CheckUser = nil;
-			S8Message = [@"Unable to login. Please check your Credentials." retain];
-			step = 8;
-			[self displayStep];
-			return;
-		}
-		[S7CheckUser done];
+	[S7ConnectionManager setCookieStorage:nil];
+	if ([info objectForKey:@"Error"]!=nil) {
+		[S7CheckUser remove];
 		[S7CheckUser release];
 		S7CheckUser = nil;
+		S8Message = [@"Unable to login. Please check your Credentials." retain];
+		step = 8;
+		[self displayStep];
+		return;
 	}
+	[S7CheckUser done];
+	[S7CheckUser release];
+	S7CheckUser = nil;
 	
 	[self S5Reset];
 	step = 9;
@@ -441,22 +420,18 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 }
 - (void)S7RegistrationChanged {
 #if MGMSIPENABLED
-	if (S7SIPRegistrationTimeout!=nil) {
-		[S7SIPRegistrationTimeout invalidate];
-		[S7SIPRegistrationTimeout release];
-		S7SIPRegistrationTimeout = nil;
+	[S7SIPRegistrationTimeout invalidate];
+	[S7SIPRegistrationTimeout release];
+	S7SIPRegistrationTimeout = nil;
+	if (![S7CheckSIPAccount isRegistered]) {
+		[S7CheckSIPAccount setLastError:@"Unable to Register with Server. Please check your credentials."];
+		[self loginErrored];
+		return;
 	}
-	if (S7CheckSIPAccount!=nil) {
-		if (![S7CheckSIPAccount isRegistered]) {
-			[S7CheckSIPAccount setLastError:@"Unable to Register with Server. Please check your credentials."];
-			[self loginErrored];
-			return;
-		}
-		[S7CheckSIPAccount setDelegate:nil];
-		[S7CheckSIPAccount logout];
-		[S7CheckSIPAccount release];
-		S7CheckSIPAccount = nil;
-	}
+	[S7CheckSIPAccount setDelegate:nil];
+	[S7CheckSIPAccount logout];
+	[S7CheckSIPAccount release];
+	S7CheckSIPAccount = nil;
 	if (S7CheckUser!=nil) {
 		[accountsCreated addObject:S7CheckUser];
 		[S7CheckUser release];
@@ -470,11 +445,9 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 }
 #if MGMSIPENABLED
 - (void)S7SIPTimeout {
-	if (S7SIPRegistrationTimeout!=nil) {
-		[S7SIPRegistrationTimeout invalidate];
-		[S7SIPRegistrationTimeout release];
-		S7SIPRegistrationTimeout = nil;
-	}
+	[S7SIPRegistrationTimeout invalidate];
+	[S7SIPRegistrationTimeout release];
+	S7SIPRegistrationTimeout = nil;
 	[S7CheckSIPAccount setLastError:@"Registration Timeout."];
 	[self loginErrored];
 }
@@ -487,19 +460,15 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 		S7SIPRegistrationTimeout = [[NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(S7SIPTimeout) userInfo:nil repeats:NO] retain];
 }
 - (void)loginErrored {
-	if (S7CheckUser!=nil) {
-		[S7CheckUser remove];
-		[S7CheckUser release];
-		S7CheckUser = nil;
-	}
-	if (S7CheckSIPAccount!=nil) {
-		NSLog(@"Login Failed %@", [S7CheckSIPAccount lastError]);
-		S8Message = [[S7CheckSIPAccount lastError] copy];
-		[S7CheckSIPAccount setDelegate:nil];
-		[S7CheckSIPAccount logout];
-		[S7CheckSIPAccount release];
-		S7CheckSIPAccount = nil;
-	}
+	[S7CheckUser remove];
+	[S7CheckUser release];
+	S7CheckUser = nil;
+	NSLog(@"Login Failed %@", [S7CheckSIPAccount lastError]);
+	S8Message = [[S7CheckSIPAccount lastError] copy];
+	[S7CheckSIPAccount setDelegate:nil];
+	[S7CheckSIPAccount logout];
+	[S7CheckSIPAccount release];
+	S7CheckSIPAccount = nil;
 	step = 8;
 	[self displayStep];
 }

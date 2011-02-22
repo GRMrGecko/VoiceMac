@@ -17,7 +17,7 @@
 	return [[[self alloc] initWithInstance:theInstance  controller:theController] autorelease];
 }
 - (id)initWithInstance:(MGMInstance *)theInstance controller:(MGMController *)theController {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		if (![NSBundle loadNibNamed:@"MultiSMS" owner:self]) {
 			NSLog(@"Unable to load Multiple SMS Window.");
 			[self release];

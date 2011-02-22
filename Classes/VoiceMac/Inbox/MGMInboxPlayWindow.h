@@ -10,7 +10,7 @@
 
 @class MGMInstance, MGMURLConnectionManager, QTMovieView;
 
-@interface MGMInboxPlayWindow : NSWindow {
+@interface MGMInboxPlayWindow : NSWindow <NSWindowDelegate> {
 	MGMInstance *instance;
 	MGMURLConnectionManager *connectionManager;
 	IBOutlet NSView *view;

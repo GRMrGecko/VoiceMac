@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2A19272612B7BD0F00B065ED /* blankicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A19272512B7BD0F00B065ED /* blankicon.png */; };
 		2A6D4DF412470DC0009C4029 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D4DF012470DC0009C4029 /* main.m */; };
 		2A6D4DF512470DC0009C4029 /* MGMThemeTesterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A6D4DF212470DC0009C4029 /* MGMThemeTesterController.m */; };
-		2A6D4DFC12470E0A009C4029 /* blankicon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2A6D4DF712470E0A009C4029 /* blankicon.jpg */; };
 		2A6D4DFD12470E0A009C4029 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2A6D4DF812470E0A009C4029 /* InfoPlist.strings */; };
 		2A6D4E0112470E1E009C4029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A6D4E0012470E1E009C4029 /* MainMenu.xib */; };
 		2A6D4E0C12470E9D009C4029 /* VoiceBase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A6D4E0A12470E83009C4029 /* VoiceBase.framework */; };
@@ -35,6 +35,13 @@
 			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = VoiceBase;
 		};
+		2AE6A4891272582D00379CDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A6D4E0512470E83009C4029 /* VoiceBase.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2AE6EE531249DA0B0006B5AC;
+			remoteInfo = "VoiceBase Touch";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,11 +64,11 @@
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2A19272512B7BD0F00B065ED /* blankicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blankicon.png; sourceTree = "<group>"; };
 		2A6D4DF012470DC0009C4029 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = "Classes/Theme Tester/main.m"; sourceTree = "<group>"; };
 		2A6D4DF112470DC0009C4029 /* MGMThemeTesterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMThemeTesterController.h; sourceTree = "<group>"; };
 		2A6D4DF212470DC0009C4029 /* MGMThemeTesterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMThemeTesterController.m; sourceTree = "<group>"; };
 		2A6D4DF312470DC0009C4029 /* Theme Tester_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "Theme Tester_Prefix.pch"; path = "Classes/Theme Tester/Theme Tester_Prefix.pch"; sourceTree = "<group>"; };
-		2A6D4DF712470E0A009C4029 /* blankicon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = blankicon.jpg; sourceTree = "<group>"; };
 		2A6D4DF912470E0A009C4029 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2A6D4DFA12470E0A009C4029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		2A6D4DFB12470E0A009C4029 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -159,7 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				2A6D4DFB12470E0A009C4029 /* Info.plist */,
-				2A6D4DF712470E0A009C4029 /* blankicon.jpg */,
+				2A19272512B7BD0F00B065ED /* blankicon.png */,
 				2A6D4DF812470E0A009C4029 /* InfoPlist.strings */,
 				2A6D4E0012470E1E009C4029 /* MainMenu.xib */,
 			);
@@ -171,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				2A6D4E0A12470E83009C4029 /* VoiceBase.framework */,
+				2AE6A48A1272582D00379CDA /* libVoiceBase.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -233,6 +241,13 @@
 			remoteRef = 2A6D4E0912470E83009C4029 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		2AE6A48A1272582D00379CDA /* libVoiceBase.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libVoiceBase.a;
+			remoteRef = 2AE6A4891272582D00379CDA /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -240,9 +255,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2A6D4DFC12470E0A009C4029 /* blankicon.jpg in Resources */,
 				2A6D4DFD12470E0A009C4029 /* InfoPlist.strings in Resources */,
 				2A6D4E0112470E1E009C4029 /* MainMenu.xib in Resources */,
+				2A19272612B7BD0F00B065ED /* blankicon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -337,13 +352,16 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
+				VALID_ARCHS = "ppc i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -356,12 +374,15 @@
 					x86_64,
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
 				PREBINDING = NO;
-				SDKROOT = macosx10.5;
+				SDKROOT = macosx10.6;
+				VALID_ARCHS = "ppc i386 x86_64";
 			};
 			name = Release;
 		};

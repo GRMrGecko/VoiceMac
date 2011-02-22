@@ -40,4 +40,5 @@
 - (void)messageWithNumber:(NSString *)theNumber instance:(MGMInstance *)theInstance;
 - (void)messageWithData:(NSDictionary *)theData instance:(MGMInstance *)theInstance;
 - (NSString *)currentPhoneNumber;
+- (void)windowDidBecomeKey:(NSNotification *)notification;
 @end

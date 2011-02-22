@@ -21,6 +21,9 @@ NSString * const MGMSIPAccountSIPAddress = @"MGMSIPAccountSIPAddress";
 NSString * const MGMSIPAccountProxy = @"MGMSIPAccountProxy";
 NSString * const MGMSIPAccountProxyPort = @"MGMSIPAccountProxyPort";
 NSString * const MGMSIPAccountRegisterTimeout = @"MGMSIPAccountRegisterTimeout";
+NSString * const MGMSIPAccountTransport = @"MGMSIPAccountTransport";
+NSString * const MGMSIPAccountDTMFToneType = @"MGMSIPAccountDTMFToneType";
+
 const int MGMSIPAccountDefaultProxyPort = 5060;
 
 const int MGMSIPAccountReregisterTimeoutMin = 60;
@@ -29,7 +32,7 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 
 @implementation MGMSIPAccount
 - (id)initWithSettings:(NSDictionary *)theSettings {
-	if (self = [self init]) {
+	if ((self = [self init])) {
 		if ([theSettings objectForKey:MGMSIPAccountUserName]==nil || [[theSettings objectForKey:MGMSIPAccountUserName] isEqual:@""] || [theSettings objectForKey:MGMSIPAccountDomain]==nil || [[theSettings objectForKey:MGMSIPAccountDomain] isEqual:@""]) {
 			[self release];
 			self = nil;
@@ -50,6 +53,14 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 				proxyPort = 0;
 			if ([theSettings objectForKey:MGMSIPAccountRegisterTimeout]!=nil && [[theSettings objectForKey:MGMSIPAccountRegisterTimeout] intValue]!=0)
 				reregisterTimeout = [[theSettings objectForKey:MGMSIPAccountRegisterTimeout] intValue];
+			if ([theSettings objectForKey:MGMSIPAccountTransport]!=nil)
+				transport = [[theSettings objectForKey:MGMSIPAccountTransport] intValue];
+#if TARGET_OS_IPHONE
+			else
+				transport = 1;
+#endif
+			if ([theSettings objectForKey:MGMSIPAccountDTMFToneType]!=nil)
+				dtmfToneType = [[theSettings objectForKey:MGMSIPAccountDTMFToneType] intValue];
 		}
 	}
 	return self;
@@ -74,31 +85,24 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	return [self initWithSettings:settings];
 }
 - (id)init {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		reregisterTimeout = MGMSIPAccountReregisterTimeoutDefault;
 		identifier = PJSUA_INVALID_ID;
+		registered = NO;
 		calls = [NSMutableArray new];
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(networkConnected:) name:MGMNetworkConnectedNotification object:nil];
 	}
 	return self;
 }
 - (void)dealloc {
-	NSLog(@"Releasing SIP Account");
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if (calls!=nil)
-		[calls release];
-	if (fullName!=nil)
-		[fullName release];
-	if (userName!=nil)
-		[userName release];
-	if (domain!=nil)
-		[domain release];
-	if (registrar!=nil)
-		[registrar release];
-	if (SIPAddress!=nil)
-		[SIPAddress release];
-	if (proxy!=nil)
-		[proxy release];
+	[calls release];
+	[fullName release];
+	[userName release];
+	[domain release];
+	[registrar release];
+	[SIPAddress release];
+	[proxy release];
 	[super dealloc];
 }
 
@@ -118,7 +122,7 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	return fullName;
 }
 - (void)setFullName:(NSString *)theFullName {
-	if (fullName!=nil) [fullName release];
+	[fullName release];
 	fullName = [theFullName copy];
 }
 - (NSString *)userName {
@@ -126,14 +130,14 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 }
 - (void)setUserName:(NSString *)theUserName {
 	if (theUserName==nil || [theUserName isEqual:@""]) return;
-	if (userName!=nil) [userName release];
+	[userName release];
 	userName = [theUserName copy];
 }
 - (NSString *)domain {
 	return domain;
 }
 - (void)setDomain:(NSString *)theDomain {
-	if (domain!=nil) [domain release];
+	[domain release];
 	domain = [theDomain copy];
 }
 - (NSString *)registrar {
@@ -141,7 +145,7 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	return registrar;
 }
 - (void)setRegistrar:(NSString *)theRegistrar {
-	if (registrar!=nil) [registrar release];
+	[registrar release];
 	registrar = [theRegistrar copy];
 }
 - (NSString *)SIPAddress {
@@ -150,14 +154,14 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	return SIPAddress;
 }
 - (void)setSIPAddress:(NSString *)theSIPAddress {
-	if (SIPAddress!=nil) [SIPAddress release];
+	[SIPAddress release];
 	SIPAddress = [theSIPAddress copy];
 }
 - (NSString *)proxy {
 	return proxy;
 }
 - (void)setProxy:(NSString *)theProxy {
-	if (proxy!=nil) [proxy release];
+	[proxy release];
 	proxy = [theProxy copy];
 }
 - (int)proxyPort {
@@ -179,6 +183,18 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 		reregisterTimeout = MGMSIPAccountReregisterTimeoutMax;
 	else
 		reregisterTimeout = theReregisterTimeout;
+}
+- (int)transport {
+	return transport;
+}
+- (void)setTransport:(int)theTransport {
+	transport = theTransport;
+}
+- (int)dtmfToneType {
+	return dtmfToneType;
+}
+- (void)setDTMFToneType:(int)theType {
+	dtmfToneType = theType;
 }
 - (pjsua_acc_id)identifier {
 	return identifier;
@@ -210,11 +226,13 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 		[settings setObject:[NSNumber numberWithInt:proxyPort] forKey:MGMSIPAccountProxyPort];
 	if (reregisterTimeout!=0)
 		[settings setObject:[NSNumber numberWithInt:reregisterTimeout] forKey:MGMSIPAccountRegisterTimeout];
+	[settings setObject:[NSNumber numberWithInt:transport] forKey:MGMSIPAccountTransport];
+	[settings setObject:[NSNumber numberWithInt:dtmfToneType] forKey:MGMSIPAccountDTMFToneType];
 	return settings;
 }
 
 - (void)setLastError:(NSString *)theError {
-	if (lastError!=nil) [lastError release];
+	[lastError release];
 	lastError = [theError copy];
 }
 - (NSString *)lastError {
@@ -237,8 +255,11 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	if (delegate!=nil && [delegate respondsToSelector:@selector(logoutErrored)]) [delegate logoutErrored];
 }
 
+- (void)registrationStateChanged {
+	registered = (([self registrationStatus]/100)==2 && [self registrationExpireTime]>0);
+}
 - (BOOL)isRegistered {
-	return (([self registrationStatus]/100)==2 && [self registrationExpireTime]>0);
+	return registered;
 }
 - (void)reregister {
 	[self setRegistered:YES];
@@ -324,11 +345,9 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	
 	pj_status_t status = pjsua_acc_set_online_status(identifier, (isOnline ? PJ_TRUE : PJ_FALSE));
 	if (status==PJ_SUCCESS) {
-		if (reregisterTimer!=nil) {
-			[reregisterTimer invalidate];
-			[reregisterTimer release];
-			reregisterTimer = nil;
-		}
+		[reregisterTimer invalidate];
+		[reregisterTimer release];
+		reregisterTimer = nil;
 		if (isOnline)
 			reregisterTimer = [[NSTimer scheduledTimerWithTimeInterval:(float)reregisterTimeout target:self selector:@selector(reregister) userInfo:nil repeats:YES] retain];
 	}

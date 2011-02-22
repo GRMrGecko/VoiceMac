@@ -58,7 +58,7 @@ const BOOL MGMInstanceInvisible = YES;
 	return [[[self alloc] initWithUser:theUser  delegate:theDelegate isCheck:isCheck] autorelease];
 }
 - (id)initWithUser:(MGMUser *)theUser delegate:(id)theDelegate isCheck:(BOOL)isCheck {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		checkingAccount = isCheck;
 		loggedIn = NO;
 		webLoginTries = 0;
@@ -75,44 +75,26 @@ const BOOL MGMInstanceInvisible = YES;
 	return self;
 }
 - (void)dealloc {
-	if (connectionManager!=nil) {
-		[connectionManager cancelAll];
-		[connectionManager release];
-	}
-	if (user!=nil)
-		[user release];
-	if (cookeStorage!=nil)
-		[cookeStorage release];
-	if (inbox!=nil)
-		[inbox release];
-	if (contacts!=nil)
-		[contacts release];
-	if (XPCURL!=nil)
-		[XPCURL release];
-	if (XPCCD!=nil)
-		[XPCCD release];
-	if (rnr_se!=nil)
-		[rnr_se release];
-	if (userName!=nil)
-		[userName release];
-	if (userNumber!=nil)
-		[userNumber release];
-	if (userAreacode!=nil)
-		[userAreacode release];
-	if (userPhoneNumbers!=nil)
-		[userPhoneNumbers release];
-	if (checkTimer!=nil) {
-		[checkTimer invalidate];
-		[checkTimer release];
-		checkTimer = nil;
-	}
-	if (unreadCounts!=nil)
-		[unreadCounts release];
-	if (creditTimer!=nil) {
-		[creditTimer invalidate];
-		[creditTimer release];
-		creditTimer = nil;
-	}
+	[connectionManager cancelAll];
+	[connectionManager release];
+	[user release];
+	[cookeStorage release];
+	[inbox release];
+	[contacts release];
+	[XPCURL release];
+	[XPCCD release];
+	[rnr_se release];
+	[userName release];
+	[userNumber release];
+	[userAreacode release];
+	[userPhoneNumbers release];
+	[checkTimer invalidate];
+	[checkTimer release];
+	checkTimer = nil;
+	[unreadCounts release];
+	[creditTimer invalidate];
+	[creditTimer release];
+	creditTimer = nil;
 	[super dealloc];
 }
 
@@ -125,16 +107,12 @@ const BOOL MGMInstanceInvisible = YES;
 		[contacts stop];
 	[inbox stop];
 	[connectionManager cancelAll];
-	if (checkTimer!=nil) {
-		[checkTimer invalidate];
-		[checkTimer release];
-		checkTimer = nil;
-	}
-	if (creditTimer!=nil) {
-		[creditTimer invalidate];
-		[creditTimer release];
-		creditTimer = nil;
-	}
+	[checkTimer invalidate];
+	[checkTimer release];
+	checkTimer = nil;
+	[creditTimer invalidate];
+	[creditTimer release];
+	creditTimer = nil;
 }
 
 - (void)registerSettings {
@@ -323,7 +301,7 @@ const BOOL MGMInstanceInvisible = YES;
 			if (range.location==NSNotFound) {
 				NSLog(@"failed 0001");
 			} else {
-				if (rnr_se!=nil) [rnr_se release];
+				[rnr_se release];
 				rnr_se = [[[string substringWithRange:NSMakeRange(0, range.location)] addPercentEscapes] copy];
 			}
 		}
@@ -364,7 +342,7 @@ const BOOL MGMInstanceInvisible = YES;
 				if (range.location==NSNotFound) {
 					NSLog(@"failed 0003.1");
 				} else {
-					if (userName!=nil) [userName release];
+					[userName release];
 					userName = [[string substringWithRange:NSMakeRange(0, range.location)] copy];
 				}
 			}
@@ -406,7 +384,7 @@ const BOOL MGMInstanceInvisible = YES;
 				if (range.location==NSNotFound) {
 					NSLog(@"failed 0004.1");
 				} else {
-					if (userNumber!=nil) [userNumber release];
+					[userNumber release];
 					userNumber = [[[string substringWithRange:NSMakeRange(0, range.location)] phoneFormat] copy];
 				}
 			}
@@ -420,7 +398,7 @@ const BOOL MGMInstanceInvisible = YES;
 			}
 			return;
 		}
-		if (userAreacode!=nil) [userAreacode release];
+		[userAreacode release];
 		userAreacode = [[userNumber areaCode] copy];
 #if MGMInstanceDebug
 		NSLog(@"Google Number = %@", userNumber);
@@ -441,7 +419,7 @@ const BOOL MGMInstanceInvisible = YES;
 		NSDictionary *phones = [phonesInfo parseJSON];
 		//NSLog(@"%@", phones);
 		NSArray *phoneKeys = [phones allKeys];
-		if (userPhoneNumbers!=nil) [userPhoneNumbers release];
+		[userPhoneNumbers release];
 		userPhoneNumbers = [NSMutableArray new];
 		for (int i=0; i<[phoneKeys count]; i++) {
 			NSDictionary *phoneInfo = [phones objectForKey:[phoneKeys objectAtIndex:i]];
@@ -465,7 +443,7 @@ const BOOL MGMInstanceInvisible = YES;
 			if (range.location==NSNotFound) {
 				NSLog(@"failed 0008");
 			} else {
-				if (XPCURL!=nil) [XPCURL release];
+				[XPCURL release];
 				XPCURL = [[string substringWithRange:NSMakeRange(0, range.location)] copy];
 			}
 		}
@@ -476,16 +454,12 @@ const BOOL MGMInstanceInvisible = YES;
 		if (delegate!=nil && [delegate respondsToSelector:@selector(loginSuccessful)]) [delegate loginSuccessful];
 		if (!checkingAccount) {
 			[contacts updateContacts];
-			if (checkTimer!=nil) {
-				[checkTimer invalidate];
-				[checkTimer release];
-			}
+			[checkTimer invalidate];
+			[checkTimer release];
 			checkTimer = [[NSTimer scheduledTimerWithTimeInterval:15.0 target:self selector:@selector(checkTimer) userInfo:nil repeats:YES] retain];
 			[checkTimer fire];
-			if (creditTimer!=nil) {
-				[creditTimer invalidate];
-				[creditTimer release];
-			}
+			[creditTimer invalidate];
+			[creditTimer release];
 			creditTimer = [[NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(creditTimer) userInfo:nil repeats:YES] retain];
 			[creditTimer fire];
 		}
@@ -503,7 +477,7 @@ const BOOL MGMInstanceInvisible = YES;
 		
 		range = [string rangeOfString:@"'"];
 		if (range.location==NSNotFound) NSLog(@"failed 0009");
-		if (XPCCD!=nil) [XPCCD release];
+		[XPCCD release];
 		XPCCD = [[[string substringWithRange:NSMakeRange(0, range.location)] addPercentEscapes] copy];
 	}
 #if MGMInstanceDebug
@@ -535,7 +509,7 @@ const BOOL MGMInstanceInvisible = YES;
 				if (delegate!=nil && [delegate respondsToSelector:@selector(updateVoicemail)]) [delegate updateVoicemail];
 			if (smsCount>0)
 				if (delegate!=nil && [delegate respondsToSelector:@selector(updateSMS)]) [delegate updateSMS];
-			if (unreadCounts!=nil) [unreadCounts release];
+			[unreadCounts release];
 			unreadCounts = [currentUnreadCounts copy];
 		}
 	}
@@ -640,7 +614,9 @@ const BOOL MGMInstanceInvisible = YES;
 			}
 		}
 	} else {
-		NSDictionary *info = [NSDictionary dictionaryWithObject:[infoDic objectForKey:@"error"] forKey:NSLocalizedDescriptionKey];
+		NSDictionary *info = nil;
+		if ([infoDic objectForKey:@"error"]!=nil)
+			info = [NSDictionary dictionaryWithObject:[infoDic objectForKey:@"error"] forKey:NSLocalizedDescriptionKey];
 		NSError *error = [NSError errorWithDomain:@"com.MrGeckosMedia.VoiceBase.Call" code:1 userInfo:info];
 		NSDictionary *thisInfo = [theInfo objectForKey:MGMConnectionObject];
 		if ([thisInfo objectForKey:MGMIDidFailWithError]!=nil) {

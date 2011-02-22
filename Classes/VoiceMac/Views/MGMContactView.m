@@ -15,7 +15,7 @@
 }
 - (id)initWithFrame:(NSRect)frameRect themeManager:(MGMThemeManager *)theThemeManager {
 	themeManager = theThemeManager;
-	if (self = [super initWithFrame:frameRect]) {
+	if ((self = [super initWithFrame:frameRect])) {
 		photoView = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, frameRect.size.height, frameRect.size.height)];
 		[photoView setRefusesFirstResponder:YES];
 		[self addSubview:photoView];
@@ -39,14 +39,10 @@
 	return self;
 }
 - (void)dealloc {
-	if (photoView!=nil)
-		[photoView release];
-	if (nameField!=nil)
-		[nameField release];
-	if (phoneField!=nil)
-		[phoneField release];
-	if (contact!=nil)
-		[contact release];
+	[photoView release];
+	[nameField release];
+	[phoneField release];
+	[contact release];
 	[super dealloc];
 }
 - (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize {
@@ -61,7 +57,7 @@
 	return contact;
 }
 - (void)setContact:(NSDictionary *)theContact {
-	if (contact!=nil) [contact release];
+	[contact release];
 	contact = [theContact mutableCopy];
 	if ([contact objectForKey:MGMCPhoto]==nil || [[contact objectForKey:MGMCPhoto] isKindOfClass:[NSNull class]])
 		[photoView setImage:[[[NSImage alloc] initWithContentsOfFile:[themeManager incomingIconPath]] autorelease]];

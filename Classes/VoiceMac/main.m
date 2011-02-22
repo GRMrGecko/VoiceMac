@@ -3,7 +3,7 @@
 //  VoiceMac
 //
 //  Created by Mr. Gecko on 7/24/09.
-//  Copyright Mr. Gecko's Media 2009. All rights reserved.
+//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
 //
 
 #import <Cocoa/Cocoa.h>

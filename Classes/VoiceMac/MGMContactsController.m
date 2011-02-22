@@ -17,7 +17,7 @@ NSString *MGMContactsWindowOpen = @"MGMContactsWindowOpen";
 
 @implementation MGMContactsController
 - (id)initWithController:(MGMController *)theController {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		controller = theController;
 		filterLock = [NSLock new];
 		filterWaiting = 0;
@@ -43,15 +43,11 @@ NSString *MGMContactsWindowOpen = @"MGMContactsWindowOpen";
 }
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if (contactsWindow!=nil)
-		[contactsWindow close];
-	if (filterLock!=nil) {
-		[filterLock lock];
-		[filterLock unlock];
-		[filterLock release];
-	}
-	if (contactViews!=nil)
-		[contactViews release];
+	[contactsWindow close];
+	[filterLock lock];
+	[filterLock unlock];
+	[filterLock release];
+	[contactViews release];
 	[super dealloc];
 }
 
@@ -113,12 +109,8 @@ NSString *MGMContactsWindowOpen = @"MGMContactsWindowOpen";
 	if (row>=contactsCount) return;
 	[self checkContactRow:row];
 	[filterLock lock];
-	@try {
+	if ((row-contactsVisible.location)<[contactViews count])
 		[(MGMViewCell *)cell addSubview:[contactViews objectAtIndex:row-contactsVisible.location]];
-	}
-	@catch (NSException *e) {
-		NSLog(@"Contact error, ignoring. %@", e);
-	}
 	[filterLock unlock];
 }
 - (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(int)row {
@@ -158,7 +150,7 @@ NSString *MGMContactsWindowOpen = @"MGMContactsWindowOpen";
 	filterWaiting--;
 	contactsCount = 0;
 	[contactViews removeAllObjects];
-	if (contactsMatchString!=nil) [contactsMatchString release];
+	[contactsMatchString release];
 	contactsMatchString = [[self filterString] copy];
 	int count = [[[self contacts] countContactsMatching:contactsMatchString] intValue];
 	[contactsTable scrollRowToVisible:0];
@@ -256,16 +248,12 @@ NSString *MGMContactsWindowOpen = @"MGMContactsWindowOpen";
 	[controller contactsControllerBecameCurrent:self];
 }
 - (void)windowWillClose:(NSNotification *)notification {
-	[contactViews removeAllObjects];
-	contactsCount = 0;
-	[self reloadData];
 	[contactsWindow setDelegate:nil];
 	contactsWindow = nil;
+	[contactViews removeAllObjects];
+	contactsCount = 0;
 	contactsTable = nil;
-	if (phoneFieldView!=nil) {
-		[phoneFieldView release];
-		phoneFieldView = nil;
-	}
+	phoneFieldView = nil;
 	phoneField = nil;
 }
 @end

@@ -9,13 +9,6 @@
 #import "MGMTranslucentTabView.h"
 
 @implementation MGMTranslucentTabView
-- (id)initWithFrame:(NSRect)frameRect {
-	if (self = [super initWithFrame:frameRect]) {
-		
-	}
-	return self;
-}
-
 - (void)awakeFromNib {
 	[self setTabViewType:NSNoTabsNoBorder];
 	[self setDrawsBackground:NO];

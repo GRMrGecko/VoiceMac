@@ -23,7 +23,7 @@ const float updateTimeInterval = 300.0;
 	return [[[self alloc] initWithController:theController] autorelease];
 }
 - (id)initWithController:(MGMController *)theController {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		controller = theController;
 		SMSMessages = [NSMutableArray new];
 		lastDates = [NSMutableDictionary new];
@@ -35,16 +35,11 @@ const float updateTimeInterval = 300.0;
 	[[[messagesTable tableColumns] objectAtIndex:0] setDataCell:[[[MGMViewCell alloc] initGradientCell] autorelease]];
 }
 - (void)dealloc {
-	if (SMSWindow!=nil)
-		[SMSWindow close];
-	if (updateTimer!=nil) {
-		[updateTimer invalidate];
-		[updateTimer release];
-	}
-	if (SMSMessages!=nil)
-		[SMSMessages release];
-	if (lastDates!=nil)
-		[lastDates release];
+	[SMSWindow close];
+	[updateTimer invalidate];
+	[updateTimer release];
+	[SMSMessages release];
+	[lastDates release];
 	[super dealloc];
 }
 

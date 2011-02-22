@@ -22,6 +22,8 @@ extern NSString * const MGMSIPAccountSIPAddress;
 extern NSString * const MGMSIPAccountProxy;
 extern NSString * const MGMSIPAccountProxyPort;
 extern NSString * const MGMSIPAccountRegisterTimeout;
+extern NSString * const MGMSIPAccountTransport;
+extern NSString * const MGMSIPAccountDTMFToneType;
 extern const int MGMSIPAccountDefaultProxyPort;
 
 @class MGMSIPCall, MGMSIPURL;
@@ -49,8 +51,11 @@ extern const int MGMSIPAccountDefaultProxyPort;
 	int proxyPort;
 	int reregisterTimeout;
 	NSTimer *reregisterTimer;
+	int transport;
+	int dtmfToneType;
 	
 	pjsua_acc_id identifier;
+	BOOL registered;
 	
 	NSMutableArray *calls;
 	
@@ -79,6 +84,10 @@ extern const int MGMSIPAccountDefaultProxyPort;
 - (void)setProxyPort:(int)theProxyPort;
 - (int)reregisterTimeout;
 - (void)setReregisterTimeout:(int)theReregisterTimeout;
+- (int)transport;
+- (void)setTransport:(int)theTransport;
+- (int)dtmfToneType;
+- (void)setDTMFToneType:(int)theType;
 - (pjsua_acc_id)identifier;
 - (void)setIdentifier:(pjsua_acc_id)theIdentifier;
 - (NSString *)password;
@@ -93,6 +102,7 @@ extern const int MGMSIPAccountDefaultProxyPort;
 - (void)logout;
 - (void)logoutErrored;
 
+- (void)registrationStateChanged;
 - (BOOL)isRegistered;
 - (void)reregister;
 - (void)setRegistered:(BOOL)isRegistered;

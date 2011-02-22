@@ -43,6 +43,8 @@
 
 - (void)checkVoicemail;
 
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item;
+
 - (IBAction)next:(id)sender;
 - (IBAction)previous:(id)sender;
 

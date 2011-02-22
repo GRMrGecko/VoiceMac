@@ -22,4 +22,8 @@ NSString * const MGMCContactID = @"contactid";
 
 NSString * const MGMCGoogleContactsUser = @"MGMCGoogleContactsUser";
 
+#if TARGET_OS_IPHONE
+const float MGMABPhotoSizePX = 120.0;
+#else
 const float MGMABPhotoSizePX = 64.0;
+#endif

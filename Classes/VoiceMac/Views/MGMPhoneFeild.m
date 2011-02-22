@@ -10,7 +10,7 @@
 
 @implementation MGMPhoneField
 - (id)initWithCoder:(NSCoder*)coder {
-	if (self = [super initWithCoder:coder]) {
+	if ((self = [super initWithCoder:coder])) {
 		NSTextFieldCell *cell = [self cell];
 		MGMPhoneFieldCell *phoneCell = [[MGMPhoneFieldCell alloc] initTextCell:[cell stringValue]];
 		//NSTextFieldCell

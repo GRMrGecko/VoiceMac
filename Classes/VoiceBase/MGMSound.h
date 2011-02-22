@@ -22,6 +22,8 @@
 @interface MGMSound : NSObject
 #if TARGET_OS_IPHONE
 <AVAudioPlayerDelegate>
+#else
+<NSSoundDelegate>
 #endif
 {
 #if TARGET_OS_IPHONE

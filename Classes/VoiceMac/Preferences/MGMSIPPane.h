@@ -37,6 +37,7 @@
 	IBOutlet NSTextField *logFileLevelField;
 	IBOutlet NSTextField *consoleLogLevelField;
 	IBOutlet NSTextField *publicAddressField;
+	IBOutlet NSTextField *userAgentField;
 }
 - (id)initWithPreferences:(MGMPreferences *)thePreferences;
 + (void)setUpToolbarItem:(NSToolbarItem *)theItem;
@@ -66,5 +67,6 @@
 - (IBAction)logFileLevel:(id)sender;
 - (IBAction)consoleLogLevel:(id)sender;
 - (IBAction)publicAddress:(id)sender;
+- (IBAction)userAgent:(id)sender;
 @end
 #endif

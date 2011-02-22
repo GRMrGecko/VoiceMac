@@ -16,7 +16,7 @@
 
 @implementation MGMSIPCall
 - (id)initWithIdentifier:(pjsua_call_id)theIdentifier account:(MGMSIPAccount *)theAccount {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		account = theAccount;
 		identifier = theIdentifier;
 		
@@ -52,18 +52,12 @@
 	if (isRingbackOn)
 		[self stopRingback];
 	[self hangUp];
-	if (remoteURL!=nil)
-		[remoteURL release];
-	if (localURL!=nil)
-		[localURL release];
-	if (stateText!=nil)
-		[stateText release];
-	if (lastStatusText!=nil)
-		[lastStatusText release];
-	if (transferStatusText!=nil)
-		[transferStatusText release];
-	if (holdMusicPath!=nil)
-		[holdMusicPath release];
+	[remoteURL release];
+	[localURL release];
+	[stateText release];
+	[lastStatusText release];
+	[transferStatusText release];
+	[holdMusicPath release];
 	if (toneGenSlot!=PJSUA_INVALID_ID) {
 		pjsua_conf_remove_port(toneGenSlot);
 		pjmedia_port_destroy(toneGenPort);
@@ -110,9 +104,9 @@
 		if (isRingbackOn)
 			[self stopRingback];
 		if (holdMusicPlayer!=PJSUA_INVALID_ID)
-			[self performSelectorOnMainThread:@selector(stopHoldMusic) withObject:nil waitUntilDone:NO];
+			[self performSelectorOnMainThread:@selector(stopHoldMusic) withObject:nil waitUntilDone:YES];
 		if (recorderID!=PJSUA_INVALID_ID)
-			[self performSelectorOnMainThread:@selector(stopRecordingMain) withObject:nil waitUntilDone:NO];
+			[self performSelectorOnMainThread:@selector(stopRecordingMain) withObject:nil waitUntilDone:YES];
 	}
 	state = theState;
 }
@@ -120,7 +114,7 @@
 	return stateText;
 }
 - (void)setStateText:(NSString *)theStateText {
-	if (stateText!=nil) [stateText release];
+	[stateText release];
 	stateText = [theStateText copy];
 }
 - (int)lastStatus {
@@ -133,7 +127,7 @@
 	return lastStatusText;
 }
 - (void)setLastStatusText:(NSString *)theLastStatusText {
-	if (lastStatusText!=nil) [lastStatusText release];
+	[lastStatusText release];
 	lastStatusText = [theLastStatusText copy];
 }
 - (int)transferStatus {
@@ -146,7 +140,7 @@
 	return transferStatusText;
 }
 - (void)setTransferStatusText:(NSString *)theTransferStatusText {
-	if (transferStatusText!=nil) [transferStatusText release];
+	[transferStatusText release];
 	transferStatusText = [theTransferStatusText copy];
 }
 - (BOOL)isIncoming {
@@ -207,7 +201,7 @@
 	return (callInfo.media_status==PJSUA_CALL_MEDIA_REMOTE_HOLD);
 }
 - (void)setHoldMusicPath:(NSString *)thePath {
-	if (holdMusicPath!=nil) [holdMusicPath release];
+	[holdMusicPath release];
 	holdMusicPath = [thePath copy];
 }
 - (void)hold {
@@ -220,12 +214,12 @@
 			onHold = YES;
 			pjsua_conf_disconnect(0, conf_port);
 			pjsua_conf_adjust_rx_level(conf_port, 0);
-			[self performSelectorOnMainThread:@selector(startHoldMusic) withObject:nil waitUntilDone:NO];
+			[self performSelectorOnMainThread:@selector(startHoldMusic) withObject:nil waitUntilDone:YES];
 		} else {
 			onHold = NO;
 			pjsua_conf_connect(0, conf_port);
 			pjsua_conf_adjust_rx_level(conf_port, [[MGMSIP sharedSIP] micVolume]);
-			[self performSelectorOnMainThread:@selector(stopHoldMusic) withObject:nil waitUntilDone:NO];
+			[self performSelectorOnMainThread:@selector(stopHoldMusic) withObject:nil waitUntilDone:YES];
 		}
 	}
 	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
@@ -331,15 +325,17 @@
 	if (identifier==PJSUA_INVALID_ID || state!=MGMSIPCallConfirmedState)
 		return;
 	
-	BOOL sendSuccessful = NO;
-	
 	pj_thread_desc PJThreadDesc;
 	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
-	pj_str_t digits = [theDigits PJString];
-	pj_status_t status = pjsua_call_dial_dtmf(identifier, &digits);
-	sendSuccessful = (status==PJ_SUCCESS);
-	if (!sendSuccessful) {
+	NSLog(@"%@", theDigits);
+	
+	if ([account dtmfToneType]==0) {
+		pj_str_t digits = [theDigits PJString];
+		pj_status_t status = pjsua_call_dial_dtmf(identifier, &digits);
+		if (status!=PJ_SUCCESS)
+			NSLog(@"Unable to send DTMF tone.");
+	} else if ([account dtmfToneType]==1) {
 		const pj_str_t INFO = pj_str("INFO");
 		for (unsigned int i=0; i<[theDigits length]; i++) {
 			pjsua_msg_data messageData;
@@ -347,8 +343,9 @@
 			messageData.content_type = pj_str("application/dtmf-relay");
 			messageData.msg_body = [[NSString stringWithFormat:@"Signal=%C\r\nDuration=300", [theDigits characterAtIndex:i]] PJString];
 			
-			status = pjsua_call_send_request(identifier, &INFO, &messageData);
-			sendSuccessful = (status==PJ_SUCCESS);
+			pj_status_t status = pjsua_call_send_request(identifier, &INFO, &messageData);
+			if (status!=PJ_SUCCESS)
+				NSLog(@"Unable to send DTMF tone.");
 		}
 	}
 	
@@ -366,22 +363,22 @@
 				pjsua_conf_connect(toneGenSlot, 0);
 		}
 	}
-	if (!sendSuccessful)
+	if ([account dtmfToneType]==2) {
+		NSLog(@"Using Tone Generator.");
 		pjsua_conf_connect(toneGenSlot, pjsua_call_get_conf_port(identifier));
+	}
 	for (unsigned int i=0; i<[theDigits length]; i++) {
 		pjmedia_tonegen_stop(toneGenPort);
 		
 		pjmedia_tone_digit digit[1];
 		digit[0].digit = [theDigits characterAtIndex:i];
-		digit[0].on_msec = 100;
-		digit[0].off_msec = 100; 
+		digit[0].on_msec = 300;
+		digit[0].off_msec = 300; 
 		digit[0].volume = 16383;
 		
 		pjmedia_tonegen_play_digits(toneGenPort, 1, digit, 0);
 		if ([theDigits length]!=1 && (i+1)<[theDigits length]) [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:1]];
 	}
-	if (!sendSuccessful)
-		pjsua_conf_disconnect(toneGenSlot, pjsua_call_get_conf_port(identifier));
 	bzero(&PJThreadDesc, sizeof(pj_thread_desc));
 }
 - (void)receivedDTMFDigit:(int)theDigit {
@@ -393,7 +390,23 @@
 	pj_thread_desc PJThreadDesc;
 	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	
+	if (toneGenSlot==PJSUA_INVALID_ID) {
+		pjsua_media_config mediaConfig = [[MGMSIP sharedSIP] mediaConfig];
+		unsigned int samplesPerFrame = mediaConfig.audio_frame_ptime * mediaConfig.clock_rate * mediaConfig.channel_count / 1000;
+		pj_status_t status = pjmedia_tonegen_create([[MGMSIP sharedSIP] PJPool], mediaConfig.clock_rate, mediaConfig.channel_count, samplesPerFrame, 16, 0, &toneGenPort);
+		if (status!=PJ_SUCCESS) {
+			NSLog(@"Error creating tone generator");
+		} else {
+			status = pjsua_conf_add_port([[MGMSIP sharedSIP] PJPool], toneGenPort, &toneGenSlot);
+			if (status!=PJ_SUCCESS)
+				NSLog(@"Error adding tone generator");
+			else
+				pjsua_conf_connect(toneGenSlot, 0);
+		}
+	}
+	
 	pjmedia_tonegen_stop(toneGenPort);
+	pjsua_conf_disconnect(toneGenSlot, pjsua_call_get_conf_port(identifier));
 	
 	pjmedia_tone_digit digit[1];
 	digit[0].digit = theDigit;

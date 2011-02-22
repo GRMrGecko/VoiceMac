@@ -44,6 +44,8 @@
 	IBOutlet NSTextField *SIPProxyPortField;
 	IBOutlet NSTextField *SIPSIPAddressField;
 	IBOutlet NSTextField *SIPRegistrarTimeoutField;
+	IBOutlet NSPopUpButton *SIPTransportPopUp;
+	IBOutlet NSPopUpButton *SIPToneTypePopUp;
 	IBOutlet NSMatrix *SIPContactsMatrix;
 	IBOutlet NSPopUpButton *SIPGoogleContactsPopUp;
 }
@@ -55,6 +57,7 @@
 - (IBAction)loginout:(id)sender;
 - (IBAction)add:(id)sender;
 - (IBAction)remove:(id)sender;
+- (void)tableViewSelectionDidChange:(NSNotification *)aNotification;
 
 - (IBAction)saveGV:(id)sender;
 - (IBAction)saveGC:(id)sender;

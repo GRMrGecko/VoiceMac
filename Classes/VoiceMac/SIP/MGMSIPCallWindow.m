@@ -22,7 +22,7 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 	return [[[self alloc] initWithCall:theCall SIPUser:theSIPUser] autorelease];
 }
 - (id)initWithCall:(MGMSIPCall *)theCall SIPUser:(MGMSIPUser *)theSIPUser {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		if (![NSBundle loadNibNamed:@"SIPCallWindow" owner:self]) {
 			NSLog(@"Unable to load SIP Call Window!");
 			[self release];
@@ -104,11 +104,9 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 			}
 			
 			if ([call state]==MGMSIPCallDisconnectedState) {
-				if (ringtone!=nil) {
-					[ringtone stop];
-					[ringtone release];
-					ringtone = nil;
-				}
+				[ringtone stop];
+				[ringtone release];
+				ringtone = nil;
 			}
 			
 			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -122,49 +120,31 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[self hidePad];
-	if (call!=nil) {
-		[call setDelegate:nil];
-		[call release];
-	}
-	if (whitePages!=nil)
-		[whitePages release];
-	if (incomingWindow!=nil)
-		[incomingWindow release];
-	if (callWindow!=nil)
-		[callWindow release];
-	if (fullName!=nil)
-		[fullName release];
-	if (phoneNumber!=nil)
-		[phoneNumber release];
-	if (ringtone!=nil) {
-		[ringtone stop];
-		[ringtone release];
-	}
-	if (startTime!=nil)
-		[startTime release];
-	if (durationUpdater!=nil) {
-		[durationUpdater invalidate];
-		[durationUpdater release];
-	}
+	[call setDelegate:nil];
+	[call release];
+	[whitePages release];
+	[incomingWindow release];
+	[callWindow release];
+	[fullName release];
+	[phoneNumber release];
+	[ringtone stop];
+	[ringtone release];
+	[durationUpdater invalidate];
+	[durationUpdater release];
+	[startTime release];
 	[super dealloc];
 }
 
 - (void)disconnected:(MGMSIPCall *)theCall {
-	if (ringtone!=nil) {
-		[ringtone stop];
-		[ringtone release];
-		ringtone = nil;
-	}
+	[ringtone stop];
+	[ringtone release];
+	ringtone = nil;
 	if ([callWindow isVisible]) {
-		if (durationUpdater!=nil) {
-			[durationUpdater invalidate];
-			[durationUpdater release];
-			durationUpdater = nil;
-		}
-		if (startTime!=nil) {
-			[startTime release];
-			startTime = nil;
-		}
+		[durationUpdater invalidate];
+		[durationUpdater release];
+		durationUpdater = nil;
+		[startTime release];
+		startTime = nil;
 		[statusField setStringValue:@"Disconnected"];
 		[[[SIPUser controller] themeManager] playSound:MGMTSSIPDisconnected];
 	} else {
@@ -176,7 +156,7 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 - (void)confirmed:(MGMSIPCall *)theCall {
 	[statusField setStringValue:@"Connected"];
 	[[[SIPUser controller] themeManager] playSound:MGMTSSIPConnected];
-	[self performSelectorOnMainThread:@selector(startDurationTimer) withObject:nil waitUntilDone:NO];
+	[self performSelectorOnMainThread:@selector(startDurationTimer) withObject:nil waitUntilDone:YES];
 }
 - (void)startDurationTimer {
 	startTime = [NSDate new];
@@ -216,22 +196,18 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 	[sound5Button setTitle:[[[SIPUser controller] themeManager] nameOfSound:MGMTSSIPSound5]];
 }
 - (IBAction)answer:(id)sender {
-	if (ringtone!=nil) {
-		[ringtone stop];
-		[ringtone release];
-		ringtone = nil;
-	}
+	[ringtone stop];
+	[ringtone release];
+	ringtone = nil;
 	[incomingWindow close];
 	[call answer];
 	[self fillCallWindow];
 	[callWindow makeKeyAndOrderFront:self];
 }
 - (IBAction)ignore:(id)sender {
-	if (ringtone!=nil) {
-		[ringtone stop];
-		[ringtone release];
-		ringtone = nil;
-	}
+	[ringtone stop];
+	[ringtone release];
+	ringtone = nil;
 	[incomingWindow close];
 	[SIPUser callDone:self];
 }
@@ -286,15 +262,11 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 }
 - (IBAction)hangUp:(id)sender {
 	[callWindow close];
-	if (durationUpdater!=nil) {
-		[durationUpdater invalidate];
-		[durationUpdater release];
-		durationUpdater = nil;
-	}
-	if (startTime!=nil) {
-		[startTime release];
-		startTime = nil;
-	}
+	[durationUpdater invalidate];
+	[durationUpdater release];
+	durationUpdater = nil;
+	[startTime release];
+	startTime = nil;
 	[call hangUp];
 	[SIPUser callDone:self];
 }

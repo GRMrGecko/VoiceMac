@@ -20,7 +20,7 @@
 
 @implementation MGMAddressBook
 - (id)initWithDelegate:(id)theDelegate {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		delegate = theDelegate;
 		shouldStop = NO;
 		gettingContacts = NO;
@@ -38,8 +38,7 @@
 	if (addressBook!=NULL)
 		CFRelease(addressBook);
 #else
-	if (addressBook!=nil)
-		[addressBook release];
+	[addressBook release];
 #endif
 	[super dealloc];
 }
@@ -101,10 +100,12 @@
 			NSMutableDictionary *contact = [NSMutableDictionary dictionary];
 			[contact setObject:name forKey:MGMCName];
 			[contact setObject:company forKey:MGMCCompany];
+			CFStringRef phoneNumber = ABMultiValueCopyValueAtIndex(phones, p);
 			if (delegate!=nil)
-				[contact setObject:[[(NSString *)ABMultiValueCopyValueAtIndex(phones, p) autorelease] phoneFormatWithAreaCode:[delegate areaCode]] forKey:MGMCNumber];
+				[contact setObject:[(NSString *)phoneNumber phoneFormatWithAreaCode:[delegate areaCode]] forKey:MGMCNumber];
 			else
-				[contact setObject:[[(NSString *)ABMultiValueCopyValueAtIndex(phones, p) autorelease] phoneFormat] forKey:MGMCNumber];
+				[contact setObject:[(NSString *)phoneNumber phoneFormat] forKey:MGMCNumber];
+			CFRelease(phoneNumber);
 			NSString *label = [(NSString *)ABMultiValueCopyLabelAtIndex(phones, p) autorelease];
 			NSRange range = [label rangeOfString:@"<"];
 			if (range.location!=NSNotFound) {

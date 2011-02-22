@@ -12,7 +12,7 @@
 
 extern NSString *MGMContactsWindowOpen;
 
-@interface MGMContactsController : NSObject {
+@interface MGMContactsController : NSObject <NSTextFieldDelegate> {
 	MGMController *controller;
 	IBOutlet NSWindow *contactsWindow;
 	BOOL closingWindow;
@@ -63,6 +63,7 @@ extern NSString *MGMContactsWindowOpen;
 - (IBAction)runAction:(id)sender;
 - (IBAction)call:(id)sender;
 
+- (void)windowDidBecomeKey:(NSNotification *)notification;
 - (void)windowWillClose:(NSNotification *)notification;
 @end
 

@@ -12,7 +12,7 @@
 
 @implementation MGMSIPPane
 - (id)initWithPreferences:(MGMPreferences *)thePreferences {
-	if (self = [super initWithPreferences:thePreferences]) {
+	if ((self = [super initWithPreferences:thePreferences])) {
         if (![NSBundle loadNibNamed:@"SIPPane" owner:self]) {
             NSLog(@"Unable to load Nib for SIP Preferences");
             [self release];
@@ -49,6 +49,8 @@
 			[consoleLogLevelField setIntValue:[defaults integerForKey:MGMSIPConsoleLogLevel]];
 			if ([defaults objectForKey:MGMSIPPublicAddress]!=nil && ![[defaults objectForKey:MGMSIPPublicAddress] isEqual:@""])
 				[publicAddressField setStringValue:[defaults objectForKey:MGMSIPPublicAddress]];
+			if ([defaults objectForKey:MGMSIPUserAgent]!=nil)
+				[userAgentField setStringValue:[defaults objectForKey:MGMSIPUserAgent]];
 			
 			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 			[notificationCenter addObserver:self selector:@selector(volumeChanged:) name:MGMSIPVolumeChangedNotification object:nil];
@@ -76,8 +78,7 @@
 		}
 		//[[MGMSIP sharedSIP] restart];
 	}
-	if (mainView!=nil)
-		[mainView release];
+	[mainView release];
 	[super dealloc];
 }
 + (void)setUpToolbarItem:(NSToolbarItem *)theItem {
@@ -226,6 +227,10 @@
 }
 - (IBAction)publicAddress:(id)sender {
 	[[NSUserDefaults standardUserDefaults] setObject:[publicAddressField stringValue] forKey:MGMSIPPublicAddress];
+	shouldRestart = YES;
+}
+- (IBAction)userAgent:(id)sender {
+	[[NSUserDefaults standardUserDefaults] setObject:[userAgentField stringValue] forKey:MGMSIPUserAgent];
 	shouldRestart = YES;
 }
 @end

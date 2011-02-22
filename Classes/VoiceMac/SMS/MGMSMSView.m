@@ -17,7 +17,7 @@
 	return [[[self alloc] initWithMessageView:theMessageView] autorelease];
 }
 - (id)initWithMessageView:(MGMSMSMessageView *)theMessageView {
-	if (self = [super initWithFrame:NSMakeRect(0, 0, 100, 40)]) {
+	if ((self = [super initWithFrame:NSMakeRect(0, 0, 100, 40)])) {
 		messageView = theMessageView;
 		[self setToolTip:[[messageView messageInfo] objectForKey:MGMTInName]];
 		NSRect frameRect = [self frame];
@@ -57,12 +57,9 @@
 	return self;
 }
 - (void)dealloc {
-	if (photoView!=nil)
-		[photoView release];
-	if (nameField!=nil)
-		[nameField release];
-	if (closeButton!=nil)
-		[closeButton release];
+	[photoView release];
+	[nameField release];
+	[closeButton release];
 	[super dealloc];
 }
 

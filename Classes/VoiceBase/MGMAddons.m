@@ -144,12 +144,16 @@
 	return number;
 }
 - (BOOL)isPhone {
+	if ([self rangeOfString:@"@"].location!=NSNotFound)
+		return YES;
 	NSString *number = [self removePhoneWhiteSpace];
 	if ([number length]<1)
 		return NO;
 	return [[NSCharacterSet decimalDigitCharacterSet] characterIsMember:[number characterAtIndex:0]];
 }
 - (BOOL)isPhoneComplete {
+	if ([self rangeOfString:@"@"].location!=NSNotFound)
+		return YES;
 	NSString *number = [self removePhoneWhiteSpace];
 	if ([number length]<1 || ![[NSCharacterSet decimalDigitCharacterSet] characterIsMember:[number characterAtIndex:0]])
 		return NO;
@@ -162,6 +166,8 @@
 	return NO;
 }
 - (NSString *)phoneFormatWithAreaCode:(NSString *)theAreaCode {
+	if ([self rangeOfString:@"@"].location!=NSNotFound)
+		return self;
 	NSString *number = [[self removePhoneWhiteSpace] littersToNumbers];
 	if (![number hasPrefix:@"011"]) {
 		int length = [number length];
@@ -175,6 +181,8 @@
 	return number;
 }
 - (NSString *)phoneFormatAreaCode:(NSString *)theAreaCode {
+	if ([self rangeOfString:@"@"].location!=NSNotFound)
+		return self;
 	NSString *number = [[self removePhoneWhiteSpace] littersToNumbers];
 	if (![number hasPrefix:@"011"]) {
 		int length = [number length];
@@ -186,6 +194,8 @@
 	return number;
 }
 - (NSString *)phoneFormat {
+	if ([self rangeOfString:@"@"].location!=NSNotFound)
+		return self;
 	NSString *number = [[self removePhoneWhiteSpace] littersToNumbers];
 	if (![number hasPrefix:@"011"]) {
 		if ([number hasPrefix:@"1"])
@@ -1371,6 +1381,8 @@ NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *cont
 #else
 	NSImage *image = [[NSImage alloc] initWithData:self];
 #endif
+	if (image==nil)
+		return self;
 	if (image!=nil) {
 #if TARGET_OS_IPHONE
 		CGSize size = [image size];
@@ -1416,6 +1428,8 @@ NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *cont
 		NSSize newSize = NSMakeSize(scaledWidth, scaledHeight);
 		if (!NSEqualSizes(newSize, NSZeroSize)) {
 			NSImage *newImage = [[NSImage alloc] initWithSize:newSize];
+			if (newImage==nil || NSEqualSizes([newImage size], NSZeroSize))
+				return self;
 			[newImage lockFocus];
 			NSGraphicsContext *graphicsContext = [NSGraphicsContext currentContext];
 			[graphicsContext setImageInterpolation:NSImageInterpolationHigh];

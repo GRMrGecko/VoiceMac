@@ -26,7 +26,7 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 	return [[[self alloc] initUser:theUser controller:theController instance:theInstance] autorelease];
 }
 - (id)initUser:(MGMUser *)theUser controller:(MGMController *)theController instance:(MGMInstance *)theInstance {
-	if (self = [super initWithController:theController]) {
+	if ((self = [super initWithController:theController])) {
 		user = [theUser retain];
 		[self registerSettings];
 		if (theInstance==nil) {
@@ -60,31 +60,20 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 	}
 }
 - (void)dealloc {
-	if (progressFadeAnimation!=nil) {
-		[progressFadeAnimation stopAnimation];
-		[progressFadeAnimation release];
-		progressFadeAnimation = nil;
-	}
+	[progressFadeAnimation stopAnimation];
+	[progressFadeAnimation release];
+	progressFadeAnimation = nil;
 	[super dealloc];
-	if (inboxWindow!=nil) {
-		[inboxWindow closeWindow];
-		[inboxWindow release];
-	}
-	if (instance!=nil) {
-		[instance setDelegate:nil];
-		[instance stop];
-		[instance release];
-	}
-	if (progressView!=nil) {
-		[progressView removeFromSuperview];
-		[progressView release];
-	}
-	if (callTimer!=nil) {
-		[callTimer invalidate];
-		[callTimer release];
-	}
-	if (user!=nil)
-		[user release];
+	[inboxWindow closeWindow];
+	[inboxWindow release];
+	[instance setDelegate:nil];
+	[instance stop];
+	[instance release];
+	[progressView removeFromSuperview];
+	[progressView release];
+	[callTimer invalidate];
+	[callTimer release];
+	[user release];
 }
 
 - (void)registerSettings {
@@ -123,18 +112,14 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 	[theAlert setInformativeText:[theError localizedDescription]];
 	[theAlert runModal];
 	
-	if (progressView!=nil) {
-		[progressView stopProgess];
-		[progressView removeFromSuperview];
-		[progressView release];
-		progressView = nil;
-	}
+	[progressView stopProgess];
+	[progressView removeFromSuperview];
+	[progressView release];
+	progressView = nil;
 }
 - (void)loginSuccessful {
-	if (progressView!=nil) {
-		[progressView stopProgess];
-		[progressView display];
-	}
+	[progressView stopProgess];
+	[progressView display];
 	
 	[self setInstanceInfo];
 	
@@ -163,15 +148,11 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 	}
 }
 - (void)animationDidEnd:(NSAnimation *)animation {
-	if (progressFadeAnimation!=nil) {
-		[progressFadeAnimation release];
-		progressFadeAnimation = nil;
-	}
-	if (progressView!=nil) {
-		[progressView removeFromSuperview];
-		[progressView release];
-		progressView = nil;
-	}
+	[progressFadeAnimation release];
+	progressFadeAnimation = nil;
+	[progressView removeFromSuperview];
+	[progressView release];
+	progressView = nil;
 }
 
 - (MGMContacts *)contacts {
@@ -180,7 +161,7 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 
 - (void)reloadData {
 	[super reloadData];
-	if (progressView!=nil) [progressView display];
+	[progressView display];
 }
 
 - (NSString *)areaCode {
@@ -246,8 +227,7 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 	[alert setInformativeText:[theError localizedDescription]];
 	[alert runModal];
 	placingCall = NO;
-	if (callTimer!=nil)
-		[callTimer fire];
+	[callTimer fire];
 }
 - (void)callDidFinish:(NSDictionary *)theInfo {
 	placingCall = NO;
@@ -260,11 +240,9 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 	[alert runModal];
 }
 - (void)callTimer {
-	if (callTimer!=nil) {
-		[callTimer invalidate];
-		[callTimer release];
-		callTimer = nil;
-	}
+	[callTimer invalidate];
+	[callTimer release];
+	callTimer = nil;
 	[callButton setImage:[NSImage imageNamed:@"placeCall"]];
 }
 
@@ -298,16 +276,14 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 - (void)windowWillClose:(NSNotification *)notification {
 	if (![controller isQuitting])
 		[user setSetting:[NSNumber numberWithBool:NO] forKey:MGMContactsWindowOpen];
-	[super windowWillClose:notification];
-	if (progressFadeAnimation!=nil) {
-		[progressFadeAnimation stopAnimation];
-		[progressFadeAnimation release];
-		progressFadeAnimation = nil;
-	}
+	[progressFadeAnimation stopAnimation];
+	[progressFadeAnimation release];
+	progressFadeAnimation = nil;
 	creditField = nil;
 	userNumberButton = nil;
 	userPhonesButton = nil;
 	callButton = nil;
 	smsButton = nil;
+	[super windowWillClose:notification];
 }
 @end

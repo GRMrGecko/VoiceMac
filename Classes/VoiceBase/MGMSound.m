@@ -10,7 +10,7 @@
 
 @implementation MGMSound
 - (id)init {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		loops = NO;
 	}
 	return self;
@@ -19,7 +19,7 @@
 	return [self initWithContentsOfURL:[NSURL fileURLWithPath:theFile]];
 }
 - (id)initWithContentsOfURL:(NSURL *)theURL {
-	if (self = [self init]) {
+	if ((self = [self init])) {
 #if TARGET_OS_IPHONE
 		sound = [[AVAudioPlayer alloc] initWithContentsOfURL:theURL error:nil];
 #else
@@ -30,7 +30,7 @@
 	return self;
 }
 - (id)initWithData:(NSData *)theData {
-	if (self = [self init]) {
+	if ((self = [self init])) {
 #if TARGET_OS_IPHONE
 		sound = [[AVAudioPlayer alloc] initWithData:theData error:nil];
 #else
@@ -41,11 +41,9 @@
 	return self;
 }
 - (void)dealloc {
-	if (sound!=nil) {
-		[sound setDelegate:nil];
-		[sound stop];
-		[sound release];
-	}
+	[sound setDelegate:nil];
+	[sound stop];
+	[sound release];
 	[super dealloc];
 }
 

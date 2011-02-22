@@ -14,7 +14,7 @@
 	return [[[self alloc] initWithFullName:theFullName userName:theUserName host:theHost] autorelease];
 }
 - (id)initWithFullName:(NSString *)theFullName userName:(NSString *)theUserName host:(NSString *)theHost {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		if (theHost==nil || [theHost isEqual:@""]) {
 			[self release];
 			self = nil;
@@ -37,7 +37,7 @@
 	return [[[self alloc] initWithSIPID:theSIPID] autorelease];
 }
 - (id)initWithSIPID:(NSString *)theSIPID {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		NSString *fullNameString, *addressString;
 		NSRange range = [theSIPID rangeOfString:@"<sip:"];
 		if (range.location==NSNotFound) {
@@ -72,12 +72,9 @@
 	return self;
 }
 - (void)dealloc {
-	if (fullName!=nil)
-		[fullName release];
-	if (userName!=nil)
-		[userName release];
-	if (host!=nil)
-		[host release];
+	[fullName release];
+	[userName release];
+	[host release];
 	[super dealloc];
 }
 

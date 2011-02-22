@@ -13,7 +13,7 @@
 
 @implementation MGMSIPWavConverter
 - (id)initWithSoundName:(NSString *)theSoundname fileConverting:(NSString *)theFile {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		fileConverting = [theFile copy];
 		soundName = [theSoundname copy];
 		cancel = NO;
@@ -34,15 +34,11 @@
 }
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if (fileConverting!=nil)
-		[fileConverting release];
-	if (soundName!=nil)
-		[soundName release];
-	if (movie!=nil)
-		[movie release];
-	if (backgroundThread!=nil) {
+	[fileConverting release];
+	[soundName release];
+	[movie release];
+	if (backgroundThread!=nil)
 		while (backgroundThread!=nil) [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.2]];
-	}
 	[super dealloc];
 }
 
@@ -71,7 +67,7 @@
 	finalPath = [finalPath stringByAppendingPathComponent:soundName];
 	NSString *convertFinalPath = [[finalPath stringByAppendingPathExtension:@".tmp"] stringByAppendingPathExtension:MGMWavExt];
 	finalPath = [finalPath stringByAppendingPathExtension:MGMWavExt];
-	NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], QTMovieExport, [NSNumber numberWithLong:kQTFileTypeWave], QTMovieExportType, [NSNumber numberWithLong:SoundMediaType], QTMovieExportManufacturer, nil];
+	NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], QTMovieExport, [NSNumber numberWithLong:kQTFileTypeWave], QTMovieExportType, [NSNumber numberWithLong:'soun'], QTMovieExportManufacturer, nil];
 	if (!cancel) {
         if (![movie writeToFile:convertFinalPath withAttributes:dictionary])
             NSLog(@"Could not convert audio %@", fileConverting);

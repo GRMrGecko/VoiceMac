@@ -11,7 +11,7 @@
 
 @implementation MGMViewCell
 - (id)initGradientCell {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		gradient = YES;
 	}
 	return self;

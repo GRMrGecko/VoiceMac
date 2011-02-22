@@ -10,17 +10,15 @@
 
 @implementation MGMBadge
 - (id)init {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		applicationIcon = [[[NSApplication sharedApplication] applicationIconImage] copy];
 		visable = NO;
 	}
 	return self;
 }
 - (void)dealloc {
-	if (label!=nil)
-		[label release];
-	if (applicationIcon!=nil)
-		[applicationIcon release];
+	[label release];
+	[applicationIcon release];
 	[super dealloc];
 }
 
@@ -55,7 +53,7 @@
 }
 
 - (void)setLabel:(NSString *)badgeLabel {
-	if (label!=nil) [label release];
+	[label release];
 	label = [badgeLabel copy];
 	if (label==nil || [label isEqual:@""])
 		[self setVisable:NO];

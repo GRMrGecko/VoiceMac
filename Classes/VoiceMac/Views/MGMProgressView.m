@@ -10,7 +10,7 @@
 
 @implementation MGMProgressView
 - (id)initWithFrame:(NSRect)frameRect {
-	if (self = [super initWithFrame:frameRect]) {
+	if ((self = [super initWithFrame:frameRect])) {
 		progress = [[NSProgressIndicator alloc] initWithFrame:NSMakeRect((frameRect.size.width-32)/2, (frameRect.size.height-32)/2, 32, 32)];
 		[progress setStyle:NSProgressIndicatorSpinningStyle];
 		[progress setControlSize:NSRegularControlSize];
@@ -39,12 +39,9 @@
 	return self;
 }
 - (void)dealloc {
-	if (progress)
-		[progress release];
-	if (pleaseWaitField!=nil)
-		[pleaseWaitField release];
-	if (progressField!=nil)
-		[progressField release];
+	[progress release];
+	[pleaseWaitField release];
+	[progressField release];
 	[super dealloc];
 }
 - (void)resizeSubviewsWithOldSize:(NSSize)oldBoundsSize {

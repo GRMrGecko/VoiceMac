@@ -27,7 +27,7 @@ NSString * const MGMSID = @"id";
 	return [[[self alloc] initWithInstance:theInstance] autorelease];
 }
 - (id)initWithInstance:(MGMInstance *)theInstance {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		if (sideItems==nil) {
 			sideItems = [NSMutableArray new];
 			[sideItems addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Inbox", MGMSName, [NSNumber numberWithBool:YES], MGMSSelectable, [NSNumber numberWithInt:0], MGMSID, nil]];
@@ -62,10 +62,8 @@ NSString * const MGMSID = @"id";
 	[sidebarView setAutosaveExpandedItems:YES];
 }
 - (void)dealloc {
-	if (inboxWindow!=nil)
-		[inboxWindow close];
-	if (currentData!=nil)
-		[currentData release];
+	[inboxWindow close];
+	[currentData release];
 	[super dealloc];
 }
 
@@ -125,22 +123,17 @@ NSString * const MGMSID = @"id";
 	[inboxWindow makeKeyAndOrderFront:self];
 }
 - (void)closeWindow {
-	if (inboxWindow!=nil)
-		[inboxWindow close];
+	[inboxWindow close];
 }
 
 - (void)startProgress {
-	if (progress!=nil) {
-		if (progressStartCount==0)
-			[progress startAnimation:self];
-	}
+	if (progressStartCount==0)
+		[progress startAnimation:self];
 	progressStartCount++;
 }
 - (void)stopProgress {
-	if (progress!=nil) {
-		if (progressStartCount==1)
-			[progress stopAnimation:self];
-	}
+	if (progressStartCount==1)
+		[progress stopAnimation:self];
 	progressStartCount--;
 }
 
@@ -162,7 +155,7 @@ NSString * const MGMSID = @"id";
 		}
 	}
 	if (newMessage) {
-		if (lastDate!=nil) [lastDate release];
+		[lastDate release];
 		lastDate = [newestDate copy];
 		[self setCurrentData:theMessages];
 		[self showWindow:self];
@@ -266,7 +259,7 @@ NSString * const MGMSID = @"id";
 	return currentInbox;
 }
 - (void)setCurrentData:(NSArray *)theData {
-	if (currentData!=nil) [currentData release];
+	[currentData release];
 	currentData = [theData mutableCopy];
 	
 	resultsCount = [currentData count];

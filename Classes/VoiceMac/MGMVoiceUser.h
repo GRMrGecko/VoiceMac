@@ -13,7 +13,7 @@ extern NSString *MGMLastUserPhoneKey;
 
 @class MGMController, MGMUser, MGMInstance, MGMInboxWindow, MGMProgressView, MGMPhoneField, MGMPhoneFieldView, MGMContactsTableView;
 
-@interface MGMVoiceUser : MGMContactsController {
+@interface MGMVoiceUser : MGMContactsController <NSAnimationDelegate> {
 	MGMInstance *instance;
 	MGMUser *user;
 	MGMInboxWindow *inboxWindow;

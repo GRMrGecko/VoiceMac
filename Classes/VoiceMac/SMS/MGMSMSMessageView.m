@@ -20,7 +20,7 @@
 	return [[[self alloc] initWithManager:theManager messages:theMessages messageInfo:theMessageInfo instance:theInstance] autorelease];
 }
 - (id)initWithManager:(MGMSMSManager *)theManager messages:(NSArray *)theMessages messageInfo:(NSDictionary *)theMessageInfo instance:(MGMInstance *)theInstance {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		if (![NSBundle loadNibNamed:@"SMSMessageView" owner:self]) {
 			NSLog(@"Error: Unable to load SMS Message View.");
 			[self release];
@@ -48,12 +48,9 @@
 }
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if (SMSSplitView!=nil)
-		[SMSSplitView release];
-	if (messages!=nil)
-		[messages release];
-	if (messageInfo!=nil)
-		[messageInfo release];
+	[SMSSplitView release];
+	[messages release];
+	[messageInfo release];
 	[super dealloc];
 }
 
@@ -100,7 +97,7 @@
 - (BOOL)updateWithMessages:(NSArray *)theMessages messageInfo:(NSDictionary *)theMessageInfo {
 	BOOL newIncomingMessages = NO;
 	if (![[theMessageInfo objectForKey:MGMITime] isEqual:[messageInfo objectForKey:MGMITime]]) {
-		if (messageInfo!=nil) [messageInfo release];
+		[messageInfo release];
 		messageInfo = [theMessageInfo mutableCopy];
 		[self setRead:[[messageInfo objectForKey:MGMIRead] boolValue]];
 		

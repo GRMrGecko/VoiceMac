@@ -15,7 +15,7 @@ NSString * const MGMTestTTPhoto = @"tPhoto";
 
 @implementation MGMSMSThemesPane
 - (id)initWithPreferences:(MGMPreferences *)thePreferences {
-	if (self = [super initWithPreferences:thePreferences]) {
+	if ((self = [super initWithPreferences:thePreferences])) {
         if (![NSBundle loadNibNamed:@"SMSThemesPane" owner:self]) {
             NSLog(@"Unable to load Nib for SMS Themes Preferences");
             [self release];
@@ -50,16 +50,11 @@ NSString * const MGMTestTTPhoto = @"tPhoto";
     return self;
 }
 - (void)dealloc {
-	if (themeManager!=nil)
-		[themeManager release];
-	if (testMessages!=nil)
-		[testMessages release];
-	if (testMessageInfo!=nil)
-		[testMessageInfo release];
-	if (mainView!=nil)
-		[mainView release];
-	if (browserWindow!=nil)
-		[browserWindow release];
+	[themeManager release];
+	[testMessages release];
+	[testMessageInfo release];
+	[mainView release];
+	[browserWindow release];
 	[super dealloc];
 }
 + (void)setUpToolbarItem:(NSToolbarItem *)theItem {

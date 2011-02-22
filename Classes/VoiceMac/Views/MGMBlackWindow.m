@@ -11,7 +11,7 @@
 
 @implementation MGMBlackWindow
 - (id)initWithContentRect:(NSRect)contentRect styleMask:(NSUInteger)windowStyle backing:(NSBackingStoreType)bufferingType defer:(BOOL)deferCreation {
-	if (self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:bufferingType defer:deferCreation]) {
+	if ((self = [super initWithContentRect:contentRect styleMask:NSBorderlessWindowMask backing:bufferingType defer:deferCreation])) {
 		forceDisplay = NO;
 		[self setLevel:NSStatusWindowLevel];
 		[self setBackgroundColor:[NSColor clearColor]];

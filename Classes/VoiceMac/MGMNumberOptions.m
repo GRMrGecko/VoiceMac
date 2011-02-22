@@ -15,7 +15,7 @@
 
 @implementation MGMNumberOptions
 - (id)initWithContactsController:(MGMContactsController *)theContactsController controller:(MGMController *)theController number:(NSString *)theNumber {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		if (![NSBundle loadNibNamed:@"NumberOptions" owner:self]) {
 			NSLog(@"Unable to load the Number Options Window");
 			[self release];
@@ -45,8 +45,7 @@
 }
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if (whitePages!=nil)
-		[whitePages release];
+	[whitePages release];
 	[super dealloc];
 }
 
@@ -100,8 +99,7 @@
 	}
 }
 - (IBAction)cancel:(id)sender {
-	if (whitePages!=nil)
-		[whitePages cancelAll];
+	[whitePages cancelAll];
 	[optionsWindow close];
 	[self release];
 }

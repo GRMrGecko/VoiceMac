@@ -21,7 +21,7 @@
 	return [self initWithData:data options:mask error:error];
 }
 - (id)initWithData:(NSData *)data options:(NSUInteger)mask error:(NSError **)error {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		if (data==nil || [data length]<=0) {
 			if (error!=nil) *error = [NSError errorWithDomain:MGMXMLErrorDomain code:0 userInfo:[NSDictionary dictionaryWithObject:@"Data has no length." forKey:NSLocalizedDescriptionKey]];
 			[self release];

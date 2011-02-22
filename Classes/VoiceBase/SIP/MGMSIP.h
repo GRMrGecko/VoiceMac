@@ -30,6 +30,7 @@ extern NSString * const MGMSIPNameServersEnabled;
 extern NSString * const MGMSIPEchoCacnellationEnabled;
 extern NSString * const MGMSIPPort;
 extern NSString * const MGMSIPPublicAddress;
+extern NSString * const MGMSIPUserAgent;
 
 extern NSString * const MGMNetworkConnectedNotification;
 extern NSString * const MGMNetworkDisconnectedNotification;

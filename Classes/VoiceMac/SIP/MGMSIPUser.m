@@ -23,7 +23,7 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 	return [[[self alloc] initUser:theUser controller:theController] autorelease];
 }
 - (id)initUser:(MGMUser *)theUser controller:(MGMController *)theController {
-	if (self = [super initWithController:theController]) {
+	if ((self = [super initWithController:theController])) {
 		user = [theUser retain];
 		[user setDelegate:self];
 		[self registerSettings];
@@ -52,7 +52,7 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 		userName = [user settingForKey:MGMSIPAccountFullName];
 	[userNameField setStringValue:userName];
 	
-	if (![account isLoggedIn]) {
+	if (![account isRegistered]) {
 		NSSize contentSize = [[contactsWindow contentView] frame].size;
 		progressView = [[MGMProgressView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height)];
 		[progressView setProgressTitle:@"Logging In"];
@@ -62,36 +62,23 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 	}
 }
 - (void)dealloc {
-	if (progressFadeAnimation!=nil) {
-		[progressFadeAnimation stopAnimation];
-		[progressFadeAnimation release];
-		progressFadeAnimation = nil;
-	}
-	if (progressView!=nil) {
-		[progressView stopProgess];
-		[progressView release];
-	}
-	if (SIPRegistrationTimeout!=nil) {
-		[SIPRegistrationTimeout invalidate];
-		[SIPRegistrationTimeout release];
-	}
+	[account setDelegate:nil];
+	[contacts setDelegate:nil];
+	[progressFadeAnimation stopAnimation];
+	[progressFadeAnimation release];
+	progressFadeAnimation = nil;
+	[progressView stopProgess];
+	[progressView release];
+	[SIPRegistrationTimeout invalidate];
+	[SIPRegistrationTimeout release];
 	[super dealloc];
-	if (calls!=nil) {
-		[calls removeAllObjects];
-		[calls release];
-	}
-	if (account!=nil) {
-		[account setDelegate:nil];
-		[account logout];
-		[account release];
-	}
-	if (contacts!=nil) {
-		[contacts stop];
-		[contacts setDelegate:nil];
-		[contacts release];
-	}
-	if (user!=nil)
-		[user release];
+	[calls removeAllObjects];
+	[calls release];
+	[account logout];
+	[account release];
+	[contacts stop];
+	[contacts release];
+	[user release];
 }
 
 - (void)registerSettings {
@@ -131,11 +118,9 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 }
 
 - (void)registrationChanged {
-	if (SIPRegistrationTimeout!=nil) {
-		[SIPRegistrationTimeout invalidate];
-		[SIPRegistrationTimeout release];
-		SIPRegistrationTimeout = nil;
-	}
+	[SIPRegistrationTimeout invalidate];
+	[SIPRegistrationTimeout release];
+	SIPRegistrationTimeout = nil;
 	if (!acountRegistered) {
 		if (![account isRegistered]) {
 			NSAlert *theAlert = [[NSAlert new] autorelease];
@@ -144,23 +129,21 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 			[theAlert runModal];
 		}
 		acountRegistered = YES;
-		[self performSelectorOnMainThread:@selector(removeLoginProgress) withObject:nil waitUntilDone:NO];
+		[self performSelectorOnMainThread:@selector(removeLoginProgress) withObject:nil waitUntilDone:YES];
 	}
 }
 - (void)loggedIn {
 	loggingIn = NO;
-	[self performSelectorOnMainThread:@selector(startRegistrationTimeoutTimer) withObject:nil waitUntilDone:NO];
+	[self performSelectorOnMainThread:@selector(startRegistrationTimeoutTimer) withObject:nil waitUntilDone:YES];
 }
 - (void)startRegistrationTimeoutTimer {
 	if (!acountRegistered)
 		SIPRegistrationTimeout = [[NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(SIPTimeout) userInfo:nil repeats:NO] retain];
 }
 - (void)SIPTimeout {
-	if (SIPRegistrationTimeout!=nil) {
-		[SIPRegistrationTimeout invalidate];
-		[SIPRegistrationTimeout release];
-		SIPRegistrationTimeout = nil;
-	}
+	[SIPRegistrationTimeout invalidate];
+	[SIPRegistrationTimeout release];
+	SIPRegistrationTimeout = nil;
 	[account setLastError:@"Registration Timeout."];
 	[self loginErrored];
 }
@@ -185,13 +168,11 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 	[theAlert setInformativeText:[account lastError]];
 	[theAlert runModal];
 	
-	if (progressView!=nil) {
-		[progressView stopProgess];
-		[progressView removeFromSuperview];
-		[progressView release];
-		progressView = nil;
-	}
-	[self performSelectorOnMainThread:@selector(removeLoginProgress) withObject:nil waitUntilDone:NO];
+	[progressView stopProgess];
+	[progressView removeFromSuperview];
+	[progressView release];
+	progressView = nil;
+	[self performSelectorOnMainThread:@selector(removeLoginProgress) withObject:nil waitUntilDone:YES];
 }
 - (void)logoutErrored {
 	NSAlert *theAlert = [[NSAlert new] autorelease];
@@ -200,15 +181,11 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 	[theAlert runModal];
 }
 - (void)animationDidEnd:(NSAnimation *)animation {
-	if (progressFadeAnimation!=nil) {
-		[progressFadeAnimation release];
-		progressFadeAnimation = nil;
-	}
-	if (progressView!=nil) {
-		[progressView removeFromSuperview];
-		[progressView release];
-		progressView = nil;
-	}
+	[progressFadeAnimation release];
+	progressFadeAnimation = nil;
+	[progressView removeFromSuperview];
+	[progressView release];
+	progressView = nil;
 }
 
 - (MGMContacts *)contacts {
@@ -217,7 +194,7 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 
 - (void)reloadData {
 	[super reloadData];
-	if (progressView!=nil) [progressView display];
+	[progressView display];
 }
 
 - (NSString *)areaCode {
@@ -274,11 +251,9 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 	if (![controller isQuitting])
 		[user setSetting:[NSNumber numberWithBool:NO] forKey:MGMContactsWindowOpen];
 	[super windowWillClose:notification];
-	if (progressFadeAnimation!=nil) {
-		[progressFadeAnimation stopAnimation];
-		[progressFadeAnimation release];
-		progressFadeAnimation = nil;
-	}
+	[progressFadeAnimation stopAnimation];
+	[progressFadeAnimation release];
+	progressFadeAnimation = nil;
 }
 @end
 #endif

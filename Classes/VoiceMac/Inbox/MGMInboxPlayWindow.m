@@ -14,7 +14,7 @@
 
 @implementation MGMInboxPlayWindow
 - (id)initWithNibNamed:(NSString *)theNib data:(NSDictionary *)theData instance:(MGMInstance *)theInstance {
-	if (self = [super initWithContentRect:NSMakeRect(34, 34, 0, 0) styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES]) {
+	if ((self = [super initWithContentRect:NSMakeRect(34, 34, 0, 0) styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:YES])) {
 		if (![NSBundle loadNibNamed:theNib owner:self]) {
 			NSLog(@"Unable to load nib for the Play Window");
 			[self release];
@@ -63,8 +63,7 @@
 }
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if (connectionManager!=nil)
-		[connectionManager release];
+	[connectionManager release];
 	[super dealloc];
 }
 
@@ -118,10 +117,8 @@
 	return [NSColor colorWithPatternImage:[bg autorelease]];
 }
 - (void)windowDidResignKey:(NSNotification *)notification {
-	if (connectionManager!=nil)
-		[connectionManager cancelAll];
-	if (audioPlayer!=nil)
-		[audioPlayer setMovie:nil];
+	[connectionManager cancelAll];
+	[audioPlayer setMovie:nil];
 	[self setContentView:nil];
 	[view release];
 	[self close];

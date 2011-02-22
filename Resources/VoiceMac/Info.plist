@@ -61,8 +61,6 @@
 	<string>VoiceMac</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.MrGeckosMedia.${PRODUCT_NAME:identifier}</string>
-	<key>NSHumanReadableCopyright</key>
-	<string>Copyright (c) 2010 Mr. Gecko&apos;s Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -117,20 +115,30 @@
 	<key>MGMGRReportFileAttached</key>
 	<true/>
 	<key>MGMGRTimeFormat</key>
-	<string>%A, %m/%d/%y %I:%M:%S %p</string>
+	<string>EEEE, MM/dd/yy h:mm:ss a</string>
 	<key>MGMGRTimeZone</key>
 	<string>CST</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSServices</key>
+	<array/>
 	<key>SUCheckAtStartup</key>
 	<true/>
 	<key>SUEnableSystemProfiling</key>
 	<true/>
 	<key>SUFeedURL</key>
 	<string>http://mrgeckosmedia.com/applications/appcast/VoiceMac</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.pem</string>
 	<key>SUScheduledCheckInterval</key>
 	<integer>86400</integer>
+	<key>UTExportedTypeDeclarations</key>
+	<array/>
+	<key>UTImportedTypeDeclarations</key>
+	<array/>
 </dict>
 </plist>

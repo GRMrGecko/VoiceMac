@@ -76,6 +76,7 @@ extern NSString * const MGMMP3Ext;
 extern NSString * const MGMWavExt;
 extern NSString * const MGMAuExt;
 extern NSString * const MGMM4AExt;
+extern NSString * const MGMCAFExt;
 
 @interface MGMThemeManager : NSObject {
 	NSMutableDictionary *currentTheme;

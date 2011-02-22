@@ -18,7 +18,7 @@ NSString * const MGMLogout = @"Logout";
 
 @implementation MGMAccountsPane
 - (id)initWithPreferences:(MGMPreferences *)thePreferences {
-	if (self = [super initWithPreferences:thePreferences]) {
+	if ((self = [super initWithPreferences:thePreferences])) {
         if (![NSBundle loadNibNamed:@"AccountsPane" owner:self]) {
             NSLog(@"Unable to load Nib for Account Preferences");
             [self release];
@@ -48,6 +48,8 @@ NSString * const MGMLogout = @"Logout";
 			[SIPProxyPortField setEnabled:NO];
 			[SIPSIPAddressField setEnabled:NO];
 			[SIPRegistrarTimeoutField setEnabled:NO];
+			[SIPTransportPopUp setEnabled:NO];
+			[SIPToneTypePopUp setEnabled:NO];
 			[SIPContactsMatrix setEnabled:NO];
 			[SIPGoogleContactsPopUp setEnabled:NO];
 			[settingsTab selectTabViewItemAtIndex:0];
@@ -58,10 +60,8 @@ NSString * const MGMLogout = @"Logout";
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[[NSNotificationCenter defaultCenter] removeObserver:usersTable];
-	if (checkInstance!=nil)
-		[checkInstance release];
-	if (mainView!=nil)
-		[mainView release];
+	[checkInstance release];
+	[mainView release];
 	[super dealloc];
 }
 + (void)setUpToolbarItem:(NSToolbarItem *)theItem {
@@ -153,6 +153,8 @@ NSString * const MGMLogout = @"Logout";
 	[SIPProxyPortField setEnabled:NO];
 	[SIPSIPAddressField setEnabled:NO];
 	[SIPRegistrarTimeoutField setEnabled:NO];
+	[SIPTransportPopUp setEnabled:NO];
+	[SIPToneTypePopUp setEnabled:NO];
 	[SIPContactsMatrix setEnabled:NO];
 	[SIPGoogleContactsPopUp setEnabled:NO];
 	if (selected==-1)
@@ -240,6 +242,8 @@ NSString * const MGMLogout = @"Logout";
 			[SIPProxyPortField setEnabled:YES];
 			[SIPSIPAddressField setEnabled:YES];
 			[SIPRegistrarTimeoutField setEnabled:YES];
+			[SIPTransportPopUp setEnabled:YES];
+			[SIPToneTypePopUp setEnabled:YES];
 		}
 		if ([user settingForKey:MGMSIPAccountFullName]!=nil)
 			[SIPFullNameField setStringValue:[user settingForKey:MGMSIPAccountFullName]];
@@ -282,6 +286,10 @@ NSString * const MGMLogout = @"Logout";
 			[SIPRegistrarTimeoutField setIntValue:[[user settingForKey:MGMSIPAccountRegisterTimeout] intValue]];
 		else
 			[SIPRegistrarTimeoutField setStringValue:@""];
+		int transport = [[user settingForKey:MGMSIPAccountTransport] intValue];
+		[SIPTransportPopUp selectItemAtIndex:transport];
+		int dtmfToneType = [[user settingForKey:MGMSIPAccountDTMFToneType] intValue];
+		[SIPToneTypePopUp selectItemAtIndex:dtmfToneType];
 		
 		NSArray *users = [MGMUser users];
 		NSMenu *menu = [[NSMenu new] autorelease];
@@ -376,6 +384,8 @@ NSString * const MGMLogout = @"Logout";
 	[user setSetting:[SIPSIPAddressField stringValue] forKey:MGMSIPAccountSIPAddress];
 	[[SIPSIPAddressField cell] setPlaceholderString:[NSString stringWithFormat:@"%@@%@", [user settingForKey:MGMSIPAccountUserName], [user settingForKey:MGMSIPAccountDomain]]];
 	[user setSetting:[NSNumber numberWithInt:[SIPRegistrarTimeoutField intValue]] forKey:MGMSIPAccountRegisterTimeout];
+	[user setSetting:[NSNumber numberWithInt:[SIPTransportPopUp indexOfSelectedItem]] forKey:MGMSIPAccountTransport];
+	[user setSetting:[NSNumber numberWithInt:[SIPToneTypePopUp indexOfSelectedItem]] forKey:MGMSIPAccountDTMFToneType];
 #endif
 }
 

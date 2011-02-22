@@ -25,7 +25,7 @@ const BOOL MGMGoogleContactsInvisible = YES;
 
 @implementation MGMGoogleContacts
 - (id)initWithDelegate:(id)theDelegate {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		gettingContacts = NO;
 		delegate = theDelegate;
 		user = [[MGMUser userWithID:[[delegate user] settingForKey:MGMCGoogleContactsUser]] retain];
@@ -49,22 +49,14 @@ const BOOL MGMGoogleContactsInvisible = YES;
 	return self;
 }
 - (void)dealloc {
-	if (user!=nil)
-		[user release];
-	if (connectionManager!=nil) {
-		[connectionManager cancelAll];
-		[connectionManager release];
-	}
-	if (authenticationString!=nil)
-		[authenticationString release];
-	if (afterAuthentication!=nil)
-		[afterAuthentication release];
-	if (releaseTimer!=nil)
-		[releaseTimer fire];
-	if (contactEntries!=nil)
-		[contactEntries release];
-	if (contactPhoto!=nil)
-		[contactPhoto release];
+	[user release];
+	[connectionManager cancelAll];
+	[connectionManager release];
+	[authenticationString release];
+	[afterAuthentication release];
+	[releaseTimer fire];
+	[contactEntries release];
+	[contactPhoto release];
 	[super dealloc];
 }
 - (void)authentication:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
@@ -88,7 +80,7 @@ const BOOL MGMGoogleContactsInvisible = YES;
 }
 - (void)authenticationDidFinish:(NSDictionary *)theInfo {
 	NSDictionary *info = [MGMGoogleContacts dictionaryWithData:[theInfo objectForKey:MGMConnectionData]];
-	if (authenticationString!=nil) [authenticationString release];
+	[authenticationString release];
 	authenticationString = [[NSString stringWithFormat:@"GoogleLogin auth=%@", [info objectForKey:@"Auth"]] retain];
 	isAuthenticating = NO;
 	while ([afterAuthentication count]!=0) {
@@ -139,12 +131,10 @@ const BOOL MGMGoogleContactsInvisible = YES;
 	if ([contactsSender respondsToSelector:@selector(contactsError:)]) [contactsSender contactsError:theError];
 }
 - (void)contactsDidFinish:(NSDictionary *)theInfo {
-	if (releaseTimer!=nil) {
-		[releaseTimer invalidate];
-		[releaseTimer release];
-		releaseTimer = nil;
-	}
-	if (contacts!=nil) [contacts release];
+	[releaseTimer invalidate];
+	[releaseTimer release];
+	releaseTimer = nil;
+	[contacts release];
 	contacts = [NSMutableArray new];
 	MGMXMLElement *XML = [(MGMXMLDocument *)[[[MGMXMLDocument alloc] initWithData:[theInfo objectForKey:MGMConnectionData] options:MGMXMLDocumentTidyXML error:nil] autorelease] rootElement];
 	contactEntries = [[XML elementsForName:@"entry"] retain];
@@ -254,15 +244,11 @@ const BOOL MGMGoogleContactsInvisible = YES;
 	}
 }
 - (void)releaseContacts {
-	if (releaseTimer!=nil) {
-		[releaseTimer invalidate];
-		[releaseTimer release];
-		releaseTimer = nil;
-	}
-	if (contacts!=nil) {
-		[contacts release];
-		contacts = nil;
-	}
+	[releaseTimer invalidate];
+	[releaseTimer release];
+	releaseTimer = nil;
+	[contacts release];
+	contacts = nil;
 }
 
 - (void)getGroups:(id)sender {

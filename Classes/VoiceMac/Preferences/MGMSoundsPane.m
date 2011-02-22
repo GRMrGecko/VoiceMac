@@ -15,7 +15,7 @@ NSString * const MGMNoAuthor = @"No Author Found";
 
 @implementation MGMSoundsPane
 - (id)initWithPreferences:(MGMPreferences *)thePreferences {
-	if (self = [super initWithPreferences:thePreferences]) {
+	if ((self = [super initWithPreferences:thePreferences])) {
         if (![NSBundle loadNibNamed:@"SoundsPane" owner:self]) {
             NSLog(@"Unable to load Nib for Sounds Preferences");
             [self release];
@@ -30,14 +30,10 @@ NSString * const MGMNoAuthor = @"No Author Found";
 }
 - (void)dealloc {
 	[self stopSound:self];
-	if (themeManager!=nil)
-		[themeManager release];
-	if (mainView!=nil)
-		[mainView release];
-	if (sounds!=nil)
-		[sounds release];
-	if (browserWindow!=nil)
-		[browserWindow release];
+	[themeManager release];
+	[mainView release];
+	[sounds release];
+	[browserWindow release];
 	[super dealloc];
 }
 + (void)setUpToolbarItem:(NSToolbarItem *)theItem {
@@ -190,11 +186,9 @@ NSString * const MGMNoAuthor = @"No Author Found";
 			if (![themeManager setSound:soundName withPath:[sound objectForKey:MGMTSPath]]) {
 				NSBeep();
 			} else {
-				if (soundPlayer!=nil) {
-					[soundPlayer stop];
-					[soundPlayer release];
-					soundPlayer = nil;
-				}
+				[soundPlayer stop];
+				[soundPlayer release];
+				soundPlayer = nil;
 				soundPlayer = [themeManager playSound:soundName];
 				[soundPlayer setDelegate:self];
 			}
@@ -205,17 +199,13 @@ NSString * const MGMNoAuthor = @"No Author Found";
 	[self reload:soundName];
 }
 - (void)soundDidFinishPlaying:(MGMSound *)theSound {
-	if (soundPlayer!=nil) {
-		[soundPlayer release];
-		soundPlayer = nil;
-	}
+	[soundPlayer release];
+	soundPlayer = nil;
 }
 - (IBAction)stopSound:(id)sender {
-	if (soundPlayer!=nil) {
-		[soundPlayer stop];
-		[soundPlayer release];
-		soundPlayer = nil;
-	}
+	[soundPlayer stop];
+	[soundPlayer release];
+	soundPlayer = nil;
 }
 
 - (IBAction)authorSite:(id)sender {

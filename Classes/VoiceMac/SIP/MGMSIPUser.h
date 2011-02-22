@@ -14,7 +14,7 @@
 
 extern NSString * const MGMSIPUserAreaCode;
 
-@interface MGMSIPUser : MGMContactsController {
+@interface MGMSIPUser : MGMContactsController <NSAnimationDelegate> {
 	MGMUser *user;
 	MGMSIPAccount *account;
 	NSMutableArray *calls;

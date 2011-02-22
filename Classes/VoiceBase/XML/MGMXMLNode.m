@@ -39,7 +39,7 @@ static void MGMXMLErrorHandler(void *userData, xmlErrorPtr error) {
 }
 
 - (id)init {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		commonXML = NULL;
 		namespaceXML = NULL;
 		parentNode = NULL;
@@ -51,7 +51,7 @@ static void MGMXMLErrorHandler(void *userData, xmlErrorPtr error) {
 	return [[[self alloc] initWithTypeXMLPtr:theXMLPtr] autorelease];
 }
 - (id)initWithTypeXMLPtr:(xmlTypPtr)theXMLPtr {
-	if (self = [self init]) {
+	if ((self = [self init])) {
 		if (theXMLPtr->type==MGMXMLNamespaceKind) {
 			xmlNsPtr xmlPtr = (xmlNsPtr)theXMLPtr;
 			if (xmlPtr->_private!=NULL) {
@@ -229,10 +229,8 @@ static void MGMXMLErrorHandler(void *userData, xmlErrorPtr error) {
 	}
 }
 - (void)releaseDocument {
-	if (documentNode!=nil) {
-		[documentNode release];
-		documentNode = nil;
-	}
+	[documentNode release];
+	documentNode = nil;
 }
 + (BOOL)isNode:(MGMXMLNodeKind)theType {
 	switch (theType) {

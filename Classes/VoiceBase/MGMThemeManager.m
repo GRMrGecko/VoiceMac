@@ -108,10 +108,11 @@ NSString * const MGMMP3Ext = @"mp3";
 NSString * const MGMWavExt = @"wav";
 NSString * const MGMAuExt = @"au";
 NSString * const MGMM4AExt = @"m4a";
+NSString * const MGMCAFExt = @"caf";
 
 @implementation MGMThemeManager
 - (id)init {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		shouldPostNotification = NO;
 		[self registerDefaults];
 		if (![self setupCurrentTheme]) {
@@ -128,8 +129,7 @@ NSString * const MGMM4AExt = @"m4a";
 }
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if (currentTheme!=nil)
-		[currentTheme release];
+	[currentTheme release];
 	[super dealloc];
 }
 
@@ -172,17 +172,25 @@ NSString * const MGMM4AExt = @"m4a";
 - (NSDictionary *)sounds {
 	NSFileManager *manager = [NSFileManager defaultManager];
 	NSMutableDictionary *sounds = [NSMutableDictionary dictionary];
+#if TARGET_IPHONE_SIMULATOR || TARGET_OS_MAC
 	NSMutableArray *systemSounds = [NSMutableArray array];
 	NSMutableArray *userSounds = [NSMutableArray array];
+#endif
 	NSMutableArray *unknownSounds = [NSMutableArray array];
+#if TARGET_IPHONE_SIMULATOR || TARGET_OS_MAC
 	NSString *systemSoundsPath = @"/System/Library/Sounds/";
 	NSString *userSoundsPath = [@"~/Library/Sounds/" stringByExpandingTildeInPath];
-	NSArray *allowedExtensions = [NSArray arrayWithObjects:MGMAiffExt, MGMAifExt, MGMMP3Ext, MGMWavExt, MGMAuExt, MGMM4AExt, nil];
-	NSArray *checkPaths = [NSArray arrayWithObjects:[self soundsFolderPath], [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:MGMTSoundsFolder], systemSoundsPath, userSoundsPath, nil];
+#endif
+	NSArray *allowedExtensions = [NSArray arrayWithObjects:MGMAiffExt, MGMAifExt, MGMMP3Ext, MGMWavExt, MGMAuExt, MGMM4AExt, MGMCAFExt, nil];
+	NSArray *checkPaths = [NSArray arrayWithObjects:[self soundsFolderPath], [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:MGMTSoundsFolder]
+#if TARGET_IPHONE_SIMULATOR || TARGET_OS_MAC
+						   , systemSoundsPath, userSoundsPath
+#endif
+						   , nil];
 	for (int i=0; i<[checkPaths count]; i++) {
 		NSDirectoryEnumerator *soundFolders = [manager enumeratorAtPath:[checkPaths objectAtIndex:i]];
 		NSString *soundName = nil;
-		while (soundName = [soundFolders nextObject]) {
+		while ((soundName = [soundFolders nextObject])) {
 			NSString *path = [[[checkPaths objectAtIndex:i] stringByAppendingPathComponent:soundName] stringByResolvingSymlinksInPath];
 			if ([[[soundName pathExtension] lowercaseString] isEqual:MGMTSoundExt]) {
 				if (![manager fileExistsAtPath:[path stringByAppendingPathComponent:MGMTInfoPlist]])
@@ -212,20 +220,27 @@ NSString * const MGMM4AExt = @"m4a";
 				NSMutableDictionary *sound = [NSMutableDictionary dictionary];
 				[sound setObject:[soundName stringByDeletingPathExtension] forKey:MGMTSName];
 				[sound setObject:path forKey:MGMTSPath];
-				if ([[checkPaths objectAtIndex:i] isEqual:systemSoundsPath])
+#if TARGET_IPHONE_SIMULATOR || TARGET_OS_MAC
+				if ([[checkPaths objectAtIndex:i] isEqual:systemSoundsPath] && ![systemSounds containsObject:sound])
 					[systemSounds addObject:sound];
-				else if ([[checkPaths objectAtIndex:i] isEqual:userSoundsPath])
+				else if ([[checkPaths objectAtIndex:i] isEqual:userSoundsPath] && ![userSounds containsObject:sound])
 					[userSounds addObject:sound];
-				else
+				else if (![[checkPaths objectAtIndex:i] isEqual:systemSoundsPath] && ![[checkPaths objectAtIndex:i] isEqual:userSoundsPath] && ![unknownSounds containsObject:sound])
 					[unknownSounds addObject:sound];
+#else
+				if (![unknownSounds containsObject:sound])
+					[unknownSounds addObject:sound];
+#endif
 			}
 		}
 	}
+#if TARGET_IPHONE_SIMULATOR || TARGET_OS_MAC
 	if ([systemSounds count]>0)
 		[sounds setObject:systemSounds forKey:@"System Sounds"];
 	if ([userSounds count]>0)
 		[sounds setObject:userSounds forKey:@"User Sounds"];
 	if ([unknownSounds count]>1)
+#endif
 		[sounds setObject:unknownSounds forKey:@"Unknown"];
 	return sounds;
 }
@@ -255,7 +270,12 @@ NSString * const MGMM4AExt = @"m4a";
 		return path;
 	path = [path replace:MGMTPResource with:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:MGMTSoundsFolder]];
 	path = [path replace:MGMTPSounds with:[self soundsFolderPath]];
-	return [path stringByAppendingPathComponent:[defaults objectForKey:[MGMTSName stringByAppendingString:theSoundName]]];
+	path = [path stringByAppendingPathComponent:[defaults objectForKey:[MGMTSName stringByAppendingString:theSoundName]]];
+	if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
+		[defaults setObject:MGMTNoSound forKey:[MGMTSPath stringByAppendingString:theSoundName]];
+		path = MGMTNoSound;
+	}
+	return path;
 }
 - (BOOL)setSound:(NSString *)theSoundName withPath:(NSString *)thePath {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -374,7 +394,7 @@ NSString * const MGMM4AExt = @"m4a";
 	for (int i=0; i<[checkPaths count]; i++) {
 		NSDirectoryEnumerator *themeFolders = [manager enumeratorAtPath:[checkPaths objectAtIndex:i]];
 		NSString *themeFolder = nil;
-		while (themeFolder = [themeFolders nextObject]) {
+		while ((themeFolder = [themeFolders nextObject])) {
 			if ([[[themeFolder pathExtension] lowercaseString] isEqual:MGMTThemeExt]) {
 				NSString *folder = [[[checkPaths objectAtIndex:i] stringByAppendingPathComponent:themeFolder] stringByResolvingSymlinksInPath];
 				if (![manager fileExistsAtPath:[folder stringByAppendingPathComponent:MGMTInfoPlist]])
@@ -394,7 +414,7 @@ NSString * const MGMM4AExt = @"m4a";
 }
 - (BOOL)setTheme:(NSDictionary *)theTheme {
 	BOOL isNew = ![[theTheme objectForKey:MGMTThemePath] isEqual:[self currentThemePath]];
-	if (currentTheme!=nil) [currentTheme release];
+	[currentTheme release];
 	currentTheme = [theTheme mutableCopy];
 	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
