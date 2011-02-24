@@ -42,7 +42,8 @@
 			}
 			if (audioPlayer!=nil) {
 				connectionManager = [[MGMURLConnectionManager managerWithCookieStorage:[instance cookieStorage]] retain];
-				[connectionManager connectionWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:MGMIVoiceMailDownloadURL, [[theData objectForKey:MGMIID] addPercentEscapes]]]] delegate:self];
+				MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:MGMIVoiceMailDownloadURL, [[theData objectForKey:MGMIID] addPercentEscapes]]]] delegate:self];
+				[connectionManager addHandler:handler];
 			}
 			forceDisplay = NO;
 			[self setLevel:NSStatusWindowLevel];
@@ -67,15 +68,15 @@
 	[super dealloc];
 }
 
-- (void)request:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
+- (void)handler:(MGMURLBasicHandler *)theHandler didFailWithError:(NSError *)theError {
 	NSLog(@"Starting Audio Error: %@", theError);
 	NSAlert *theAlert = [[NSAlert new] autorelease];
 	[theAlert setMessageText:@"Error loading audio"];
 	[theAlert setInformativeText:[theError localizedDescription]];
 	[theAlert runModal];
 }
-- (void)requestDidFinish:(NSDictionary *)theInfo {
-	QTDataReference *audioReference = [QTDataReference dataReferenceWithReferenceToData:[theInfo objectForKey:MGMConnectionData] name:@"voicemail.mp3" MIMEType:nil];
+- (void)handlerDidFinish:(MGMURLBasicHandler *)theHandler {
+	QTDataReference *audioReference = [QTDataReference dataReferenceWithReferenceToData:[theHandler data] name:@"voicemail.mp3" MIMEType:nil];
 	QTMovie *theAudio = [QTMovie movieWithDataReference:audioReference error:NULL];
 	[theAudio autoplay];
 	[audioPlayer setMovie:theAudio];

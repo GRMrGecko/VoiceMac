@@ -158,15 +158,9 @@ NSString * const MGMCAFExt = @"caf";
 }
 - (NSString *)soundsFolderPath {
 	NSString *supportPath = [[MGMUser applicationSupportPath] stringByAppendingPathComponent:MGMTSoundsFolder];
-	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
-	if (![manager fileExistsAtPath:supportPath]) {
-#if !TARGET_OS_IPHONE
-		if ([manager respondsToSelector:@selector(createDirectoryAtPath:attributes:)])
-			[manager createDirectoryAtPath:supportPath attributes:nil];
-		else
-#endif
-			[manager createDirectoryAtPath:supportPath withIntermediateDirectories:YES attributes:nil error:nil];
-	}
+	NSFileManager *manager = [NSFileManager defaultManager];
+	if (![manager fileExistsAtPath:supportPath])
+		[manager createDirectoryAtPath:supportPath withAttributes:nil];
 	return supportPath;
 }
 - (NSDictionary *)sounds {
@@ -333,15 +327,9 @@ NSString * const MGMCAFExt = @"caf";
 
 - (NSString *)themesFolderPath {
 	NSString *supportPath = [[MGMUser applicationSupportPath] stringByAppendingPathComponent:MGMTThemeFolder];
-	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
-	if (![manager fileExistsAtPath:supportPath]) {
-#if !TARGET_OS_IPHONE
-		if ([manager respondsToSelector:@selector(createDirectoryAtPath:attributes:)])
-			[manager createDirectoryAtPath:supportPath attributes:nil];
-		else
-#endif
-			[manager createDirectoryAtPath:supportPath withIntermediateDirectories:YES attributes:nil error:nil];
-	}
+	NSFileManager *manager = [NSFileManager defaultManager];
+	if (![manager fileExistsAtPath:supportPath])
+		[manager createDirectoryAtPath:supportPath withAttributes:nil];
 	return supportPath;
 }
 - (NSString *)currentThemePath {
@@ -360,7 +348,7 @@ NSString * const MGMCAFExt = @"caf";
 	NSLog(@"%@ Path: %@", self, [defaults objectForKey:MGMTCurrentThemePath]);
 	NSLog(@"%@ Name: %@", self, [defaults objectForKey:MGMTCurrentThemeName]);
 #endif
-	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
+	NSFileManager *manager = [NSFileManager defaultManager];
 	if (![manager fileExistsAtPath:[[self currentThemePath] stringByAppendingPathComponent:MGMTInfoPlist]]) {
 		if ([[defaults objectForKey:MGMTCurrentThemePath] isEqual:MGMTPResource]) {
 			NSLog(@"Error: Theme not found in resource!");
@@ -416,7 +404,7 @@ NSString * const MGMCAFExt = @"caf";
 	BOOL isNew = ![[theTheme objectForKey:MGMTThemePath] isEqual:[self currentThemePath]];
 	[currentTheme release];
 	currentTheme = [theTheme mutableCopy];
-	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
+	NSFileManager *manager = [NSFileManager defaultManager];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	if (isNew) {
 		if ([[currentTheme objectForKey:MGMTThemePath] containsString:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:MGMTThemeFolder]])
@@ -470,7 +458,7 @@ NSString * const MGMCAFExt = @"caf";
 	for (int i=0; i<[variants count]; i++) {
 		if ([[[variants objectAtIndex:i] objectForKey:MGMTName] isEqual:theVariant]) {
 			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-			NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
+			NSFileManager *manager = [NSFileManager defaultManager];
 			NSString *varriant = [[variants objectAtIndex:i] objectForKey:MGMTFolder];
 			if (![manager fileExistsAtPath:[[currentTheme objectForKey:MGMTThemePath] stringByAppendingPathComponent:varriant]]) {
 				NSLog(@"Error: Varient Folder Is Missing!");
@@ -486,7 +474,7 @@ NSString * const MGMCAFExt = @"caf";
 }
 
 - (BOOL)hasCustomIncomingIcon {
-	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
+	NSFileManager *manager = [NSFileManager defaultManager];
 	NSDictionary *variant = [[currentTheme objectForKey:MGMTVariants] objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:MGMTCurrentThemeVariant]];
 	NSString *photoPath = nil;
 	if (variant!=nil) {
@@ -499,7 +487,7 @@ NSString * const MGMCAFExt = @"caf";
 	return (photoPath!=nil);
 }
 - (NSString *)incomingIconPath {
-	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
+	NSFileManager *manager = [NSFileManager defaultManager];
 	NSDictionary *variant = [[currentTheme objectForKey:MGMTVariants] objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:MGMTCurrentThemeVariant]];
 	NSString *photoPath = nil;
 	if (variant!=nil) {
@@ -514,7 +502,7 @@ NSString * const MGMCAFExt = @"caf";
 	return photoPath;
 }
 - (NSString *)outgoingIconPath {
-	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
+	NSFileManager *manager = [NSFileManager defaultManager];
 	NSDictionary *variant = [[currentTheme objectForKey:MGMTVariants] objectAtIndex:[[NSUserDefaults standardUserDefaults] integerForKey:MGMTCurrentThemeVariant]];
 	NSString *photoPath = nil;
 	if (variant!=nil) {
@@ -555,7 +543,7 @@ NSString * const MGMCAFExt = @"caf";
 - (NSString *)buildHTMLWithMessages:(NSArray *)theMessages messageInfo:(NSDictionary *)theMessageInfo {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *variantPath = [self currentThemeVariantPath];
-	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
+	NSFileManager *manager = [NSFileManager defaultManager];
 	NSMutableString *html = [NSMutableString string];
 	if ([manager fileExistsAtPath:[variantPath stringByAppendingPathComponent:MGMTThemeHeaderName]]) {
 #if MGMThemeManagerDebug

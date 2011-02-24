@@ -9,13 +9,13 @@
 #if MGMSIPENABLED
 #import <Cocoa/Cocoa.h>
 
-@class MGMSIPCall, MGMSIPAccount, MGMSIPUser, MGMWhitePages, MGMSound;
+@class MGMSIPCall, MGMSIPAccount, MGMSIPUser, MGMURLConnectionManager, MGMSound;
 
 @interface MGMSIPCallWindow : NSObject {
 	MGMSIPCall *call;
 	MGMSIPAccount *account;
 	MGMSIPUser *SIPUser;
-	MGMWhitePages *whitePages;
+	MGMURLConnectionManager *connectionManager;
 	
 	IBOutlet NSWindow *incomingWindow;
 	IBOutlet NSTextField *phoneField;

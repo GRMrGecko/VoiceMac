@@ -136,13 +136,9 @@ const int MGMCMaxResults = 10;
 		return;
 	isUpdating = YES;
 	[updateLock lock];
-	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
-	if ([manager fileExistsAtPath:[[user supportPath] stringByAppendingPathComponent:MGMCUpdateDB]]) {
-		if ([manager respondsToSelector:@selector(removeFileAtPath:handler:)])
-			[manager removeFileAtPath:[[user supportPath] stringByAppendingPathComponent:MGMCUpdateDB] handler:nil];
-		else
-			[manager removeItemAtPath:[[user supportPath] stringByAppendingPathComponent:MGMCUpdateDB] error:nil];
-	}
+	NSFileManager *manager = [NSFileManager defaultManager];
+	if ([manager fileExistsAtPath:[[user supportPath] stringByAppendingPathComponent:MGMCUpdateDB]])
+		[manager removeItemAtPath:[[user supportPath] stringByAppendingPathComponent:MGMCUpdateDB]];
 	updateConnection = [[MGMLiteConnection connectionWithPath:[[user supportPath] stringByAppendingPathComponent:MGMCUpdateDB]] retain];
 	if (updateConnection==nil) {
 		[self contactsError:nil];
@@ -217,17 +213,10 @@ const int MGMCMaxResults = 10;
 - (void)updated {
 	[updateLock lock];
 	[self setContactsConnection:nil];
-	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
-	if ([manager fileExistsAtPath:[[user supportPath] stringByAppendingPathComponent:MGMCContactsDB]]) {
-		if ([manager respondsToSelector:@selector(removeFileAtPath:handler:)])
-			[manager removeFileAtPath:[[user supportPath] stringByAppendingPathComponent:MGMCContactsDB] handler:nil];
-		else
-			[manager removeItemAtPath:[[user supportPath] stringByAppendingPathComponent:MGMCContactsDB] error:nil];
-	}
-	if ([manager respondsToSelector:@selector(movePath:toPath:handler:)] )
-		[manager movePath:[[user supportPath] stringByAppendingPathComponent:MGMCUpdateDB] toPath:[[user supportPath] stringByAppendingPathComponent:MGMCContactsDB] handler:nil];
-	else
-		[manager moveItemAtPath:[[user supportPath] stringByAppendingPathComponent:MGMCUpdateDB] toPath:[[user supportPath] stringByAppendingPathComponent:MGMCContactsDB] error:nil];
+	NSFileManager *manager = [NSFileManager defaultManager];
+	if ([manager fileExistsAtPath:[[user supportPath] stringByAppendingPathComponent:MGMCContactsDB]])
+		[manager removeItemAtPath:[[user supportPath] stringByAppendingPathComponent:MGMCContactsDB]];
+	[manager moveItemAtPath:[[user supportPath] stringByAppendingPathComponent:MGMCUpdateDB] toPath:[[user supportPath] stringByAppendingPathComponent:MGMCContactsDB]];
 	[self setContactsConnection:[MGMLiteConnection connectionWithPath:[[user supportPath] stringByAppendingPathComponent:MGMCContactsDB]]];
 	[updateLock unlock];
 	isUpdating = NO;

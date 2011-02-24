@@ -3,7 +3,7 @@
 //  YouView
 //
 //  Created by Mr. Gecko on 4/16/09.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
 //
 
 #import <Cocoa/Cocoa.h>
@@ -28,7 +28,6 @@ extern NSString * const MGMVMSExt;
 
 @end
 
-
 @interface MGMTaskManager : NSObject {
 	id delegate;
 	
@@ -46,8 +45,8 @@ extern NSString * const MGMVMSExt;
 - (void)updateCount;
 - (IBAction)showTaskManager:(id)sender;
 - (IBAction)clear:(id)sender;
-- (void)addTask:(NSDictionary *)theTask withURL:(NSURL *)theURL;
-- (void)saveURL:(NSURL *)theURL withName:(NSString *)theName;
+- (void)addTask:(NSDictionary *)theTask withURL:(NSURL *)theURL cookieStorage:(id)theCookieStorage;
+- (void)saveURL:(NSURL *)theURL withName:(NSString *)theName cookieStorage:(id)theCookieStorage;
 
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)files;
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender;

@@ -187,7 +187,7 @@
 	[SMSTextView setEditable:NO];
 	[[instance inbox] sendMessage:[SMSTextView string] phoneNumbers:[NSArray arrayWithObject:[messageInfo objectForKey:MGMIPhoneNumber]] smsID:[messageInfo objectForKey:MGMIID] delegate:self];
 }
-- (void)message:(NSDictionary *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
+- (void)message:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	sendingMessage = NO;
 	[SMSTextView setEditable:YES];
 	[[manager SMSWindow] makeFirstResponder:SMSTextView];
@@ -196,7 +196,7 @@
 	[theAlert setInformativeText:[theError localizedDescription]];
 	[theAlert runModal];
 }
-- (void)messageDidFinish:(NSDictionary *)theInfo instance:(MGMInstance *)theInstance {
+- (void)messageDidFinish:(MGMDelegateInfo *)theInfo instance:(MGMInstance *)theInstance {
 	sendingMessage = NO;
 	NSDateFormatter *formatter = [[NSDateFormatter new] autorelease];
 	[formatter setDateFormat:@"h:mm a"];
@@ -242,14 +242,14 @@
 - (BOOL)shouldClose {
 	return (!sendingMessage);
 }
-- (void)mark:(NSDictionary *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
+- (void)mark:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	marking = NO;
 	NSAlert *theAlert = [[NSAlert new] autorelease];
 	[theAlert setMessageText:@"Error marking as read"];
 	[theAlert setInformativeText:[theError localizedDescription]];
 	[theAlert runModal];
 }
-- (void)markDidFinish:(NSDictionary *)theInfo instance:(MGMInstance *)theInstance {
+- (void)markDidFinish:(MGMDelegateInfo *)theInfo instance:(MGMInstance *)theInstance {
 	marking = NO;
 	[messageInfo setObject:[NSNumber numberWithBool:YES] forKey:MGMIRead];
 	[self close:self];

@@ -89,13 +89,9 @@ NSString * const MGMLoading = @"Loading...";
 		}
 	}
 	
-	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
-	if ([manager fileExistsAtPath:[MGMUser cachePath]]) {
-		if ([manager respondsToSelector:@selector(removeFileAtPath:handler:)])
-			[manager removeFileAtPath:[MGMUser cachePath] handler:nil];
-		else
-			[manager removeItemAtPath:[MGMUser cachePath] error:nil];
-	}
+	NSFileManager *manager = [NSFileManager defaultManager];
+	if ([manager fileExistsAtPath:[MGMUser cachePath]])
+		[manager removeItemAtPath:[MGMUser cachePath]];
 	quitting = NO;
 	currentContactsController = -1;
 	preferences = [MGMPreferences new];
@@ -108,7 +104,7 @@ NSString * const MGMLoading = @"Loading...";
 	[[MGMSIP sharedSIP] setDelegate:self];
 #endif
 	taskManager = [[MGMTaskManager managerWithDelegate:self] retain];
-	whitePages = [MGMWhitePages new];
+	connectionManager = [MGMURLConnectionManager new];
 	
 	themeManager = [MGMThemeManager new];
 	SMSManager = [[MGMSMSManager managerWithController:self] retain];
@@ -162,7 +158,7 @@ NSString * const MGMLoading = @"Loading...";
 	[multipleSMS release];
 	[preferences release];
 	[taskManager release];
-	[whitePages release];
+	[connectionManager release];
 	[themeManager release];
 	[SMSManager release];
 	[badge release];
@@ -324,27 +320,19 @@ NSString * const MGMLoading = @"Loading...";
 		[[contactsController phoneField] setStringValue:[phoneNumber readableNumber]];
 		[self sms:self];
 	} else if ([scheme isEqualToString:@"vmtheme"]) {
-		[taskManager addTask:nil withURL:[NSURL URLWithString:[@"http://" stringByAppendingString:data]]];
+		[taskManager addTask:nil withURL:[NSURL URLWithString:[@"http://" stringByAppendingString:data]] cookieStorage:nil];
 	} else if ([scheme isEqualToString:@"vmsound"]) {
-		[taskManager addTask:nil withURL:[NSURL URLWithString:[@"http://" stringByAppendingString:data]]];
+		[taskManager addTask:nil withURL:[NSURL URLWithString:[@"http://" stringByAppendingString:data]] cookieStorage:nil];
 	}
 }
 - (void)application:(NSApplication *)sender openFiles:(NSArray *)filenames {
 	[taskManager application:sender openFiles:filenames];
+	NSFileManager *manager = [NSFileManager defaultManager];
 	for (int i=0; i<[filenames count]; i++) {
-		if ([[[[filenames objectAtIndex:i] pathExtension] lowercaseString] isEqualToString:MGMVMTExt]) {
-			NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
-			if ([manager respondsToSelector:@selector(movePath:toPath:handler:)])
-				[manager movePath:[filenames objectAtIndex:i] toPath:[[themeManager themesFolderPath] stringByAppendingPathComponent:[[filenames objectAtIndex:i] lastPathComponent]] handler:nil];
-			else
-				[manager moveItemAtPath:[filenames objectAtIndex:i] toPath:[[themeManager themesFolderPath] stringByAppendingPathComponent:[[filenames objectAtIndex:i] lastPathComponent]] error:nil];
-		} else if ([[[[filenames objectAtIndex:i] pathExtension] lowercaseString] isEqualToString:MGMVMSExt]) {
-			NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
-			if ([manager respondsToSelector:@selector(movePath:toPath:handler:)])
-				[manager movePath:[filenames objectAtIndex:i] toPath:[[themeManager soundsFolderPath] stringByAppendingPathComponent:[[filenames objectAtIndex:i] lastPathComponent]] handler:nil];
-			else
-				[manager moveItemAtPath:[filenames objectAtIndex:i] toPath:[[themeManager soundsFolderPath] stringByAppendingPathComponent:[[filenames objectAtIndex:i] lastPathComponent]] error:nil];
-		}
+		if ([[[[filenames objectAtIndex:i] pathExtension] lowercaseString] isEqualToString:MGMVMTExt])
+			[manager moveItemAtPath:[filenames objectAtIndex:i] toPath:[[themeManager themesFolderPath] stringByAppendingPathComponent:[[filenames objectAtIndex:i] lastPathComponent]]];
+		else if ([[[[filenames objectAtIndex:i] pathExtension] lowercaseString] isEqualToString:MGMVMSExt])
+			[manager moveItemAtPath:[filenames objectAtIndex:i] toPath:[[themeManager soundsFolderPath] stringByAppendingPathComponent:[[filenames objectAtIndex:i] lastPathComponent]]];
 	}
 }
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)theApplication hasVisibleWindows:(BOOL)flag {
@@ -495,7 +483,7 @@ NSString * const MGMLoading = @"Loading...";
 	MGMVoiceUser *voiceUser = [contactsControllers objectAtIndex:currentContactsController];
 	NSURL *audioURL = [[voiceUser inboxWindow] audioURL];
 	NSDictionary *data = [[voiceUser inboxWindow] selectedItem];
-	[taskManager saveURL:audioURL withName:[NSString stringWithFormat:@"%@ (%@)", [[voiceUser contacts] nameForNumber:[data objectForKey:MGMIPhoneNumber]], [[data objectForKey:MGMIPhoneNumber] readableNumber]]];
+	[taskManager saveURL:audioURL withName:[NSString stringWithFormat:@"%@ (%@)", [[voiceUser contacts] nameForNumber:[data objectForKey:MGMIPhoneNumber]], [[data objectForKey:MGMIPhoneNumber] readableNumber]] cookieStorage:[[voiceUser instance] cookieStorage]];
 }
 
 - (IBAction)call:(id)sender {
@@ -527,7 +515,9 @@ NSString * const MGMLoading = @"Loading...";
 		NSBeep();
 		return;
 	}
-	[whitePages reverseLookup:phoneNumber delegate:self];
+	connectionManager = [MGMURLConnectionManager new];
+	MGMWhitePagesHandler *handler = [MGMWhitePagesHandler reverseLookup:phoneNumber delegate:self];
+	[connectionManager addHandler:handler];
 	[RLName setStringValue:MGMLoading];
 	[RLAddress setStringValue:MGMLoading];
 	[RLCityState setStringValue:MGMLoading];
@@ -541,43 +531,46 @@ NSString * const MGMLoading = @"Loading...";
 	[alert setInformativeText:[theError localizedDescription]];
 	[alert runModal];
 }
-- (void)reverseLookupDidFindInfo:(NSDictionary *)theInfo forRequest:(NSDictionary *)theRequest {
-	if ([theInfo objectForKey:MGMWPName]) {
-		[RLName setStringValue:[theInfo objectForKey:MGMWPName]];
+- (void)reverseLookupDidFindInfo:(MGMWhitePagesHandler *)theHandler {
+	if ([theHandler name]!=nil) {
+		[RLName setStringValue:[theHandler name]];
 	} else {
 		[RLName setStringValue:@""];
 	}
-	if ([theInfo objectForKey:MGMWPAddress]) {
-		[RLAddress setStringValue:[theInfo objectForKey:MGMWPAddress]];
+	if ([theHandler address]!=nil) {
+		[RLAddress setStringValue:[theHandler address]];
 	} else {
 		[RLAddress setStringValue:@""];
 	}
-	if ([theInfo objectForKey:MGMWPLocation]) {
-		[RLCityState setStringValue:[theInfo objectForKey:MGMWPLocation]];
+	if ([theHandler location]!=nil) {
+		[RLCityState setStringValue:[theHandler location]];
 	} else {
 		[RLCityState setStringValue:@""];
 	}
-	if ([theInfo objectForKey:MGMWPZip]) {
-		[RLZipCode setStringValue:[theInfo objectForKey:MGMWPZip]];
+	if ([theHandler zip]) {
+		[RLZipCode setStringValue:[theHandler zip]];
 	} else {
 		[RLZipCode setStringValue:@""];
 	}
-	if ([theInfo objectForKey:MGMWPPhoneNumber]) {
-		[RLPhoneNumber setStringValue:[[theInfo objectForKey:MGMWPPhoneNumber] readableNumber]];
+	if ([theHandler phoneNumber]) {
+		[RLPhoneNumber setStringValue:[[theHandler phoneNumber] readableNumber]];
 	} else {
 		[RLPhoneNumber setStringValue:@""];
 	}
 	
 	int zoom = 0;
 	NSString *address = nil;
-	if ([theInfo objectForKey:MGMWPAddress]!=nil) {
-		address = [NSString stringWithFormat:@"%@, %@", [theInfo objectForKey:MGMWPAddress], [theInfo objectForKey:MGMWPZip]];
+	if ([theHandler address]!=nil) {
+		address = [NSString stringWithFormat:@"%@, %@", [theHandler address], [theHandler zip]];
 		zoom = 15;
-	} else if ([theInfo objectForKey:MGMWPZip]!=nil) {
-		address = [theInfo objectForKey:MGMWPZip];
+	} else if ([theHandler zip]!=nil) {
+		address = [theHandler zip];
 		zoom = 13;
-	} else if ([theInfo objectForKey:MGMWPLocation]!=nil) {
-		address = [theInfo objectForKey:MGMWPLocation];
+	} else if ([theHandler location]!=nil) {
+		address = [theHandler location];
+		zoom = 13;
+	} else if ([theHandler latitude]!=nil && [theHandler longitude]!=nil) {
+		address = [NSString stringWithFormat:@"%@, %@", [theHandler latitude], [theHandler longitude]];
 		zoom = 13;
 	}
 	if (address!=nil)

@@ -128,7 +128,7 @@ const float updateTimeInterval = 300.0;
 - (void)checkSMSMessagesForInstance:(MGMInstance *)theInstance {
 	[[theInstance inbox] getSMSForPage:1 delegate:self];
 }
-- (void)inbox:(NSDictionary *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
+- (void)inbox:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	NSLog(@"SMS Error: %@ for instance: %@", theError, theInstance);
 }
 - (void)inboxGotInfo:(NSArray *)theMessages instance:(MGMInstance *)theInstance {

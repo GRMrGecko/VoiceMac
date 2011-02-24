@@ -7,6 +7,7 @@
 //
 
 #import "MGMInstance.h"
+#import "MGMDelegateInfo.h"
 #import "MGMInbox.h"
 #import "MGMContacts.h"
 #import "MGMAddressBook.h"
@@ -70,7 +71,11 @@ const BOOL MGMInstanceInvisible = YES;
 		inbox = [[MGMInbox inboxWithInstance:self] retain];
 		if (!checkingAccount)
 			contacts = [[MGMContacts contactsWithClass:NSClassFromString([user settingForKey:MGMSContactsSourceKey]) delegate:self] retain];
-		[connectionManager connectionWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:MGMVoiceIndexURL]] delegate:self didFailWithError:@selector(index:didFailWithError:) didFinish:@selector(indexDidFinish:) invisible:MGMInstanceInvisible object:nil];
+		MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:MGMVoiceIndexURL]] delegate:self];
+		[handler setFailWithError:@selector(index:didFailWithError:)];
+		[handler setFinish:@selector(indexDidFinish:)];
+		[handler setInvisible:MGMInstanceInvisible];
+		[connectionManager addHandler:handler];
 	}
 	return self;
 }
@@ -176,15 +181,15 @@ const BOOL MGMInstanceInvisible = YES;
 	return unreadCounts;
 }
 
-- (void)index:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
+- (void)index:(MGMURLBasicHandler *)theHandler didFailWithError:(NSError *)theError {
 	if (delegate!=nil && [delegate respondsToSelector:@selector(loginError:)]) {
 		[delegate loginError:theError];
 	} else {
 		NSLog(@"Login Error: %@", theError);
 	}
 }
-- (void)indexDidFinish:(NSDictionary *)theInfo {
-	NSString *returnedString = [[[NSString alloc] initWithData:[theInfo objectForKey:MGMConnectionData] encoding:NSUTF8StringEncoding] autorelease];
+- (void)indexDidFinish:(MGMURLBasicHandler *)theHandler {
+	NSString *returnedString = [theHandler string];
 	if ([returnedString containsString:@"<title>Redirecting</title>"]) {
 		NSRange range;
 		NSString *redirectURL = MGMVoiceIndexURL;
@@ -213,7 +218,11 @@ const BOOL MGMInstanceInvisible = YES;
 			}
 		}
 		//NSLog(@"Redirecting to %@", redirectURL);
-		[connectionManager connectionWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:redirectURL]] delegate:self didFailWithError:@selector(index:didFailWithError:) didFinish:@selector(indexDidFinish:) invisible:MGMInstanceInvisible object:nil];
+		MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:redirectURL]] delegate:self];
+		[handler setFailWithError:@selector(index:didFailWithError:)];
+		[handler setFinish:@selector(indexDidFinish:)];
+		[handler setInvisible:MGMInstanceInvisible];
+		[connectionManager addHandler:handler];
 	} else if ([returnedString containsString:@"<div id=\"gaia_loginbox\">"]) {
 		if (webLoginTries>2) {
 			NSError *error = [NSError errorWithDomain:@"com.MrGeckosMedia.MGMInstance.Login" code:1 userInfo:[NSDictionary dictionaryWithObject:@"Unable to login. Please check your Credentials." forKey:NSLocalizedDescriptionKey]];
@@ -285,7 +294,11 @@ const BOOL MGMInstanceInvisible = YES;
 		}
 		
 		[request setHTTPBody:[bodyString dataUsingEncoding:NSUTF8StringEncoding]];
-		[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(index:didFailWithError:) didFinish:@selector(indexDidFinish:) invisible:MGMInstanceInvisible object:nil];
+		MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+		[handler setFailWithError:@selector(index:didFailWithError:)];
+		[handler setFinish:@selector(indexDidFinish:)];
+		[handler setInvisible:MGMInstanceInvisible];
+		[connectionManager addHandler:handler];
 	} else {
 		NSString *string, *guser = @"", *phonesInfo = @"";
 		NSRange range;
@@ -469,8 +482,8 @@ const BOOL MGMInstanceInvisible = YES;
 	return loggedIn;
 }
 
-- (void)xpcFinished:(NSDictionary *)theInfo {
-	NSString *returnedString = [[[NSString alloc] initWithData:[theInfo objectForKey:MGMConnectionData] encoding:NSUTF8StringEncoding] autorelease];
+- (void)xpcFinished:(MGMURLBasicHandler *)theHandler {
+	NSString *returnedString = [theHandler string];
 	NSRange range = [returnedString rangeOfString:@"new _cd('"];
 	if (range.location!=NSNotFound) {
 		NSString *string = [returnedString substringFromIndex:range.location+range.length];
@@ -486,13 +499,20 @@ const BOOL MGMInstanceInvisible = YES;
 	[checkTimer fire];
 }
 - (void)checkTimer {
-	if (XPCCD)
-		[connectionManager connectionWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:[XPCURL stringByAppendingString:MGMCheckPath], XPCCD]]] delegate:self didFailWithError:NULL didFinish:@selector(checkFinished:) invisible:MGMInstanceInvisible object:nil];
-	else
-		[connectionManager connectionWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[XPCURL stringByAppendingString:MGMXPCPath]]] delegate:self didFailWithError:NULL didFinish:@selector(xpcFinished:) invisible:MGMInstanceInvisible object:nil];
+	if (XPCCD) {
+		MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:[XPCURL stringByAppendingString:MGMCheckPath], XPCCD]]] delegate:self];
+		[handler setFinish:@selector(checkFinished:)];
+		[handler setInvisible:MGMInstanceInvisible];
+		[connectionManager addHandler:handler];
+	} else {
+		MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[XPCURL stringByAppendingString:MGMXPCPath]]] delegate:self];
+		[handler setFinish:@selector(xpcFinished:)];
+		[handler setInvisible:MGMInstanceInvisible];
+		[connectionManager addHandler:handler];
+	}
 }
-- (void)checkFinished:(NSDictionary *)theInfo {
-	NSDictionary *returnDic = [[theInfo objectForKey:MGMConnectionData] parseJSON];
+- (void)checkFinished:(MGMURLBasicHandler *)theHandler {
+	NSDictionary *returnDic = [[theHandler data] parseJSON];
 	if (returnDic!=nil) {
 		if ([[returnDic objectForKey:@"ok"] intValue]!=0) {
 			NSDictionary *currentUnreadCounts = [[returnDic objectForKey:@"data"] objectForKey:@"unreadCounts"];
@@ -519,10 +539,13 @@ const BOOL MGMInstanceInvisible = YES;
 	[request setHTTPMethod:MGMPostMethod];
 	[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
 	[request setHTTPBody:[[NSString stringWithFormat:@"_rnr_se=%@", rnr_se] dataUsingEncoding:NSUTF8StringEncoding]];
-	[connectionManager connectionWithRequest:request delegate:self didFailWithError:NULL didFinish:@selector(creditFinished:) invisible:MGMInstanceInvisible object:nil];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+	[handler setFinish:@selector(creditFinished:)];
+	[handler setInvisible:MGMInstanceInvisible];
+	[connectionManager addHandler:handler];
 }
-- (void)creditFinished:(NSDictionary *)theInfo {
-	NSString *credit = [[[theInfo objectForKey:MGMConnectionData] parseJSON] objectForKey:@"formattedCredit"];
+- (void)creditFinished:(MGMURLBasicHandler *)theHandler {
+	NSString *credit = [[[theHandler data] parseJSON] objectForKey:@"formattedCredit"];
 #if MGMInstanceDebug
 	NSLog(@"Credit = %@", credit);
 #endif
@@ -533,15 +556,11 @@ const BOOL MGMInstanceInvisible = YES;
 	[self placeCall:thePhoneNumber usingPhone:thePhone delegate:theDelegate didFailWithError:@selector(call:didFailWithError:) didFinish:@selector(callDidFinish:)];
 }
 - (void)placeCall:(NSString *)thePhoneNumber usingPhone:(int)thePhone delegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didFinish:(SEL)didFinish {
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didFinish!=NULL)
-		[info setObject:NSStringFromSelector(didFinish) forKey:MGMIDidFinish];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
-	if (thePhoneNumber!=nil)
-		[info setObject:thePhoneNumber forKey:MGMPhoneNumber];
-	[info setObject:[userPhoneNumbers objectAtIndex:thePhone] forKey:MGMPhone];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setFinish:didFinish];
+	[info setFailWithError:didFailWithError];
+	[info setPhoneNumbers:[NSArray arrayWithObject:thePhoneNumber]];
+	[info setPhone:[userPhoneNumbers objectAtIndex:thePhone]];
 	if (thePhoneNumber==nil || [thePhoneNumber isEqual:@""]) {
 		NSMethodSignature *signature = [theDelegate methodSignatureForSelector:didFailWithError];
 		if (signature!=nil) {
@@ -558,59 +577,62 @@ const BOOL MGMInstanceInvisible = YES;
 	[request setHTTPMethod:MGMPostMethod];
 	[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
 	[request setHTTPBody:[[NSString stringWithFormat:@"outgoingNumber=%@&forwardingNumber=%@&subscriberNumber=undefined&phoneType=%@&remember=1&_rnr_se=%@", thePhoneNumber, [[userPhoneNumbers objectAtIndex:thePhone] objectForKey:MGMPhoneNumber], [[userPhoneNumbers objectAtIndex:thePhone] objectForKey:MGMType], rnr_se] dataUsingEncoding:NSUTF8StringEncoding]];
-	[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(call:didFailWithError:) didFinish:@selector(callDidFinish:) invisible:MGMInstanceInvisible object:info];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+	[handler setFailWithError:@selector(call:didFailWithError:)];
+	[handler setFinish:@selector(callDidFinish:)];
+	[handler setInvisible:MGMInstanceInvisible];
+	[handler setObject:info];
+	[connectionManager addHandler:handler];
 }
 - (void)cancelCallWithDelegate:(id)theDelegate {
 	[self cancelCallWithDelegate:theDelegate didFailWithError:@selector(callCancel:didFailWithError:) didFinish:@selector(callCancelDidFinish:)];
 }
 - (void)cancelCallWithDelegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didFinish:(SEL)didFinish {
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didFinish!=NULL)
-		[info setObject:NSStringFromSelector(didFinish) forKey:MGMIDidFinish];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setFinish:didFinish];
+	[info setFailWithError:didFailWithError];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMCallCancelURL]];
 	[request setHTTPMethod:MGMPostMethod];
 	[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
 	[request setHTTPBody:[[NSString stringWithFormat:@"outgoingNumber=undefined&forwardingNumber=undefined&cancelType=C2C&_rnr_se=%@", rnr_se] dataUsingEncoding:NSUTF8StringEncoding]];
-	[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(call:didFailWithError:) didFinish:@selector(callDidFinish:) invisible:MGMInstanceInvisible object:info];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+	[handler setFailWithError:@selector(call:didFailWithError:)];
+	[handler setFinish:@selector(callDidFinish:)];
+	[handler setInvisible:MGMInstanceInvisible];
+	[handler setObject:info];
+	[connectionManager addHandler:handler];
 }
-- (void)call:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
-	NSDictionary *info = [theInfo objectForKey:MGMConnectionObject];
-	if ([info objectForKey:MGMIDidFailWithError]!=nil) {
-		SEL selector = NSSelectorFromString([info objectForKey:MGMIDidFailWithError]);
-		id theDelegate = [info objectForKey:MGMIDelegate];
-		NSMethodSignature *signature = [theDelegate methodSignatureForSelector:selector];
+- (void)call:(MGMURLBasicHandler *)theHandler didFailWithError:(NSError *)theError {
+	MGMDelegateInfo *info = [theHandler object];
+	BOOL displayError = YES;
+	if ([info failWithError]!=nil) {
+		NSMethodSignature *signature = [[info delegate] methodSignatureForSelector:[info failWithError]];
 		if (signature!=nil) {
 			NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-			[invocation setSelector:selector];
-			[invocation setArgument:&theInfo atIndex:2];
+			[invocation setSelector:[info failWithError]];
+			[invocation setArgument:&info atIndex:2];
 			[invocation setArgument:&theError atIndex:3];
-			[invocation invokeWithTarget:theDelegate];
-		} else {
-			NSLog(@"MGMInstance Call Error: %@", theError);
+			[invocation invokeWithTarget:[info delegate]];
+			displayError = NO;
 		}
-	} else {
-		NSLog(@"MGMInstance Call Error: %@", theError);
 	}
+	if (displayError)
+		NSLog(@"MGMInstance Call Error: %@", theError);
 }
-- (void)callDidFinish:(NSDictionary *)theInfo {
-	NSDictionary *infoDic = [[theInfo objectForKey:MGMConnectionData] parseJSON];
+- (void)callDidFinish:(MGMURLBasicHandler *)theHandler {
+	NSDictionary *infoDic = [[theHandler data] parseJSON];
+	MGMDelegateInfo *thisInfo = [theHandler object];
 	if ([[infoDic objectForKey:@"ok"] boolValue]) {
 #if MGMInstanceDebug
 		NSLog(@"MGMInstance Did Call %@", infoDic);
 #endif
-		NSDictionary *thisInfo = [theInfo objectForKey:MGMConnectionObject];
-		if ([thisInfo objectForKey:MGMIDidFinish]!=nil) {
-			SEL selector = NSSelectorFromString([thisInfo objectForKey:MGMIDidFinish]);
-			id theDelegate = [thisInfo objectForKey:MGMIDelegate];
-			NSMethodSignature *signature = [theDelegate methodSignatureForSelector:selector];
+		if ([thisInfo finish]!=nil) {
+			NSMethodSignature *signature = [[thisInfo delegate] methodSignatureForSelector:[thisInfo finish]];
 			if (signature!=nil) {
 				NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-				[invocation setSelector:selector];
-				[invocation setArgument:&theInfo atIndex:2];
-				[invocation invokeWithTarget:theDelegate];
+				[invocation setSelector:[thisInfo finish]];
+				[invocation setArgument:&thisInfo atIndex:2];
+				[invocation invokeWithTarget:[thisInfo delegate]];
 			}
 		}
 	} else {
@@ -618,17 +640,14 @@ const BOOL MGMInstanceInvisible = YES;
 		if ([infoDic objectForKey:@"error"]!=nil)
 			info = [NSDictionary dictionaryWithObject:[infoDic objectForKey:@"error"] forKey:NSLocalizedDescriptionKey];
 		NSError *error = [NSError errorWithDomain:@"com.MrGeckosMedia.VoiceBase.Call" code:1 userInfo:info];
-		NSDictionary *thisInfo = [theInfo objectForKey:MGMConnectionObject];
-		if ([thisInfo objectForKey:MGMIDidFailWithError]!=nil) {
-			SEL selector = NSSelectorFromString([thisInfo objectForKey:MGMIDidFailWithError]);
-			id theDelegate = [thisInfo objectForKey:MGMIDelegate];
-			NSMethodSignature *signature = [theDelegate methodSignatureForSelector:selector];
+		if ([thisInfo failWithError]!=nil) {
+			NSMethodSignature *signature = [[thisInfo delegate] methodSignatureForSelector:[thisInfo failWithError]];
 			if (signature!=nil) {
 				NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-				[invocation setSelector:selector];
-				[invocation setArgument:&theInfo atIndex:2];
+				[invocation setSelector:[thisInfo failWithError]];
+				[invocation setArgument:&thisInfo atIndex:2];
 				[invocation setArgument:&error atIndex:3];
-				[invocation invokeWithTarget:theDelegate];
+				[invocation invokeWithTarget:[thisInfo delegate]];
 			} else {
 				NSLog(@"MGMInstance Call Error: %@", error);
 			}

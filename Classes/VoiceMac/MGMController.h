@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class MGMContactsController, MGMPreferences, MGMTaskManager, MGMWhitePages, MGMThemeManager, MGMSMSManager, MGMBadge, MGMMultiSMS, MGMInstance, WebView;
+@class MGMContactsController, MGMPreferences, MGMTaskManager, MGMURLConnectionManager, MGMThemeManager, MGMSMSManager, MGMBadge, MGMMultiSMS, MGMInstance, WebView;
 
 extern NSString * const MGMContactsControllersChangedNotification;
 
@@ -18,7 +18,7 @@ extern NSString * const MGMContactsControllersChangedNotification;
 	NSMutableArray *multipleSMS;
 	MGMPreferences *preferences;
 	MGMTaskManager *taskManager;
-	MGMWhitePages *whitePages;
+	MGMURLConnectionManager *connectionManager;
 	BOOL quitting;
 	
 	MGMThemeManager *themeManager;

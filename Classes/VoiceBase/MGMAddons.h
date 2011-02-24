@@ -59,17 +59,3 @@ NSComparisonResult dateSort(NSDictionary *info1, NSDictionary *info2, void *cont
 - (NSData *)resizeTo:(NSSize)theSize;
 #endif
 @end
-
-@protocol NSFileManagerProtocol <NSObject>
-- (BOOL)createDirectoryAtPath:(NSString *)path withIntermediateDirectories:(BOOL)createIntermediates attributes:(NSDictionary *)attributes error:(NSError **)error;
-- (BOOL)createDirectoryAtPath:(NSString *)path attributes:(NSDictionary *)attributes;
-
-- (BOOL)removeItemAtPath:(NSString *)path error:(NSError **)error;
-- (BOOL)removeFileAtPath:(NSString *)path handler:(id)handler;
-
-- (BOOL)copyItemAtPath:(NSString *)srcPath toPath:(NSString *)dstPath error:(NSError **)error;
-- (BOOL)copyPath:(NSString *)source toPath:(NSString *)destination handler:(id)handler;
-
-- (BOOL)moveItemAtPath:(NSString *)srcPath toPath:(NSString *)dstPath error:(NSError **)error;
-- (BOOL)movePath:(NSString *)source toPath:(NSString *)destination handler:(id)handler;
-@end

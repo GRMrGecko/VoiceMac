@@ -3,7 +3,7 @@
 //  MGMUsers
 //
 //  Created by Mr. Gecko on 8/13/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
 //
 
 #if TARGET_OS_IPHONE

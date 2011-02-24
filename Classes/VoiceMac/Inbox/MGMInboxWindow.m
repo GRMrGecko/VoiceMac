@@ -140,7 +140,7 @@ NSString * const MGMSID = @"id";
 - (void)checkVoicemail {
 	[[instance inbox] getVoicemailForPage:1 delegate:self didFailWithError:@selector(voicemail:didFailWithError:instance:) didReceiveInfo:@selector(voicemailGotInfo:instance:)];
 }
-- (void)voicemail:(NSDictionary *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
+- (void)voicemail:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	NSLog(@"Voicemail Error: %@ for instance: %@", theError, theInstance);
 }
 - (void)voicemailGotInfo:(NSArray *)theMessages instance:(MGMInstance *)theInstance {
@@ -239,7 +239,7 @@ NSString * const MGMSID = @"id";
 			break;
 	}
 }
-- (void)inbox:(NSDictionary *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
+- (void)inbox:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	NSLog(@"Inbox Error: %@ for instance: %@", theError, theInstance);
 	NSAlert *theAlert = [[NSAlert new] autorelease];
 	[theAlert setMessageText:@"Error loading inbox"];
@@ -300,7 +300,7 @@ NSString * const MGMSID = @"id";
 	[currentData removeObject:data];
 	[inboxTable reloadData];
 }
-- (IBAction)report:(NSDictionary *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
+- (IBAction)report:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	NSLog(@"Report Error: %@ for instance: %@", theError, theInstance);
 	NSAlert *theAlert = [[NSAlert new] autorelease];
 	[theAlert setMessageText:@"Error reporting"];
@@ -308,7 +308,7 @@ NSString * const MGMSID = @"id";
 	[theAlert runModal];
 	[self stopProgress];
 }
-- (void)reportDidFinish:(NSDictionary *)theInfo instance:(MGMInstance *)theInstance {
+- (void)reportDidFinish:(MGMDelegateInfo *)theInfo instance:(MGMInstance *)theInstance {
 	[self loadInbox];
 	[self stopProgress];
 }
@@ -342,7 +342,7 @@ NSString * const MGMSID = @"id";
 	[currentData removeObject:data];
 	[inboxTable reloadData];
 }
-- (void)delete:(NSDictionary *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
+- (void)delete:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	NSLog(@"Delete Error: %@ for instance: %@", theError, theInstance);
 	NSAlert *theAlert = [[NSAlert new] autorelease];
 	[theAlert setMessageText:@"Error deleting"];
@@ -350,7 +350,7 @@ NSString * const MGMSID = @"id";
 	[theAlert runModal];
 	[self stopProgress];
 }
-- (void)deleteDidFinish:(NSDictionary *)theInfo instance:(MGMInstance *)theInstance {
+- (void)deleteDidFinish:(MGMDelegateInfo *)theInfo instance:(MGMInstance *)theInstance {
 	[self loadInbox];
 	[self stopProgress];
 }

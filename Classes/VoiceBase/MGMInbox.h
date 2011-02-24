@@ -12,17 +12,9 @@
 #import <Cocoa/Cocoa.h>
 #endif
 
-@class MGMInstance, MGMURLConnectionManager;
+@class MGMDelegateInfo, MGMInstance, MGMURLConnectionManager;
 
 #define MGMInboxDebug 0
-
-extern NSString * const MGMIDelegate;
-extern NSString * const MGMIDidReceiveInfo;
-extern NSString * const MGMIDidFinish;
-extern NSString * const MGMIDidFailWithError;
-extern NSString * const MGMIEntries;
-extern NSString * const MGMIPhoneNumbers;
-extern NSString * const MGMIMessage;
 
 extern NSString * const MGMIVoiceMailDownloadURL;
 
@@ -89,7 +81,7 @@ extern const int MGMISMSOutType;
 - (void)getMissedCallsForPage:(int)thePage delegate:(id)theDelegate;
 - (void)getMissedCallsForPage:(int)thePage delegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didReceiveInfo:(SEL)didReceiveInfo;
 
-- (void)retrieveURL:(NSString *)theURL page:(int)thePage info:(NSDictionary *)theInfo;
+- (void)retrieveURL:(NSString *)theURL page:(int)thePage info:(MGMDelegateInfo *)theInfo;
 - (NSDictionary *)parseMessageWithHTML:(NSString *)theHTML info:(NSDictionary *)theInfo;
 
 - (void)deleteEntriesForever:(NSArray *)theEntries delegate:(id)theDelegate;

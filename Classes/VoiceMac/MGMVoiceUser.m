@@ -221,7 +221,7 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 		[instance placeCall:phoneNumber usingPhone:[userPhonesButton indexOfSelectedItem] delegate:self];
 	}
 }
-- (void)call:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
+- (void)call:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError {
 	NSAlert *alert = [[NSAlert new] autorelease];
 	[alert setMessageText:@"Call Failed"];
 	[alert setInformativeText:[theError localizedDescription]];
@@ -229,11 +229,11 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 	placingCall = NO;
 	[callTimer fire];
 }
-- (void)callDidFinish:(NSDictionary *)theInfo {
+- (void)callDidFinish:(MGMDelegateInfo *)theInfo {
 	placingCall = NO;
 	NSLog(@"YEA! We Made The Call!");
 }
-- (void)callCancel:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
+- (void)callCancel:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError {
 	NSAlert *alert = [[NSAlert new] autorelease];
 	[alert setMessageText:@"Call Cancel Failed"];
 	[alert setInformativeText:[theError localizedDescription]];

@@ -56,8 +56,9 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 					[phoneField setStringValue:phoneNumber];
 					NSString *name = [[SIPUser contacts] nameForNumber:number];
 					if (name==nil || [name isEqual:phoneNumber]) {
-						whitePages = [MGMWhitePages new];
-						[whitePages reverseLookup:number delegate:self];
+						connectionManager = [MGMURLConnectionManager new];
+						MGMWhitePagesHandler *handler = [MGMWhitePagesHandler reverseLookup:number delegate:self];
+						[connectionManager addHandler:handler];
 						[nameField setStringValue:@"Loading..."];
 					} else {
 						fullName = [name copy];
@@ -87,8 +88,9 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 					phoneNumber = [[number readableNumber] copy];
 					NSString *name = [[SIPUser contacts] nameForNumber:number];
 					if (name==nil || [name isEqual:phoneNumber]) {
-						whitePages = [MGMWhitePages new];
-						[whitePages reverseLookup:number delegate:self];
+						connectionManager = [MGMURLConnectionManager new];
+						MGMWhitePagesHandler *handler = [MGMWhitePagesHandler reverseLookup:number delegate:self];
+						[connectionManager addHandler:handler];
 					} else {
 						fullName = [name copy];
 					}
@@ -122,7 +124,7 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 	[self hidePad];
 	[call setDelegate:nil];
 	[call release];
-	[whitePages release];
+	[connectionManager release];
 	[incomingWindow release];
 	[callWindow release];
 	[fullName release];
@@ -338,16 +340,16 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 		[call sendDTMFDigits:@"#"];
 }
 
-- (void)reverseLookupDidFindInfo:(NSDictionary *)theInfo forRequest:(NSDictionary *)theRequest {
-	if ([theInfo objectForKey:MGMWPName]!=nil) {
-		fullName = [[theInfo objectForKey:MGMWPName] copy];
+- (void)reverseLookupDidFindInfo:(MGMWhitePagesHandler *)theHandler {
+	if ([theHandler name]!=nil) {
+		fullName = [[theHandler name] copy];
 		if ([callWindow isVisible])
 			[self setTitle:[NSString stringWithFormat:MGMSCTitleFormat, fullName, phoneNumber]];
 		else
 			[nameField setStringValue:fullName];
-	} else if ([theInfo objectForKey:MGMWPLocation]!=nil) {
+	} else if ([theHandler location]!=nil) {
 		if ([incomingWindow isVisible])
-			[nameField setStringValue:[theInfo objectForKey:MGMWPLocation]];
+			[nameField setStringValue:[theHandler location]];
 	}
 }
 @end

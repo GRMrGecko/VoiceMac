@@ -38,7 +38,7 @@ extern NSString * const MGMGCUseragent;
 	NSTimer *releaseTimer;
 }
 - (id)initWithDelegate:(id)theDelegate;
-+ (NSDictionary *)dictionaryWithData:(NSData *)theData;
++ (NSDictionary *)dictionaryWithString:(NSString *)theString;
 - (MGMUser *)user;
 - (void)getContacts:(id)sender;
 - (void)parseContact;

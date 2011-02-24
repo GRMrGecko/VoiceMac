@@ -56,14 +56,10 @@
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	backgroundThread = [[NSThread currentThread] retain];
     [NSThread sleepUntilDate:[NSDate dateWithTimeIntervalSinceNow:2.0]];
-	NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
+	NSFileManager *manager = [NSFileManager defaultManager];
 	NSString *finalPath = [[MGMUser applicationSupportPath] stringByAppendingPathComponent:MGMTCallSoundsFolder];
-	if (![manager fileExistsAtPath:finalPath]) {
-		if ([manager respondsToSelector:@selector(createDirectoryAtPath:attributes:)])
-			[manager createDirectoryAtPath:finalPath attributes:nil];
-		else
-			[manager createDirectoryAtPath:finalPath withIntermediateDirectories:YES attributes:nil error:nil];
-	}
+	if (![manager fileExistsAtPath:finalPath])
+		[manager createDirectoryAtPath:finalPath withAttributes:nil];
 	finalPath = [finalPath stringByAppendingPathComponent:soundName];
 	NSString *convertFinalPath = [[finalPath stringByAppendingPathExtension:@".tmp"] stringByAppendingPathExtension:MGMWavExt];
 	finalPath = [finalPath stringByAppendingPathExtension:MGMWavExt];
@@ -72,18 +68,10 @@
         if (![movie writeToFile:convertFinalPath withAttributes:dictionary])
             NSLog(@"Could not convert audio %@", fileConverting);
     }
-	if ([manager fileExistsAtPath:finalPath]) {
-		if ([manager respondsToSelector:@selector(removeFileAtPath:)])
-			[manager removeFileAtPath:finalPath handler:nil];
-		else
-			[manager removeItemAtPath:finalPath error:nil];
-	}
-	if (!cancel) {
-		if ([manager respondsToSelector:@selector(movePath:toPath:handler:)])
-			[manager movePath:convertFinalPath toPath:finalPath handler:nil];
-		else
-			[manager moveItemAtPath:convertFinalPath toPath:finalPath error:nil];
-	}
+	if ([manager fileExistsAtPath:finalPath])
+		[manager removeItemAtPath:finalPath];
+	if (!cancel)
+		[manager moveItemAtPath:convertFinalPath toPath:finalPath];
 	[pool drain];
 	[backgroundThread release];
 	backgroundThread = nil;

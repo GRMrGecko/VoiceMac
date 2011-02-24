@@ -10,6 +10,7 @@
 #import <VoiceBase/MGMAddons.h>
 #import <VoiceBase/MGMInstance.h>
 #import <VoiceBase/MGMInbox.h>
+#import <VoiceBase/MGMDelegateInfo.h>
 #import <VoiceBase/MGMContactsProtocol.h>
 #import <VoiceBase/MGMContacts.h>
 #import <VoiceBase/MGMAddressBook.h>

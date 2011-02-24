@@ -3,7 +3,7 @@
 //  MGMUsers
 //
 //  Created by Mr. Gecko on 7/27/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
 //
 
 #import <Cocoa/Cocoa.h>

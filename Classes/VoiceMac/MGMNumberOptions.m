@@ -26,8 +26,9 @@
 			[phoneField setStringValue:[theNumber readableNumber]];
 			NSString *name = [[contactsController contacts] nameForNumber:theNumber];
 			if (name==nil || [name isEqual:[phoneField stringValue]]) {
-				whitePages = [MGMWhitePages new];
-				[whitePages reverseLookup:theNumber delegate:self];
+				connectionManager = [MGMURLConnectionManager new];
+				MGMWhitePagesHandler *handler = [MGMWhitePagesHandler reverseLookup:theNumber delegate:self];
+				[connectionManager addHandler:handler];
 				[nameField setStringValue:@"Loading..."];
 			} else {
 				[nameField setStringValue:name];
@@ -45,7 +46,7 @@
 }
 - (void)dealloc {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[whitePages release];
+	[connectionManager release];
 	[super dealloc];
 }
 
@@ -99,16 +100,16 @@
 	}
 }
 - (IBAction)cancel:(id)sender {
-	[whitePages cancelAll];
+	[connectionManager cancelAll];
 	[optionsWindow close];
 	[self release];
 }
 
-- (void)reverseLookupDidFindInfo:(NSDictionary *)theInfo forRequest:(NSDictionary *)theRequest {
-	if ([theInfo objectForKey:MGMWPName]!=nil) {
-		[nameField setStringValue:[theInfo objectForKey:MGMWPName]];
-	} else if ([theInfo objectForKey:MGMWPLocation]!=nil) {
-		[nameField setStringValue:[theInfo objectForKey:MGMWPLocation]];
+- (void)reverseLookupDidFindInfo:(MGMWhitePagesHandler *)theHandler {
+	if ([theHandler name]!=nil) {
+		[nameField setStringValue:[theHandler name]];
+	} else if ([theHandler location]!=nil) {
+		[nameField setStringValue:[theHandler location]];
 	}
 }
 @end

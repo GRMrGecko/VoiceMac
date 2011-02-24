@@ -161,14 +161,10 @@ NSString * const MGMNoAuthor = @"No Author Found";
 	if ([sender tag]==-1) {
 		[themeManager setSound:soundName withPath:MGMTNoSound];
 		if ([soundName isEqual:MGMTSSIPHoldMusic] || [soundName isEqual:MGMTSSIPSound1] || [soundName isEqual:MGMTSSIPSound2] || [soundName isEqual:MGMTSSIPSound3] || [soundName isEqual:MGMTSSIPSound4] || [soundName isEqual:MGMTSSIPSound5]) {
-			NSFileManager<NSFileManagerProtocol> *manager = [NSFileManager defaultManager];
+			NSFileManager *manager = [NSFileManager defaultManager];
 			NSString *finalPath = [[[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:MGMTCallSoundsFolder] stringByAppendingPathComponent:soundName] stringByAppendingPathExtension:MGMWavExt];
-			if ([manager fileExistsAtPath:finalPath]) {
-				if ([manager respondsToSelector:@selector(removeFileAtPath:)])
-					[manager removeFileAtPath:finalPath handler:nil];
-				else
-					[manager removeItemAtPath:finalPath error:nil];
-			}		
+			if ([manager fileExistsAtPath:finalPath])
+				[manager removeItemAtPath:finalPath];
 		}
 	} else {
 		NSMenuItem *soundsMenuItem = nil;

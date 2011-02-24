@@ -7,18 +7,11 @@
 //
 
 #import "MGMInbox.h"
+#import "MGMDelegateInfo.h"
 #import "MGMInstance.h"
 #import "MGMAddons.h"
 #import "MGMXML.h"
 #import <MGMUsers/MGMUsers.h>
-
-NSString * const MGMIDelegate = @"delegate";
-NSString * const MGMIDidReceiveInfo = @"didReceiveInfo";
-NSString * const MGMIDidFinish = @"didFinish";
-NSString * const MGMIDidFailWithError = @"didFailWithError";
-NSString * const MGMIEntries = @"entries";
-NSString * const MGMIPhoneNumbers = @"phoneNumbers";
-NSString * const MGMIMessage = @"message";
 
 NSString * const MGMIInboxURL = @"https://www.google.com/voice/inbox/recent/";
 NSString * const MGMIStarredURL = @"https://www.google.com/voice/inbox/recent/starred/";
@@ -93,12 +86,9 @@ const BOOL MGMInboxInvisible = YES;
 	[self getInboxForPage:thePage delegate:theDelegate didFailWithError:@selector(inbox:didFailWithError:instance:) didReceiveInfo:@selector(inboxGotInfo:instance:)];
 }
 - (void)getInboxForPage:(int)thePage delegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didReceiveInfo:(SEL)didReceiveInfo {
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didReceiveInfo!=NULL)
-		[info setObject:NSStringFromSelector(didReceiveInfo) forKey:MGMIDidReceiveInfo];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setReceiveInfo:didReceiveInfo];
+	[info setFailWithError:didFailWithError];
 	[self retrieveURL:MGMIInboxURL page:thePage info:info];
 }
 
@@ -106,12 +96,9 @@ const BOOL MGMInboxInvisible = YES;
 	[self getStarredForPage:thePage delegate:theDelegate didFailWithError:@selector(inbox:didFailWithError:instance:) didReceiveInfo:@selector(inboxGotInfo:instance:)];
 }
 - (void)getStarredForPage:(int)thePage delegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didReceiveInfo:(SEL)didReceiveInfo {
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didReceiveInfo!=NULL)
-		[info setObject:NSStringFromSelector(didReceiveInfo) forKey:MGMIDidReceiveInfo];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setReceiveInfo:didReceiveInfo];
+	[info setFailWithError:didFailWithError];
 	[self retrieveURL:MGMIStarredURL page:thePage info:info];
 }
 
@@ -119,12 +106,9 @@ const BOOL MGMInboxInvisible = YES;
 	[self getSpamForPage:thePage delegate:theDelegate didFailWithError:@selector(inbox:didFailWithError:instance:) didReceiveInfo:@selector(inboxGotInfo:instance:)];
 }
 - (void)getSpamForPage:(int)thePage delegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didReceiveInfo:(SEL)didReceiveInfo {
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didReceiveInfo!=NULL)
-		[info setObject:NSStringFromSelector(didReceiveInfo) forKey:MGMIDidReceiveInfo];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setReceiveInfo:didReceiveInfo];
+	[info setFailWithError:didFailWithError];
 	[self retrieveURL:MGMISpamURL page:thePage info:info];
 }
 
@@ -132,12 +116,10 @@ const BOOL MGMInboxInvisible = YES;
 	[self getTrashForPage:thePage delegate:theDelegate didFailWithError:@selector(inbox:didFailWithError:instance:) didReceiveInfo:@selector(inboxGotInfo:instance:)];
 }
 - (void)getTrashForPage:(int)thePage delegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didReceiveInfo:(SEL)didReceiveInfo {
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didReceiveInfo!=NULL)
-		[info setObject:NSStringFromSelector(didReceiveInfo) forKey:MGMIDidReceiveInfo];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setDelegate:theDelegate];
+	[info setReceiveInfo:didReceiveInfo];
+	[info setFailWithError:didFailWithError];
 	[self retrieveURL:MGMITrashURL page:thePage info:info];
 }
 
@@ -145,12 +127,9 @@ const BOOL MGMInboxInvisible = YES;
 	[self getVoicemailForPage:thePage delegate:theDelegate didFailWithError:@selector(inbox:didFailWithError:instance:) didReceiveInfo:@selector(inboxGotInfo:instance:)];
 }
 - (void)getVoicemailForPage:(int)thePage delegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didReceiveInfo:(SEL)didReceiveInfo {
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didReceiveInfo!=NULL)
-		[info setObject:NSStringFromSelector(didReceiveInfo) forKey:MGMIDidReceiveInfo];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setReceiveInfo:didReceiveInfo];
+	[info setFailWithError:didFailWithError];
 	[self retrieveURL:MGMIVoiceMailURL page:thePage info:info];
 }
 
@@ -158,12 +137,9 @@ const BOOL MGMInboxInvisible = YES;
 	[self getSMSForPage:thePage delegate:theDelegate didFailWithError:@selector(inbox:didFailWithError:instance:) didReceiveInfo:@selector(inboxGotInfo:instance:)];
 }
 - (void)getSMSForPage:(int)thePage delegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didReceiveInfo:(SEL)didReceiveInfo {
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didReceiveInfo!=NULL)
-		[info setObject:NSStringFromSelector(didReceiveInfo) forKey:MGMIDidReceiveInfo];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setReceiveInfo:didReceiveInfo];
+	[info setFailWithError:didFailWithError];
 	[self retrieveURL:MGMISMSURL page:thePage info:info];
 }
 
@@ -171,12 +147,9 @@ const BOOL MGMInboxInvisible = YES;
 	[self getRecordedCallsForPage:thePage delegate:theDelegate didFailWithError:@selector(inbox:didFailWithError:instance:) didReceiveInfo:@selector(inboxGotInfo:instance:)];
 }
 - (void)getRecordedCallsForPage:(int)thePage delegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didReceiveInfo:(SEL)didReceiveInfo {
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didReceiveInfo!=NULL)
-		[info setObject:NSStringFromSelector(didReceiveInfo) forKey:MGMIDidReceiveInfo];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setReceiveInfo:didReceiveInfo];
+	[info setFailWithError:didFailWithError];
 	[self retrieveURL:MGMIRecordedURL page:thePage info:info];
 }
 
@@ -184,12 +157,9 @@ const BOOL MGMInboxInvisible = YES;
 	[self getPlacedCallsForPage:thePage delegate:theDelegate didFailWithError:@selector(inbox:didFailWithError:instance:) didReceiveInfo:@selector(inboxGotInfo:instance:)];
 }
 - (void)getPlacedCallsForPage:(int)thePage delegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didReceiveInfo:(SEL)didReceiveInfo {
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didReceiveInfo!=NULL)
-		[info setObject:NSStringFromSelector(didReceiveInfo) forKey:MGMIDidReceiveInfo];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setReceiveInfo:didReceiveInfo];
+	[info setFailWithError:didFailWithError];
 	[self retrieveURL:MGMIPlacedURL page:thePage info:info];
 }
 
@@ -197,12 +167,9 @@ const BOOL MGMInboxInvisible = YES;
 	[self getPlacedCallsForPage:thePage delegate:theDelegate didFailWithError:@selector(inbox:didFailWithError:instance:) didReceiveInfo:@selector(inboxGotInfo:instance:)];
 }
 - (void)getReceivedCallsForPage:(int)thePage delegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didReceiveInfo:(SEL)didReceiveInfo {
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didReceiveInfo!=NULL)
-		[info setObject:NSStringFromSelector(didReceiveInfo) forKey:MGMIDidReceiveInfo];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setReceiveInfo:didReceiveInfo];
+	[info setFailWithError:didFailWithError];
 	[self retrieveURL:MGMIReceivedURL page:thePage info:info];
 }
 
@@ -210,16 +177,13 @@ const BOOL MGMInboxInvisible = YES;
 	[self getPlacedCallsForPage:thePage delegate:theDelegate didFailWithError:@selector(inbox:didFailWithError:instance:) didReceiveInfo:@selector(inboxGotInfo:instance:)];
 }
 - (void)getMissedCallsForPage:(int)thePage delegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didReceiveInfo:(SEL)didReceiveInfo {
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didReceiveInfo!=NULL)
-		[info setObject:NSStringFromSelector(didReceiveInfo) forKey:MGMIDidReceiveInfo];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setReceiveInfo:didReceiveInfo];
+	[info setFailWithError:didFailWithError];
 	[self retrieveURL:MGMIMissedURL page:thePage info:info];
 }
 
-- (void)retrieveURL:(NSString *)theURL page:(int)thePage info:(NSDictionary *)theInfo {
+- (void)retrieveURL:(NSString *)theURL page:(int)thePage info:(MGMDelegateInfo *)theInfo {
 	NSString *url = nil;
 	if (thePage<=1)
 		url = theURL;
@@ -228,30 +192,31 @@ const BOOL MGMInboxInvisible = YES;
 #if MGMInboxDebug
 	NSLog(@"MGMInbox Will load %@", url);
 #endif
-	[connectionManager connectionWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]] delegate:self didFailWithError:@selector(request:didFailWithError:) didFinish:@selector(requestDidFinish:) invisible:MGMInboxInvisible object:theInfo];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]] delegate:self];
+	[handler setInvisible:MGMInboxInvisible];
+	[handler setObject:theInfo];
+	[connectionManager addHandler:handler];
 }
-- (void)request:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
-	NSDictionary *info = [theInfo objectForKey:MGMConnectionObject];
-	if ([info objectForKey:MGMIDidFailWithError]!=nil) {
-		SEL selector = NSSelectorFromString([info objectForKey:MGMIDidFailWithError]);
-		id delegate = [info objectForKey:MGMIDelegate];
-		NSMethodSignature *signature = [delegate methodSignatureForSelector:selector];
+- (void)handler:(MGMURLBasicHandler *)theHandler didFailWithError:(NSError *)theError {
+	MGMDelegateInfo *info = [theHandler object];
+	BOOL displayError = YES;
+	if ([info failWithError]!=nil) {
+		NSMethodSignature *signature = [[info delegate] methodSignatureForSelector:[info failWithError]];
 		if (signature!=nil) {
 			NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-			[invocation setSelector:selector];
-			[invocation setArgument:&theInfo atIndex:2];
+			[invocation setSelector:[info failWithError]];
+			[invocation setArgument:&info atIndex:2];
 			[invocation setArgument:&theError atIndex:3];
 			[invocation setArgument:&instance atIndex:4];
-			[invocation invokeWithTarget:delegate];
-		} else {
-			NSLog(@"MGMInbox Error: %@", theError);
+			[invocation invokeWithTarget:[info delegate]];
+			displayError = NO;
 		}
-	} else {
-		NSLog(@"MGMInbox Error: %@", theError);
 	}
+	if (displayError)
+		NSLog(@"MGMInbox Error: %@", theError);
 }
-- (void)requestDidFinish:(NSDictionary *)theInfo {
-	MGMXMLElement *XML = [(MGMXMLDocument *)[[[MGMXMLDocument alloc] initWithData:[theInfo objectForKey:MGMConnectionData] options:MGMXMLDocumentTidyXML error:nil] autorelease] rootElement];
+- (void)handlerDidFinish:(MGMURLBasicHandler *)theHandler {
+	MGMXMLElement *XML = [(MGMXMLDocument *)[[[MGMXMLDocument alloc] initWithData:[theHandler data] options:MGMXMLDocumentTidyXML error:nil] autorelease] rootElement];
 	NSDictionary *infoDic = [[[[XML elementsForName:@"json"] objectAtIndex:0] stringValue] parseJSON];
 	NSDictionary *messagesInfo = [infoDic objectForKey:@"messages"];
 	NSArray *messagesInfoKeys = [messagesInfo allKeys];
@@ -318,23 +283,21 @@ const BOOL MGMInboxInvisible = YES;
 	}
 	[info sortUsingFunction:dateSort context:nil];
 	
-	NSDictionary *thisInfo = [theInfo objectForKey:MGMConnectionObject];
-	if ([thisInfo objectForKey:MGMIDidReceiveInfo]!=nil) {
-		SEL selector = NSSelectorFromString([thisInfo objectForKey:MGMIDidReceiveInfo]);
-		id delegate = [thisInfo objectForKey:MGMIDelegate];
-		NSMethodSignature *signature = [delegate methodSignatureForSelector:selector];
+	MGMDelegateInfo *thisInfo = [theHandler object];
+	BOOL displayInfo = YES;
+	if ([thisInfo receiveInfo]!=nil) {
+		NSMethodSignature *signature = [[thisInfo delegate] methodSignatureForSelector:[thisInfo receiveInfo]];
 		if (signature!=nil) {
 			NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-			[invocation setSelector:selector];
+			[invocation setSelector:[thisInfo receiveInfo]];
 			[invocation setArgument:&info atIndex:2];
 			[invocation setArgument:&instance atIndex:3];
-			[invocation invokeWithTarget:delegate];
-		} else {
-			NSLog(@"MGMInbox Info: %@", info);
+			[invocation invokeWithTarget:[thisInfo delegate]];
+			displayInfo = NO;
 		}
-	} else {
-		NSLog(@"MGMInbox Info: %@", info);
 	}
+	if (displayInfo)
+		NSLog(@"MGMInbox Info: %@", info);
 }
 - (NSDictionary *)parseMessageWithHTML:(NSString *)theHTML info:(NSDictionary *)theInfo {
 	NSMutableDictionary *message = [NSMutableDictionary dictionary];
@@ -376,13 +339,10 @@ const BOOL MGMInboxInvisible = YES;
 #if MGMInboxDebug
 	NSLog(@"MGMInbox Will delete %@", theEntries);
 #endif
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didFinish!=NULL)
-		[info setObject:NSStringFromSelector(didFinish) forKey:MGMIDidFinish];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
-	[info setObject:theEntries forKey:MGMIEntries];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setFinish:didFinish];
+	[info setFailWithError:didFailWithError];
+	[info setEntries:theEntries];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMIDeleteForeverURL]];
 	[request setHTTPMethod:MGMPostMethod];
 	[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
@@ -392,7 +352,12 @@ const BOOL MGMInboxInvisible = YES;
 	}
 	[body appendFormat:@"_rnr_se=%@", [instance rnr_se]];
 	[request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
-	[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(sendRequest:didFailWithError:) didFinish:@selector(sendRequestDidFinish:) invisible:MGMInboxInvisible object:info];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+	[handler setFailWithError:@selector(send:didFailWithError:)];
+	[handler setFinish:@selector(sendDidFinish:)];
+	[handler setInvisible:MGMInboxInvisible];
+	[handler setObject:info];
+	[connectionManager addHandler:handler];
 }
 - (void)deleteEntries:(NSArray *)theEntries delegate:(id)theDelegate {
 	[self deleteEntries:theEntries delegate:theDelegate didFailWithError:@selector(delete:didFailWithError:instance:) didFinish:@selector(deleteDidFinish:instance:)];
@@ -401,13 +366,10 @@ const BOOL MGMInboxInvisible = YES;
 #if MGMInboxDebug
 	NSLog(@"MGMInbox Will delete %@", theEntries);
 #endif
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didFinish!=NULL)
-		[info setObject:NSStringFromSelector(didFinish) forKey:MGMIDidFinish];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
-	[info setObject:theEntries forKey:MGMIEntries];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setFinish:didFinish];
+	[info setFailWithError:didFailWithError];
+	[info setEntries:theEntries];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMIDeleteURL]];
 	[request setHTTPMethod:MGMPostMethod];
 	[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
@@ -417,7 +379,12 @@ const BOOL MGMInboxInvisible = YES;
 	}
 	[body appendFormat:@"trash=1&_rnr_se=%@", [instance rnr_se]];
 	[request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
-	[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(sendRequest:didFailWithError:) didFinish:@selector(sendRequestDidFinish:) invisible:MGMInboxInvisible object:info];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+	[handler setFailWithError:@selector(send:didFailWithError:)];
+	[handler setFinish:@selector(sendDidFinish:)];
+	[handler setInvisible:MGMInboxInvisible];
+	[handler setObject:info];
+	[connectionManager addHandler:handler];
 }
 
 - (void)markEntries:(NSArray *)theEntries read:(BOOL)isRead delegate:(id)theDelegate {
@@ -427,13 +394,10 @@ const BOOL MGMInboxInvisible = YES;
 #if MGMInboxDebug
 	NSLog(@"MGMInbox Will delete %@", theEntries);
 #endif
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didFinish!=NULL)
-		[info setObject:NSStringFromSelector(didFinish) forKey:MGMIDidFinish];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
-	[info setObject:theEntries forKey:MGMIEntries];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setFinish:didFinish];
+	[info setFailWithError:didFailWithError];
+	[info setEntries:theEntries];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMIMarkURL]];
 	[request setHTTPMethod:MGMPostMethod];
 	[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
@@ -443,7 +407,12 @@ const BOOL MGMInboxInvisible = YES;
 	}
 	[body appendFormat:@"read=%d&_rnr_se=%@", (isRead ? 1 : 0), [instance rnr_se]];
 	[request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
-	[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(sendRequest:didFailWithError:) didFinish:@selector(sendRequestDidFinish:) invisible:MGMInboxInvisible object:info];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+	[handler setFailWithError:@selector(send:didFailWithError:)];
+	[handler setFinish:@selector(sendDidFinish:)];
+	[handler setInvisible:MGMInboxInvisible];
+	[handler setObject:info];
+	[connectionManager addHandler:handler];
 }
 
 - (void)reportEntries:(NSArray *)theEntries delegate:(id)theDelegate {
@@ -453,13 +422,10 @@ const BOOL MGMInboxInvisible = YES;
 #if MGMInboxDebug
 	NSLog(@"MGMInbox Will delete %@", theEntries);
 #endif
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didFinish!=NULL)
-		[info setObject:NSStringFromSelector(didFinish) forKey:MGMIDidFinish];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
-	[info setObject:theEntries forKey:MGMIEntries];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setFinish:didFinish];
+	[info setFailWithError:didFailWithError];
+	[info setEntries:theEntries];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMIReportURL]];
 	[request setHTTPMethod:MGMPostMethod];
 	[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
@@ -469,7 +435,12 @@ const BOOL MGMInboxInvisible = YES;
 	}
 	[body appendFormat:@"spam=1&_rnr_se=%@", [instance rnr_se]];
 	[request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
-	[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(sendRequest:didFailWithError:) didFinish:@selector(sendRequestDidFinish:) invisible:MGMInboxInvisible object:info];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+	[handler setFailWithError:@selector(send:didFailWithError:)];
+	[handler setFinish:@selector(sendDidFinish:)];
+	[handler setInvisible:MGMInboxInvisible];
+	[handler setObject:info];
+	[connectionManager addHandler:handler];
 }
 
 - (void)starEntries:(NSArray *)theEntries starred:(BOOL)isStarred delegate:(id)theDelegate {
@@ -479,13 +450,10 @@ const BOOL MGMInboxInvisible = YES;
 #if MGMInboxDebug
 	NSLog(@"MGMInbox Will delete %@", theEntries);
 #endif
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didFinish!=NULL)
-		[info setObject:NSStringFromSelector(didFinish) forKey:MGMIDidFinish];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
-	[info setObject:theEntries forKey:MGMIEntries];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setFinish:didFinish];
+	[info setFailWithError:didFailWithError];
+	[info setEntries:theEntries];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMIStarURL]];
 	[request setHTTPMethod:MGMPostMethod];
 	[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
@@ -495,25 +463,25 @@ const BOOL MGMInboxInvisible = YES;
 	}
 	[body appendFormat:@"star=%d&_rnr_se=%@", (isStarred ? 1 : 0), [instance rnr_se]];
 	[request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
-	[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(sendRequest:didFailWithError:) didFinish:@selector(sendRequestDidFinish:) invisible:MGMInboxInvisible object:info];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+	[handler setFailWithError:@selector(send:didFailWithError:)];
+	[handler setFinish:@selector(sendDidFinish:)];
+	[handler setInvisible:MGMInboxInvisible];
+	[handler setObject:info];
+	[connectionManager addHandler:handler];
 }
 
 - (void)sendMessage:(NSString *)theMessage phoneNumbers:(NSArray *)thePhoneNumbers smsID:(NSString *)theID delegate:(id)theDelegate {
 	[self sendMessage:theMessage phoneNumbers:thePhoneNumbers smsID:theID delegate:theDelegate didFailWithError:@selector(message:didFailWithError:instance:) didFinish:@selector(messageDidFinish:instance:)];
 }
 - (void)sendMessage:(NSString *)theMessage phoneNumbers:(NSArray *)thePhoneNumbers smsID:(NSString *)theID delegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didFinish:(SEL)didFinish {
-	NSMutableDictionary *info = [NSMutableDictionary dictionary];
-	[info setObject:theDelegate forKey:MGMIDelegate];
-	if (didFinish!=NULL)
-		[info setObject:NSStringFromSelector(didFinish) forKey:MGMIDidFinish];
-	if (didFailWithError!=NULL)
-		[info setObject:NSStringFromSelector(didFailWithError) forKey:MGMIDidFailWithError];
-	if (theMessage!=nil)
-		[info setObject:theMessage forKey:MGMIMessage];
-	if (thePhoneNumbers!=nil)
-		[info setObject:thePhoneNumbers forKey:MGMIPhoneNumbers];
+	MGMDelegateInfo *info = [MGMDelegateInfo infoWithDelegate:theDelegate];
+	[info setFinish:didFinish];
+	[info setFailWithError:didFailWithError];
+	[info setMessage:theMessage];
+	[info setPhoneNumbers:thePhoneNumbers];
 	if (theID==nil) theID = @"";
-	[info setObject:theID forKey:MGMIID];
+	[info setIdentifier:theID];
 	if (thePhoneNumbers==nil || [thePhoneNumbers count]==0 || theMessage==nil || [theMessage isEqual:@""]) {
 		NSMethodSignature *signature = [theDelegate methodSignatureForSelector:didFailWithError];
 		if (signature!=nil) {
@@ -538,22 +506,25 @@ const BOOL MGMInboxInvisible = YES;
 	}
 	[body appendFormat:@"&text=%@&sendErrorSms=0&_rnr_se=%@", [theMessage addPercentEscapes], [instance rnr_se]];
 	[request setHTTPBody:[body dataUsingEncoding:NSUTF8StringEncoding]];
-	[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(sendRequest:didFailWithError:) didFinish:@selector(sendRequestDidFinish:) invisible:MGMInboxInvisible object:info];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+	[handler setFailWithError:@selector(send:didFailWithError:)];
+	[handler setFinish:@selector(sendDidFinish:)];
+	[handler setInvisible:MGMInboxInvisible];
+	[handler setObject:info];
+	[connectionManager addHandler:handler];
 }
 
-- (void)sendRequest:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
-	NSDictionary *info = [theInfo objectForKey:MGMConnectionObject];
-	if ([info objectForKey:MGMIDidFailWithError]!=nil) {
-		SEL selector = NSSelectorFromString([info objectForKey:MGMIDidFailWithError]);
-		id delegate = [info objectForKey:MGMIDelegate];
-		NSMethodSignature *signature = [delegate methodSignatureForSelector:selector];
+- (void)send:(MGMURLBasicHandler *)theHandler didFailWithError:(NSError *)theError {
+	MGMDelegateInfo *info = [theHandler object];
+	if ([info failWithError]!=nil) {
+		NSMethodSignature *signature = [[info delegate] methodSignatureForSelector:[info failWithError]];
 		if (signature!=nil) {
 			NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-			[invocation setSelector:selector];
-			[invocation setArgument:&theInfo atIndex:2];
+			[invocation setSelector:[info failWithError]];
+			[invocation setArgument:&info atIndex:2];
 			[invocation setArgument:&theError atIndex:3];
 			[invocation setArgument:&instance atIndex:4];
-			[invocation invokeWithTarget:delegate];
+			[invocation invokeWithTarget:[info delegate]];
 		} else {
 			NSLog(@"MGMInbox Send Request Error: %@", theError);
 		}
@@ -561,22 +532,19 @@ const BOOL MGMInboxInvisible = YES;
 		NSLog(@"MGMInbox Send Request Error: %@", theError);
 	}
 }
-- (void)sendRequestDidFinish:(NSDictionary *)theInfo {
+- (void)sendDidFinish:(MGMURLBasicHandler *)theHandler {
 #if MGMInboxDebug
-	NSLog(@"MGMInbox Did Send Request %@", [[[NSString alloc] initWithData:[theInfo objectForKey:MGMConnectionData] encoding:NSUTF8StringEncoding] autorelease]);
+	NSLog(@"MGMInbox Did Send Request %@", [theHandler string]);
 #endif
-	NSMutableDictionary *thisInfo = [NSMutableDictionary dictionaryWithDictionary:[theInfo objectForKey:MGMConnectionObject]];
-	[thisInfo setObject:[theInfo objectForKey:MGMConnectionData] forKey:MGMConnectionData];
-	if ([thisInfo objectForKey:MGMIDidFinish]!=nil) {
-		SEL selector = NSSelectorFromString([thisInfo objectForKey:MGMIDidFinish]);
-		id delegate = [thisInfo objectForKey:MGMIDelegate];
-		NSMethodSignature *signature = [delegate methodSignatureForSelector:selector];
+	MGMDelegateInfo *thisInfo = [theHandler object];
+	if ([thisInfo finish]!=nil) {
+		NSMethodSignature *signature = [[thisInfo delegate] methodSignatureForSelector:[thisInfo finish]];
 		if (signature!=nil) {
 			NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:signature];
-			[invocation setSelector:selector];
+			[invocation setSelector:[thisInfo finish]];
 			[invocation setArgument:&thisInfo atIndex:2];
 			[invocation setArgument:&instance atIndex:3];
-			[invocation invokeWithTarget:delegate];
+			[invocation invokeWithTarget:[thisInfo delegate]];
 		}
 	}
 }

@@ -37,14 +37,18 @@ const BOOL MGMGoogleContactsInvisible = YES;
 		NSURLCredential *credentials = [NSURLCredential credentialWithUser:username password:[user password] persistence:NSURLCredentialPersistenceForSession];
 		connectionManager = [[MGMURLConnectionManager managerWithCookieStorage:[user cookieStorage]] retain];
 		[connectionManager setCredentials:credentials];
-		[connectionManager setCustomUseragent:MGMGCUseragent];
+		[connectionManager setUserAgent:MGMGCUseragent];
 		isAuthenticating = YES;
 		afterAuthentication = [NSMutableArray new];
 		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMGCAuthenticationURL] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15.0];
 		[request setHTTPMethod:MGMPostMethod];
 		[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
 		[request setHTTPBody:[[NSString stringWithFormat:MGMGCAuthenticationBody, [username addPercentEscapes], [[user password] addPercentEscapes]] dataUsingEncoding:NSUTF8StringEncoding]];
-		[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(authentication:didFailWithError:) didFinish:@selector(authenticationDidFinish:) invisible:MGMGoogleContactsInvisible object:nil];
+		MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+		[handler setFailWithError:@selector(authentication:didFailWithError:)];
+		[handler setFinish:@selector(authenticationDidFinish:)];
+		[handler setInvisible:MGMGoogleContactsInvisible];
+		[connectionManager addHandler:handler];
 	}
 	return self;
 }
@@ -59,12 +63,11 @@ const BOOL MGMGoogleContactsInvisible = YES;
 	[contactPhoto release];
 	[super dealloc];
 }
-- (void)authentication:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
+- (void)authentication:(MGMURLBasicHandler *)theHandler didFailWithError:(NSError *)theError {
 	NSLog(@"MGMGoogleContacts Error: %@", theError);
 }
-+ (NSDictionary *)dictionaryWithData:(NSData *)theData {
-	NSString *string = [[NSString alloc] initWithData:theData encoding:NSUTF8StringEncoding];
-	NSArray *values = [string componentsSeparatedByString:@"\n"];
++ (NSDictionary *)dictionaryWithString:(NSString *)theString {
+	NSArray *values = [theString componentsSeparatedByString:@"\n"];
 	NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
 	for (int i=0; i<[values count]; i++) {
 		if (![[values objectAtIndex:i] isEqual:@""]) {
@@ -75,11 +78,10 @@ const BOOL MGMGoogleContactsInvisible = YES;
 			[dictionary setObject:value forKey:key];
 		}
 	}
-	[string release];
 	return dictionary;
 }
-- (void)authenticationDidFinish:(NSDictionary *)theInfo {
-	NSDictionary *info = [MGMGoogleContacts dictionaryWithData:[theInfo objectForKey:MGMConnectionData]];
+- (void)authenticationDidFinish:(MGMURLBasicHandler *)theHandler {
+	NSDictionary *info = [MGMGoogleContacts dictionaryWithString:[theHandler string]];
 	[authenticationString release];
 	authenticationString = [[NSString stringWithFormat:@"GoogleLogin auth=%@", [info objectForKey:@"Auth"]] retain];
 	isAuthenticating = NO;
@@ -123,32 +125,36 @@ const BOOL MGMGoogleContactsInvisible = YES;
 	contactsSender = sender;
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMGCContactsURL] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60.0];
 	[request setValue:authenticationString forHTTPHeaderField:MGMGCAuthorization];
-	[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(contacts:didFailWithError:) didFinish:@selector(contactsDidFinish:) invisible:MGMGoogleContactsInvisible object:nil];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+	[handler setFailWithError:@selector(contacts:didFailWithError:)];
+	[handler setFinish:@selector(contactsDidFinish:)];
+	[handler setInvisible:MGMGoogleContactsInvisible];
+	[connectionManager addHandler:handler];
 }
-- (void)contacts:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
+- (void)contacts:(MGMURLBasicHandler *)theHandler didFailWithError:(NSError *)theError {
 	gettingContacts = NO;
 	NSLog(@"MGMGoogleContacts Error: %@", theError);
 	if ([contactsSender respondsToSelector:@selector(contactsError:)]) [contactsSender contactsError:theError];
 }
-- (void)contactsDidFinish:(NSDictionary *)theInfo {
+- (void)contactsDidFinish:(MGMURLBasicHandler *)theHandler {
 	[releaseTimer invalidate];
 	[releaseTimer release];
 	releaseTimer = nil;
 	[contacts release];
 	contacts = [NSMutableArray new];
-	MGMXMLElement *XML = [(MGMXMLDocument *)[[[MGMXMLDocument alloc] initWithData:[theInfo objectForKey:MGMConnectionData] options:MGMXMLDocumentTidyXML error:nil] autorelease] rootElement];
+	MGMXMLElement *XML = [(MGMXMLDocument *)[[[MGMXMLDocument alloc] initWithData:[theHandler data] options:MGMXMLDocumentTidyXML error:nil] autorelease] rootElement];
 	contactEntries = [[XML elementsForName:@"entry"] retain];
 	contactsIndex=0;
 	[self continueContacts];
 }
-- (void)photo:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
+- (void)photo:(MGMURLBasicHandler *)theHandler didFailWithError:(NSError *)theError {
 	NSLog(@"MGMGoogleContacts Photo Error: %@", theError);
 	[self parseContact];
 	contactsIndex++;
 	[self continueContacts];
 }
-- (void)photoDidFinish:(NSDictionary *)theInfo {
-	contactPhoto = [[theInfo objectForKey:MGMConnectionData] retain];
+- (void)photoDidFinish:(MGMURLBasicHandler *)theHandler {
+	contactPhoto = [[theHandler data] retain];
 	[self parseContact];
 	contactsIndex++;
 	[self continueContacts];
@@ -222,7 +228,10 @@ const BOOL MGMGoogleContactsInvisible = YES;
 						NSString *url = [[[links objectAtIndex:i] attributeForName:@"href"] stringValue];
 						NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:60.0];
 						[request setValue:authenticationString forHTTPHeaderField:MGMGCAuthorization];
-						[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(photo:didFailWithError:) didFinish:@selector(photoDidFinish:) invisible:YES object:nil];
+						MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+						[handler setFailWithError:@selector(photo:didFailWithError:)];
+						[handler setFinish:@selector(photoDidFinish:)];
+						[connectionManager addHandler:handler];
 						loadingPhoto = YES;
 						break;
 					}
@@ -276,14 +285,18 @@ const BOOL MGMGoogleContactsInvisible = YES;
 	groupsSender = sender;
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMGCGroupsURL]];
 	[request setValue:authenticationString forHTTPHeaderField:MGMGCAuthorization];
-	[connectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(groups:didFailWithError:) didFinish:@selector(groupsDidFinish:) invisible:MGMGoogleContactsInvisible object:nil];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+	[handler setFailWithError:@selector(groups:didFailWithError:)];
+	[handler setFinish:@selector(groupsDidFinish:)];
+	[handler setInvisible:MGMGoogleContactsInvisible];
+	[connectionManager addHandler:handler];
 }
-- (void)groups:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
+- (void)groups:(MGMURLBasicHandler *)theHandler didFailWithError:(NSError *)theError {
 	gettingGroups = NO;
 	NSLog(@"MGMGoogleContacts Error: %@", theError);
 }
-- (void)groupsDidFinish:(NSDictionary *)theInfo {
-	MGMXMLElement *XML = [(MGMXMLDocument *)[[[MGMXMLDocument alloc] initWithData:[theInfo objectForKey:MGMConnectionData] options:MGMXMLDocumentTidyXML error:nil] autorelease] rootElement];
+- (void)groupsDidFinish:(MGMURLBasicHandler *)theHandler {
+	MGMXMLElement *XML = [(MGMXMLDocument *)[[[MGMXMLDocument alloc] initWithData:[theHandler data] options:MGMXMLDocumentTidyXML error:nil] autorelease] rootElement];
 	NSLog(@"%@", XML);
 	gettingGroups = NO;
 }

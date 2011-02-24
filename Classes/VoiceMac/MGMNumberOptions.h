@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MGMContactsController.h"
 
-@class MGMController, MGMWhitePages;
+@class MGMController, MGMURLConnectionManager;
 
 @interface MGMContactsController (MGMSMS)
 - (IBAction)sms:(id)sender;
@@ -18,7 +18,7 @@
 @interface MGMNumberOptions : NSObject {
 	MGMContactsController *contactsController;
 	MGMController *controller;
-	MGMWhitePages *whitePages;
+	MGMURLConnectionManager *connectionManager;
 	IBOutlet NSWindow *optionsWindow;
 	IBOutlet NSTextField *phoneField;
 	IBOutlet NSTextField *nameField;

@@ -350,14 +350,17 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	NSURLCredential *credentials = [NSURLCredential credentialWithUser:username password:[S7CheckUser password] persistence:NSURLCredentialPersistenceForSession];
 	[S7ConnectionManager setCookieStorage:[S7CheckUser cookieStorage]];
 	[S7ConnectionManager setCredentials:credentials];
-	[S7ConnectionManager setCustomUseragent:MGMGCUseragent];
+	[S7ConnectionManager setUserAgent:MGMGCUseragent];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMGCAuthenticationURL] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15.0];
 	[request setHTTPMethod:MGMPostMethod];
 	[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
 	[request setHTTPBody:[[NSString stringWithFormat:MGMGCAuthenticationBody, [username addPercentEscapes], [[S7CheckUser password] addPercentEscapes]] dataUsingEncoding:NSUTF8StringEncoding]];
-	[S7ConnectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(authentication:didFailWithError:) didFinish:@selector(authenticationDidFinish:) invisible:NO object:nil];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+	[handler setFailWithError:@selector(authentication:didFailWithError:)];
+	[handler setFinish:@selector(authenticationDidFinish:)];
+	[S7ConnectionManager addHandler:handler];
 }
-- (void)authentication:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
+- (void)authentication:(MGMURLBasicHandler *)theHandler didFailWithError:(NSError *)theError {
 	[S7CheckUser remove];
 	[S7CheckUser release];
 	S7CheckUser = nil;
@@ -367,8 +370,8 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	step = 8;
 	[self displayStep];
 }
-- (void)authenticationDidFinish:(NSDictionary *)theInfo {
-	NSDictionary *info = [MGMGoogleContacts dictionaryWithData:[theInfo objectForKey:MGMConnectionData]];
+- (void)authenticationDidFinish:(MGMURLBasicHandler *)theHandler {
+	NSDictionary *info = [MGMGoogleContacts dictionaryWithString:[theHandler string]];
 	[S7ConnectionManager setCookieStorage:nil];
 	if ([info objectForKey:@"Error"]!=nil) {
 		[S7CheckUser remove];

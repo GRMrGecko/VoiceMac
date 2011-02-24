@@ -101,12 +101,12 @@
 #if TARGET_OS_IPHONE
 		if (speaker) [self speaker];
 #endif
+		if (recorderID!=PJSUA_INVALID_ID)
+			[self performSelectorOnMainThread:@selector(stopRecordingMain) withObject:nil waitUntilDone:YES];
 		if (isRingbackOn)
 			[self stopRingback];
 		if (holdMusicPlayer!=PJSUA_INVALID_ID)
 			[self performSelectorOnMainThread:@selector(stopHoldMusic) withObject:nil waitUntilDone:YES];
-		if (recorderID!=PJSUA_INVALID_ID)
-			[self performSelectorOnMainThread:@selector(stopRecordingMain) withObject:nil waitUntilDone:YES];
 	}
 	state = theState;
 }
@@ -252,6 +252,10 @@
 	
 	pj_thread_desc PJThreadDesc;
 	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
+	
+	
+	if (recorderID!=PJSUA_INVALID_ID)
+		[self performSelectorOnMainThread:@selector(stopRecordingMain) withObject:nil waitUntilDone:YES];
 	
 	pj_status_t status = pjsua_call_hangup(identifier, 0, NULL, NULL);
 	if (status!=PJ_SUCCESS)

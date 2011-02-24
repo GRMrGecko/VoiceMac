@@ -2,53 +2,51 @@
 //  MGMURLConnectionManager.h
 //  MGMUsers
 //
-//  Created by Mr. Gecko on 7/23/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Created by Mr. Gecko on 2/21/11.
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
 //
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const MGMCookie;
-extern NSString * const MGMUserAgent;
+@class MGMURLConnectionManager;
 
-extern NSString * const MGMConnectionObject;
-extern NSString * const MGMConnectionRequest;
-extern NSString * const MGMConnectionOldRequest;
-extern NSString * const MGMConnectionResponse;
-extern NSString * const MGMConnectionDelegate;
-extern NSString * const MGMConnectionDidReceiveResponse;
-extern NSString * const MGMConnectionDidReceiveData;
-extern NSString * const MGMConnectionWillRedirect;
-extern NSString * const MGMConnectionDidFailWithError;
-extern NSString * const MGMConnectionDidFinish;
-extern NSString * const MGMConnectionInvisible;
-extern NSString * const MGMConnectionData;
+@protocol MGMURLConnectionHandler <NSObject>
+- (void)setManager:(MGMURLConnectionManager *)theManager;
+- (void)setConnection:(NSURLConnection *)theConnection;
+- (NSURLConnection *)connection;
+- (void)setRequest:(NSMutableURLRequest *)theRequest;
+- (NSMutableURLRequest *)request;
+- (BOOL)synchronous;
+- (NSURLCredential *)credentailsForChallenge:(NSURLAuthenticationChallenge *)theChallenge;
+- (void)uploaded:(unsigned long)theBytes totalBytes:(unsigned long)theTotalBytes totalBytesExpected:(unsigned long)theExpectedBytes;
+- (NSURLRequest *)willSendRequest:(NSURLRequest *)theRequest redirectResponse:(NSHTTPURLResponse *)theResponse;
+- (void)didReceiveResponse:(NSHTTPURLResponse *)theResponse;
+- (void)didReceiveData:(NSData *)theData;
+- (void)didFailWithError:(NSError *)theError;
+- (void)didFinishLoading;
+@end
 
 @interface MGMURLConnectionManager : NSObject {
-@private
     NSHTTPCookieStorage *cookieStorage;
-    NSMutableArray *connections;
-    NSURLConnection *connection;
-    NSMutableData *receivedData;
-    NSString *customUseragent;
+    NSString *userAgent;
 	NSURLCredential *credentials;
+	NSMutableArray *handlers;
+	
+	BOOL runningSynchronousConnection;
 }
-+ (id)defaultManager;
++ (id)manager;
 + (id)managerWithCookieStorage:(id)theCookieStorage;
 - (id)initWithCookieStorage:(id)theCookieStorage;
-- (NSHTTPCookieStorage *)cookieStorage;
-- (void)setCredentials:(NSURLCredential *)theCredentials;
-- (NSURLCredential *)credentials;
+
 - (void)setCookieStorage:(id)theCookieStorage;
-- (NSString *)customUseragent;
-- (void)setCustomUseragent:(NSString *)theCustomUseragent;
-- (NSData *)synchronousRequest:(NSURLRequest *)theRequest returningResponse:(NSURLResponse **)theResponse error:(NSError **)theError;
-- (void)connectionWithRequest:(NSURLRequest *)theRequest delegate:(id)theDelegate;
-- (void)connectionWithRequest:(NSURLRequest *)theRequest delegate:(id)theDelegate object:(id)theObject;
-- (void)connectionWithRequest:(NSURLRequest *)theRequest delegate:(id)theDelegate didFailWithError:(SEL)didFailWithError didFinish:(SEL)didFinish invisible:(BOOL)isInvisible object:(id)theObject;
-- (void)connectionWithRequest:(NSURLRequest *)theRequest delegate:(id)theDelegate didReceiveResponse:(SEL)didReceiveResponse didFailWithError:(SEL)didFailWithError didFinish:(SEL)didFinish invisible:(BOOL)isInvisible object:(id)theObject;
-- (void)connectionWithRequest:(NSURLRequest *)theRequest delegate:(id)theDelegate didReceiveResponse:(SEL)didReceiveResponse willRedirect:(SEL)willRedirect didFailWithError:(SEL)didFailWithError didFinish:(SEL)didFinish invisible:(BOOL)isInvisible object:(id)theObject;
-- (void)connectionWithRequest:(NSURLRequest *)theRequest delegate:(id)theDelegate didReceiveResponse:(SEL)didReceiveResponse didReceiveData:(SEL)didReceiveData willRedirect:(SEL)willRedirect didFailWithError:(SEL)didFailWithError didFinish:(SEL)didFinish invisible:(BOOL)isInvisible object:(id)theObject;
-- (void)cancelCurrent;
+- (NSHTTPCookieStorage *)cookieStorage;
+- (void)setUserAgent:(NSString *)theUserAgent;
+- (NSString *)userAgent;
+- (void)setCredentials:(NSURLCredential *)theCredentials;
+- (void)setUser:(NSString *)theUser password:(NSString *)thePassword;
+- (NSURLCredential *)credentials;
+
+- (void)addHandler:(id)theHandler;
+- (void)cancelHandler:(id)theHandler;
 - (void)cancelAll;
 @end

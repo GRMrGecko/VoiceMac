@@ -116,7 +116,7 @@
 		[[instance inbox] sendMessage:[SMSTextView string] phoneNumbers:SMSNumbers smsID:@"" delegate:self];
 	}
 }
-- (void)message:(NSDictionary *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
+- (void)message:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	sendingMessage = NO;
 	[SMSTextView setEditable:YES];
 	[sendButton setTitle:@"Send"];
@@ -130,7 +130,7 @@
 	[theAlert setAlertStyle:2];
 	[theAlert runModal];
 }
-- (void)messageDidFinish:(NSDictionary *)theInfo instance:(MGMInstance *)theInstance {
+- (void)messageDidFinish:(MGMDelegateInfo *)theInfo instance:(MGMInstance *)theInstance {
 	sendingMessage = NO;
 	[SMSWindow close];
 }
