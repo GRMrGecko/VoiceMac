@@ -74,7 +74,6 @@
 		2A487CCB124BE22E00E8EE4E /* MGMSIPCall.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BA1245676A00D119B5 /* MGMSIPCall.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A487CCC124BE22E00E8EE4E /* MGMSIPURL.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BC1245676A00D119B5 /* MGMSIPURL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A487CCD124BE22E00E8EE4E /* MGMXML.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487CAE124BE0C400E8EE4E /* MGMXML.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487CCE124BE22E00E8EE4E /* MGMXMLAddons.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487C93124BE0AB00E8EE4E /* MGMXMLAddons.h */; };
 		2A487CCF124BE22E00E8EE4E /* MGMXMLDocument.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487C95124BE0AB00E8EE4E /* MGMXMLDocument.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A487CD0124BE22E00E8EE4E /* MGMXMLDTD.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487C97124BE0AB00E8EE4E /* MGMXMLDTD.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A487CD1124BE22E00E8EE4E /* MGMXMLDTDNode.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487C99124BE0AB00E8EE4E /* MGMXMLDTDNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -83,6 +82,10 @@
 		2A487CD4124BE22E00E8EE4E /* MGMXMLNodeOptions.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9F124BE0AB00E8EE4E /* MGMXMLNodeOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A487CD5124BE22E00E8EE4E /* VoiceBase.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BE1245676A00D119B5 /* VoiceBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A487D0F124BE41B00E8EE4E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A487D0E124BE41B00E8EE4E /* libxml2.dylib */; };
+		2A50699C1315726E003CACD5 /* MGMDelegateInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A50699A1315726C003CACD5 /* MGMDelegateInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2A50699D1315726E003CACD5 /* MGMDelegateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A50699B1315726D003CACD5 /* MGMDelegateInfo.m */; };
+		2A50699E1315726E003CACD5 /* MGMDelegateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A50699B1315726D003CACD5 /* MGMDelegateInfo.m */; };
+		2A5069AB13157E0D003CACD5 /* MGMDelegateInfo.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A50699A1315726C003CACD5 /* MGMDelegateInfo.h */; };
 		2A77133C124C4CE200D68042 /* MGMSound.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A77133A124C4CE200D68042 /* MGMSound.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A77133D124C4CE200D68042 /* MGMSound.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A77133B124C4CE200D68042 /* MGMSound.m */; };
 		2A771340124C4D2800D68042 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A77133F124C4D2800D68042 /* AudioToolbox.framework */; };
@@ -127,9 +130,9 @@
 				2A487CC5124BE22E00E8EE4E /* MGMAddons.h in Copy Headers */,
 				2A487CC6124BE22E00E8EE4E /* MGMInbox.h in Copy Headers */,
 				2A487CC7124BE22E00E8EE4E /* MGMInstance.h in Copy Headers */,
+				2A5069AB13157E0D003CACD5 /* MGMDelegateInfo.h in Copy Headers */,
 				2A487CC8124BE22E00E8EE4E /* MGMThemeManager.h in Copy Headers */,
 				2A487CCD124BE22E00E8EE4E /* MGMXML.h in Copy Headers */,
-				2A487CCE124BE22E00E8EE4E /* MGMXMLAddons.h in Copy Headers */,
 				2A487CCF124BE22E00E8EE4E /* MGMXMLDocument.h in Copy Headers */,
 				2A487CD0124BE22E00E8EE4E /* MGMXMLDTD.h in Copy Headers */,
 				2A487CD1124BE22E00E8EE4E /* MGMXMLDTDNode.h in Copy Headers */,
@@ -203,6 +206,8 @@
 		2A487C9F124BE0AB00E8EE4E /* MGMXMLNodeOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMXMLNodeOptions.h; sourceTree = "<group>"; };
 		2A487CAE124BE0C400E8EE4E /* MGMXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMXML.h; sourceTree = "<group>"; };
 		2A487D0E124BE41B00E8EE4E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		2A50699A1315726C003CACD5 /* MGMDelegateInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMDelegateInfo.h; sourceTree = "<group>"; };
+		2A50699B1315726D003CACD5 /* MGMDelegateInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMDelegateInfo.m; sourceTree = "<group>"; };
 		2A77133A124C4CE200D68042 /* MGMSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSound.h; sourceTree = "<group>"; };
 		2A77133B124C4CE200D68042 /* MGMSound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSound.m; sourceTree = "<group>"; };
 		2A77133F124C4D2800D68042 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -328,6 +333,8 @@
 				2A1171B01245676A00D119B5 /* MGMInbox.m */,
 				2A1171B11245676A00D119B5 /* MGMInstance.h */,
 				2A1171B21245676A00D119B5 /* MGMInstance.m */,
+				2A50699A1315726C003CACD5 /* MGMDelegateInfo.h */,
+				2A50699B1315726D003CACD5 /* MGMDelegateInfo.m */,
 				2A77133A124C4CE200D68042 /* MGMSound.h */,
 				2A77133B124C4CE200D68042 /* MGMSound.m */,
 				2A1171B31245676A00D119B5 /* MGMThemeManager.h */,
@@ -465,6 +472,7 @@
 				2A1171C81245676A00D119B5 /* MGMAddons.h in Headers */,
 				2A1171CA1245676A00D119B5 /* MGMInbox.h in Headers */,
 				2A1171CC1245676A00D119B5 /* MGMInstance.h in Headers */,
+				2A50699C1315726E003CACD5 /* MGMDelegateInfo.h in Headers */,
 				2A7713BF124C6A5B00D68042 /* MGMSound.h in Headers */,
 				2A1171CE1245676A00D119B5 /* MGMThemeManager.h in Headers */,
 				2A1171D01245676A00D119B5 /* MGMSIP.h in Headers */,
@@ -580,6 +588,7 @@
 				2AE6EE6C1249DA790006B5AC /* MGMSIPCall.m in Sources */,
 				2AE6EE6D1249DA790006B5AC /* MGMSIPURL.m in Sources */,
 				2A77133D124C4CE200D68042 /* MGMSound.m in Sources */,
+				2A50699E1315726E003CACD5 /* MGMDelegateInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -606,6 +615,7 @@
 				2A487CA7124BE0AB00E8EE4E /* MGMXMLDTDNode.m in Sources */,
 				2A487CA9124BE0AB00E8EE4E /* MGMXMLElement.m in Sources */,
 				2A487CAB124BE0AB00E8EE4E /* MGMXMLNode.m in Sources */,
+				2A50699D1315726E003CACD5 /* MGMDelegateInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -64,7 +64,7 @@
 	return [temp autorelease];
 }
 - (BOOL)containsString:(NSString *)string {
-	return ([[self lowercaseString] rangeOfString:[string lowercaseString]].location != NSNotFound);
+	return ([[self lowercaseString] rangeOfString:[string lowercaseString]].location!=NSNotFound);
 }
 
 - (NSString *)javascriptEscape {
