@@ -7,6 +7,10 @@ build
 *.xcodeproj/project.xcworkspace/xcuserdata
 *.xcworkspace/xcuserdata
 SIP/opt*
-SIP/pjproject*
+SIP/pjproject
+SIP/pjproject-*
+FFmpeg/opt*
+FFmpeg/ffmpeg
+FFmpeg/ffmpeg-*
 VoiceMac/*
 Screenshots/*

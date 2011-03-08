@@ -36,6 +36,9 @@
 		2A03CCA21247D75700730F0C /* SMSThemesPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CCA11247D75700730F0C /* SMSThemesPane.xib */; };
 		2A03CCA41247D75C00730F0C /* SoundsPane.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2A03CCA31247D75C00730F0C /* SoundsPane.xib */; };
 		2A0C3698127F40EF00334471 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 2A0C3697127F40EF00334471 /* dsa_pub.pem */; };
+		2A0F564813228C3E00046E86 /* MGMConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0F564513228C3E00046E86 /* MGMConverter.m */; };
+		2A0F564913228C3E00046E86 /* MGMFFmpeg.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A0F564713228C3E00046E86 /* MGMFFmpeg.m */; };
+		2A0F564B132292EE00046E86 /* About.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 2A0F564A132292EE00046E86 /* About.rtf */; };
 		2A11738212456E4300D119B5 /* MGMInboxPlayWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11734112456E4300D119B5 /* MGMInboxPlayWindow.m */; };
 		2A11738312456E4300D119B5 /* MGMInboxWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11734312456E4300D119B5 /* MGMInboxWindow.m */; };
 		2A11738412456E4300D119B5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11734412456E4300D119B5 /* main.m */; };
@@ -52,7 +55,6 @@
 		2A11738F12456E4300D119B5 /* MGMSoundsPane.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11735B12456E4300D119B5 /* MGMSoundsPane.m */; };
 		2A11739012456E4300D119B5 /* MGMSIPCallWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11735E12456E4300D119B5 /* MGMSIPCallWindow.m */; };
 		2A11739112456E4300D119B5 /* MGMSIPUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11736012456E4300D119B5 /* MGMSIPUser.m */; };
-		2A11739212456E4300D119B5 /* MGMSIPWavConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11736212456E4300D119B5 /* MGMSIPWavConverter.m */; };
 		2A11739312456E4300D119B5 /* MGMMultiSMS.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11736512456E4300D119B5 /* MGMMultiSMS.m */; };
 		2A11739412456E4300D119B5 /* MGMSMSManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11736712456E4300D119B5 /* MGMSMSManager.m */; };
 		2A11739512456E4300D119B5 /* MGMSMSMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A11736912456E4300D119B5 /* MGMSMSMessageView.m */; };
@@ -106,7 +108,7 @@
 		2A1174D812456F2700D119B5 /* SIP.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11742812456F2600D119B5 /* SIP.png */; };
 		2A1174DB12456F2700D119B5 /* SMSThemes.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11742B12456F2600D119B5 /* SMSThemes.png */; };
 		2A1174DF12456F2700D119B5 /* Sounds.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11742F12456F2600D119B5 /* Sounds.png */; };
-		2A11750B12456F2700D119B5 /* VoiceMac Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11746312456F2700D119B5 /* VoiceMac Icon.png */; };
+		2A11750B12456F2700D119B5 /* VoiceMacIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11746312456F2700D119B5 /* VoiceMacIcon.png */; };
 		2A11750D12456F2700D119B5 /* VoiceMac Setup.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11746512456F2700D119B5 /* VoiceMac Setup.png */; };
 		2A11751112456F2700D119B5 /* volume.png in Resources */ = {isa = PBXBuildFile; fileRef = 2A11746912456F2700D119B5 /* volume.png */; };
 		2A11753D12456FA600D119B5 /* SMS Themes in Resources */ = {isa = PBXBuildFile; fileRef = 2A11751212456FA600D119B5 /* SMS Themes */; };
@@ -187,6 +189,11 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		2A03CC891247D5B100730F0C /* License.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = License.txt; sourceTree = SOURCE_ROOT; };
 		2A0C3697127F40EF00334471 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
+		2A0F564413228C3E00046E86 /* MGMConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMConverter.h; sourceTree = "<group>"; };
+		2A0F564513228C3E00046E86 /* MGMConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMConverter.m; sourceTree = "<group>"; };
+		2A0F564613228C3E00046E86 /* MGMFFmpeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMFFmpeg.h; sourceTree = "<group>"; };
+		2A0F564713228C3E00046E86 /* MGMFFmpeg.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMFFmpeg.m; sourceTree = "<group>"; };
+		2A0F564A132292EE00046E86 /* About.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = About.rtf; sourceTree = SOURCE_ROOT; };
 		2A11734012456E4300D119B5 /* MGMInboxPlayWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMInboxPlayWindow.h; sourceTree = "<group>"; };
 		2A11734112456E4300D119B5 /* MGMInboxPlayWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMInboxPlayWindow.m; sourceTree = "<group>"; };
 		2A11734212456E4300D119B5 /* MGMInboxWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMInboxWindow.h; sourceTree = "<group>"; };
@@ -218,8 +225,6 @@
 		2A11735E12456E4300D119B5 /* MGMSIPCallWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSIPCallWindow.m; sourceTree = "<group>"; };
 		2A11735F12456E4300D119B5 /* MGMSIPUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSIPUser.h; sourceTree = "<group>"; };
 		2A11736012456E4300D119B5 /* MGMSIPUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSIPUser.m; sourceTree = "<group>"; };
-		2A11736112456E4300D119B5 /* MGMSIPWavConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSIPWavConverter.h; sourceTree = "<group>"; };
-		2A11736212456E4300D119B5 /* MGMSIPWavConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSIPWavConverter.m; sourceTree = "<group>"; };
 		2A11736412456E4300D119B5 /* MGMMultiSMS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMMultiSMS.h; sourceTree = "<group>"; };
 		2A11736512456E4300D119B5 /* MGMMultiSMS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMMultiSMS.m; sourceTree = "<group>"; };
 		2A11736612456E4300D119B5 /* MGMSMSManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSMSManager.h; sourceTree = "<group>"; };
@@ -301,7 +306,7 @@
 		2A11743312456F2600D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SIPUser.xib; sourceTree = "<group>"; };
 		2A11745912456F2700D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SMSMessageView.xib; sourceTree = "<group>"; };
 		2A11745A12456F2700D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/SMSWindow.xib; sourceTree = "<group>"; };
-		2A11746312456F2700D119B5 /* VoiceMac Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VoiceMac Icon.png"; sourceTree = "<group>"; };
+		2A11746312456F2700D119B5 /* VoiceMacIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VoiceMacIcon.png; sourceTree = "<group>"; };
 		2A11746512456F2700D119B5 /* VoiceMac Setup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "VoiceMac Setup.png"; sourceTree = "<group>"; };
 		2A11746612456F2700D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/VoicemailView.xib; sourceTree = "<group>"; };
 		2A11746712456F2700D119B5 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/VoiceUser.xib; sourceTree = "<group>"; };
@@ -406,6 +411,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2A0F564313228C3E00046E86 /* FFmpeg */ = {
+			isa = PBXGroup;
+			children = (
+				2A0F564413228C3E00046E86 /* MGMConverter.h */,
+				2A0F564513228C3E00046E86 /* MGMConverter.m */,
+				2A0F564613228C3E00046E86 /* MGMFFmpeg.h */,
+				2A0F564713228C3E00046E86 /* MGMFFmpeg.m */,
+			);
+			name = FFmpeg;
+			path = Classes/FFmpeg;
+			sourceTree = SOURCE_ROOT;
+		};
 		2A11733E12456E4300D119B5 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -425,6 +442,7 @@
 				2A11735112456E4300D119B5 /* MGMVoiceUser.h */,
 				2A11735212456E4300D119B5 /* MGMVoiceUser.m */,
 				2A11735312456E4300D119B5 /* Preferences */,
+				2A0F564313228C3E00046E86 /* FFmpeg */,
 				2A11735C12456E4300D119B5 /* SIP */,
 				2A11736312456E4300D119B5 /* SMS */,
 				2A11736E12456E4300D119B5 /* Views */,
@@ -466,8 +484,6 @@
 				2A11736012456E4300D119B5 /* MGMSIPUser.m */,
 				2A11735D12456E4300D119B5 /* MGMSIPCallWindow.h */,
 				2A11735E12456E4300D119B5 /* MGMSIPCallWindow.m */,
-				2A11736112456E4300D119B5 /* MGMSIPWavConverter.h */,
-				2A11736212456E4300D119B5 /* MGMSIPWavConverter.m */,
 			);
 			path = SIP;
 			sourceTree = "<group>";
@@ -518,6 +534,7 @@
 			isa = PBXGroup;
 			children = (
 				2A03CC891247D5B100730F0C /* License.txt */,
+				2A0F564A132292EE00046E86 /* About.rtf */,
 				2A117684124573D600D119B5 /* VoiceMac.icns */,
 				2A11740412456F2600D119B5 /* Info.plist */,
 				2A0C3697127F40EF00334471 /* dsa_pub.pem */,
@@ -544,7 +561,7 @@
 				2A03CC811247D48800730F0C /* SMSMessageView.xib */,
 				2A03CC831247D48E00730F0C /* SMSWindow.xib */,
 				2A1175E312456FC100D119B5 /* Sounds */,
-				2A11746312456F2700D119B5 /* VoiceMac Icon.png */,
+				2A11746312456F2700D119B5 /* VoiceMacIcon.png */,
 				2A11746512456F2700D119B5 /* VoiceMac Setup.png */,
 				2A03CC851247D49300730F0C /* VoicemailView.xib */,
 				2A03CC871247D49800730F0C /* VoiceUser.xib */,
@@ -753,7 +770,7 @@
 				2A03CC801247D48100730F0C /* SIPUser.xib in Resources */,
 				2A03CC821247D48800730F0C /* SMSMessageView.xib in Resources */,
 				2A03CC841247D48E00730F0C /* SMSWindow.xib in Resources */,
-				2A11750B12456F2700D119B5 /* VoiceMac Icon.png in Resources */,
+				2A11750B12456F2700D119B5 /* VoiceMacIcon.png in Resources */,
 				2A11750D12456F2700D119B5 /* VoiceMac Setup.png in Resources */,
 				2A03CC861247D49300730F0C /* VoicemailView.xib in Resources */,
 				2A03CC881247D49800730F0C /* VoiceUser.xib in Resources */,
@@ -764,6 +781,7 @@
 				2A11770412458C8A00D119B5 /* blankicon.png in Resources */,
 				2A03CC8A1247D5B100730F0C /* License.txt in Resources */,
 				2A0C3698127F40EF00334471 /* dsa_pub.pem in Resources */,
+				2A0F564B132292EE00046E86 /* About.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -806,7 +824,6 @@
 				2A11738F12456E4300D119B5 /* MGMSoundsPane.m in Sources */,
 				2A11739012456E4300D119B5 /* MGMSIPCallWindow.m in Sources */,
 				2A11739112456E4300D119B5 /* MGMSIPUser.m in Sources */,
-				2A11739212456E4300D119B5 /* MGMSIPWavConverter.m in Sources */,
 				2A11739312456E4300D119B5 /* MGMMultiSMS.m in Sources */,
 				2A11739412456E4300D119B5 /* MGMSMSManager.m in Sources */,
 				2A11739512456E4300D119B5 /* MGMSMSMessageView.m in Sources */,
@@ -821,6 +838,8 @@
 				2A11739E12456E4300D119B5 /* MGMSplitView.m in Sources */,
 				2A11739F12456E4300D119B5 /* MGMTranslucentTabView.m in Sources */,
 				2A1173A012456E4300D119B5 /* MGMViewCell.m in Sources */,
+				2A0F564813228C3E00046E86 /* MGMConverter.m in Sources */,
+				2A0F564913228C3E00046E86 /* MGMFFmpeg.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -992,8 +1011,15 @@
 				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/include\"";
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/lib\"";
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"\"$(SRCROOT)/SIP/opt/include\"",
+					"\"$(SRCROOT)/FFmpeg/opt/include\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/SIP/opt/lib\"",
+					"\"$(SRCROOT)/FFmpeg/opt/lib\"",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1001,6 +1027,14 @@
 					"-DPJ_AUTOCONF=1",
 					"-DNDEBUG",
 					"-DMGMSIPENABLED=1",
+				);
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-lavformat",
+					"-lavcodec",
+					"-lavdevice",
+					"-lavutil",
+					"-lswscale",
 				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
@@ -1023,10 +1057,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceMac/VoiceMac_Prefix.pch;
-				HEADER_SEARCH_PATHS = (
-					/usr/include/libxml2,
-					"\"$(SRCROOT)/SIP/opt/include\"",
-				);
 				INFOPLIST_FILE = Resources/VoiceMac/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = VoiceMac;
@@ -1045,14 +1075,29 @@
 				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/include\"";
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/lib\"";
+				HEADER_SEARCH_PATHS = (
+					/usr/include/libxml2,
+					"\"$(SRCROOT)/SIP/opt/include\"",
+					"\"$(SRCROOT)/FFmpeg/opt/include\"",
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/SIP/opt/lib\"",
+					"\"$(SRCROOT)/FFmpeg/opt/lib\"",
+				);
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
 				OTHER_CFLAGS = (
 					"-DPJ_AUTOCONF=1",
 					"-DNDEBUG",
 					"-DMGMSIPENABLED=1",
+				);
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-lavformat",
+					"-lavcodec",
+					"-lavdevice",
+					"-lavutil",
+					"-lswscale",
 				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
@@ -1072,10 +1117,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceMac/VoiceMac_Prefix.pch;
-				HEADER_SEARCH_PATHS = (
-					/usr/include/libxml2,
-					"\"$(SRCROOT)/SIP/opt/include\"",
-				);
 				INFOPLIST_FILE = Resources/VoiceMac/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = VoiceMac;
@@ -1125,7 +1166,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceMac/VoiceMac_Prefix.pch;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Resources/VoiceMac/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = VoiceMac;
@@ -1144,7 +1184,6 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceMac/VoiceMac_Prefix.pch;
-				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				INFOPLIST_FILE = Resources/VoiceMac/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = VoiceMac;
@@ -1164,9 +1203,18 @@
 				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-lavformat",
+					"-lavcodec",
+					"-lavdevice",
+					"-lavutil",
+					"-lswscale",
+				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 				VALID_ARCHS = "ppc i386 x86_64";
@@ -1185,8 +1233,17 @@
 				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
+				OTHER_LDFLAGS = (
+					"-lz",
+					"-lavformat",
+					"-lavcodec",
+					"-lavdevice",
+					"-lavutil",
+					"-lswscale",
+				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
 				VALID_ARCHS = "ppc i386 x86_64";

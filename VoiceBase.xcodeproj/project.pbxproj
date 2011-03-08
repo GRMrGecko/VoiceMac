@@ -81,7 +81,6 @@
 		2A487CD3124BE22E00E8EE4E /* MGMXMLNode.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9D124BE0AB00E8EE4E /* MGMXMLNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A487CD4124BE22E00E8EE4E /* MGMXMLNodeOptions.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A487C9F124BE0AB00E8EE4E /* MGMXMLNodeOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A487CD5124BE22E00E8EE4E /* VoiceBase.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = 2A1171BE1245676A00D119B5 /* VoiceBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A487D0F124BE41B00E8EE4E /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A487D0E124BE41B00E8EE4E /* libxml2.dylib */; };
 		2A50699C1315726E003CACD5 /* MGMDelegateInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A50699A1315726C003CACD5 /* MGMDelegateInfo.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A50699D1315726E003CACD5 /* MGMDelegateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A50699B1315726D003CACD5 /* MGMDelegateInfo.m */; };
 		2A50699E1315726E003CACD5 /* MGMDelegateInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A50699B1315726D003CACD5 /* MGMDelegateInfo.m */; };
@@ -205,7 +204,6 @@
 		2A487C9E124BE0AB00E8EE4E /* MGMXMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMXMLNode.m; sourceTree = "<group>"; };
 		2A487C9F124BE0AB00E8EE4E /* MGMXMLNodeOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMXMLNodeOptions.h; sourceTree = "<group>"; };
 		2A487CAE124BE0C400E8EE4E /* MGMXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMXML.h; sourceTree = "<group>"; };
-		2A487D0E124BE41B00E8EE4E /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		2A50699A1315726C003CACD5 /* MGMDelegateInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMDelegateInfo.h; sourceTree = "<group>"; };
 		2A50699B1315726D003CACD5 /* MGMDelegateInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMDelegateInfo.m; sourceTree = "<group>"; };
 		2A77133A124C4CE200D68042 /* MGMSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSound.h; sourceTree = "<group>"; };
@@ -234,7 +232,6 @@
 				2AE6EE701249DA870006B5AC /* libMGMUsers.a in Frameworks */,
 				2AE6EE761249DB2F0006B5AC /* CoreGraphics.framework in Frameworks */,
 				2AE6EE7A1249DB2F0006B5AC /* UIKit.framework in Frameworks */,
-				2A487D0F124BE41B00E8EE4E /* libxml2.dylib in Frameworks */,
 				2A771340124C4D2800D68042 /* AudioToolbox.framework in Frameworks */,
 				2A771344124C4F9A00D68042 /* AVFoundation.framework in Frameworks */,
 				2A1E9723124D174200D3BEAE /* CoreAudio.framework in Frameworks */,
@@ -422,7 +419,6 @@
 			isa = PBXGroup;
 			children = (
 				2AE6EE0F1249D70F0006B5AC /* libMGMUsers.a */,
-				2A487D0E124BE41B00E8EE4E /* libxml2.dylib */,
 			);
 			name = "Linked Libraries Touch";
 			sourceTree = "<group>";
@@ -655,6 +651,7 @@
 				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = VoiceBase;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -672,6 +669,7 @@
 					"\"$(SRCROOT)/Frameworks\"",
 				);
 				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
@@ -679,6 +677,7 @@
 				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = VoiceBase;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -688,7 +687,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
-					ppc7400,
+					ppc,
 					i386,
 					x86_64,
 				);
@@ -698,12 +697,13 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
-				VALID_ARCHS = "ppc7400 i386 x86_64";
+				VALID_ARCHS = "ppc i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -711,7 +711,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
-					ppc7400,
+					ppc,
 					i386,
 					x86_64,
 				);
@@ -720,11 +720,12 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
-				VALID_ARCHS = "ppc7400 i386 x86_64";
+				VALID_ARCHS = "ppc i386 x86_64";
 			};
 			name = Release;
 		};
@@ -732,7 +733,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
-					ppc7400,
+					ppc,
 					i386,
 					x86_64,
 				);
@@ -756,7 +757,7 @@
 				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
-				VALID_ARCHS = "ppc7400 i386 x86_64";
+				VALID_ARCHS = "ppc i386 x86_64";
 			};
 			name = "Debug SIP";
 		};
@@ -783,24 +784,24 @@
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
-					"-lg7221codec-universal",
-					"-lgsmcodec-universal",
-					"-lilbccodec-universal",
-					"-lmilenage-universal",
-					"-lpj-universal",
-					"-lpjlib-util-universal",
-					"-lpjmedia-audiodev-universal",
-					"-lpjmedia-codec-universal",
-					"-lpjmedia-universal",
-					"-lpjnath-universal",
-					"-lpjsip-simple-universal",
-					"-lpjsip-ua-universal",
-					"-lpjsip-universal",
-					"-lpjsua-universal",
-					"-lportaudio-universal",
-					"-lresample-universal",
-					"-lspeex-universal",
-					"-lsrtp-universal",
+					"-lg7221codec",
+					"-lgsmcodec",
+					"-lilbccodec",
+					"-lmilenage",
+					"-lpj",
+					"-lpjlib-util",
+					"-lpjmedia-audiodev",
+					"-lpjmedia-codec",
+					"-lpjmedia",
+					"-lpjnath",
+					"-lpjsip-simple",
+					"-lpjsip-ua",
+					"-lpjsip",
+					"-lpjsua",
+					"-lportaudio",
+					"-lresample",
+					"-lspeex",
+					"-lsrtp",
 				);
 				PRODUCT_NAME = VoiceBase;
 				WRAPPER_EXTENSION = framework;
@@ -811,7 +812,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = (
-					ppc7400,
+					ppc,
 					i386,
 					x86_64,
 				);
@@ -833,7 +834,7 @@
 				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
-				VALID_ARCHS = "ppc7400 i386 x86_64";
+				VALID_ARCHS = "ppc i386 x86_64";
 			};
 			name = "Release SIP";
 		};
@@ -849,6 +850,7 @@
 					"\"$(SRCROOT)/Frameworks\"",
 				);
 				FRAMEWORK_VERSION = A;
+				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
@@ -857,24 +859,24 @@
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				OTHER_LDFLAGS = (
-					"-lg7221codec-universal",
-					"-lgsmcodec-universal",
-					"-lilbccodec-universal",
-					"-lmilenage-universal",
-					"-lpj-universal",
-					"-lpjlib-util-universal",
-					"-lpjmedia-audiodev-universal",
-					"-lpjmedia-codec-universal",
-					"-lpjmedia-universal",
-					"-lpjnath-universal",
-					"-lpjsip-simple-universal",
-					"-lpjsip-ua-universal",
-					"-lpjsip-universal",
-					"-lpjsua-universal",
-					"-lportaudio-universal",
-					"-lresample-universal",
-					"-lspeex-universal",
-					"-lsrtp-universal",
+					"-lg7221codec",
+					"-lgsmcodec",
+					"-lilbccodec",
+					"-lmilenage",
+					"-lpj",
+					"-lpjlib-util",
+					"-lpjmedia-audiodev",
+					"-lpjmedia-codec",
+					"-lpjmedia",
+					"-lpjnath",
+					"-lpjsip-simple",
+					"-lpjsip-ua",
+					"-lpjsip",
+					"-lpjsua",
+					"-lportaudio",
+					"-lresample",
+					"-lspeex",
+					"-lsrtp",
 				);
 				PRODUCT_NAME = VoiceBase;
 				WRAPPER_EXTENSION = framework;
@@ -935,23 +937,29 @@
 					"-DMGMSIPENABLED=1",
 				);
 				OTHER_LDFLAGS = (
-					"-lg7221codec-ios-universal",
-					"-lgsmcodec-ios-universal",
-					"-lilbccodec-ios-universal",
-					"-lmilenage-ios-universal",
-					"-lpj-ios-universal",
-					"-lpjlib-util-ios-universal",
-					"-lpjmedia-audiodev-ios-universal",
-					"-lpjmedia-codec-ios-universal",
-					"-lpjmedia-ios-universal",
-					"-lpjnath-ios-universal",
-					"-lpjsip-ios-universal",
-					"-lpjsip-simple-ios-universal",
-					"-lpjsip-ua-ios-universal",
-					"-lpjsua-ios-universal",
-					"-lresample-ios-universal",
-					"-lspeex-ios-universal",
-					"-lsrtp-ios-universal",
+					"-lg7221codec-ios",
+					"-lgsmcodec-ios",
+					"-lilbccodec-ios",
+					"-lmilenage-ios",
+					"-lpj-ios",
+					"-lpjlib-util-ios",
+					"-lpjmedia-audiodev-ios",
+					"-lpjmedia-codec-ios",
+					"-lpjmedia-ios",
+					"-lpjnath-ios",
+					"-lpjsip-ios",
+					"-lpjsip-simple-ios",
+					"-lpjsip-ua-ios",
+					"-lpjsua-ios",
+					"-lresample-ios",
+					"-lspeex-ios",
+					"-lsrtp-ios",
+					"-lz",
+					"-lavcodec",
+					"-lavdevice",
+					"-lavformat",
+					"-lavutil",
+					"-lswscale",
 					"-ObjC",
 					"-all_load",
 				);
@@ -1017,23 +1025,29 @@
 					"-DMGMSIPENABLED=1",
 				);
 				OTHER_LDFLAGS = (
-					"-lg7221codec-ios-universal",
-					"-lgsmcodec-ios-universal",
-					"-lilbccodec-ios-universal",
-					"-lmilenage-ios-universal",
-					"-lpj-ios-universal",
-					"-lpjlib-util-ios-universal",
-					"-lpjmedia-audiodev-ios-universal",
-					"-lpjmedia-codec-ios-universal",
-					"-lpjmedia-ios-universal",
-					"-lpjnath-ios-universal",
-					"-lpjsip-ios-universal",
-					"-lpjsip-simple-ios-universal",
-					"-lpjsip-ua-ios-universal",
-					"-lpjsua-ios-universal",
-					"-lresample-ios-universal",
-					"-lspeex-ios-universal",
-					"-lsrtp-ios-universal",
+					"-lg7221codec-ios",
+					"-lgsmcodec-ios",
+					"-lilbccodec-ios",
+					"-lmilenage-ios",
+					"-lpj-ios",
+					"-lpjlib-util-ios",
+					"-lpjmedia-audiodev-ios",
+					"-lpjmedia-codec-ios",
+					"-lpjmedia-ios",
+					"-lpjnath-ios",
+					"-lpjsip-ios",
+					"-lpjsip-simple-ios",
+					"-lpjsip-ua-ios",
+					"-lpjsua-ios",
+					"-lresample-ios",
+					"-lspeex-ios",
+					"-lsrtp-ios",
+					"-lz",
+					"-lavcodec",
+					"-lavdevice",
+					"-lavformat",
+					"-lavutil",
+					"-lswscale",
 					"-ObjC",
 					"-all_load",
 				);

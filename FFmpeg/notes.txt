@@ -1,0 +1,15 @@
+Getting the source code to PJProject.
+To get the latest source to PJProject, run the command below.
+git clone git://git.ffmpeg.org/ffmpeg.git ffmpeg
+
+To get the tag that I am using in VoiceMac and VoiceMob, run the commands below.
+git clone git://git.ffmpeg.org/ffmpeg.git ffmpeg
+cd ffmpeg
+git checkout v0.6.1
+
+Building.
+To build for VoiceMac, run the command below.
+./install
+
+To build for VoiceMob, run the command below.
+./install ios
