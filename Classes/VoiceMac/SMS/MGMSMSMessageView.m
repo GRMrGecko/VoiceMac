@@ -173,21 +173,31 @@
 		tPhotoPath = [[[manager themeManager] incomingIconPath] filePath];
 	NSMutableDictionary *message = [NSMutableDictionary dictionaryWithDictionary:theMessage];
 	[message setObject:[[NSNumber numberWithInt:[messages count]-1] stringValue] forKey:MGMIID];
+	NSMutableArray *classes = [NSMutableArray array];
 	int type = 1;
 	if ([[message objectForKey:MGMIYou] boolValue]) {
+		[classes addObject:MGMTCOutgoing];
 		type = (([[message objectForKey:MGMIID] intValue]==0 || ![[[messages objectAtIndex:[[message objectForKey:MGMIID] intValue]-1] objectForKey:MGMIYou] boolValue]) ? 1 : 2);
+		if (type==2)
+			[classes addObject:MGMTCNext];
 		[message setObject:yPhotoPath forKey:MGMTPhoto];
 		[message setObject:NSFullUserName() forKey:MGMTName];
 		[message setObject:[messageInfo objectForKey:MGMTUserNumber] forKey:MGMIPhoneNumber];
 	} else {
+		[classes addObject:MGMTCIncoming];
 		type = (([[message objectForKey:MGMIID] intValue]==0 || [[[messages objectAtIndex:[[message objectForKey:MGMIID] intValue]-1] objectForKey:MGMIYou] boolValue]) ? 3 : 4);
+		if (type==4)
+			[classes addObject:MGMTCNext];
 		[message setObject:tPhotoPath forKey:MGMTPhoto];
 		[message setObject:[messageInfo objectForKey:MGMTInName] forKey:MGMTName];
 		[message setObject:[messageInfo objectForKey:MGMIPhoneNumber] forKey:MGMIPhoneNumber];
 	}
+	[classes addObject:MGMTCMessage];
+	if (![[NSUserDefaults standardUserDefaults] boolForKey:MGMTShowIcons])
+		[classes addObject:MGMTCHideIcons];
 	NSDateFormatter *formatter = [[NSDateFormatter new] autorelease];
 	[formatter setDateFormat:[[[manager themeManager] variant] objectForKey:MGMTDate]];
-	[SMSView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"newMessage('%@', '%@', '%@', %@, '%@', '%@', '%@', %d);", [[message objectForKey:MGMIText] javascriptEscape], [[message objectForKey:MGMTPhoto] javascriptEscape], [[message objectForKey:MGMITime] javascriptEscape], [message objectForKey:MGMIID], [[message objectForKey:MGMTName] javascriptEscape], [[[message objectForKey:MGMIPhoneNumber] readableNumber] javascriptEscape], [formatter stringFromDate:[messageInfo objectForKey:MGMITime]], type]];
+	[SMSView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"newMessage('%@', '%@', '%@', %@, '%@', '%@', '%@', %d, '%@');", [[[manager themeManager] htmlTextFromMessage:message] javascriptEscape], [[message objectForKey:MGMTPhoto] javascriptEscape], [[message objectForKey:MGMITime] javascriptEscape], [message objectForKey:MGMIID], [[message objectForKey:MGMTName] javascriptEscape], [[[message objectForKey:MGMIPhoneNumber] readableNumber] javascriptEscape], [formatter stringFromDate:[messageInfo objectForKey:MGMITime]], type, [classes componentsJoinedByString:@" "]]];
 	[SMSView stringByEvaluatingJavaScriptFromString:@"scrollToBottom();"];
 }
 
@@ -266,11 +276,21 @@
 	[self close:self];
 }
 
-- (float)splitView:(NSSplitView *)sender constrainMinCoordinate:(float)proposedMin ofSubviewAt:(int)offset {
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+- (float)splitView:(NSSplitView *)sender constrainMinCoordinate:(float)proposedMin ofSubviewAt:(int)offset
+#else
+- (CGFloat)splitView:(NSSplitView *)sender constrainMinCoordinate:(CGFloat)proposedMin ofSubviewAt:(NSInteger)offset
+#endif
+{
     bottomMax = [[[sender subviews] objectAtIndex:1] frame].size.height;
 	return 50.0;
 }
-- (float)splitView:(NSSplitView *)sender constrainMaxCoordinate:(float)proposedMax ofSubviewAt:(int)offset{
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+- (float)splitView:(NSSplitView *)sender constrainMaxCoordinate:(float)proposedMax ofSubviewAt:(int)offset
+#else
+- (CGFloat)splitView:(NSSplitView *)sender constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)offset
+#endif
+{
 	bottomMax = [[[sender subviews] objectAtIndex:1] frame].size.height;
 	return proposedMax - 33.0;
 }

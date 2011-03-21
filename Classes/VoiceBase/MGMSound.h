@@ -17,11 +17,9 @@
 //  ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
+#import <Foundation/Foundation.h>
 #if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-#else
-#import <Cocoa/Cocoa.h>
 #endif
 
 @class MGMSound;
@@ -33,7 +31,7 @@
 @interface MGMSound : NSObject
 #if TARGET_OS_IPHONE
 <AVAudioPlayerDelegate>
-#else
+#elif (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
 <NSSoundDelegate>
 #endif
 {

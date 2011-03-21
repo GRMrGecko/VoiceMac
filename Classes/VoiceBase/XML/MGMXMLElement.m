@@ -22,6 +22,18 @@
 #import "MGMXMLAddons.h"
 
 @implementation MGMXMLElement
+- (id)initWithName:(NSString *)name {
+	return [self initWithName:name stringValue:nil];
+}
+- (id)initWithName:(NSString *)name stringValue:(NSString *)string {
+	if ((self = [super init])) {
+		xmlNodePtr node = xmlNewNode(NULL, [name xmlString]);
+		if (string!=nil)
+			xmlNodeSetContent(node, [string xmlString]);
+		[self setTypeXMLPtr:(xmlTypPtr)node];
+	}
+	return self;
+}
 - (id)initWithXMLString:(NSString *)string error:(NSError **)error {
 	[super release];
 	MGMXMLDocument *document = [[MGMXMLDocument alloc] initWithXMLString:string options:0 error:error];
@@ -88,10 +100,9 @@
 }
 
 - (void)addAttribute:(MGMXMLNode *)attribute {
-	if ([attribute kind]==MGMXMLAttributeKind && [attribute commonXML]->parent!=NULL) {
+	if ([attribute kind]==MGMXMLAttributeKind && [attribute commonXML]->parent!=NULL)
 		[self removeAttributeForName:[attribute name]];
-		xmlAddChild(MGMXMLNodePtr, (xmlNodePtr)[attribute commonXML]);
-	}
+	xmlAddChild(MGMXMLNodePtr, (xmlNodePtr)[attribute commonXML]);
 }
 - (void)removeAttributeForName:(NSString *)name {
 	xmlAttrPtr attribute = MGMXMLNodePtr->properties;

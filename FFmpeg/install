@@ -1,28 +1,161 @@
 #!/bin/bash
 
-#PPCFLAGS="-isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.4  -arch ppc"
-PPCFLAGS="-isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.4  -arch ppc"
+#PPCFLAGS="-isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.4 -arch ppc"
+PPCFLAGS="-isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.4 -arch ppc"
 PPCCC="/usr/bin/gcc-4.0"
-PPCCXX="/usr/bin/g++-4.0"
 PPCHOST="ppc-apple-darwin8"
 PPCPATH="${PWD}/opt-ppc"
-PPCLDFLAGS="-arch ppc"
+PPCLDFLAGS="${PPCFLAGS}"
 
-#I386FLAGS="-isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.4  -arch i386"
-I386FLAGS="-isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.4  -arch i386"
+#I386FLAGS="-isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.4 -arch i386"
+I386FLAGS="-isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.4 -arch i386"
 I386CC="/usr/bin/gcc-4.0"
-I386CXX="/usr/bin/g++-4.0"
 I386HOST="i386-apple-darwin8"
 I386PATH="${PWD}/opt-i386"
-I386LDFLAGS="-arch i386"
+I386LDFLAGS="${I386FLAGS}"
 
-#X86_64FLAGS="-isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.5  -arch x86_64"
-X86_64FLAGS="-isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5  -arch x86_64"
+#X86_64FLAGS="-isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.5 -arch x86_64"
+X86_64FLAGS="-isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -arch x86_64"
 X86_64CC="/usr/bin/gcc-4.0"
-X86_64CXX="/usr/bin/g++-4.0"
 X86_64HOST="x86_64-apple-darwin9"
 X86_64PATH="${PWD}/opt-x86_64"
-X86_64LDFLAGS="-arch x86_64"
+X86_64LDFLAGS="${X86_64FLAGS}"
+
+STANDARD="--disable-bzlib --enable-pthreads --disable-network --enable-small --disable-ffprobe --disable-ffplay --disable-ffserver --disable-decoder=atrac3 --disable-shared --enable-static \
+--disable-decoders \
+--enable-decoder=aac \
+--enable-decoder=theora \
+--enable-decoder=vorbis \
+--enable-decoder=wmavoice \
+--enable-decoder=wmav2 \
+--enable-decoder=wmav1 \
+--enable-decoder=wmapro \
+--enable-decoder=wavpack \
+--enable-decoder=mp3on4 \
+--enable-decoder=mp3adu \
+--enable-decoder=mp3 \
+--enable-decoder=mp2 \
+--enable-decoder=mp1 \
+--enable-decoder=pcm_zork \
+--enable-decoder=pcm_u8 \
+--enable-decoder=pcm_u32le \
+--enable-decoder=pcm_u32be \
+--enable-decoder=pcm_u24le \
+--enable-decoder=pcm_u24be \
+--enable-decoder=pcm_u16le \
+--enable-decoder=pcm_u16be \
+--enable-decoder=pcm_s8 \
+--enable-decoder=pcm_s32le \
+--enable-decoder=pcm_s32be \
+--enable-decoder=pcm_s24le \
+--enable-decoder=pcm_s24daud \
+--enable-decoder=pcm_s24be \
+--enable-decoder=pcm_s16le_planar \
+--enable-decoder=pcm_s16le \
+--enable-decoder=pcm_s16be \
+--enable-decoder=pcm_mulaw \
+--enable-decoder=pcm_f64le \
+--enable-decoder=pcm_f64be \
+--enable-decoder=pcm_f32le \
+--enable-decoder=pcm_f32be \
+--enable-decoder=pcm_dvd \
+--enable-decoder=pcm_bluray \
+--enable-decoder=pcm_alaw \
+--enable-decoder=flac \
+--disable-encoders \
+--enable-encoder=aac \
+--enable-encoder=flac \
+--enable-encoder=pcm_alaw \
+--enable-encoder=pcm_f32be \
+--enable-encoder=pcm_f32le \
+--enable-encoder=pcm_f64be \
+--enable-encoder=pcm_f64le \
+--enable-encoder=pcm_mulaw \
+--enable-encoder=pcm_s16be \
+--enable-encoder=pcm_s16le \
+--enable-encoder=pcm_s24be \
+--enable-encoder=pcm_s24daud \
+--enable-encoder=pcm_s24le \
+--enable-encoder=pcm_s32be \
+--enable-encoder=pcm_s32le \
+--enable-encoder=pcm_s8 \
+--enable-encoder=pcm_u16be \
+--enable-encoder=pcm_u16le \
+--enable-encoder=pcm_u24be \
+--enable-encoder=pcm_u24le \
+--enable-encoder=pcm_u32be \
+--enable-encoder=pcm_u32le \
+--enable-encoder=pcm_u8 \
+--enable-encoder=pcm_zork \
+--enable-encoder=wmav1 \
+--enable-encoder=wmav2 \
+--disable-demuxers \
+--enable-demuxer=aac \
+--enable-demuxer=ac3 \
+--enable-demuxer=aiff \
+--enable-demuxer=au \
+--enable-demuxer=caf \
+--enable-demuxer=flac \
+--enable-demuxer=mp3 \
+--enable-demuxer=ogg \
+--enable-demuxer=pcm_alaw \
+--enable-demuxer=pcm_f32be \
+--enable-demuxer=pcm_f32le \
+--enable-demuxer=pcm_f64be \
+--enable-demuxer=pcm_f64le \
+--enable-demuxer=pcm_mulaw \
+--enable-demuxer=pcm_s16be \
+--enable-demuxer=pcm_s16le \
+--enable-demuxer=pcm_s24be \
+--enable-demuxer=pcm_s24le \
+--enable-demuxer=pcm_s32be \
+--enable-demuxer=pcm_s32le \
+--enable-demuxer=pcm_s8 \
+--enable-demuxer=pcm_u16be \
+--enable-demuxer=pcm_u16le \
+--enable-demuxer=pcm_u24be \
+--enable-demuxer=pcm_u24le \
+--enable-demuxer=pcm_u32be \
+--enable-demuxer=pcm_u32le \
+--enable-demuxer=pcm_u8 \
+--enable-demuxer=wav \
+--disable-muxers \
+--enable-muxer=ac3 \
+--enable-muxer=aiff \
+--enable-muxer=au \
+--enable-muxer=flac \
+--enable-muxer=matroska_audio \
+--enable-muxer=mp3 \
+--enable-muxer=ogg \
+--enable-muxer=pcm_alaw \
+--enable-muxer=pcm_f32be \
+--enable-muxer=pcm_f32le \
+--enable-muxer=pcm_f64be \
+--enable-muxer=pcm_f64le \
+--enable-muxer=pcm_mulaw \
+--enable-muxer=pcm_s16be \
+--enable-muxer=pcm_s16le \
+--enable-muxer=pcm_s24be \
+--enable-muxer=pcm_s24le \
+--enable-muxer=pcm_s32be \
+--enable-muxer=pcm_s32le \
+--enable-muxer=pcm_s8 \
+--enable-muxer=pcm_u16be \
+--enable-muxer=pcm_u16le \
+--enable-muxer=pcm_u24be \
+--enable-muxer=pcm_u24le \
+--enable-muxer=pcm_u32be \
+--enable-muxer=pcm_u32le \
+--enable-muxer=pcm_u8 \
+--enable-muxer=voc \
+--enable-muxer=wav \
+--disable-filters \
+--enable-filter=format \
+--enable-filter=noformat \
+--enable-filter=null \
+--enable-filter=nullsink \
+--enable-filter=nullsrc \
+--enable-filter=slicify"
 
 FFMPEGNAME="ffmpeg"
 
@@ -34,6 +167,71 @@ if [ "$1" = "clean" ]; then
 	rm -fR opt-i386 opt-x86_64 opt-ppc
 	rm -fR opt
 fi
+if [ "$1" = "ios" ]; then
+	IOS6FLAGS="-isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk -miphoneos-version-min=3.1 -arch armv6"
+	IOS6CC="/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/gcc-4.2"
+	IOS6HOST="arm-apple-darwin10"
+	IOS6PATH="${PWD}/opt-ios6"
+	IOS6LDFLAGS="${IOS6FLAGS}"
+	
+	IOS7FLAGS="-isysroot /Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS4.2.sdk -miphoneos-version-min=3.1 -arch armv7"
+	IOS7CC="/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/gcc-4.2"
+	IOS7HOST="arm-apple-darwin10"
+	IOS7PATH="${PWD}/opt-ios7"
+	IOS7LDFLAGS="${IOS7FLAGS}"
+	
+	SIMULATORFLAGS="-isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk -miphoneos-version-min=3.1"
+	SIMULATORCC="/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2"
+	SIMULATORHOST="i686-apple-darwin10"
+	SIMULATORPATH="${PWD}/opt-simulator"
+	SIMULATORLDFLAGS="${SIMULATORFLAGS}"
+	
+	echo "Copying FFmpeg"
+	cp -R ${FFMPEGNAME} ${FFMPEGNAME}-ios6
+	cp -R ${FFMPEGNAME}-ios6 ${FFMPEGNAME}-ios7
+	cp -R ${FFMPEGNAME}-ios6 ${FFMPEGNAME}-simulator
+	
+	echo "Configuring FFmpeg"
+	cd ${FFMPEGNAME}-ios6
+	LDFLAGS="${IOS6LDFLAGS} -L${IOS6PATH}/lib" CFLAGS="${IOS6FLAGS} -I${IOS6PATH}/include -mdynamic-no-pic" CC="${IOS6CC}" ./configure --prefix="${IOS6PATH}" --arch=armv6 --cc="${IOS6CC}" --disable-mmx --disable-iwmmxt --disable-armvfp --disable-armv5te --enable-armv6 --disable-asm --enable-cross-compile --target-os=darwin ${STANDARD}
+	cd ../${FFMPEGNAME}-ios7
+	LDFLAGS="${IOS7LDFLAGS} -L${IOS7PATH}/lib" CFLAGS="${IOS7FLAGS} -I${IOS7PATH}/include -mdynamic-no-pic" CC="${IOS7CC}" ./configure --prefix="${IOS7PATH}" --arch=armv7 --cc="${IOS7CC}" --disable-mmx --disable-iwmmxt --disable-armvfp --disable-armv5te --enable-armv6 --disable-asm --enable-cross-compile --target-os=darwin ${STANDARD}
+	cd ../${FFMPEGNAME}-simulator
+	LDFLAGS="${SIMULATORLDFLAGS} -L${SIMULATORPATH}/lib" CFLAGS="${SIMULATORFLAGS} -I${SIMULATORPATH}/include -mdynamic-no-pic" CC="${SIMULATORCC}" ./configure --prefix="${SIMULATORPATH}" --cc="${SIMULATORCC}" --disable-asm ${STANDARD}
+	
+	echo "Compiling FFmpeg"
+	cd ../${FFMPEGNAME}-ios6
+	make
+	cd ../${FFMPEGNAME}-ios7
+	make
+	cd ../${FFMPEGNAME}-simulator
+	make
+	
+	echo "Installing FFmpeg"
+	cd ../${FFMPEGNAME}-ios6
+	make install
+	cd ../${FFMPEGNAME}-ios7
+	make install
+	cd ../${FFMPEGNAME}-simulator
+	make install
+	
+	echo "Making FFmpeg Universal"
+	cd ../
+	
+	mkdir -p ./opt/bin
+	mkdir -p ./opt/lib
+	
+	cp -R "${IOS6PATH}/include" ./opt/include
+	cp ./${FFMPEGNAME}-ios6/libavcodec/audioconvert.h ./opt/include/libavcodec/audioconvert.h
+	cp ./${FFMPEGNAME}-ios6/libavcodec/colorspace.h ./opt/include/libavcodec/colorspace.h
+	cp ./${FFMPEGNAME}-ios6/config.h ./opt/include/ffconfig.h
+	lipo -create "${IOS6PATH}/lib/libavcodec.a" "${IOS7PATH}/lib/libavcodec.a" "${SIMULATORPATH}/lib/libavcodec.a" -output ./opt/lib/libavcodec-ios.a
+	lipo -create "${IOS6PATH}/lib/libavdevice.a" "${IOS7PATH}/lib/libavdevice.a" "${SIMULATORPATH}/lib/libavdevice.a" -output ./opt/lib/libavdevice-ios.a
+	lipo -create "${IOS6PATH}/lib/libavformat.a" "${IOS7PATH}/lib/libavformat.a" "${SIMULATORPATH}/lib/libavformat.a" -output ./opt/lib/libavformat-ios.a
+	lipo -create "${IOS6PATH}/lib/libavutil.a" "${IOS7PATH}/lib/libavutil.a" "${SIMULATORPATH}/lib/libavutil.a" -output ./opt/lib/libavutil-ios.a
+	lipo -create "${IOS6PATH}/lib/libswscale.a" "${IOS7PATH}/lib/libswscale.a" "${SIMULATORPATH}/lib/libswscale.a" -output ./opt/lib/libswscale-ios.a
+	lipo -create "${IOS6PATH}/bin/ffmpeg" "${IOS7PATH}/bin/ffmpeg" "${SIMULATORPATH}/bin/ffmpeg" -output ./opt/bin/ffmpeg-ios
+fi
 if [ "$1" = "" ]; then
 	echo "Copying FFmpeg"
 	cp -R ${FFMPEGNAME} ${FFMPEGNAME}-ppc
@@ -42,413 +240,11 @@ if [ "$1" = "" ]; then
 	
 	echo "Configuring FFmpeg"
 	cd ${FFMPEGNAME}-ppc
-	LDFLAGS="${PPCLDFLAGS} -L${PPCPATH}/lib" CFLAGS="${PPCFLAGS} -I${PPCPATH}/include -mdynamic-no-pic" CXXFLAGS="${PPCFLAGS} -I${PPCPATH}/include -mdynamic-no-pic" CC="${PPCCC}" CXX="${PPCCXX}" ./configure --prefix="${PPCPATH}" --arch=ppc --disable-bzlib --enable-pthreads --disable-network --enable-small --disable-ffprobe --disable-ffplay --disable-ffserver --disable-decoder=atrac3 --disable-shared --enable-static \
-	--disable-decoders \
-	--enable-decoder=aac \
-	--enable-decoder=theora \
-	--enable-decoder=vorbis \
-	--enable-decoder=wmavoice \
-	--enable-decoder=wmav2 \
-	--enable-decoder=wmav1 \
-	--enable-decoder=wmapro \
-	--enable-decoder=wavpack \
-	--enable-decoder=mp3on4 \
-	--enable-decoder=mp3adu \
-	--enable-decoder=mp3 \
-	--enable-decoder=mp2 \
-	--enable-decoder=mp1 \
-	--enable-decoder=pcm_zork \
-	--enable-decoder=pcm_u8 \
-	--enable-decoder=pcm_u32le \
-	--enable-decoder=pcm_u32be \
-	--enable-decoder=pcm_u24le \
-	--enable-decoder=pcm_u24be \
-	--enable-decoder=pcm_u16le \
-	--enable-decoder=pcm_u16be \
-	--enable-decoder=pcm_s8 \
-	--enable-decoder=pcm_s32le \
-	--enable-decoder=pcm_s32be \
-	--enable-decoder=pcm_s24le \
-	--enable-decoder=pcm_s24daud \
-	--enable-decoder=pcm_s24be \
-	--enable-decoder=pcm_s16le_planar \
-	--enable-decoder=pcm_s16le \
-	--enable-decoder=pcm_s16be \
-	--enable-decoder=pcm_mulaw \
-	--enable-decoder=pcm_f64le \
-	--enable-decoder=pcm_f64be \
-	--enable-decoder=pcm_f32le \
-	--enable-decoder=pcm_f32be \
-	--enable-decoder=pcm_dvd \
-	--enable-decoder=pcm_bluray \
-	--enable-decoder=pcm_alaw \
-	--enable-decoder=flac \
-	--disable-encoders \
-	--enable-encoder=aac \
-	--enable-encoder=flac \
-	--enable-encoder=pcm_alaw \
-	--enable-encoder=pcm_f32be \
-	--enable-encoder=pcm_f32le \
-	--enable-encoder=pcm_f64be \
-	--enable-encoder=pcm_f64le \
-	--enable-encoder=pcm_mulaw \
-	--enable-encoder=pcm_s16be \
-	--enable-encoder=pcm_s16le \
-	--enable-encoder=pcm_s24be \
-	--enable-encoder=pcm_s24daud \
-	--enable-encoder=pcm_s24le \
-	--enable-encoder=pcm_s32be \
-	--enable-encoder=pcm_s32le \
-	--enable-encoder=pcm_s8 \
-	--enable-encoder=pcm_u16be \
-	--enable-encoder=pcm_u16le \
-	--enable-encoder=pcm_u24be \
-	--enable-encoder=pcm_u24le \
-	--enable-encoder=pcm_u32be \
-	--enable-encoder=pcm_u32le \
-	--enable-encoder=pcm_u8 \
-	--enable-encoder=pcm_zork \
-	--enable-encoder=wmav1 \
-	--enable-encoder=wmav2 \
-	--disable-demuxers \
-	--enable-demuxer=aac \
-	--enable-demuxer=ac3 \
-	--enable-demuxer=aiff \
-	--enable-demuxer=au \
-	--enable-demuxer=caf \
-	--enable-demuxer=flac \
-	--enable-demuxer=mp3 \
-	--enable-demuxer=ogg \
-	--enable-demuxer=pcm_alaw \
-	--enable-demuxer=pcm_f32be \
-	--enable-demuxer=pcm_f32le \
-	--enable-demuxer=pcm_f64be \
-	--enable-demuxer=pcm_f64le \
-	--enable-demuxer=pcm_mulaw \
-	--enable-demuxer=pcm_s16be \
-	--enable-demuxer=pcm_s16le \
-	--enable-demuxer=pcm_s24be \
-	--enable-demuxer=pcm_s24le \
-	--enable-demuxer=pcm_s32be \
-	--enable-demuxer=pcm_s32le \
-	--enable-demuxer=pcm_s8 \
-	--enable-demuxer=pcm_u16be \
-	--enable-demuxer=pcm_u16le \
-	--enable-demuxer=pcm_u24be \
-	--enable-demuxer=pcm_u24le \
-	--enable-demuxer=pcm_u32be \
-	--enable-demuxer=pcm_u32le \
-	--enable-demuxer=pcm_u8 \
-	--enable-demuxer=wav \
-	--disable-muxers \
-	--enable-muxer=ac3 \
-	--enable-muxer=aiff \
-	--enable-muxer=au \
-	--enable-muxer=flac \
-	--enable-muxer=matroska_audio \
-	--enable-muxer=mp3 \
-	--enable-muxer=ogg \
-	--enable-muxer=pcm_alaw \
-	--enable-muxer=pcm_f32be \
-	--enable-muxer=pcm_f32le \
-	--enable-muxer=pcm_f64be \
-	--enable-muxer=pcm_f64le \
-	--enable-muxer=pcm_mulaw \
-	--enable-muxer=pcm_s16be \
-	--enable-muxer=pcm_s16le \
-	--enable-muxer=pcm_s24be \
-	--enable-muxer=pcm_s24le \
-	--enable-muxer=pcm_s32be \
-	--enable-muxer=pcm_s32le \
-	--enable-muxer=pcm_s8 \
-	--enable-muxer=pcm_u16be \
-	--enable-muxer=pcm_u16le \
-	--enable-muxer=pcm_u24be \
-	--enable-muxer=pcm_u24le \
-	--enable-muxer=pcm_u32be \
-	--enable-muxer=pcm_u32le \
-	--enable-muxer=pcm_u8 \
-	--enable-muxer=voc \
-	--enable-muxer=wav \
-	--disable-filters \
-	--enable-filter=format \
-	--enable-filter=noformat \
-	--enable-filter=null \
-	--enable-filter=nullsink \
-	--enable-filter=nullsrc \
-	--enable-filter=slicify
+	LDFLAGS="${PPCLDFLAGS} -L${PPCPATH}/lib" CFLAGS="${PPCFLAGS} -I${PPCPATH}/include -mdynamic-no-pic" CC="${PPCCC}" ./configure --prefix="${PPCPATH}" --arch=ppc ${STANDARD}
 	cd ../${FFMPEGNAME}-i386
-	LDFLAGS="${I386LDFLAGS} -L${I386PATH}/lib" CFLAGS="${I386FLAGS} -I${I386PATH}/include -mdynamic-no-pic" CXXFLAGS="${I386FLAGS} -I${I386PATH}/include -mdynamic-no-pic" CC="${I386CC}" CXX="${I386CXX}" ./configure --prefix="${I386PATH}" --arch=i386 --disable-bzlib --enable-pthreads --disable-network --enable-small --disable-yasm --disable-ffprobe --disable-ffplay --disable-ffserver --disable-decoder=atrac3 --disable-shared --enable-static \
-	--disable-decoders \
-	--enable-decoder=aac \
-	--enable-decoder=theora \
-	--enable-decoder=vorbis \
-	--enable-decoder=wmavoice \
-	--enable-decoder=wmav2 \
-	--enable-decoder=wmav1 \
-	--enable-decoder=wmapro \
-	--enable-decoder=wavpack \
-	--enable-decoder=mp3on4 \
-	--enable-decoder=mp3adu \
-	--enable-decoder=mp3 \
-	--enable-decoder=mp2 \
-	--enable-decoder=mp1 \
-	--enable-decoder=pcm_zork \
-	--enable-decoder=pcm_u8 \
-	--enable-decoder=pcm_u32le \
-	--enable-decoder=pcm_u32be \
-	--enable-decoder=pcm_u24le \
-	--enable-decoder=pcm_u24be \
-	--enable-decoder=pcm_u16le \
-	--enable-decoder=pcm_u16be \
-	--enable-decoder=pcm_s8 \
-	--enable-decoder=pcm_s32le \
-	--enable-decoder=pcm_s32be \
-	--enable-decoder=pcm_s24le \
-	--enable-decoder=pcm_s24daud \
-	--enable-decoder=pcm_s24be \
-	--enable-decoder=pcm_s16le_planar \
-	--enable-decoder=pcm_s16le \
-	--enable-decoder=pcm_s16be \
-	--enable-decoder=pcm_mulaw \
-	--enable-decoder=pcm_f64le \
-	--enable-decoder=pcm_f64be \
-	--enable-decoder=pcm_f32le \
-	--enable-decoder=pcm_f32be \
-	--enable-decoder=pcm_dvd \
-	--enable-decoder=pcm_bluray \
-	--enable-decoder=pcm_alaw \
-	--enable-decoder=flac \
-	--disable-encoders \
-	--enable-encoder=aac \
-	--enable-encoder=flac \
-	--enable-encoder=pcm_alaw \
-	--enable-encoder=pcm_f32be \
-	--enable-encoder=pcm_f32le \
-	--enable-encoder=pcm_f64be \
-	--enable-encoder=pcm_f64le \
-	--enable-encoder=pcm_mulaw \
-	--enable-encoder=pcm_s16be \
-	--enable-encoder=pcm_s16le \
-	--enable-encoder=pcm_s24be \
-	--enable-encoder=pcm_s24daud \
-	--enable-encoder=pcm_s24le \
-	--enable-encoder=pcm_s32be \
-	--enable-encoder=pcm_s32le \
-	--enable-encoder=pcm_s8 \
-	--enable-encoder=pcm_u16be \
-	--enable-encoder=pcm_u16le \
-	--enable-encoder=pcm_u24be \
-	--enable-encoder=pcm_u24le \
-	--enable-encoder=pcm_u32be \
-	--enable-encoder=pcm_u32le \
-	--enable-encoder=pcm_u8 \
-	--enable-encoder=pcm_zork \
-	--enable-encoder=wmav1 \
-	--enable-encoder=wmav2 \
-	--disable-demuxers \
-	--enable-demuxer=aac \
-	--enable-demuxer=ac3 \
-	--enable-demuxer=aiff \
-	--enable-demuxer=au \
-	--enable-demuxer=caf \
-	--enable-demuxer=flac \
-	--enable-demuxer=mp3 \
-	--enable-demuxer=ogg \
-	--enable-demuxer=pcm_alaw \
-	--enable-demuxer=pcm_f32be \
-	--enable-demuxer=pcm_f32le \
-	--enable-demuxer=pcm_f64be \
-	--enable-demuxer=pcm_f64le \
-	--enable-demuxer=pcm_mulaw \
-	--enable-demuxer=pcm_s16be \
-	--enable-demuxer=pcm_s16le \
-	--enable-demuxer=pcm_s24be \
-	--enable-demuxer=pcm_s24le \
-	--enable-demuxer=pcm_s32be \
-	--enable-demuxer=pcm_s32le \
-	--enable-demuxer=pcm_s8 \
-	--enable-demuxer=pcm_u16be \
-	--enable-demuxer=pcm_u16le \
-	--enable-demuxer=pcm_u24be \
-	--enable-demuxer=pcm_u24le \
-	--enable-demuxer=pcm_u32be \
-	--enable-demuxer=pcm_u32le \
-	--enable-demuxer=pcm_u8 \
-	--enable-demuxer=wav \
-	--disable-muxers \
-	--enable-muxer=ac3 \
-	--enable-muxer=aiff \
-	--enable-muxer=au \
-	--enable-muxer=flac \
-	--enable-muxer=matroska_audio \
-	--enable-muxer=mp3 \
-	--enable-muxer=ogg \
-	--enable-muxer=pcm_alaw \
-	--enable-muxer=pcm_f32be \
-	--enable-muxer=pcm_f32le \
-	--enable-muxer=pcm_f64be \
-	--enable-muxer=pcm_f64le \
-	--enable-muxer=pcm_mulaw \
-	--enable-muxer=pcm_s16be \
-	--enable-muxer=pcm_s16le \
-	--enable-muxer=pcm_s24be \
-	--enable-muxer=pcm_s24le \
-	--enable-muxer=pcm_s32be \
-	--enable-muxer=pcm_s32le \
-	--enable-muxer=pcm_s8 \
-	--enable-muxer=pcm_u16be \
-	--enable-muxer=pcm_u16le \
-	--enable-muxer=pcm_u24be \
-	--enable-muxer=pcm_u24le \
-	--enable-muxer=pcm_u32be \
-	--enable-muxer=pcm_u32le \
-	--enable-muxer=pcm_u8 \
-	--enable-muxer=voc \
-	--enable-muxer=wav \
-	--disable-filters \
-	--enable-filter=format \
-	--enable-filter=noformat \
-	--enable-filter=null \
-	--enable-filter=nullsink \
-	--enable-filter=nullsrc \
-	--enable-filter=slicify
+	LDFLAGS="${I386LDFLAGS} -L${I386PATH}/lib" CFLAGS="${I386FLAGS} -I${I386PATH}/include -mdynamic-no-pic" CC="${I386CC}" ./configure --prefix="${I386PATH}" --arch=i386 ${STANDARD}
 	cd ../${FFMPEGNAME}-x86_64
-	LDFLAGS="${X86_64LDFLAGS} -L${X86_64PATH}/lib" CFLAGS="${X86_64FLAGS} -I${X86_64PATH}/include -mdynamic-no-pic" CXXFLAGS="${X86_64FLAGS} -I${X86_64PATH}/include -mdynamic-no-pic" CC="${X86_64CC}" CXX="${X86_64CXX}" ./configure --prefix="${X86_64PATH}" --target-os=darwin --arch=x86_64 --disable-bzlib --enable-pthreads --disable-network --enable-small --disable-yasm --disable-ffprobe --disable-ffplay --disable-ffserver --disable-decoder=atrac3 --disable-shared --enable-static --enable-cross-compile \
-	--disable-decoders \
-	--enable-decoder=aac \
-	--enable-decoder=theora \
-	--enable-decoder=vorbis \
-	--enable-decoder=wmavoice \
-	--enable-decoder=wmav2 \
-	--enable-decoder=wmav1 \
-	--enable-decoder=wmapro \
-	--enable-decoder=wavpack \
-	--enable-decoder=mp3on4 \
-	--enable-decoder=mp3adu \
-	--enable-decoder=mp3 \
-	--enable-decoder=mp2 \
-	--enable-decoder=mp1 \
-	--enable-decoder=pcm_zork \
-	--enable-decoder=pcm_u8 \
-	--enable-decoder=pcm_u32le \
-	--enable-decoder=pcm_u32be \
-	--enable-decoder=pcm_u24le \
-	--enable-decoder=pcm_u24be \
-	--enable-decoder=pcm_u16le \
-	--enable-decoder=pcm_u16be \
-	--enable-decoder=pcm_s8 \
-	--enable-decoder=pcm_s32le \
-	--enable-decoder=pcm_s32be \
-	--enable-decoder=pcm_s24le \
-	--enable-decoder=pcm_s24daud \
-	--enable-decoder=pcm_s24be \
-	--enable-decoder=pcm_s16le_planar \
-	--enable-decoder=pcm_s16le \
-	--enable-decoder=pcm_s16be \
-	--enable-decoder=pcm_mulaw \
-	--enable-decoder=pcm_f64le \
-	--enable-decoder=pcm_f64be \
-	--enable-decoder=pcm_f32le \
-	--enable-decoder=pcm_f32be \
-	--enable-decoder=pcm_dvd \
-	--enable-decoder=pcm_bluray \
-	--enable-decoder=pcm_alaw \
-	--enable-decoder=flac \
-	--disable-encoders \
-	--enable-encoder=aac \
-	--enable-encoder=flac \
-	--enable-encoder=pcm_alaw \
-	--enable-encoder=pcm_f32be \
-	--enable-encoder=pcm_f32le \
-	--enable-encoder=pcm_f64be \
-	--enable-encoder=pcm_f64le \
-	--enable-encoder=pcm_mulaw \
-	--enable-encoder=pcm_s16be \
-	--enable-encoder=pcm_s16le \
-	--enable-encoder=pcm_s24be \
-	--enable-encoder=pcm_s24daud \
-	--enable-encoder=pcm_s24le \
-	--enable-encoder=pcm_s32be \
-	--enable-encoder=pcm_s32le \
-	--enable-encoder=pcm_s8 \
-	--enable-encoder=pcm_u16be \
-	--enable-encoder=pcm_u16le \
-	--enable-encoder=pcm_u24be \
-	--enable-encoder=pcm_u24le \
-	--enable-encoder=pcm_u32be \
-	--enable-encoder=pcm_u32le \
-	--enable-encoder=pcm_u8 \
-	--enable-encoder=pcm_zork \
-	--enable-encoder=wmav1 \
-	--enable-encoder=wmav2 \
-	--disable-demuxers \
-	--enable-demuxer=aac \
-	--enable-demuxer=ac3 \
-	--enable-demuxer=aiff \
-	--enable-demuxer=au \
-	--enable-demuxer=caf \
-	--enable-demuxer=flac \
-	--enable-demuxer=mp3 \
-	--enable-demuxer=ogg \
-	--enable-demuxer=pcm_alaw \
-	--enable-demuxer=pcm_f32be \
-	--enable-demuxer=pcm_f32le \
-	--enable-demuxer=pcm_f64be \
-	--enable-demuxer=pcm_f64le \
-	--enable-demuxer=pcm_mulaw \
-	--enable-demuxer=pcm_s16be \
-	--enable-demuxer=pcm_s16le \
-	--enable-demuxer=pcm_s24be \
-	--enable-demuxer=pcm_s24le \
-	--enable-demuxer=pcm_s32be \
-	--enable-demuxer=pcm_s32le \
-	--enable-demuxer=pcm_s8 \
-	--enable-demuxer=pcm_u16be \
-	--enable-demuxer=pcm_u16le \
-	--enable-demuxer=pcm_u24be \
-	--enable-demuxer=pcm_u24le \
-	--enable-demuxer=pcm_u32be \
-	--enable-demuxer=pcm_u32le \
-	--enable-demuxer=pcm_u8 \
-	--enable-demuxer=wav \
-	--disable-muxers \
-	--enable-muxer=ac3 \
-	--enable-muxer=aiff \
-	--enable-muxer=au \
-	--enable-muxer=flac \
-	--enable-muxer=matroska_audio \
-	--enable-muxer=mp3 \
-	--enable-muxer=ogg \
-	--enable-muxer=pcm_alaw \
-	--enable-muxer=pcm_f32be \
-	--enable-muxer=pcm_f32le \
-	--enable-muxer=pcm_f64be \
-	--enable-muxer=pcm_f64le \
-	--enable-muxer=pcm_mulaw \
-	--enable-muxer=pcm_s16be \
-	--enable-muxer=pcm_s16le \
-	--enable-muxer=pcm_s24be \
-	--enable-muxer=pcm_s24le \
-	--enable-muxer=pcm_s32be \
-	--enable-muxer=pcm_s32le \
-	--enable-muxer=pcm_s8 \
-	--enable-muxer=pcm_u16be \
-	--enable-muxer=pcm_u16le \
-	--enable-muxer=pcm_u24be \
-	--enable-muxer=pcm_u24le \
-	--enable-muxer=pcm_u32be \
-	--enable-muxer=pcm_u32le \
-	--enable-muxer=pcm_u8 \
-	--enable-muxer=voc \
-	--enable-muxer=wav \
-	--disable-filters \
-	--enable-filter=format \
-	--enable-filter=noformat \
-	--enable-filter=null \
-	--enable-filter=nullsink \
-	--enable-filter=nullsrc \
-	--enable-filter=slicify
+	LDFLAGS="${X86_64LDFLAGS} -L${X86_64PATH}/lib" CFLAGS="${X86_64FLAGS} -I${X86_64PATH}/include -mdynamic-no-pic" CC="${X86_64CC}" ./configure --prefix="${X86_64PATH}" --enable-cross-compile --target-os=darwin --arch=x86_64 ${STANDARD}
 	
 	echo "Compiling FFmpeg"
 	cd ../${FFMPEGNAME}-ppc

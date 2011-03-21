@@ -62,6 +62,15 @@
 				[publicAddressField setStringValue:[defaults objectForKey:MGMSIPPublicAddress]];
 			if ([defaults objectForKey:MGMSIPUserAgent]!=nil)
 				[userAgentField setStringValue:[defaults objectForKey:MGMSIPUserAgent]];
+			NSArray *codecs = [[[MGMSIP sharedSIP] codecs] allKeys];
+			codecs = [codecs sortedArrayUsingSelector:@selector(compare:)];
+			int currentCodecIndex = 0;
+			for (int i=0; i<[codecs count]; i++) {
+				if ([[codecs objectAtIndex:i] isEqual:[defaults objectForKey:MGMSIPCodec]])
+					currentCodecIndex = i;
+				[codecPopUp addItemWithTitle:[codecs objectAtIndex:i]];
+			}
+			[codecPopUp selectItemAtIndex:currentCodecIndex];
 			
 			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 			[notificationCenter addObserver:self selector:@selector(volumeChanged:) name:MGMSIPVolumeChangedNotification object:nil];
@@ -243,6 +252,9 @@
 - (IBAction)userAgent:(id)sender {
 	[[NSUserDefaults standardUserDefaults] setObject:[userAgentField stringValue] forKey:MGMSIPUserAgent];
 	shouldRestart = YES;
+}
+- (IBAction)codec:(id)sender {
+	[[MGMSIP sharedSIP] setTopCodec:[[codecPopUp selectedItem] title]];
 }
 @end
 #endif

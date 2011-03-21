@@ -91,8 +91,6 @@
 		2A771344124C4F9A00D68042 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A771343124C4F9A00D68042 /* AVFoundation.framework */; };
 		2A7713BD124C6A4900D68042 /* MGMSound.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A77133B124C4CE200D68042 /* MGMSound.m */; };
 		2A7713BF124C6A5B00D68042 /* MGMSound.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A77133A124C4CE200D68042 /* MGMSound.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2AB13633130AB39C00F2B0E8 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB13632130AB39C00F2B0E8 /* libxml2.2.dylib */; };
-		2AB13634130AB39C00F2B0E8 /* libxml2.2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AB13632130AB39C00F2B0E8 /* libxml2.2.dylib */; };
 		2AE6EE621249DA790006B5AC /* MGMAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171A61245676A00D119B5 /* MGMAddressBook.m */; };
 		2AE6EE631249DA790006B5AC /* MGMContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171A81245676A00D119B5 /* MGMContacts.m */; };
 		2AE6EE641249DA790006B5AC /* MGMContactsProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2A1171AA1245676A00D119B5 /* MGMContactsProtocol.m */; };
@@ -108,10 +106,9 @@
 		2AE6EE701249DA870006B5AC /* libMGMUsers.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE6EE0F1249D70F0006B5AC /* libMGMUsers.a */; };
 		2AE6EE761249DB2F0006B5AC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE6EE751249DB2F0006B5AC /* CoreGraphics.framework */; };
 		2AE6EE7A1249DB2F0006B5AC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE6EE791249DB2F0006B5AC /* UIKit.framework */; };
-		2AE8D44B1309EFF500D0104B /* libcrypto.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE8D44A1309EFF500D0104B /* libcrypto.0.9.7.dylib */; };
-		2AE8D44C1309EFF500D0104B /* libcrypto.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE8D44A1309EFF500D0104B /* libcrypto.0.9.7.dylib */; };
-		2AE8D44E1309F00200D0104B /* libssl.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE8D44D1309F00200D0104B /* libssl.0.9.7.dylib */; };
-		2AE8D44F1309F00200D0104B /* libssl.0.9.7.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AE8D44D1309F00200D0104B /* libssl.0.9.7.dylib */; };
+		2AF3A2721327B2B1003D0507 /* libssl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AF3A2711327B2B1003D0507 /* libssl.dylib */; };
+		2AF3A2741327B2BD003D0507 /* libcrypto.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AF3A2731327B2BD003D0507 /* libcrypto.dylib */; };
+		2AF3A2761327B2CB003D0507 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AF3A2751327B2CB003D0507 /* libxml2.dylib */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
 
@@ -179,7 +176,6 @@
 		2A1171BC1245676A00D119B5 /* MGMSIPURL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSIPURL.h; sourceTree = "<group>"; };
 		2A1171BD1245676A00D119B5 /* MGMSIPURL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSIPURL.m; sourceTree = "<group>"; };
 		2A1171BE1245676A00D119B5 /* VoiceBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoiceBase.h; sourceTree = "<group>"; };
-		2A1171BF1245676A00D119B5 /* VoiceBase_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoiceBase_Prefix.pch; path = Classes/VoiceBase/VoiceBase_Prefix.pch; sourceTree = "<group>"; };
 		2A1171DC1245678600D119B5 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2A1171DD1245678600D119B5 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2A1172981245684600D119B5 /* MGMUsers.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MGMUsers.framework; path = Frameworks/MGMUsers.framework; sourceTree = "<group>"; };
@@ -206,20 +202,21 @@
 		2A487CAE124BE0C400E8EE4E /* MGMXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMXML.h; sourceTree = "<group>"; };
 		2A50699A1315726C003CACD5 /* MGMDelegateInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMDelegateInfo.h; sourceTree = "<group>"; };
 		2A50699B1315726D003CACD5 /* MGMDelegateInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMDelegateInfo.m; sourceTree = "<group>"; };
+		2A5B70CE13310E9100F89B56 /* prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = prefix.pch; path = Classes/VoiceBase/prefix.pch; sourceTree = "<group>"; };
+		2A5B70CF13310E9100F89B56 /* touch_prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = touch_prefix.pch; path = Classes/VoiceBase/touch_prefix.pch; sourceTree = "<group>"; };
 		2A77133A124C4CE200D68042 /* MGMSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGMSound.h; sourceTree = "<group>"; };
 		2A77133B124C4CE200D68042 /* MGMSound.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGMSound.m; sourceTree = "<group>"; };
 		2A77133F124C4D2800D68042 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		2A771343124C4F9A00D68042 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		2AB13632130AB39C00F2B0E8 /* libxml2.2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.2.dylib; path = usr/lib/libxml2.2.dylib; sourceTree = SDKROOT; };
 		2AE6EE0F1249D70F0006B5AC /* libMGMUsers.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMGMUsers.a; path = Libraries/lib/libMGMUsers.a; sourceTree = "<group>"; };
 		2AE6EE531249DA0B0006B5AC /* libVoiceBase.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libVoiceBase.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AE6EE731249DB2F0006B5AC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		2AE6EE751249DB2F0006B5AC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2AE6EE771249DB2F0006B5AC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2AE6EE791249DB2F0006B5AC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		2AE6EF191249DBA70006B5AC /* VoiceBaseTouch_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VoiceBaseTouch_Prefix.pch; path = Classes/VoiceBase/VoiceBaseTouch_Prefix.pch; sourceTree = "<group>"; };
-		2AE8D44A1309EFF500D0104B /* libcrypto.0.9.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.0.9.7.dylib; path = usr/lib/libcrypto.0.9.7.dylib; sourceTree = SDKROOT; };
-		2AE8D44D1309F00200D0104B /* libssl.0.9.7.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.0.9.7.dylib; path = usr/lib/libssl.0.9.7.dylib; sourceTree = SDKROOT; };
+		2AF3A2711327B2B1003D0507 /* libssl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libssl.dylib; path = usr/lib/libssl.dylib; sourceTree = SDKROOT; };
+		2AF3A2731327B2BD003D0507 /* libcrypto.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcrypto.dylib; path = usr/lib/libcrypto.dylib; sourceTree = SDKROOT; };
+		2AF3A2751327B2CB003D0507 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		8DC2EF5B0486A6940098B216 /* VoiceBase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VoiceBase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -236,9 +233,6 @@
 				2A771344124C4F9A00D68042 /* AVFoundation.framework in Frameworks */,
 				2A1E9723124D174200D3BEAE /* CoreAudio.framework in Frameworks */,
 				2A1E9754124D187500D3BEAE /* SystemConfiguration.framework in Frameworks */,
-				2AE8D44C1309EFF500D0104B /* libcrypto.0.9.7.dylib in Frameworks */,
-				2AE8D44F1309F00200D0104B /* libssl.0.9.7.dylib in Frameworks */,
-				2AB13634130AB39C00F2B0E8 /* libxml2.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +240,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AF3A2721327B2B1003D0507 /* libssl.dylib in Frameworks */,
+				2AF3A2741327B2BD003D0507 /* libcrypto.dylib in Frameworks */,
+				2AF3A2761327B2CB003D0507 /* libxml2.dylib in Frameworks */,
 				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
 				2A1172991245684600D119B5 /* MGMUsers.framework in Frameworks */,
 				2A1172BB124569AC00D119B5 /* AddressBook.framework in Frameworks */,
@@ -253,9 +250,6 @@
 				2A11730912456C4F00D119B5 /* AudioToolbox.framework in Frameworks */,
 				2A11730D12456C5F00D119B5 /* AudioUnit.framework in Frameworks */,
 				2A11731112456C6D00D119B5 /* SystemConfiguration.framework in Frameworks */,
-				2AE8D44B1309EFF500D0104B /* libcrypto.0.9.7.dylib in Frameworks */,
-				2AE8D44E1309F00200D0104B /* libssl.0.9.7.dylib in Frameworks */,
-				2AB13633130AB39C00F2B0E8 /* libxml2.2.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,9 +281,9 @@
 			isa = PBXGroup;
 			children = (
 				2AE6EC281249C2C70006B5AC /* Linked Libraries Touch */,
+				2AF3A2AD1327B314003D0507 /* Linled Libraries */,
 				2AE6EC2A1249C2D50006B5AC /* Linked Frameworks Touch */,
 				2AE6EC2B1249C2E20006B5AC /* Other Frameworks Touch */,
-				2A1172F612456C0600D119B5 /* Linked Libraries */,
 				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
 				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
 			);
@@ -384,16 +378,6 @@
 			path = Resources/VoiceBase;
 			sourceTree = "<group>";
 		};
-		2A1172F612456C0600D119B5 /* Linked Libraries */ = {
-			isa = PBXGroup;
-			children = (
-				2AE8D44D1309F00200D0104B /* libssl.0.9.7.dylib */,
-				2AE8D44A1309EFF500D0104B /* libcrypto.0.9.7.dylib */,
-				2AB13632130AB39C00F2B0E8 /* libxml2.2.dylib */,
-			);
-			name = "Linked Libraries";
-			sourceTree = "<group>";
-		};
 		2A487C92124BE0AB00E8EE4E /* XML */ = {
 			isa = PBXGroup;
 			children = (
@@ -445,11 +429,21 @@
 			name = "Other Frameworks Touch";
 			sourceTree = "<group>";
 		};
+		2AF3A2AD1327B314003D0507 /* Linled Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				2AF3A2711327B2B1003D0507 /* libssl.dylib */,
+				2AF3A2731327B2BD003D0507 /* libcrypto.dylib */,
+				2AF3A2751327B2CB003D0507 /* libxml2.dylib */,
+			);
+			name = "Linled Libraries";
+			sourceTree = "<group>";
+		};
 		32C88DFF0371C24200C91783 /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				2AE6EF191249DBA70006B5AC /* VoiceBaseTouch_Prefix.pch */,
-				2A1171BF1245676A00D119B5 /* VoiceBase_Prefix.pch */,
+				2A5B70CE13310E9100F89B56 /* prefix.pch */,
+				2A5B70CF13310E9100F89B56 /* touch_prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -646,12 +640,12 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
+				GCC_PREFIX_HEADER = Classes/VoiceBase/prefix.pch;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = VoiceBase;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -672,12 +666,12 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
+				GCC_PREFIX_HEADER = Classes/VoiceBase/prefix.pch;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = VoiceBase;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -686,14 +680,9 @@
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
@@ -701,52 +690,39 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
-				VALID_ARCHS = "ppc i386 x86_64";
+				SDKROOT = macosx10.5;
 			};
 			name = Debug;
 		};
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = /usr/include/libxml2;
 				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
-				VALID_ARCHS = "ppc i386 x86_64";
+				SDKROOT = macosx10.5;
 			};
 			name = Release;
 		};
 		2A1172E612456A6700D119B5 /* Debug SIP */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					/usr/include/libxml2,
-					"\"$(SRCROOT)/SIP/opt/include\"",
-				);
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/lib\"";
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
 				ONLY_ACTIVE_ARCH = YES;
@@ -755,9 +731,9 @@
 					"-DNDEBUG",
 					"-DMGMSIPENABLED=1",
 				);
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
-				VALID_ARCHS = "ppc i386 x86_64";
+				SDKROOT = macosx10.5;
 			};
 			name = "Debug SIP";
 		};
@@ -778,12 +754,19 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
-				HEADER_SEARCH_PATHS = "$(inherited)";
+				GCC_PREFIX_HEADER = Classes/VoiceBase/prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/SIP/opt/include\"",
+				);
 				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/SIP/opt/lib\"",
+				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-lg7221codec",
 					"-lgsmcodec",
 					"-lilbccodec",
@@ -811,20 +794,12 @@
 		2A1172E812456A6C00D119B5 /* Release SIP */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_VERSION = 4.2;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					/usr/include/libxml2,
-					"\"$(SRCROOT)/SIP/opt/include\"",
-				);
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/SIP/opt/lib\"";
+				HEADER_SEARCH_PATHS = /usr/include/libxml2;
+				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				"MACOSX_DEPLOYMENT_TARGET[arch=x86_64]" = 10.5;
 				OTHER_CFLAGS = (
@@ -832,9 +807,9 @@
 					"-DNDEBUG",
 					"-DMGMSIPENABLED=1",
 				);
+				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
-				SDKROOT = macosx10.6;
-				VALID_ARCHS = "ppc i386 x86_64";
+				SDKROOT = macosx10.5;
 			};
 			name = "Release SIP";
 		};
@@ -853,12 +828,19 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBase_Prefix.pch;
-				HEADER_SEARCH_PATHS = "$(inherited)";
+				GCC_PREFIX_HEADER = Classes/VoiceBase/prefix.pch;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/SIP/opt/include\"",
+				);
 				INFOPLIST_FILE = Resources/VoiceBase/Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/SIP/opt/lib\"",
+				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-lg7221codec",
 					"-lgsmcodec",
 					"-lilbccodec",
@@ -891,7 +873,7 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBaseTouch_Prefix.pch;
+				GCC_PREFIX_HEADER = Classes/VoiceBase/touch_prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -904,12 +886,13 @@
 				);
 				OTHER_CFLAGS = "-fblocks";
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-all_load",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = VoiceBase;
-				SDKROOT = iphoneos4.2;
+				SDKROOT = iphoneos4.3;
 				VALID_ARCHS = "i386 armv6 armv7";
 			};
 			name = Debug;
@@ -919,16 +902,18 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBaseTouch_Prefix.pch;
+				GCC_PREFIX_HEADER = Classes/VoiceBase/touch_prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/include\"",
+					"\"$(SRCROOT)/SIP/opt-ios/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/lib\"",
+					"\"$(SRCROOT)/SIP/opt-ios/lib\"",
 				);
 				OTHER_CFLAGS = (
 					"-fblocks",
@@ -937,6 +922,7 @@
 					"-DMGMSIPENABLED=1",
 				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-lg7221codec-ios",
 					"-lgsmcodec-ios",
 					"-lilbccodec-ios",
@@ -954,18 +940,12 @@
 					"-lresample-ios",
 					"-lspeex-ios",
 					"-lsrtp-ios",
-					"-lz",
-					"-lavcodec",
-					"-lavdevice",
-					"-lavformat",
-					"-lavutil",
-					"-lswscale",
 					"-ObjC",
 					"-all_load",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = VoiceBase;
-				SDKROOT = iphoneos4.2;
+				SDKROOT = iphoneos4.3;
 				VALID_ARCHS = "i386 armv6 armv7";
 			};
 			name = "Debug SIP";
@@ -978,7 +958,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBaseTouch_Prefix.pch;
+				GCC_PREFIX_HEADER = Classes/VoiceBase/touch_prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -991,12 +971,13 @@
 				);
 				OTHER_CFLAGS = "-fblocks";
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-all_load",
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = VoiceBase;
-				SDKROOT = iphoneos4.2;
+				SDKROOT = iphoneos4.3;
 				VALID_ARCHS = "i386 armv6 armv7";
 				ZERO_LINK = NO;
 			};
@@ -1007,16 +988,18 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				GCC_PREFIX_HEADER = Classes/VoiceBase/VoiceBaseTouch_Prefix.pch;
+				GCC_PREFIX_HEADER = Classes/VoiceBase/touch_prefix.pch;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/include\"",
+					"\"$(SRCROOT)/SIP/opt-ios/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/Libraries/lib\"",
+					"\"$(SRCROOT)/SIP/opt-ios/lib\"",
 				);
 				OTHER_CFLAGS = (
 					"-fblocks",
@@ -1025,6 +1008,7 @@
 					"-DMGMSIPENABLED=1",
 				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-lg7221codec-ios",
 					"-lgsmcodec-ios",
 					"-lilbccodec-ios",
@@ -1042,12 +1026,6 @@
 					"-lresample-ios",
 					"-lspeex-ios",
 					"-lsrtp-ios",
-					"-lz",
-					"-lavcodec",
-					"-lavdevice",
-					"-lavformat",
-					"-lavutil",
-					"-lswscale",
 					"-ObjC",
 					"-all_load",
 				);
@@ -1055,7 +1033,7 @@
 				PRIVATE_HEADERS_FOLDER_PATH = /usr/local/include/VoiceBase;
 				PRODUCT_NAME = VoiceBase;
 				PUBLIC_HEADERS_FOLDER_PATH = /usr/local/include/VoiceBase;
-				SDKROOT = iphoneos4.2;
+				SDKROOT = iphoneos4.3;
 				VALID_ARCHS = "i386 armv6 armv7";
 			};
 			name = "Release SIP";

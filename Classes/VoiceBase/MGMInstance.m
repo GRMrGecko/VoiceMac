@@ -23,15 +23,18 @@
 #import "MGMContacts.h"
 #import "MGMAddressBook.h"
 #import "MGMAddons.h"
+#import "MGMXML.h"
 #import <MGMUsers/MGMUsers.h>
 
 NSString * const MGMVoiceBaseCopyright = @"Copyright (c) 2011 Mr. Gecko's Media (James Coleman). http://mrgeckosmedia.com/";
 
 NSString * const MGMVoiceIndexURL = @"https://www.google.com/voice/#inbox";
 NSString * const MGMLoginURL = @"https://www.google.com/accounts/ServiceLoginAuth";
+NSString * const MGMLoginVerifyURL = @"https://www.google.com/accounts/SmsAuth?persistent=yes";
 NSString * const MGMXPCPath = @"/voice/xpc/?xpc=%7B%22cn%22%3A%22i70avDIMsA%22%2C%22tp%22%3Anull%2C%22pru%22%3A%22https%3A%2F%2Fwww.google.com%2Fvoice%2Fxpc%2Frelay%22%2C%22ppu%22%3A%22https%3A%2F%2Fwww.google.com%2Fvoice%2Fxpc%2Fblank%2F%22%2C%22lpu%22%3A%22https%3A%2F%2Fclients4.google.com%2Fvoice%2Fxpc%2Fblank%2F%22%7D";
 NSString * const MGMCheckPath = @"/voice/xpc/checkMessages?r=%@";
 NSString * const MGMCreditURL = @"https://www.google.com/voice/settings/billingcredit/";
+NSString * const MGMPhonesURL = @"https://www.google.com/voice/settings/tab/phones";
 NSString * const MGMCallURL = @"https://www.google.com/voice/call/connect/";
 NSString * const MGMCallCancelURL = @"https://www.google.com/voice/call/cancel/";
 
@@ -230,6 +233,122 @@ const BOOL MGMInstanceInvisible = YES;
 		}
 		//NSLog(@"Redirecting to %@", redirectURL);
 		MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:redirectURL]] delegate:self];
+		[handler setFailWithError:@selector(index:didFailWithError:)];
+		[handler setFinish:@selector(indexDidFinish:)];
+		[handler setInvisible:MGMInstanceInvisible];
+		[connectionManager addHandler:handler];
+	} else if ([returnedString containsString:@"Enter verification code"]) {
+		[verificationParameters release];
+		verificationParameters = [NSMutableDictionary new];
+		[verificationParameters setObject:@"yes" forKey:@"PersistentCookie"];
+		NSString *nameValue = @"name=\"%@\"";
+		NSString *valueStart = @"value=\"";
+		NSString *valueEnd = @"\"";
+		NSString *valueStartQ = @"value='";
+		NSString *valueEndQ = @"'";
+		NSArray *names = [NSArray arrayWithObjects:@"timeStmp", @"secTok", @"smsToken", @"email", nil];
+		for (int i=0; i<[names count]; i++) {
+			NSAutoreleasePool *pool = [NSAutoreleasePool new];
+			NSString *nameString = [NSString stringWithFormat:nameValue, [names objectAtIndex:i]];
+			NSRange range = [returnedString rangeOfString:nameString];
+			if (range.location==NSNotFound) {
+				nameString = [nameString replace:@"\"" with:@"'"];
+				range = [returnedString rangeOfString:nameString];
+			}
+			if (range.location==NSNotFound) {
+				NSLog(@"Unable to find %@", [names objectAtIndex:i]);
+			} else {
+				NSString *string = [returnedString substringFromIndex:range.location+range.length];
+				range = [string rangeOfString:valueStart];
+				if (range.location==NSNotFound) {
+					range = [string rangeOfString:valueStartQ];
+					if (range.location==NSNotFound) {
+						NSLog(@"Unable to find value for %@", [names objectAtIndex:i]);
+						[pool drain];
+						continue;
+					}
+					string = [string substringFromIndex:range.location+range.length];
+					range = [string rangeOfString:valueEndQ];
+				} else {
+					string = [string substringFromIndex:range.location+range.length];
+					range = [string rangeOfString:valueEnd];
+				}
+				if (range.location==NSNotFound) NSLog(@"failed 532");
+				[verificationParameters setObject:[[[string substringWithRange:NSMakeRange(0, range.location)] copy] autorelease] forKey:[names objectAtIndex:i]];
+			}
+			[pool drain];
+		}
+		if ([delegate respondsToSelector:@selector(loginVerificationRequested)]) {
+#if MGMInstanceDebug
+			NSLog(@"%@", verificationParameters);
+#endif
+			[delegate loginVerificationRequested];
+		} else {
+			NSError *error = [NSError errorWithDomain:@"com.MrGeckosMedia.MGMInstance.Login" code:54 userInfo:[NSDictionary dictionaryWithObject:@"Unable to login. The application does not implument with 2 step verification." forKey:NSLocalizedDescriptionKey]];
+			if (delegate!=nil && [delegate respondsToSelector:@selector(loginError:)]) {
+				[delegate loginError:error];
+			} else {
+				NSLog(@"Login Error: %@", error);
+			}
+			return;
+		}
+	} else if ([returnedString containsString:@"onload=\"autoSubmit()\""]) {
+		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMLoginURL]];
+		[request setHTTPMethod:MGMPostMethod];
+		[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
+		NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
+		NSString *nameValue = @"name=\"%@\"";
+		NSString *valueStart = @"value=\"";
+		NSString *valueEnd = @"\"";
+		NSString *valueStartQ = @"value='";
+		NSString *valueEndQ = @"'";
+		NSArray *names = [NSArray arrayWithObjects:@"dsh", @"smsToken", @"followup", @"continue", @"PersistentCookie", @"service", @"rmShown", @"GALX", @"ltmpl", nil];
+		for (int i=0; i<[names count]; i++) {
+			NSAutoreleasePool *pool = [NSAutoreleasePool new];
+			NSString *nameString = [NSString stringWithFormat:nameValue, [names objectAtIndex:i]];
+			NSRange range = [returnedString rangeOfString:nameString];
+			if (range.location==NSNotFound) {
+				nameString = [nameString replace:@"\"" with:@"'"];
+				range = [returnedString rangeOfString:nameString];
+			}
+			if (range.location==NSNotFound) {
+				NSLog(@"Unable to find %@", [names objectAtIndex:i]);
+			} else {
+				NSString *string = [returnedString substringFromIndex:range.location+range.length];
+				range = [string rangeOfString:valueStart];
+				if (range.location==NSNotFound) {
+					range = [string rangeOfString:valueStartQ];
+					if (range.location==NSNotFound) {
+						NSLog(@"Unable to find value for %@", [names objectAtIndex:i]);
+						[pool drain];
+						continue;
+					}
+					string = [string substringFromIndex:range.location+range.length];
+					range = [string rangeOfString:valueEndQ];
+				} else {
+					string = [string substringFromIndex:range.location+range.length];
+					range = [string rangeOfString:valueEnd];
+				}
+				if (range.location==NSNotFound) NSLog(@"failed 532");
+				[parameters setObject:[[[string substringWithRange:NSMakeRange(0, range.location)] copy] autorelease] forKey:[names objectAtIndex:i]];
+			}
+			[pool drain];
+		}
+		
+#if MGMInstanceDebug
+		NSLog(@"%@", parameters);
+#endif
+		
+		NSArray *parametersKeys = [parameters allKeys];
+		NSMutableString *bodyString = [NSMutableString string];
+		for (int i=0; i<[parametersKeys count]; i++) {
+			if (i!=0)
+				[bodyString appendString:@"&"];
+			[bodyString appendFormat:@"%@=%@", [[parametersKeys objectAtIndex:i] addPercentEscapes], [[parameters objectForKey:[parametersKeys objectAtIndex:i]] addPercentEscapes]];
+		}
+		
+		[request setHTTPBody:[bodyString dataUsingEncoding:NSUTF8StringEncoding]];
+		MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
 		[handler setFailWithError:@selector(index:didFailWithError:)];
 		[handler setFinish:@selector(indexDidFinish:)];
 		[handler setInvisible:MGMInstanceInvisible];
@@ -440,21 +559,7 @@ const BOOL MGMInstanceInvisible = YES;
 				phonesInfo = [string substringWithRange:NSMakeRange(0, range.location)];
 			}
 		}
-		NSDictionary *phones = [phonesInfo parseJSON];
-		//NSLog(@"%@", phones);
-		NSArray *phoneKeys = [phones allKeys];
-		[userPhoneNumbers release];
-		userPhoneNumbers = [NSMutableArray new];
-		for (int i=0; i<[phoneKeys count]; i++) {
-			NSDictionary *phoneInfo = [phones objectForKey:[phoneKeys objectAtIndex:i]];
-			if ([[phoneInfo objectForKey:@"telephonyVerified"] intValue]==1) {
-				NSMutableDictionary *phone = [NSMutableDictionary dictionary];
-				[phone setObject:[[phoneInfo objectForKey:MGMPhoneNumber] phoneFormat] forKey:MGMPhoneNumber];
-				[phone setObject:[[phoneInfo objectForKey:MGMName] flattenHTML] forKey:MGMName];
-				[phone setObject:[phoneInfo objectForKey:MGMType] forKey:MGMType];
-				[userPhoneNumbers addObject:phone];
-			}
-		}
+		[self parseUserPhones:[phonesInfo parseJSON]];
 #if MGMInstanceDebug
 		NSLog(@"User Phones = %@", userPhoneNumbers);
 		NSLog(@"Parsing XPCURL");
@@ -489,8 +594,70 @@ const BOOL MGMInstanceInvisible = YES;
 		}
 	}
 }
+- (void)cancelVerification {
+	[verificationParameters release];
+	verificationParameters = nil;
+	NSError *error = [NSError errorWithDomain:@"com.MrGeckosMedia.MGMInstance.Login" code:54 userInfo:[NSDictionary dictionaryWithObject:@"Unable to login. Verification was canceled." forKey:NSLocalizedDescriptionKey]];
+	if (delegate!=nil && [delegate respondsToSelector:@selector(loginError:)]) {
+		[delegate loginError:error];
+	} else {
+		NSLog(@"Login Error: %@", error);
+	}
+}
+- (void)verifyWithCode:(NSString *)theCode {
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMLoginVerifyURL]];
+	[request setHTTPMethod:MGMPostMethod];
+	[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
+	[verificationParameters setObject:theCode forKey:@"smsUserPin"];
+	NSArray *parametersKeys = [verificationParameters allKeys];
+	NSMutableString *bodyString = [NSMutableString string];
+	for (int i=0; i<[parametersKeys count]; i++) {
+		if (i!=0)
+			[bodyString appendString:@"&"];
+		[bodyString appendFormat:@"%@=%@", [[parametersKeys objectAtIndex:i] addPercentEscapes], [[verificationParameters objectForKey:[parametersKeys objectAtIndex:i]] addPercentEscapes]];
+	}
+	
+	[request setHTTPBody:[bodyString dataUsingEncoding:NSUTF8StringEncoding]];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+	[handler setFailWithError:@selector(index:didFailWithError:)];
+	[handler setFinish:@selector(indexDidFinish:)];
+	[handler setInvisible:MGMInstanceInvisible];
+	[connectionManager addHandler:handler];
+	[verificationParameters release];
+	verificationParameters = nil;
+}
 - (BOOL)isLoggedIn {
 	return loggedIn;
+}
+
+- (void)checkPhones {
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:MGMPhonesURL]] delegate:self];
+	[handler setFinish:@selector(phonesFinished:)];
+	[handler setInvisible:MGMInstanceInvisible];
+	[connectionManager addHandler:handler];
+}
+- (void)phonesFinished:(MGMURLBasicHandler *)theHandler {
+	MGMXMLElement *XML = [(MGMXMLDocument *)[[[MGMXMLDocument alloc] initWithData:[theHandler data] options:MGMXMLDocumentTidyXML error:nil] autorelease] rootElement];
+	NSDictionary *info = [[[[XML elementsForName:@"json"] objectAtIndex:0] stringValue] parseJSON];
+	[self parseUserPhones:[info objectForKey:@"phones"]];
+	if ([delegate respondsToSelector:@selector(updatedUserPhones)]) [delegate updatedUserPhones];
+}
+- (void)parseUserPhones:(NSDictionary *)thePhones {
+	if (thePhones==nil)
+		return;
+	NSArray *phones = [thePhones allKeys];
+	[userPhoneNumbers release];
+	userPhoneNumbers = [NSMutableArray new];
+	for (int i=0; i<[phones count]; i++) {
+		NSDictionary *phoneInfo = [thePhones objectForKey:[phones objectAtIndex:i]];
+		if ([[phoneInfo objectForKey:@"verified"] intValue]==1) {
+			NSMutableDictionary *phone = [NSMutableDictionary dictionary];
+			[phone setObject:[[phoneInfo objectForKey:MGMPhoneNumber] phoneFormat] forKey:MGMPhoneNumber];
+			[phone setObject:[[phoneInfo objectForKey:MGMName] flattenHTML] forKey:MGMName];
+			[phone setObject:[phoneInfo objectForKey:MGMType] forKey:MGMType];
+			[userPhoneNumbers addObject:phone];
+		}
+	}
 }
 
 - (void)xpcFinished:(MGMURLBasicHandler *)theHandler {

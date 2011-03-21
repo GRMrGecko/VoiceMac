@@ -21,13 +21,12 @@ X86_64HOST="x86_64-apple-darwin9"
 X86_64PATH="${PWD}/opt-x86_64"
 X86_64LDFLAGS="-arch x86_64"
 
-FINALPATH="${PWD}/opt"
-
 if [ "$1" = "clean" ]; then
 	echo "Cleaning PJProject"
 	rm -fR pjproject-i386 pjproject-x86_64 pjproject-ppc pjproject-ios pjproject-simulator
 fi
 if [ "$1" = "ios" ]; then
+	FINALPATH="${PWD}/opt-ios"
 	IOSCFLAGS="-miphoneos-version-min=3.1"
 	IOS6PATH="${PWD}/opt-ios6"
 	IOS7PATH="${PWD}/opt-ios7"
@@ -38,6 +37,9 @@ if [ "$1" = "ios" ]; then
 	cp -R ${PJPROJECTNAME} ${PJPROJECTNAME}-ios6
 	echo "#define PJ_CONFIG_IPHONE 1" > ${PJPROJECTNAME}-ios6/pjlib/include/pj/config_site.h
 	echo "#include <pj/config_site_sample.h>" >> ${PJPROJECTNAME}-ios6/pjlib/include/pj/config_site.h
+	echo "#define PJMEDIA_AUDIO_DEV_HAS_PORTAUDIO 0" >> ${PJPROJECTNAME}-ios6/pjlib/include/pj/config_site.h
+	echo "#define PJMEDIA_AUDIO_DEV_HAS_COREAUDIO 1" >> ${PJPROJECTNAME}-ios6/pjlib/include/pj/config_site.h
+	echo "#define PJMEDIA_HAS_G722_CODEC 2" >> ${PJPROJECTNAME}-ios6/pjlib/include/pj/config_site.h
 	
 	OLDDIR="${PWD}"
 	cd ${PJPROJECTNAME}-ios6
@@ -45,7 +47,6 @@ if [ "$1" = "ios" ]; then
 	cd "${OLDDIR}"
 	cp -R ${PJPROJECTNAME}-ios6 ${PJPROJECTNAME}-ios7
 	cp -R ${PJPROJECTNAME}-ios6 ${PJPROJECTNAME}-simulator
-	
 	echo "Configuring PJProject"
 	cd ${PJPROJECTNAME}-ios6
 	CC="/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/gcc-4.2 -arch armv6" CFLAGS="${IOSCFLAGS}" ./configure-iphone --prefix="${IOS6PATH}"
@@ -78,7 +79,7 @@ if [ "$1" = "ios" ]; then
 	
 	echo "Making PJProject Universal"
 	mkdir -p "${FINALPATH}/lib/pkgconfig"
-	cp -R "${PPCPATH}/include" "${FINALPATH}/include"
+	cp -R "${IOS6PATH}/include" "${FINALPATH}"
 	lipo -create "${IOS6PATH}/lib/libg7221codec-arm-apple-darwin9.a" "${IOS7PATH}/lib/libg7221codec-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libg7221codec-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libg7221codec-ios.a"
 	lipo -create "${IOS6PATH}/lib/libgsmcodec-arm-apple-darwin9.a" "${IOS7PATH}/lib/libgsmcodec-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libgsmcodec-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libgsmcodec-ios.a"
 	lipo -create "${IOS6PATH}/lib/libilbccodec-arm-apple-darwin9.a" "${IOS7PATH}/lib/libilbccodec-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libilbccodec-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libilbccodec-ios.a"
@@ -97,7 +98,63 @@ if [ "$1" = "ios" ]; then
 	lipo -create "${IOS6PATH}/lib/libspeex-arm-apple-darwin9.a" "${IOS7PATH}/lib/libspeex-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libspeex-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libspeex-ios.a"
 	lipo -create "${IOS6PATH}/lib/libsrtp-arm-apple-darwin9.a" "${IOS7PATH}/lib/libsrtp-arm-apple-darwin9.a" "${SIMULATORPATH}/lib/libsrtp-arm-apple-darwin9.a" -output "${FINALPATH}/lib/libsrtp-ios.a"
 fi
+if [ "$1" = "simulator" ]; then
+	FINALPATH="${PWD}/opt-ios"
+	IOSCFLAGS="-miphoneos-version-min=3.1"
+	SIMULATORPATH="${PWD}/opt-simulator"
+	
+	echo "Copying PJProject"
+	PJPROJECTNAME="pjproject"
+	cp -R ${PJPROJECTNAME} ${PJPROJECTNAME}-simulator
+	echo "#define PJ_CONFIG_IPHONE 1" > ${PJPROJECTNAME}-simulator/pjlib/include/pj/config_site.h
+	echo "#include <pj/config_site_sample.h>" >> ${PJPROJECTNAME}-simulator/pjlib/include/pj/config_site.h
+	echo "#define PJMEDIA_AUDIO_DEV_HAS_PORTAUDIO 0" >> ${PJPROJECTNAME}-simulator/pjlib/include/pj/config_site.h
+	echo "#define PJMEDIA_AUDIO_DEV_HAS_COREAUDIO 1" >> ${PJPROJECTNAME}-simulator/pjlib/include/pj/config_site.h
+	echo "#define PJMEDIA_HAS_G722_CODEC 2" >> ${PJPROJECTNAME}-simulator/pjlib/include/pj/config_site.h
+	
+	OLDDIR="${PWD}"
+	cd ${PJPROJECTNAME}-simulator
+	patch -p0 < "${OLDDIR}/mips_test.patch"
+	cd "${OLDDIR}"
+	echo "Configuring PJProject"
+	cd ${PJPROJECTNAME}-simulator
+	DEVPATH="/Developer/Platforms/iPhoneSimulator.platform/Developer" CC="/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2" CFLAGS="${IOSCFLAGS}" ./configure-iphone --prefix="${SIMULATORPATH}"
+	cd ../
+	
+	echo "Compiling PJProject"
+	cd ${PJPROJECTNAME}-simulator
+	make dep
+	make
+	cd ../
+	
+	echo "Installing PJProject"
+	cd ${PJPROJECTNAME}-simulator
+	make install
+	cd ../
+	
+	echo "Making PJProject Universal"
+	mkdir -p "${FINALPATH}/lib/pkgconfig"
+	cp -R "${SIMULATORPATH}/include" "${FINALPATH}"
+	mv "${SIMULATORPATH}/lib/libg7221codec-arm-apple-darwin9.a" "${FINALPATH}/lib/libg7221codec-ios.a"
+	mv "${SIMULATORPATH}/lib/libgsmcodec-arm-apple-darwin9.a" "${FINALPATH}/lib/libgsmcodec-ios.a"
+	mv "${SIMULATORPATH}/lib/libilbccodec-arm-apple-darwin9.a" "${FINALPATH}/lib/libilbccodec-ios.a"
+	mv "${SIMULATORPATH}/lib/libmilenage-arm-apple-darwin9.a" "${FINALPATH}/lib/libmilenage-ios.a"
+	mv "${SIMULATORPATH}/lib/libpj-arm-apple-darwin9.a" "${FINALPATH}/lib/libpj-ios.a"
+	mv "${SIMULATORPATH}/lib/libpjlib-util-arm-apple-darwin9.a" "${FINALPATH}/lib/libpjlib-util-ios.a"
+	mv "${SIMULATORPATH}/lib/libpjmedia-arm-apple-darwin9.a" "${FINALPATH}/lib/libpjmedia-ios.a"
+	mv "${SIMULATORPATH}/lib/libpjmedia-audiodev-arm-apple-darwin9.a" "${FINALPATH}/lib/libpjmedia-audiodev-ios.a"
+	mv "${SIMULATORPATH}/lib/libpjmedia-codec-arm-apple-darwin9.a" "${FINALPATH}/lib/libpjmedia-codec-ios.a"
+	mv "${SIMULATORPATH}/lib/libpjnath-arm-apple-darwin9.a" "${FINALPATH}/lib/libpjnath-ios.a"
+	mv "${SIMULATORPATH}/lib/libpjsip-arm-apple-darwin9.a" "${FINALPATH}/lib/libpjsip-ios.a"
+	mv "${SIMULATORPATH}/lib/libpjsip-simple-arm-apple-darwin9.a" "${FINALPATH}/lib/libpjsip-simple-ios.a"
+	mv "${SIMULATORPATH}/lib/libpjsip-ua-arm-apple-darwin9.a" "${FINALPATH}/lib/libpjsip-ua-ios.a"
+	mv "${SIMULATORPATH}/lib/libpjsua-arm-apple-darwin9.a" "${FINALPATH}/lib/libpjsua-ios.a"
+	mv "${SIMULATORPATH}/lib/libresample-arm-apple-darwin9.a" "${FINALPATH}/lib/libresample-ios.a"
+	mv "${SIMULATORPATH}/lib/libspeex-arm-apple-darwin9.a" "${FINALPATH}/lib/libspeex-ios.a"
+	mv "${SIMULATORPATH}/lib/libsrtp-arm-apple-darwin9.a" "${FINALPATH}/lib/libsrtp-ios.a"
+fi
 if [ "$1" = "" ]; then
+	FINALPATH="${PWD}/opt"
 	echo "Copying PJProject"
 	PJPROJECTNAME="pjproject"
 	cp -R ${PJPROJECTNAME} ${PJPROJECTNAME}-ppc
@@ -138,7 +195,7 @@ if [ "$1" = "" ]; then
 	
 	echo "Making PJProject Universal"
 	mkdir -p "${FINALPATH}/lib/pkgconfig"
-	cp -R "${PPCPATH}/include" "${FINALPATH}/include"
+	cp -R "${PPCPATH}/include" "${FINALPATH}"
 	lipo -create "${PPCPATH}/lib/libg7221codec-powerpc-apple-darwin8.a" "${I386PATH}/lib/libg7221codec-i386-apple-darwin8.a" "${X86_64PATH}/lib/libg7221codec-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libg7221codec.a"
 	lipo -create "${PPCPATH}/lib/libgsmcodec-powerpc-apple-darwin8.a" "${I386PATH}/lib/libgsmcodec-i386-apple-darwin8.a" "${X86_64PATH}/lib/libgsmcodec-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libgsmcodec.a"
 	lipo -create "${PPCPATH}/lib/libilbccodec-powerpc-apple-darwin8.a" "${I386PATH}/lib/libilbccodec-i386-apple-darwin8.a" "${X86_64PATH}/lib/libilbccodec-x86_64-apple-darwin9.a" -output "${FINALPATH}/lib/libilbccodec.a"

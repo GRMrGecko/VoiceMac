@@ -117,9 +117,13 @@
 		[theAlert setMessageText:@"Error sending a SMS Message"];
 		[theAlert setInformativeText:@"You need to at least have 1 contact to send to."];
 		[theAlert runModal];
+	} else if ([[SMSTextView string] isEqual:@""]) {
+		NSAlert *theAlert = [[NSAlert new] autorelease];
+		[theAlert setMessageText:@"Error sending a SMS Message"];
+		[theAlert setInformativeText:@"Message is blank."];
+		[theAlert runModal];
 	} else {
-		if ([[SMSTextView string] isEqual:@""])
-			return;
+		[SMSTextView setEditable:NO];
 		sendingMessage = YES;
 		[sendButton setTitle:@"Sending..."];
 		[sendButton setEnabled:NO];

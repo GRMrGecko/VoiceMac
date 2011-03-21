@@ -176,7 +176,13 @@ typedef struct AVInputFile {
     int nb_streams;       /* nb streams we are aware of */
 } AVInputFile;
 
-@interface MGMFFmpeg : NSObject <NSApplicationDelegate> {
+@interface MGMFFmpeg : NSObject
+#if !TARGET_OS_IPHONE
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+<NSApplicationDelegate>
+#endif
+#endif
+{
 	id<MGMFFmpegDelegate> delegate;
 	
 	char **opt_names;
@@ -340,7 +346,9 @@ typedef struct AVInputFile {
 	double previousTime;
 	
 	BOOL stopConverting;
+#if !TARGET_OS_IPHONE
 	BOOL stoppedByQuit;
+#endif
 	BOOL isConverting;
 	
 	OptionDef options[102];
@@ -361,5 +369,9 @@ typedef struct AVInputFile {
 - (void)setInputFile:(NSString *)theFile;
 - (void)setInputHandle:(NSFileHandle *)theHandle;
 - (void)startConverting;
+
+#if !TARGET_OS_IPHONE
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender;
+#endif
 @end
 #endif

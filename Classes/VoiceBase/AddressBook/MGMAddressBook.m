@@ -212,9 +212,9 @@
 		NSString *name = [(NSString *)ABRecordCopyValue(abGroup, kABGroupNameProperty) autorelease];
 		NSArray *people = [(NSArray *)ABGroupCopyArrayOfAllMembers(abGroup) autorelease];
 		NSMutableArray *groupMembers = [NSMutableArray array];
-		for (unsigned int p=0; p<[people count]; p++) {
+		for (unsigned int m=0; m<[people count]; m++) {
 			if (shouldStop) break;
-			ABRecordRef person = [people objectAtIndex:i];
+			ABRecordRef person = [people objectAtIndex:m];
 			ABMultiValueRef phones = ABRecordCopyValue(person, kABPersonPhoneProperty);
 			if (phones!=NULL) {
 				if (shouldStop) break;
@@ -239,9 +239,9 @@
 		NSString *name = [abGroup valueForProperty:kABGroupNameProperty];
 		NSArray *people = [abGroup members];
 		NSMutableArray *groupMembers = [NSMutableArray array];
-		for (unsigned int p=0; p<[people count]; p++) {
+		for (unsigned int m=0; m<[people count]; m++) {
 			if (shouldStop) break;
-			ABPerson *person = [people objectAtIndex:p];
+			ABPerson *person = [people objectAtIndex:m];
 			if ([person valueForProperty:kABPhoneProperty]!=nil) {
 				ABMultiValue *phones = [person valueForProperty:kABPhoneProperty];
 				for (int p=0; p<[phones count]; p++) {

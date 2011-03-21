@@ -18,10 +18,8 @@
 //
 
 #if MGMSIPENABLED
-#if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
-#else
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
+#if !TARGET_OS_IPHONE
 #import <SystemConfiguration/SystemConfiguration.h>
 #endif
 #import <pjsua-lib/pjsua.h>
@@ -42,6 +40,7 @@ extern NSString * const MGMSIPEchoCacnellationEnabled;
 extern NSString * const MGMSIPPort;
 extern NSString * const MGMSIPPublicAddress;
 extern NSString * const MGMSIPUserAgent;
+extern NSString * const MGMSIPCodec;
 
 extern NSString * const MGMNetworkConnectedNotification;
 extern NSString * const MGMNetworkDisconnectedNotification;
@@ -114,6 +113,9 @@ typedef enum {
 	BOOL shouldRestart;
 	NSTimer *restartTimer;
 	
+	unsigned int codecOriginalPriority;
+	NSMutableDictionary *codecsInfo;
+	
 	NSMutableArray *accounts;
 	NSMutableArray *restartAccounts;
 #if !TARGET_OS_IPHONE
@@ -162,6 +164,10 @@ typedef enum {
 #endif
 
 - (void)registerThread:(pj_thread_desc *)thePJThreadDesc;
+
+- (void)setTopCodec:(NSString *)theCodec;
+- (void)setPriority:(unsigned int)thePriority forCodec:(NSString *)theCodec;
+- (NSDictionary *)codecs;
 
 - (void)loginToAccount:(MGMSIPAccount *)theAccount;
 - (void)logoutOfAccount:(MGMSIPAccount *)theAccount;

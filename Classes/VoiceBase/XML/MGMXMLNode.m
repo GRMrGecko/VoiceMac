@@ -63,22 +63,28 @@ static void MGMXMLErrorHandler(void *userData, xmlErrorPtr error) {
 }
 - (id)initWithTypeXMLPtr:(xmlTypPtr)theXMLPtr {
 	if ((self = [self init])) {
-		if (theXMLPtr->type==MGMXMLNamespaceKind) {
-			xmlNsPtr xmlPtr = (xmlNsPtr)theXMLPtr;
-			if (xmlPtr->_private!=NULL) {
-				[self release];
-				self = nil;
-				return [(MGMXMLNode *)xmlPtr->_private retain];
-			}
+		if (theXMLPtr==NULL) {
+			//NSLog(@"NULL XMLPtr");
+			[self release];
+			self = nil;
 		} else {
-			xmlComPtr comXML = (xmlComPtr)theXMLPtr;
-			if (comXML->_private!=NULL) {
-				[self release];
-				self = nil;
-				return [(MGMXMLNode *)comXML->_private retain];
+			if (theXMLPtr->type==MGMXMLNamespaceKind) {
+				xmlNsPtr xmlPtr = (xmlNsPtr)theXMLPtr;
+				if (xmlPtr->_private!=NULL) {
+					[self release];
+					self = nil;
+					return [(MGMXMLNode *)xmlPtr->_private retain];
+				}
+			} else {
+				xmlComPtr comXML = (xmlComPtr)theXMLPtr;
+				if (comXML->_private!=NULL) {
+					[self release];
+					self = nil;
+					return [(MGMXMLNode *)comXML->_private retain];
+				}
 			}
+			[self setTypeXMLPtr:theXMLPtr];
 		}
-		[self setTypeXMLPtr:theXMLPtr];
 	}
 	return self;
 }
@@ -239,6 +245,10 @@ static void MGMXMLErrorHandler(void *userData, xmlErrorPtr error) {
 			documentNode = [[MGMXMLDocument alloc] initWithTypeXMLPtr:(xmlTypPtr)commonXML->doc];
 	}
 }
+- (void)setDocument:(MGMXMLDocument *)theDocument {
+	[documentNode release];
+	documentNode = [theDocument retain];
+}
 - (void)releaseDocument {
 	[documentNode release];
 	documentNode = nil;
@@ -272,6 +282,27 @@ static void MGMXMLErrorHandler(void *userData, xmlErrorPtr error) {
 	return [[self class] lastError];
 }
 
+- (id)initWithKind:(MGMXMLNodeKind)kind {
+	if (kind==MGMXMLDocumentKind) {
+		[self release];
+		return [[MGMXMLDocument alloc] initWithRootElement:nil];
+	} else if (kind==MGMXMLElementKind) {
+		return [self initWithTypeXMLPtr:(xmlTypPtr)xmlNewNode(NULL, NULL)];
+	} else if (kind==MGMXMLAttributeKind) {
+		return [self initWithTypeXMLPtr:(xmlTypPtr)xmlNewProp(NULL, (const xmlChar *)"", NULL)];
+	} else if (kind==MGMXMLNamespaceKind) {
+		return [self initWithTypeXMLPtr:(xmlTypPtr)xmlNewNs(NULL, NULL, NULL)];
+	} else if (kind==MGMXMLProcessingInstructionKind) {
+		return [self initWithTypeXMLPtr:(xmlTypPtr)xmlNewPI(NULL, NULL)];
+	} else if (kind==MGMXMLCommentKind) {
+		return [self initWithTypeXMLPtr:(xmlTypPtr)xmlNewComment(NULL)];
+	} else if (kind==MGMXMLTextKind) {
+		return [self initWithTypeXMLPtr:(xmlTypPtr)xmlNewText(NULL)];
+	}
+	[self release];
+	return nil;
+}
+
 - (MGMXMLNodeKind)kind {
 	return type;
 }
@@ -300,13 +331,19 @@ static void MGMXMLErrorHandler(void *userData, xmlErrorPtr error) {
 	}
 	return nil;
 }
+- (void)setStringValue:(NSString *)string {
+	if (type==MGMXMLNamespaceKind) {
+		namespaceXML->href = [string xmlString];
+	} else if ([self isNode] || type==MGMXMLAttributeKind) {
+		xmlChar *contentString = xmlEncodeEntitiesReentrant(commonXML->doc, [string xmlString]);
+		xmlNodeSetContent(MGMXMLNodePtr, contentString);
+		xmlFree(contentString);
+	}
+}
 - (NSString *)stringValue {
 	if (type==MGMXMLNamespaceKind) {
 		return [NSString stringWithXMLString:namespaceXML->href];
-	} else if (type==MGMXMLAttributeKind) {
-		if (MGMXMLAttrPtr->children!=NULL)
-			return [NSString stringWithXMLString:MGMXMLAttrPtr->children->content];
-	} else if ([self isNode]) {
+	} else if ([self isNode] || type==MGMXMLAttributeKind) {
 		xmlChar *contentString = xmlNodeGetContent(MGMXMLNodePtr);
 		NSString *stringValue = [NSString stringWithXMLString:contentString];
 		xmlFree(contentString);

@@ -21,7 +21,11 @@
 
 @class WebView, MGMThemeManager;
 
-@interface MGMThemeTesterController : NSObject {
+@interface MGMThemeTesterController : NSObject
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+	<NSWindowDelegate>
+#endif
+{
 	NSPipe *errorPipe;
 	IBOutlet NSTextView *errorConsole;
 	IBOutlet NSWindow *errorConsoleWindow;
@@ -41,6 +45,10 @@
 	IBOutlet NSTextField *IDField;
 	IBOutlet NSTextField *messageField;
 	IBOutlet NSPopUpButton *variantsButton;
+	IBOutlet NSTextField *fontPreview;
+	IBOutlet NSButton *headerButton;
+	IBOutlet NSButton *footerButton;
+	IBOutlet NSButton *iconsButton;
 }
 - (IBAction)open:(id)sender;
 - (IBAction)save:(id)sender;
@@ -49,6 +57,11 @@
 
 - (IBAction)chooseYPhoto:(id)sender;
 - (IBAction)chooseTPhoto:(id)sender;
+
+- (IBAction)selectFont:(id)sender;
+- (IBAction)header:(id)sender;
+- (IBAction)footer:(id)sender;
+- (IBAction)icons:(id)sender;
 
 - (IBAction)rebuild:(id)sender;
 - (IBAction)incoming:(id)sender;

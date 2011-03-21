@@ -1,6 +1,11 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <style type="text/css">
+body {
+	%FONTSTYLE%
+}
 .ttl {
 	background: url("%THEME%/images/ttl.png") no-repeat top left;
 	width:21px;
@@ -103,10 +108,24 @@
 	height:14px;
 	font-size:0pt;
 }
-td.pname {
+.time {
 	font-size:9pt;
 	color:#999999;
 	text-align:center;
+}
+.hideIcons .pname {
+	display: none;
+}
+.hideIcon {
+	display: none;
+}
+.hideIcons.outgoing .hideIcon {
+	display: block;
+	float: right;
+}
+.hideIcons.incoming .hideIcon {
+	display: block;
+	float: left;
 }
 
 #inContext {
@@ -126,7 +145,24 @@ td.pname {
 }
 </style>
 <script type="text/javascript">
-function newMessage(text, photourl, time, id, name, number, lastdate, type) {
+function findInsert(node) {
+	var result = null;
+	if (node.getAttribute("id")=="insert")
+		return node;
+	for (var i=0; i<node.childNodes.length; i++) {
+		if (node.childNodes[i].nodeType==1) {
+			result = findInsert(node.childNodes[i]);
+			if (result!=null)
+				return result;
+		}
+	}
+	return null;
+}
+var shouldScroll = true;
+function newMessage(text, photourl, time, id, name, number, lastdate, type, classes) {
+	shouldScroll = nearBottom();
+	var content = document.getElementById("content");
+	var insert = findInsert(content);
 	var template = null;
 	if (type==1) {
 		template = document.getElementById("outContext").cloneNode(true);
@@ -141,17 +177,28 @@ function newMessage(text, photourl, time, id, name, number, lastdate, type) {
 		template = document.getElementById("inNextContext").cloneNode(true);
 		template.setAttribute("class", "inNextContent");
 	}	
-	template.removeAttribute("id");
 	template.innerHTML = template.innerHTML.replace(/%TEXT%/g, text);
 	template.innerHTML = template.innerHTML.replace(/%PHOTO%/g, photourl);
 	template.innerHTML = template.innerHTML.replace(/%TIME%/g, time);
 	template.innerHTML = template.innerHTML.replace(/%MESSAGEID%/g, id);
 	template.innerHTML = template.innerHTML.replace(/%NAME%/g, name);
 	template.innerHTML = template.innerHTML.replace(/%NUMBER%/g, number);
-	document.getElementById("content").appendChild(template);
+	template.innerHTML = template.innerHTML.replace(/%MESSAGECLASSES%/g, classes);
+	template = template.childNodes[1];
+	if ((type==2 || type==4) && insert!=null) {
+		insert.parentNode.replaceChild(template, insert);
+	} else {
+		if (insert!=null)
+			insert.parentNode.removeChild(insert);
+		content.appendChild(template);
+	}
+}
+function nearBottom() {
+	return (document.body.scrollTop >= (document.body.offsetHeight - (window.innerHeight * 1.2)));
 }
 function scrollToBottom() {
-	window.scrollTo(0, document.body.scrollHeight);
+	if (shouldScroll)
+		document.body.scrollTop = document.body.offsetHeight;
 }
 </script>
 </head>

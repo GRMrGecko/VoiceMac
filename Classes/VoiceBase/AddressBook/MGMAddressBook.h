@@ -17,11 +17,9 @@
 //  ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
+#import <Foundation/Foundation.h>
 #if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
 #import <AddressBook/ABAddressBook.h>
-#else
-#import <Cocoa/Cocoa.h>
 #endif
 
 @protocol MGMContactsDelegate, MGMContactsOwnerDelegate;

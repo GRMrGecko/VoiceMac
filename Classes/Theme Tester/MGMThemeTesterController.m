@@ -48,12 +48,21 @@
 	[messages addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"That sounds good.", MGMIText, @"6:06 PM", MGMITime, [NSNumber numberWithBool:YES], MGMIYou, nil]];
 	[messages addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"Great, meet you then.", MGMIText, @"6:07 PM", MGMITime, [NSNumber numberWithBool:NO], MGMIYou, nil]];
 	[[SMSView mainFrame] loadHTMLString:@"<div style=\"text-align: center; font-size: 14pt; font-weight: bold;\">Please open a theme to preview it.</div>" baseURL:nil];
+	themeManager = [MGMThemeManager new];
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSFont *font = [NSFont fontWithName:[defaults objectForKey:MGMTFontName] size:[defaults integerForKey:MGMTFontSize]];
+	[fontPreview setFont:font];
+	[fontPreview setStringValue:[NSString stringWithFormat:@"%@ %d", [font fontName], (int)[font pointSize]]];
+	
+	[headerButton setState:([defaults boolForKey:MGMTShowHeader] ? NSOnState : NSOffState)];
+	[footerButton setState:([defaults boolForKey:MGMTShowFooter] ? NSOnState : NSOffState)];
+	[iconsButton setState:([defaults boolForKey:MGMTShowIcons] ? NSOnState : NSOffState)];
 	[mainWindow makeKeyAndOrderFront:self];
 }
 - (IBAction)open:(id)sender {
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	[panel setCanChooseFiles:YES];
-	[panel setCanChooseDirectories:NO];
+	[panel setCanChooseDirectories:YES];
 	[panel setResolvesAliases:YES];
 	[panel setAllowsMultipleSelection:NO];
 	[panel setAllowedFileTypes:[NSArray arrayWithObject:@"vmt"]];
@@ -64,7 +73,7 @@
 		[defaults setObject:[[[panel URL] path] stringByDeletingLastPathComponent] forKey:MGMTCurrentThemePath];
 		[defaults setObject:[[[panel URL] path] lastPathComponent] forKey:MGMTCurrentThemeName];
 		[defaults setObject:[NSNumber numberWithInt:0] forKey:MGMTCurrentThemeVariant];
-		if (themeManager!=nil) [themeManager release];
+		[themeManager release];
 		NSLog(@"Loading Theme Manager");
 		themeManager = [MGMThemeManager new];
 		if (themeManager!=nil) {
@@ -157,6 +166,42 @@
 	}
 }
 
+- (IBAction)selectFont:(id)sender {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSFontManager *fontManager = [NSFontManager sharedFontManager];
+	
+    NSFontPanel *fontPanel = [fontManager fontPanel:YES];
+    [fontPanel setDelegate:self];
+	[fontPanel setPanelFont:[NSFont fontWithName:[defaults objectForKey:MGMTFontName] size:[defaults integerForKey:MGMTFontSize]] isMultiple:NO];
+	[fontPanel makeKeyAndOrderFront:self];
+}
+- (void)changeFont:(id)sender {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSFont *font = [sender convertFont:[NSFont fontWithName:[defaults objectForKey:MGMTFontName] size:[defaults integerForKey:MGMTFontSize]]];
+	[defaults setObject:[font fontName] forKey:MGMTFontName];
+	[defaults setInteger:(int)[font pointSize] forKey:MGMTFontSize];
+	[fontPreview setFont:font];
+	[fontPreview setStringValue:[NSString stringWithFormat:@"%@ %d", [font fontName], (int)[font pointSize]]];
+}
+- (void)windowWillClose:(NSNotification *)notification {
+	[self rebuild:self];
+}
+- (void)windowDidResignKey:(NSNotification *)notification {
+	[[notification object] close];
+}
+- (IBAction)header:(id)sender {
+	[[NSUserDefaults standardUserDefaults] setBool:([headerButton state]==NSOnState) forKey:MGMTShowHeader];
+	[self rebuild:self];
+}
+- (IBAction)footer:(id)sender {
+	[[NSUserDefaults standardUserDefaults] setBool:([footerButton state]==NSOnState) forKey:MGMTShowFooter];
+	[self rebuild:self];
+}
+- (IBAction)icons:(id)sender {
+	[[NSUserDefaults standardUserDefaults] setBool:([iconsButton state]==NSOnState) forKey:MGMTShowIcons];
+	[self rebuild:self];
+}
+
 - (IBAction)rebuild:(id)sender {
 	if (themeManager!=nil) {
 		[themeManager setVariant:[variantsButton titleOfSelectedItem]];
@@ -181,23 +226,33 @@
 		tPhotoPath = [[tPhotoField stringValue] filePath];
 	NSMutableDictionary *message = [NSMutableDictionary dictionaryWithDictionary:theMessage];
 	[message setObject:[[NSNumber numberWithInt:[messages count]-1] stringValue] forKey:MGMIID];
+	NSMutableArray *classes = [NSMutableArray array];
 	int type = 1;
 	if ([[message objectForKey:MGMIYou] boolValue]) {
+		[classes addObject:MGMTCOutgoing];
 		type = ([[[messages objectAtIndex:[[message objectForKey:MGMIID] intValue]-1] objectForKey:MGMIYou] boolValue] ? 2 : 1);
+		if (type==2)
+			[classes addObject:MGMTCNext];
 		NSLog(@"Adding Outgoing %@", (type==1 ? @"Content" : @"Next Content"));
 		[message setObject:yPhotoPath forKey:MGMTPhoto];
 		[message setObject:NSFullUserName() forKey:MGMTName];
 		[message setObject:[messageInfo objectForKey:MGMTUserNumber] forKey:MGMIPhoneNumber];
 	} else {
+		[classes addObject:MGMTCIncoming];
 		type = ([[[messages objectAtIndex:[[message objectForKey:MGMIID] intValue]-1] objectForKey:MGMIYou] boolValue] ? 3 : 4);
+		if (type==4)
+			[classes addObject:MGMTCNext];
 		NSLog(@"Adding Incoming %@", (type==3 ? @"Content" : @"Next Content"));
 		[message setObject:tPhotoPath forKey:MGMTPhoto];
 		[message setObject:[messageInfo objectForKey:MGMTInName] forKey:MGMTName];
 		[message setObject:[messageInfo objectForKey:MGMIPhoneNumber] forKey:MGMIPhoneNumber];
 	}
+	[classes addObject:MGMTCMessage];
+	if (![[NSUserDefaults standardUserDefaults] boolForKey:MGMTShowIcons])
+		[classes addObject:MGMTCHideIcons];
 	NSDateFormatter *formatter = [[NSDateFormatter new] autorelease];
 	[formatter setDateFormat:[[themeManager variant] objectForKey:MGMTDate]];
-	[SMSView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"newMessage('%@', '%@', '%@', %@, '%@', '%@', '%@', %d);", [[message objectForKey:MGMIText] javascriptEscape], [[message objectForKey:MGMTPhoto] javascriptEscape], [[message objectForKey:MGMITime] javascriptEscape], [message objectForKey:MGMIID], [[message objectForKey:MGMTName] javascriptEscape], [[[message objectForKey:MGMIPhoneNumber] readableNumber] javascriptEscape], [formatter stringFromDate:[messageInfo objectForKey:MGMITime]], type]];
+	[SMSView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"newMessage('%@', '%@', '%@', %@, '%@', '%@', '%@', %d, '%@');", [[themeManager htmlTextFromMessage:message] javascriptEscape], [[message objectForKey:MGMTPhoto] javascriptEscape], [[message objectForKey:MGMITime] javascriptEscape], [message objectForKey:MGMIID], [[message objectForKey:MGMTName] javascriptEscape], [[[message objectForKey:MGMIPhoneNumber] readableNumber] javascriptEscape], [formatter stringFromDate:[messageInfo objectForKey:MGMITime]], type, [classes componentsJoinedByString:@" "]]];
 	[SMSView stringByEvaluatingJavaScriptFromString:@"scrollToBottom();"];
 }
 - (IBAction)incoming:(id)sender {

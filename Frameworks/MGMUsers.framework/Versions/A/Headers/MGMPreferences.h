@@ -10,7 +10,11 @@
 
 @class MGMPreferencesPane;
 
-@interface MGMPreferences : NSObject <NSWindowDelegate, NSToolbarDelegate> {
+@interface MGMPreferences : NSObject
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+	<NSWindowDelegate, NSToolbarDelegate>
+#endif
+{
 @private
     NSWindow *preferencesWindow;
     NSMutableArray *preferencesPanes;

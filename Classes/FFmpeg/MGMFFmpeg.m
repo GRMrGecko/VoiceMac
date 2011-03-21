@@ -181,7 +181,9 @@ static BOOL FFmpegRegistered = NO;
 		input_tmp = NULL;
 		
 		stopConverting = NO;
+#if !TARGET_OS_IPHONE
 		stoppedByQuit = NO;
+#endif
 		isConverting = NO;
 		
 		options[0] = (OptionDef){ "f", HAS_ARG, {@selector(opt_format:)}, "force format", "fmt" };
@@ -3963,6 +3965,7 @@ fail:
     return ret;
 }
 
+#if !TARGET_OS_IPHONE
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
 	if (isConverting) {
 		stopConverting = YES;
@@ -3971,6 +3974,7 @@ fail:
 	}
 	return NSTerminateNow;
 }
+#endif
 
 - (void)startConverting {
 	[NSThread detachNewThreadSelector:@selector(startConvertingBackground) toTarget:self withObject:nil];
@@ -4007,8 +4011,10 @@ fail:
 cleanup:
 	isConverting = NO;
 	stopConverting = NO;
+#if !TARGET_OS_IPHONE
 	if (stoppedByQuit)
 		[[NSApplication sharedApplication] replyToApplicationShouldTerminate:YES];
+#endif
 	if ([delegate respondsToSelector:@selector(conversionFinished)])
 		[delegate conversionFinished];
 	[pool drain];

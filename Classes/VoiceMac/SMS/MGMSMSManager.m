@@ -98,19 +98,39 @@ const float updateTimeInterval = 300.0;
 		[[[messagesTable subviews] lastObject] removeFromSuperviewWithoutNeedingDisplay];
     [messagesTable reloadData];
 }
-- (int)numberOfRowsInTableView:(NSTableView *)tableView {
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+- (int)numberOfRowsInTableView:(NSTableView *)theTableView
+#else
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)theTableView
+#endif
+{
 	return [SMSMessages count];
 }
-- (id)tableView:(NSTableView *)tableView objectValueForTableColumn:(NSTableColumn *)tableColumn row:(int)row {
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+- (id)tableView:(NSTableView *)theTableView objectValueForTableColumn:(NSTableColumn *)theTableColumn row:(int)theRow
+#else
+- (id)tableView:(NSTableView *)theTableView objectValueForTableColumn:(NSTableColumn *)theTableColumn row:(NSInteger)theRow
+#endif
+{
 	return nil;
 }
-- (void)tableView:(NSTableView *)tableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)tableColumn row:(int)row {
-	[(MGMViewCell *)cell addSubview:[[SMSMessages objectAtIndex:row] view]];
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+- (void)tableView:(NSTableView *)theTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)theTableColumn row:(int)theRow
+#else
+- (void)tableView:(NSTableView *)theTableView willDisplayCell:(id)cell forTableColumn:(NSTableColumn *)theTableColumn row:(NSInteger)theRow
+#endif
+{
+	[(MGMViewCell *)cell addSubview:[[SMSMessages objectAtIndex:theRow] view]];
 }
-- (BOOL)tableView:(NSTableView *)tableView shouldSelectRow:(int)row {
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+- (BOOL)tableView:(NSTableView *)theTableView shouldSelectRow:(int)theRow
+#else
+- (BOOL)tableView:(NSTableView *)theTableView shouldSelectRow:(NSInteger)theRow
+#endif
+{
 	while ([[messageView subviews] count]>0)
 		[[[messageView subviews] lastObject] removeFromSuperviewWithoutNeedingDisplay];
-	MGMSMSMessageView *message = [SMSMessages objectAtIndex:row];
+	MGMSMSMessageView *message = [SMSMessages objectAtIndex:theRow];
 	[[message SMSSplitView] setFrame:NSMakeRect(0, 0, [messageView frame].size.width, [messageView frame].size.height)];
 	[messageView addSubview:[message SMSSplitView]];
 	[SMSWindow makeFirstResponder:[message SMSTextField]];
@@ -243,12 +263,22 @@ const float updateTimeInterval = 300.0;
 	return [[[SMSMessages objectAtIndex:[messagesTable selectedRow]] messageInfo] objectForKey:MGMIPhoneNumber];
 }
 
-- (float)splitView:(NSSplitView *)sender constrainMinCoordinate:(float)proposedMin ofSubviewAt:(int)offset {
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+- (float)splitView:(NSSplitView *)sender constrainMinCoordinate:(float)proposedMin ofSubviewAt:(int)offset
+#else
+- (CGFloat)splitView:(NSSplitView *)sender constrainMinCoordinate:(CGFloat)proposedMin ofSubviewAt:(NSInteger)offset
+#endif
+{
     leftMax = [[[sender subviews] objectAtIndex:0] frame].size.width;
 	rightMax = [[[sender subviews] objectAtIndex:1] frame].size.width;
 	return 0.0;
 }
-- (float)splitView:(NSSplitView *)sender constrainMaxCoordinate:(float)proposedMax ofSubviewAt:(int)offset{
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+- (float)splitView:(NSSplitView *)sender constrainMaxCoordinate:(float)proposedMax ofSubviewAt:(int)offset
+#else
+- (CGFloat)splitView:(NSSplitView *)sender constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)offset
+#endif
+{
 	leftMax = [[[sender subviews] objectAtIndex:0] frame].size.width;
 	rightMax = [[[sender subviews] objectAtIndex:1] frame].size.width;
 	return proposedMax - 150.0;

@@ -32,9 +32,14 @@
 	IBOutlet NSPopUpButton *themePopUp;
 	IBOutlet NSPopUpButton *variantPopUp;
 	IBOutlet NSButton *authorButton;
+	IBOutlet NSTextField *fontPreview;
+	IBOutlet NSButton *headerButton;
+	IBOutlet NSButton *footerButton;
+	IBOutlet NSButton *iconsButton;
 	
 	IBOutlet NSWindow *browserWindow;
 	IBOutlet WebView *browser;
+	NSButton *selectFont;
 }
 - (id)initWithPreferences:(MGMPreferences *)thePreferences;
 + (void)setUpToolbarItem:(NSToolbarItem *)theItem;
@@ -47,6 +52,10 @@
 - (IBAction)changeTheme:(id)sender;
 - (IBAction)changeVariant:(id)sender;
 - (IBAction)authorSite:(id)sender;
+- (IBAction)selectFont:(id)sender;
+- (IBAction)header:(id)sender;
+- (IBAction)footer:(id)sender;
+- (IBAction)icons:(id)sender;
 
 - (IBAction)showBrowser:(id)sender;
 @end

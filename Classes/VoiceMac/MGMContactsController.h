@@ -23,7 +23,11 @@
 
 extern NSString *MGMContactsWindowOpen;
 
-@interface MGMContactsController : NSObject <NSTextFieldDelegate> {
+@interface MGMContactsController : NSObject
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+<NSTextFieldDelegate>
+#endif
+{
 	MGMController *controller;
 	IBOutlet NSWindow *contactsWindow;
 	BOOL closingWindow;

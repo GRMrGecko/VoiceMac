@@ -17,11 +17,7 @@
 //  ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-#if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
-#else
-#import <Cocoa/Cocoa.h>
-#endif
+#import <Foundation/Foundation.h>
 
 @class MGMInstance, MGMUser, MGMHTTPCookieStorage, MGMURLConnectionManager, MGMWhitePages, MGMInbox, MGMContacts;
 
@@ -29,10 +25,12 @@
 
 extern NSString * const MGMVoiceIndexURL;
 extern NSString * const MGMLoginURL;
+extern NSString * const MGMLoginVerifyURL;
 extern NSString * const MGMLoginBody;
 extern NSString * const MGMXPCPath;
 extern NSString * const MGMCheckPath;
 extern NSString * const MGMCreditURL;
+extern NSString * const MGMPhonesURL;
 extern NSString * const MGMCallURL;
 extern NSString * const MGMCallCancelURL;
 
@@ -63,12 +61,14 @@ extern NSString * const MGMUCVoicemail;
 
 @protocol MGMInstanceDelegate <NSObject>
 - (void)loginError:(NSError *)theError;
+- (void)loginVerificationRequested;
 - (void)loginSuccessful;
 - (void)updatedContacts;
+- (void)updatedUserPhones;
 - (void)updateUnreadCount:(int)theCount;
 - (void)updateVoicemail;
 - (void)updateSMS;
-- (void)updateCredit:(NSString *)credit;
+- (void)updateCredit:(NSString *)theCredit;
 @end
 
 @interface MGMInstance : NSObject {
@@ -81,6 +81,7 @@ extern NSString * const MGMUCVoicemail;
 	
 	int webLoginTries;
 	BOOL loggedIn;
+	NSMutableDictionary *verificationParameters;
 	
 	NSString *XPCURL;
 	NSString *XPCCD;
@@ -123,7 +124,11 @@ extern NSString * const MGMUCVoicemail;
 - (NSArray *)userPhoneNumbers;
 - (NSDictionary *)unreadCounts;
 
+- (void)cancelVerification;
+- (void)verifyWithCode:(NSString *)theCode;
 - (BOOL)isLoggedIn;
+- (void)checkPhones;
+- (void)parseUserPhones:(NSDictionary *)thePhones;
 - (void)checkTimer;
 - (void)creditTimer;
 

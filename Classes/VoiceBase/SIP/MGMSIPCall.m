@@ -261,6 +261,9 @@
 	if (identifier==PJSUA_INVALID_ID || state==MGMSIPCallDisconnectedState)
 		return;
 	
+	if (isRingbackOn)
+		[self stopRingback];
+	
 	pj_thread_desc PJThreadDesc;
 	[[MGMSIP sharedSIP] registerThread:&PJThreadDesc];
 	

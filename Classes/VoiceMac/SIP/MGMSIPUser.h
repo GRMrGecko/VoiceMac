@@ -25,7 +25,11 @@
 
 extern NSString * const MGMSIPUserAreaCode;
 
-@interface MGMSIPUser : MGMContactsController <NSAnimationDelegate> {
+@interface MGMSIPUser : MGMContactsController
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+<NSAnimationDelegate>
+#endif
+{
 	MGMUser *user;
 	MGMSIPAccount *account;
 	NSMutableArray *calls;

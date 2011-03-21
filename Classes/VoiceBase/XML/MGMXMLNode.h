@@ -17,11 +17,7 @@
 //  ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-#if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
-#else
-#import <Cocoa/Cocoa.h>
-#endif
+#import <Foundation/Foundation.h>
 #import <VoiceBase/MGMXMLNodeOptions.h>
 #import <libxml/parser.h>
 #import <libxml/tree.h>
@@ -98,7 +94,7 @@ struct _xmlCom {
 - (BOOL)isNode;
 + (NSError *)lastError;
 - (NSError *)lastError;
-//- (id)initWithKind:(MGMXMLNodeKind)kind;
+- (id)initWithKind:(MGMXMLNodeKind)kind;
 //- (id)initWithKind:(MGMXMLNodeKind)kind options:(NSUInteger)options; //primitive
 //+ (id)document;
 //+ (id)documentWithRootElement:(MGMXMLElement *)element;
@@ -121,7 +117,7 @@ struct _xmlCom {
 - (NSString *)name;
 //- (void)setObjectValue:(id)value; //primitive
 //- (id)objectValue; //primitive
-//- (void)setStringValue:(NSString *)string;
+- (void)setStringValue:(NSString *)string;
 //- (void)setStringValue:(NSString *)string resolvingEntities:(BOOL)resolve; //primitive
 - (NSString *)stringValue; //primitive
 

@@ -17,11 +17,7 @@
 //  ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-#if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
-#else
-#import <Cocoa/Cocoa.h>
-#endif
+#import <Foundation/Foundation.h>
 #import <VoiceBase/MGMXMLNode.h>
 
 #define MGMXMLDocPtr (xmlDocPtr)commonXML
@@ -32,7 +28,7 @@
 - (id)initWithXMLString:(NSString *)string options:(NSUInteger)mask error:(NSError **)error;
 - (id)initWithContentsOfURL:(NSURL *)url options:(NSUInteger)mask error:(NSError **)error;
 - (id)initWithData:(NSData *)data options:(NSUInteger)mask error:(NSError **)error; //primitive
-//- (id)initWithRootElement:(MGMXMLElement *)element;
+- (id)initWithRootElement:(MGMXMLElement *)element;
 
 //+ (Class)replacementClassForClass:(Class)cls;
 //- (void)setCharacterEncoding:(NSString *)encoding; //primitive

@@ -55,6 +55,14 @@ NSString * const MGMTestTTPhoto = @"tPhoto";
 			[testMessageInfo setObject:@"+17204325686" forKey:MGMTUserNumber];
 			[testMessageInfo setObject:@"673bd22599231d1a9ba78760f2df085a7237b4b3" forKey:MGMIID];
 			[SMSView setResourceLoadDelegate:self];
+			NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+			NSFont *font = [NSFont fontWithName:[defaults objectForKey:MGMTFontName] size:[defaults integerForKey:MGMTFontSize]];
+			[fontPreview setFont:font];
+			[fontPreview setStringValue:[NSString stringWithFormat:@"%@ %d", [font fontName], (int)[font pointSize]]];
+			
+			[headerButton setState:([defaults boolForKey:MGMTShowHeader] ? NSOnState : NSOffState)];
+			[footerButton setState:([defaults boolForKey:MGMTShowFooter] ? NSOnState : NSOffState)];
+			[iconsButton setState:([defaults boolForKey:MGMTShowIcons] ? NSOnState : NSOffState)];
 			[self reload:self];
         }
     }
@@ -138,6 +146,46 @@ NSString * const MGMTestTTPhoto = @"tPhoto";
 	if ([[themeManager theme] objectForKey:MGMTSite]!=nil)
 		[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[[themeManager theme] objectForKey:MGMTSite]]];
 }
+- (IBAction)selectFont:(id)sender {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSFontManager *fontManager = [NSFontManager sharedFontManager];
+	
+    NSFontPanel *fontPanel = [fontManager fontPanel:YES];
+    [fontPanel setDelegate:self];
+	[fontPanel setPanelFont:[NSFont fontWithName:[defaults objectForKey:MGMTFontName] size:[defaults integerForKey:MGMTFontSize]] isMultiple:NO];
+	[fontPanel makeKeyAndOrderFront:self];
+}
+- (void)changeFont:(id)sender {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSFont *font = [sender convertFont:[NSFont fontWithName:[defaults objectForKey:MGMTFontName] size:[defaults integerForKey:MGMTFontSize]]];
+	[defaults setObject:[font fontName] forKey:MGMTFontName];
+	[defaults setInteger:(int)[font pointSize] forKey:MGMTFontSize];
+	[fontPreview setFont:font];
+	[fontPreview setStringValue:[NSString stringWithFormat:@"%@ %d", [font fontName], (int)[font pointSize]]];
+}
+- (void)windowWillClose:(NSNotification *)notification {
+	[self reload:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MGMTUpdatedSMSThemeNotification object:self];
+}
+- (void)windowDidResignKey:(NSNotification *)notification {
+	[[notification object] close];
+}
+- (IBAction)header:(id)sender {
+	[[NSUserDefaults standardUserDefaults] setBool:([headerButton state]==NSOnState) forKey:MGMTShowHeader];
+	[self reload:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MGMTUpdatedSMSThemeNotification object:self];
+}
+- (IBAction)footer:(id)sender {
+	[[NSUserDefaults standardUserDefaults] setBool:([footerButton state]==NSOnState) forKey:MGMTShowFooter];
+	[self reload:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MGMTUpdatedSMSThemeNotification object:self];
+}
+- (IBAction)icons:(id)sender {
+	[[NSUserDefaults standardUserDefaults] setBool:([iconsButton state]==NSOnState) forKey:MGMTShowIcons];
+	[self reload:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:MGMTUpdatedSMSThemeNotification object:self];
+}
+
 - (IBAction)showBrowser:(id)sender {
 	[[browser mainFrame] loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://mrgeckosmedia.com/voicemac/themes/"]]];
 	[browserWindow makeKeyAndOrderFront:self];

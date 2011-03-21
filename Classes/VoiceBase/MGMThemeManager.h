@@ -17,11 +17,7 @@
 //  ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-#if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
-#else
-#import <Cocoa/Cocoa.h>
-#endif
+#import <Foundation/Foundation.h>
 
 #define MGMThemeManagerDebug 0
 
@@ -35,6 +31,9 @@ extern NSString * const MGMTCurrentThemePath;
 extern NSString * const MGMTCurrentThemeVariant;
 extern NSString * const MGMTShowHeader;
 extern NSString * const MGMTShowFooter;
+extern NSString * const MGMTShowIcons;
+extern NSString * const MGMTFontName;
+extern NSString * const MGMTFontSize;
 extern NSString * const MGMTInfoPlist;
 
 extern NSString * const MGMTThemePath;
@@ -55,6 +54,12 @@ extern NSString * const MGMTUserNumber;
 extern NSString * const MGMTInName;
 extern NSString * const MGMTInNumber;
 extern NSString * const MGMTPhoto;
+
+extern NSString * const MGMTCOutgoing;
+extern NSString * const MGMTCIncoming;
+extern NSString * const MGMTCNext;
+extern NSString * const MGMTCMessage;
+extern NSString * const MGMTCHideIcons;
 
 extern NSString * const MGMTSoundChangedNotification;
 
@@ -116,6 +121,7 @@ extern NSString * const MGMCAFExt;
 - (NSString *)incomingIconPath;
 - (NSString *)outgoingIconPath;
 
+- (NSString *)htmlTextFromMessage:(NSDictionary *)theMessage;
 - (NSString *)replace:(NSString *)theHTML messageInfo:(NSDictionary *)theMessageInfo;
 - (NSString *)replace:(NSString *)theHTML message:(NSDictionary *)theMessage;
 - (NSString *)buildHTMLWithMessages:(NSArray *)theMessages messageInfo:(NSDictionary *)theMessageInfo;

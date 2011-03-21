@@ -49,6 +49,7 @@
 	IBOutlet NSTextField *consoleLogLevelField;
 	IBOutlet NSTextField *publicAddressField;
 	IBOutlet NSTextField *userAgentField;
+	IBOutlet NSPopUpButton *codecPopUp;
 }
 - (id)initWithPreferences:(MGMPreferences *)thePreferences;
 + (void)setUpToolbarItem:(NSToolbarItem *)theItem;
@@ -79,5 +80,6 @@
 - (IBAction)consoleLogLevel:(id)sender;
 - (IBAction)publicAddress:(id)sender;
 - (IBAction)userAgent:(id)sender;
+- (IBAction)codec:(id)sender;
 @end
 #endif

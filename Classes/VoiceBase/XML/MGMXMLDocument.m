@@ -22,6 +22,10 @@
 #import <libxml/HTMLtree.h>
 #import <libxml/HTMLparser.h>
 
+@interface MGMXMLNode (MGMPrivate)
+- (void)setDocument:(MGMXMLDocument *)theDocument;
+@end
+
 @implementation MGMXMLDocument
 - (id)initWithXMLString:(NSString *)string options:(NSUInteger)mask error:(NSError **)error {
 	NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
@@ -54,6 +58,17 @@
 				[self setTypeXMLPtr:(xmlTypPtr)document];
 			}
 		}
+	}
+	return self;
+}
+- (id)initWithRootElement:(MGMXMLElement *)element {
+	if ((self = [super init])) {
+		xmlDocPtr document = xmlNewDoc(NULL);
+		if (element!=nil) {
+			xmlDocSetRootElement(document, (xmlNodePtr)[element commonXML]);
+			[element setDocument:self];
+		}
+		[self setTypeXMLPtr:(xmlTypPtr)document];
 	}
 	return self;
 }

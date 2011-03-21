@@ -21,6 +21,7 @@
 #import "MGMInbox.h"
 #import "MGMAddons.h"
 #import "MGMSound.h"
+#import "MGMXML.h"
 #import <MGMUsers/MGMUsers.h>
 
 NSString * const MGMTThemeChangedNotification = @"MGMTThemeChangedNotification";
@@ -33,6 +34,9 @@ NSString * const MGMTCurrentThemePath = @"MGMTCurrentThemePath";
 NSString * const MGMTCurrentThemeVariant = @"MGMTCurrentThemeVariant";
 NSString * const MGMTShowHeader = @"MGMTShowHeader";
 NSString * const MGMTShowFooter = @"MGMTShowFooter";
+NSString * const MGMTShowIcons = @"MGMTShowIcons";
+NSString * const MGMTFontName = @"MGMTFontName";
+NSString * const MGMTFontSize = @"MGMTFontSize";
 NSString * const MGMTInfoPlist = @"Info.plist";
 
 NSString * const MGMTPResource = @"%RESOURCE%";
@@ -65,10 +69,20 @@ NSString * const MGMTContextName = @"context.html";
 NSString * const MGMTNextContentName = @"nextContent.html";
 NSString * const MGMTNextContextName = @"nextContext.html";
 
+NSString * const MGMTInsertDIV = @"<div id=\"insert\"></div>";
+
 NSString * const MGMTUserNumber = @"userNumber";
 NSString * const MGMTInName = @"inName";
 NSString * const MGMTPhoto = @"photo";
 
+NSString * const MGMTCOutgoing = @"outgoing";
+NSString * const MGMTCIncoming = @"incoming";
+NSString * const MGMTCNext = @"next";
+NSString * const MGMTCMessage = @"message";
+NSString * const MGMTCHideIcons = @"hideIcons";
+
+NSString * const MGMTRFontStyle = @"%FONTSTYLE%";
+NSString * const MGMTRMessageClasses = @"%MESSAGECLASSES%";
 NSString * const MGMTRHeader = @"%HEADER%";
 NSString * const MGMTRFooter = @"%FOOTER%";
 NSString * const MGMTRResource = @"%RESOURCE%";
@@ -151,6 +165,9 @@ NSString * const MGMCAFExt = @"caf";
 	[defaults setObject:[NSNumber numberWithInt:0] forKey:MGMTCurrentThemeVariant];
 	[defaults setObject:[NSNumber numberWithBool:YES] forKey:MGMTShowHeader];
 	[defaults setObject:[NSNumber numberWithBool:YES] forKey:MGMTShowFooter];
+	[defaults setObject:[NSNumber numberWithBool:YES] forKey:MGMTShowIcons];
+	[defaults setObject:@"HelveticaNeue" forKey:MGMTFontName];
+	[defaults setObject:[NSNumber numberWithInt:12] forKey:MGMTFontSize];
 	[defaults setObject:[MGMTPResource stringByAppendingString:MGMTSDefaultPath] forKey:[MGMTSPath stringByAppendingString:MGMTSSMSMessage]];
 	[defaults setObject:MGMTSDefaultSMSMessageName forKey:[MGMTSName stringByAppendingString:MGMTSSMSMessage]];
 	[defaults setObject:[MGMTPResource stringByAppendingString:MGMTSDefaultPath] forKey:[MGMTSPath stringByAppendingString:MGMTSVoicemail]];
@@ -528,8 +545,18 @@ NSString * const MGMCAFExt = @"caf";
 	return photoPath;
 }
 
+- (NSString *)htmlTextFromMessage:(NSDictionary *)theMessage {
+	MGMXMLElement *span = [[[MGMXMLElement alloc] initWithName:@"span"] autorelease];
+	MGMXMLNode *style = [[(MGMXMLNode *)[MGMXMLNode alloc] initWithKind:MGMXMLAttributeKind] autorelease];
+	[style setName:@"style"];
+	[style setStringValue:[NSString stringWithFormat:@"font-family: '%@'; font-size: %dpt;", [[NSUserDefaults standardUserDefaults] objectForKey:MGMTFontName], [[NSUserDefaults standardUserDefaults] integerForKey:MGMTFontSize]]];
+	[span addAttribute:style];
+	[span setStringValue:[theMessage objectForKey:MGMIText]];
+	return [span XMLString];
+}
 - (NSString *)replace:(NSString *)theHTML messageInfo:(NSDictionary *)theMessageInfo {
-	NSString *HTML = [theHTML replace:MGMTRResource with:[[[NSBundle mainBundle] resourcePath] filePath]];
+	NSString *HTML = [theHTML replace:MGMTRFontStyle with:[NSString stringWithFormat:@"font-family: '%@'; font-size: %dpt;", [[NSUserDefaults standardUserDefaults] objectForKey:MGMTFontName], [[NSUserDefaults standardUserDefaults] integerForKey:MGMTFontSize]]];
+	HTML = [HTML replace:MGMTRResource with:[[[NSBundle mainBundle] resourcePath] filePath]];
 	HTML = [HTML replace:MGMTRTheme with:[[self currentThemeVariantPath] filePath]];
 	HTML = [HTML replace:MGMTRThemes with:[[currentTheme objectForKey:MGMTThemePath] filePath]];
 	HTML = [HTML replace:MGMTRUserName with:NSFullUserName()];
@@ -543,7 +570,7 @@ NSString * const MGMCAFExt = @"caf";
 	return HTML;
 }
 - (NSString *)replace:(NSString *)theHTML message:(NSDictionary *)theMessage {
-	NSString *HTML = [theHTML replace:MGMTRText with:[theMessage objectForKey:MGMIText]];
+	NSString *HTML = [theHTML replace:MGMTRText with:[self htmlTextFromMessage:theMessage]];
 	HTML = [HTML replace:MGMTRPhoto with:[theMessage objectForKey:MGMTPhoto]];
 	HTML = [HTML replace:MGMTRTime with:[theMessage objectForKey:MGMITime]];
 	HTML = [HTML replace:MGMTRMessageID with:[theMessage objectForKey:MGMIID]];
@@ -603,12 +630,15 @@ NSString * const MGMCAFExt = @"caf";
 		[html appendString:themeHeader];
 		[pool drain];
 	}
+	NSString *messages = [@"" retain];
 	NSDictionary *lastMessage = nil;
 	for (unsigned int i=0; i<[theMessages count]; i++) {
 		NSAutoreleasePool *pool = [NSAutoreleasePool new];
 		NSDictionary *message = [theMessages objectAtIndex:i];
 		NSString *messageHTML = nil;
+		NSMutableArray *classes = [NSMutableArray array];
 		if ([[message objectForKey:MGMIYou] boolValue]) {
+			[classes addObject:MGMTCOutgoing];
 			if (lastMessage==nil || ![[lastMessage objectForKey:MGMIYou] boolValue]) {
 #if MGMThemeManagerDebug
 				NSLog(@"Adding Message for Outgoing Content");
@@ -636,6 +666,7 @@ NSString * const MGMCAFExt = @"caf";
 					return nil;
 				}
 			} else {
+				[classes addObject:MGMTCNext];
 #if MGMThemeManagerDebug
 				NSLog(@"Adding Message for Outgoing Next Content");
 #endif
@@ -663,6 +694,7 @@ NSString * const MGMCAFExt = @"caf";
 				}
 			}
 		} else {
+			[classes addObject:MGMTCIncoming];
 			if (lastMessage==nil || [[lastMessage objectForKey:MGMIYou] boolValue]) {
 #if MGMThemeManagerDebug
 				NSLog(@"Adding Message for Incoming Content");
@@ -690,6 +722,7 @@ NSString * const MGMCAFExt = @"caf";
 					return nil;
 				}
 			} else {
+				[classes addObject:MGMTCNext];
 #if MGMThemeManagerDebug
 				NSLog(@"Adding Message for Incoming Next Content");
 #endif
@@ -717,12 +750,25 @@ NSString * const MGMCAFExt = @"caf";
 				}
 			}
 		}
+		[classes addObject:MGMTCMessage];
+		if (![[NSUserDefaults standardUserDefaults] boolForKey:MGMTShowIcons])
+			[classes addObject:MGMTCHideIcons];
 		messageHTML = [self replace:messageHTML messageInfo:theMessageInfo];
 		messageHTML = [self replace:messageHTML message:message];
-		[html appendString:messageHTML];
+		messageHTML = [messageHTML replace:MGMTRMessageClasses with:[classes componentsJoinedByString:@" "]];
+		if ((([[message objectForKey:MGMIYou] boolValue] && [[lastMessage objectForKey:MGMIYou] boolValue]) || (![[message objectForKey:MGMIYou] boolValue] && ![[lastMessage objectForKey:MGMIYou] boolValue])) && lastMessage!=nil && [messages containsString:MGMTInsertDIV]) {
+			[messages autorelease];
+			messages = [[messages replace:MGMTInsertDIV with:messageHTML] retain];
+		} else {
+			[messages autorelease];
+			messages = [messages replace:MGMTInsertDIV with:@""];
+			messages = [[messages stringByAppendingString:messageHTML] retain];
+		}
 		lastMessage = message;
 		[pool drain];
 	}
+	[html appendString:messages];
+	[messages release];
 	if ([manager fileExistsAtPath:[variantPath stringByAppendingPathComponent:MGMTThemeFooterName]]) {
 #if MGMThemeManagerDebug
 		NSLog(@"Loading Theme Footer");

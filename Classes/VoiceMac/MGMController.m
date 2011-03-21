@@ -525,7 +525,6 @@ NSString * const MGMLoading = @"Loading...";
 		NSBeep();
 		return;
 	}
-	connectionManager = [MGMURLConnectionManager new];
 	MGMWhitePagesHandler *handler = [MGMWhitePagesHandler reverseLookup:phoneNumber delegate:self];
 	[connectionManager addHandler:handler];
 	[RLName setStringValue:MGMLoading];
@@ -535,7 +534,7 @@ NSString * const MGMLoading = @"Loading...";
 	[RLPhoneNumber setStringValue:MGMLoading];
 	[RLWindow orderFront:self];
 }
-- (void)reverseLookup:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
+- (void)reverseLookup:(MGMWhitePagesHandler *)theHandler didFailWithError:(NSError *)theError {
 	NSAlert *alert = [[NSAlert new] autorelease];
 	[alert setMessageText:@"Reverse Lookup Failed"];
 	[alert setInformativeText:[theError localizedDescription]];
@@ -557,12 +556,12 @@ NSString * const MGMLoading = @"Loading...";
 	} else {
 		[RLCityState setStringValue:@""];
 	}
-	if ([theHandler zip]) {
+	if ([theHandler zip]!=nil) {
 		[RLZipCode setStringValue:[theHandler zip]];
 	} else {
 		[RLZipCode setStringValue:@""];
 	}
-	if ([theHandler phoneNumber]) {
+	if ([theHandler phoneNumber]!=nil) {
 		[RLPhoneNumber setStringValue:[[theHandler phoneNumber] readableNumber]];
 	} else {
 		[RLPhoneNumber setStringValue:@""];

@@ -82,7 +82,6 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 	[progressView release];
 	[SIPRegistrationTimeout invalidate];
 	[SIPRegistrationTimeout release];
-	[super dealloc];
 	[calls removeAllObjects];
 	[calls release];
 	[account logout];
@@ -90,6 +89,7 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 	[contacts stop];
 	[contacts release];
 	[user release];
+	[super dealloc];
 }
 
 - (void)registerSettings {

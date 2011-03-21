@@ -19,6 +19,7 @@
 
 #import "MGMVoiceUser.h"
 #import "MGMController.h"
+#import "MGMVoiceVerify.h"
 #import "MGMProgressView.h"
 #import "MGMContactView.h"
 #import "MGMPhoneFeild.h"
@@ -27,7 +28,7 @@
 #import <VoiceBase/VoiceBase.h>
 #import <MGMUsers/MGMUsers.h>
 
-NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
+NSString * const MGMLastUserPhoneKey = @"MGMLastUserPhone";
 
 @implementation MGMVoiceUser
 + (id)voiceUser:(MGMUser *)theUser controller:(MGMController *)theController {
@@ -74,7 +75,6 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 	[progressFadeAnimation stopAnimation];
 	[progressFadeAnimation release];
 	progressFadeAnimation = nil;
-	[super dealloc];
 	[inboxWindow closeWindow];
 	[inboxWindow release];
 	[instance setDelegate:nil];
@@ -85,6 +85,8 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 	[callTimer invalidate];
 	[callTimer release];
 	[user release];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[super dealloc];
 }
 
 - (void)registerSettings {
@@ -123,12 +125,20 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 	[theAlert setInformativeText:[theError localizedDescription]];
 	[theAlert runModal];
 	
+	[verifyWindow release];
+	verifyWindow = nil;
 	[progressView stopProgess];
 	[progressView removeFromSuperview];
 	[progressView release];
 	progressView = nil;
 }
+- (void)loginVerificationRequested {
+	[verifyWindow release];
+	verifyWindow = [[MGMVoiceVerify verifyWithInstance:instance] retain];
+}
 - (void)loginSuccessful {
+	[verifyWindow release];
+	verifyWindow = nil;
 	[progressView stopProgess];
 	[progressView display];
 	
@@ -145,17 +155,11 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 	}
 }
 - (void)setInstanceInfo {
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(becameActive) name:NSApplicationDidBecomeActiveNotification object:nil];
 	if (contactsWindow==nil) return;
 	if ([instance isLoggedIn]) {
 		[userNumberButton setTitle:[[instance userNumber] readableNumber]];
-		[userPhonesButton removeAllItems];
-		NSArray *phones = [instance userPhoneNumbers];
-		for (int i=0; i<[phones count]; i++) {
-			NSDictionary *phone = [phones objectAtIndex:i];
-			[userPhonesButton addItemWithTitle:[NSString stringWithFormat:@"%@ [%@]", [[phone objectForKey:MGMPhoneNumber] readableNumber], [phone objectForKey:MGMName]]];
-			[userPhonesButton selectItemAtIndex:0];
-		}
-		[userPhonesButton selectItemAtIndex:[[user settingForKey:MGMLastUserPhoneKey] intValue]];
+		[self updatedUserPhones];
 	}
 }
 - (void)animationDidEnd:(NSAnimation *)animation {
@@ -173,6 +177,24 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 - (void)reloadData {
 	[super reloadData];
 	[progressView display];
+}
+
+- (void)becameActive {
+	[instance checkPhones];
+}
+- (void)updatedUserPhones {
+	[userPhonesButton removeAllItems];
+	NSArray *phones = [instance userPhoneNumbers];
+	for (int i=0; i<[phones count]; i++) {
+		NSDictionary *phone = [phones objectAtIndex:i];
+		[userPhonesButton addItemWithTitle:[NSString stringWithFormat:@"%@ [%@]", [[phone objectForKey:MGMPhoneNumber] readableNumber], [phone objectForKey:MGMName]]];
+		[userPhonesButton selectItemAtIndex:0];
+	}
+	if ([[instance userPhoneNumbers] count]>=1) {
+		if ([[instance userPhoneNumbers] count]<([[user settingForKey:MGMLastUserPhoneKey] intValue]+1))
+			[user setSetting:[NSNumber numberWithInt:0] forKey:MGMLastUserPhoneKey];
+		[userPhonesButton selectItemAtIndex:[[user settingForKey:MGMLastUserPhoneKey] intValue]];
+	}
 }
 
 - (NSString *)areaCode {
@@ -212,12 +234,12 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 			[[instance connectionManager] cancelAll];
 		[callButton setImage:[NSImage imageNamed:@"placeCall"]];
 		[instance cancelCallWithDelegate:self];
+	} else if ([[instance userPhoneNumbers] count]<=0) {
+		NSAlert *alert = [[NSAlert new] autorelease];
+		[alert setMessageText:@"Call Failed"];
+		[alert setInformativeText:@"You need to have a phone number setup with your Google Voice account. To add one, click your Google Voice number at the bottom left of your Contacts window and add a phone number. Once you got a phone number setup with Google Voice, reopen VoiceMac."];
+		[alert runModal];
 	} else {
-		if ([userPhonesButton indexOfSelectedItem]==-1) {
-			NSBeep();
-			return;
-		}
-		
 		NSString *phoneNumber = [controller currentPhoneNumber];
 		if (phoneNumber==nil || [phoneNumber isEqual:@""]) {
 			NSBeep();
@@ -276,8 +298,8 @@ NSString *MGMLastUserPhoneKey = @"MGMLastUserPhone";
 - (void)updateSMS {
 	[[controller SMSManager] checkSMSMessagesForInstance:instance];
 }
-- (void)updateCredit:(NSString *)credit {
-	[creditField setStringValue:credit];
+- (void)updateCredit:(NSString *)theCredit {
+	[creditField setStringValue:theCredit];
 }
 
 - (IBAction)viewSettings:(id)sender {

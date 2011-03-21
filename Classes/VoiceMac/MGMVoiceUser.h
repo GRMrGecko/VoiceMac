@@ -20,15 +20,21 @@
 #import <Cocoa/Cocoa.h>
 #import "MGMContactsController.h"
 
-extern NSString *MGMLastUserPhoneKey;
+extern NSString * const MGMLastUserPhoneKey;
 
-@class MGMController, MGMUser, MGMInstance, MGMInboxWindow, MGMProgressView, MGMPhoneField, MGMPhoneFieldView, MGMContactsTableView;
+@class MGMController, MGMUser, MGMInstance, MGMInboxWindow, MGMVoiceVerify, MGMProgressView, MGMPhoneField, MGMPhoneFieldView, MGMContactsTableView;
 
-@interface MGMVoiceUser : MGMContactsController <NSAnimationDelegate> {
+@interface MGMVoiceUser : MGMContactsController
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+<NSAnimationDelegate>
+#endif
+{
 	MGMInstance *instance;
 	MGMUser *user;
 	MGMInboxWindow *inboxWindow;
-
+	
+	MGMVoiceVerify *verifyWindow;
+	
 	MGMProgressView *progressView;
 	NSViewAnimation *progressFadeAnimation;
 	IBOutlet NSTextField *creditField;
@@ -52,6 +58,8 @@ extern NSString *MGMLastUserPhoneKey;
 
 - (void)loginSuccessful;
 - (void)setInstanceInfo;
+
+- (void)updatedUserPhones;
 
 - (BOOL)isPlacingCall;
 - (void)donePlacingCall;

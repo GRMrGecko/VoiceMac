@@ -217,6 +217,8 @@
 	return number;
 }
 - (NSString *)readableNumber {
+	if ([self rangeOfString:@"@"].location!=NSNotFound)
+		return self;
 	NSString *number = [[self removePhoneWhiteSpace] littersToNumbers];
 	if (![number hasPrefix:@"011"]) {
 		if ([number length]==10) {

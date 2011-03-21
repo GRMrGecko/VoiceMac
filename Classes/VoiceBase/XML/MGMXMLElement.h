@@ -17,19 +17,15 @@
 //  ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 //
 
-#if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
-#else
-#import <Cocoa/Cocoa.h>
-#endif
+#import <Foundation/Foundation.h>
 #import <VoiceBase/MGMXMLNode.h>
 
 @interface MGMXMLElement : MGMXMLNode {
 
 }
-//- (id)initWithName:(NSString *)name;
+- (id)initWithName:(NSString *)name;
 //- (id)initWithName:(NSString *)name URI:(NSString *)URI; //primitive
-//- (id)initWithName:(NSString *)name stringValue:(NSString *)string;
+- (id)initWithName:(NSString *)name stringValue:(NSString *)string;
 - (id)initWithXMLString:(NSString *)string error:(NSError **)error;
 
 - (NSArray *)elementsForName:(NSString *)name;

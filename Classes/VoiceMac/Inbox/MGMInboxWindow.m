@@ -438,12 +438,22 @@ NSString * const MGMSID = @"id";
 		[self markRead:self];
 }
 
-- (float)splitView:(NSSplitView *)sender constrainMinCoordinate:(float)proposedMin ofSubviewAt:(int)offset {
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+- (float)splitView:(NSSplitView *)sender constrainMinCoordinate:(float)proposedMin ofSubviewAt:(int)offset
+#else
+- (CGFloat)splitView:(NSSplitView *)sender constrainMinCoordinate:(CGFloat)proposedMin ofSubviewAt:(NSInteger)offset
+#endif
+{
     leftMax = [[[sender subviews] objectAtIndex:0] frame].size.width;
 	rightMax = [[[sender subviews] objectAtIndex:1] frame].size.width;
 	return 0.0;
 }
-- (float)splitView:(NSSplitView *)sender constrainMaxCoordinate:(float)proposedMax ofSubviewAt:(int)offset{
+#if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
+- (float)splitView:(NSSplitView *)sender constrainMaxCoordinate:(float)proposedMax ofSubviewAt:(int)offset
+#else
+- (CGFloat)splitView:(NSSplitView *)sender constrainMaxCoordinate:(CGFloat)proposedMax ofSubviewAt:(NSInteger)offset
+#endif
+{
 	leftMax = [[[sender subviews] objectAtIndex:0] frame].size.width;
 	rightMax = [[[sender subviews] objectAtIndex:1] frame].size.width;
 	return proposedMax - 250.0;

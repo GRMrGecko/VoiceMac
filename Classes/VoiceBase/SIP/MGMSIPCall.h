@@ -18,11 +18,7 @@
 //
 
 #if MGMSIPENABLED
-#if TARGET_OS_IPHONE
-#import <UIKit/UIKit.h>
-#else
-#import <Cocoa/Cocoa.h>
-#endif
+#import <Foundation/Foundation.h>
 #import <pjsua-lib/pjsua.h>
 
 @class MGMSIPCall, MGMSIPAccount, MGMSIPURL;

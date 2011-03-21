@@ -23,7 +23,7 @@
 #import "MGMSIPCall.h"
 #import "MGMSIPURL.h"
 #import "MGMAddons.h"
-#include <pjsua-lib/pjsua_internal.h>
+#import <pjsua-lib/pjsua_internal.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 #if !TARGET_OS_IPHONE
 #import <CoreAudio/CoreAudio.h>
@@ -50,6 +50,7 @@ NSString * const MGMSIPEchoCacnellationEnabled = @"MGMSIPEchoCacnellationEnabled
 NSString * const MGMSIPPort = @"MGMSIPPort";
 NSString * const MGMSIPPublicAddress = @"MGMSIPPublicAddress";
 NSString * const MGMSIPUserAgent = @"MGMSIPUserAgent";
+NSString * const MGMSIPCodec = @"MGMSIPCodec";
 
 NSString * const MGMNetworkConnectedNotification = @"MGMNetworkConnectedNotification";
 NSString * const MGMNetworkDisconnectedNotification = @"MGMNetworkDisconnectedNotification";
@@ -291,12 +292,14 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 #endif
 		shouldRestart = NO;
 		
+		codecsInfo = [NSMutableDictionary new];
+		
 #if !TARGET_OS_IPHONE
 		store = SCDynamicStoreCreate(kCFAllocatorDefault, CFBundleGetIdentifier(CFBundleGetMainBundle()), (SCDynamicStoreCallBack)MGMNetworkNotification, NULL);
 		if (!store) {
 			NSLog(@"Unable to create store for system configuration %s", SCErrorString(SCError()));
 		} else {
-			NSArray *keys = [NSArray arrayWithObjects:@"State:/Network/Global/IPv4", nil];
+			NSArray *keys = [NSArray arrayWithObjects:@"State:/Network/Global/IPv4", @"State:/Network/Global/IPv6", nil];
 			if (!SCDynamicStoreSetNotificationKeys(store, (CFArrayRef)keys, NULL)) {
 				NSLog(@"Faild to set the store for notifications %s", SCErrorString(SCError()));
 				CFRelease(store);
@@ -324,7 +327,9 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		CFRelease(store);
 #endif
 	[lock release];
+	[codecsInfo release];
 	[accounts release];
+	[restartAccounts release];
 	[super dealloc];
 }
 
@@ -337,6 +342,7 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 	[defaults setObject:[NSNumber numberWithBool:NO] forKey:MGMSIPNameServersEnabled];
 	[defaults setObject:[NSNumber numberWithBool:YES] forKey:MGMSIPEchoCacnellationEnabled];
 	[defaults setObject:[NSNumber numberWithInt:0] forKey:MGMSIPPort];
+	[defaults setObject:@"speex/16000" forKey:MGMSIPCodec];
 	[defaults setObject:[NSNumber numberWithFloat:1.0] forKey:MGMSIPVolume];
 	[defaults setObject:[NSNumber numberWithFloat:1.0] forKey:MGMSIPMicVolume];
 	[defaults setObject:MGMSIPASystemDefault forKey:MGMSIPACurrentInputDevice];
@@ -568,6 +574,23 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		return;
 	}
 	
+	if (pjsua_var.med_endpt!=NULL) {
+		pjmedia_codec_info codecs[PJMEDIA_CODEC_MGR_MAX_CODECS];
+		unsigned int prio[PJMEDIA_CODEC_MGR_MAX_CODECS];
+		unsigned int count = PJ_ARRAY_SIZE(codecs);
+		status = pjmedia_codec_mgr_enum_codecs(pjmedia_endpt_get_codec_mgr(pjsua_var.med_endpt), &count, codecs, prio);
+		
+		if (status==PJ_SUCCESS) {
+			for (int i=0; i<count; i++) {
+				[codecsInfo setObject:[NSNumber numberWithUnsignedInt:prio[i]] forKey:[NSString stringWithFormat:@"%@/%u", [NSString stringWithPJString:codecs[i].encoding_name], codecs[i].clock_rate]];
+			}
+		}
+		codecOriginalPriority = [[codecsInfo objectForKey:[defaults objectForKey:MGMSIPCodec]] unsignedIntValue];
+		[self setPriority:PJMEDIA_CODEC_PRIO_NEXT_HIGHER forCodec:[defaults objectForKey:MGMSIPCodec]];
+	} else {
+		NSLog(@"pjsua_var.med_endpt was NULL");
+	}
+	
 	state = MGMSIPStartedState;
 	
 	[accounts makeObjectsPerformSelector:@selector(login)];
@@ -710,6 +733,26 @@ static OSStatus MGMAudioDevicesChanged(AudioHardwarePropertyID propertyID, void 
 		if (status!=PJ_SUCCESS)
 			NSLog(@"Error registering thread for PJSUA with status %d", status);
 	}
+}
+
+- (void)setTopCodec:(NSString *)theCodec {
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[self setPriority:codecOriginalPriority forCodec:[defaults objectForKey:MGMSIPCodec]];
+	[defaults setObject:theCodec forKey:MGMSIPCodec];
+	codecOriginalPriority = [[codecsInfo objectForKey:theCodec] unsignedIntValue];
+	[self setPriority:PJMEDIA_CODEC_PRIO_NEXT_HIGHER forCodec:theCodec];
+}
+- (void)setPriority:(unsigned int)thePriority forCodec:(NSString *)theCodec {
+	if ([codecsInfo objectForKey:theCodec]!=nil) {
+		pj_str_t codec = [theCodec PJString];
+		pj_status_t status = pjmedia_codec_mgr_set_codec_priority(pjmedia_endpt_get_codec_mgr(pjsua_var.med_endpt), &codec, thePriority);
+		[codecsInfo setObject:[NSNumber numberWithUnsignedInt:thePriority] forKey:theCodec];
+		if (status!=PJ_SUCCESS)
+			NSLog(@"Error changing priority of codec %@ to %u: %d", theCodec, thePriority, status);
+	}
+}
+- (NSDictionary *)codecs {
+	return codecsInfo;
 }
 
 - (void)loginToAccount:(MGMSIPAccount *)theAccount {
