@@ -19,7 +19,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class WebView, MGMUser, MGMInstance, MGMURLConnectionManager, MGMSIPAccount;
+@class WebView, MGMUser, MGMInstance, MGMVoiceVerify, MGMURLConnectionManager, MGMSIPAccount;
 
 extern NSString * const MGMSGoogleVoice;
 extern NSString * const MGMSGoogleContacts;
@@ -68,6 +68,7 @@ extern NSString * const MGMSIPDefaultDomain;
 	IBOutlet NSTextField *S7StatusField;
 	MGMUser *S7CheckUser;
 	MGMInstance *S7CheckInstance;
+	MGMVoiceVerify *S7VerifyWindow;
 	MGMURLConnectionManager *S7ConnectionManager;
 #if MGMSIPENABLED
 	MGMSIPAccount *S7CheckSIPAccount;

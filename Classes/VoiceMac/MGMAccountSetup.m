@@ -19,6 +19,7 @@
 
 #import "MGMAccountSetup.h"
 #import "MGMVoiceUser.h"
+#import "MGMVoiceVerify.h"
 #import "MGMSIPUser.h"
 #import <VoiceBase/VoiceBase.h>
 #import <MGMUsers/MGMUsers.h>
@@ -326,6 +327,8 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	S7CheckInstance = [[MGMInstance instanceWithUser:S7CheckUser delegate:self isCheck:YES] retain];
 }
 - (void)loginError:(NSError *)theError {
+	[S7VerifyWindow release];
+	S7VerifyWindow = nil;
 	[S7CheckUser remove];
 	[S7CheckUser release];
 	S7CheckUser = nil;
@@ -336,7 +339,13 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	step = 8;
 	[self displayStep];
 }
+- (void)loginVerificationRequested {
+	[S7VerifyWindow release];
+	S7VerifyWindow = [[MGMVoiceVerify verifyWithInstance:S7CheckInstance] retain];
+}
 - (void)loginSuccessful {
+	[S7VerifyWindow release];
+	S7VerifyWindow = nil;
 	if (S7CheckUser!=nil) {
 		[accountsCreated addObject:S7CheckUser];
 		MGMUser *contactsUser = [MGMUser createUserWithName:[S4EmailField stringValue] password:[S4PasswordField stringValue]];
