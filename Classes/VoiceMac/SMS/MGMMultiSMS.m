@@ -113,15 +113,15 @@
 		}
 	}
 	if ([SMSNumbers count]<=0) {
-		NSAlert *theAlert = [[NSAlert new] autorelease];
-		[theAlert setMessageText:@"Error sending a SMS Message"];
-		[theAlert setInformativeText:@"You need to at least have 1 contact to send to."];
-		[theAlert runModal];
+		NSAlert *alert = [[NSAlert new] autorelease];
+		[alert setMessageText:@"Error sending a SMS Message"];
+		[alert setInformativeText:@"You need to at least have 1 contact to send to."];
+		[alert runModal];
 	} else if ([[SMSTextView string] isEqual:@""]) {
-		NSAlert *theAlert = [[NSAlert new] autorelease];
-		[theAlert setMessageText:@"Error sending a SMS Message"];
-		[theAlert setInformativeText:@"Message is blank."];
-		[theAlert runModal];
+		NSAlert *alert = [[NSAlert new] autorelease];
+		[alert setMessageText:@"Error sending a SMS Message"];
+		[alert setInformativeText:@"Message is blank."];
+		[alert runModal];
 	} else {
 		[SMSTextView setEditable:NO];
 		sendingMessage = YES;
@@ -138,12 +138,12 @@
 	[sendButton setEnabled:YES];
 	[cancelButton setEnabled:YES];
 	[SMSWindow makeFirstResponder:SMSTextView];
-	NSAlert *theAlert = [[NSAlert new] autorelease];
-	[theAlert addButtonWithTitle:@"Ok"];
-	[theAlert setMessageText:@"Error sending a SMS Message"];
-	[theAlert setInformativeText:[theError localizedDescription]];
-	[theAlert setAlertStyle:2];
-	[theAlert runModal];
+	NSAlert *alert = [[NSAlert new] autorelease];
+	[alert addButtonWithTitle:@"Ok"];
+	[alert setMessageText:@"Error sending a SMS Message"];
+	[alert setInformativeText:[theError localizedDescription]];
+	[alert setAlertStyle:2];
+	[alert runModal];
 }
 - (void)messageDidFinish:(MGMDelegateInfo *)theInfo instance:(MGMInstance *)theInstance {
 	sendingMessage = NO;
@@ -155,10 +155,10 @@
 
 - (BOOL)windowShouldClose:(id)sender {
 	if (sendingMessage) {
-		NSAlert *theAlert = [[NSAlert new] autorelease];
-		[theAlert setMessageText:@"Sending a SMS Message"];
-		[theAlert setInformativeText:@"Your SMS Message is currently being sent, please wait for it to be sent."];
-		[theAlert runModal];
+		NSAlert *alert = [[NSAlert new] autorelease];
+		[alert setMessageText:@"Sending a SMS Message"];
+		[alert setInformativeText:@"Your SMS Message is currently being sent, please wait for it to be sent."];
+		[alert runModal];
 		return NO;
 	}
 	return YES;

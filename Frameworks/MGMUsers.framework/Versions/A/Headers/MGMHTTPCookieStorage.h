@@ -8,8 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+#define MGMEnableMemorySaving 1
+
 @interface MGMHTTPCookieStorage : NSObject {
 @private
+#if MGMEnableMemorySaving
+	MGMHTTPCookieStorage *foundCookieJar;
+#endif
 	NSString *cookiesPath;
 	NSHTTPCookieAcceptPolicy policy;
 	NSMutableArray *cookieJar;

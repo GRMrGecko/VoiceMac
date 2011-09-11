@@ -204,6 +204,11 @@
 - (IBAction)sendMessage:(id)sender {
 	if ([[SMSTextView string] isEqual:@""])
 		return;
+	if (![[messageInfo objectForKey:MGMIRead] boolValue]) {
+		marking = YES;
+		markingForMessage = YES;
+		[[instance inbox] markEntries:[NSArray arrayWithObject:[messageInfo objectForKey:MGMIID]] read:YES delegate:self];
+	}
 	sendingMessage = YES;
 	[SMSTextView setEditable:NO];
 	[[instance inbox] sendMessage:[SMSTextView string] phoneNumbers:[NSArray arrayWithObject:[messageInfo objectForKey:MGMIPhoneNumber]] smsID:[messageInfo objectForKey:MGMIID] delegate:self];
@@ -212,10 +217,10 @@
 	sendingMessage = NO;
 	[SMSTextView setEditable:YES];
 	[[manager SMSWindow] makeFirstResponder:SMSTextView];
-	NSAlert *theAlert = [[NSAlert new] autorelease];
-	[theAlert setMessageText:@"Error sending a SMS Message"];
-	[theAlert setInformativeText:[theError localizedDescription]];
-	[theAlert runModal];
+	NSAlert *alert = [[NSAlert new] autorelease];
+	[alert setMessageText:@"Error sending a SMS Message"];
+	[alert setInformativeText:[theError localizedDescription]];
+	[alert runModal];
 }
 - (void)messageDidFinish:(MGMDelegateInfo *)theInfo instance:(MGMInstance *)theInstance {
 	sendingMessage = NO;
@@ -247,10 +252,10 @@
 
 - (IBAction)close:(id)sender {
 	if (sendingMessage) {
-		NSAlert *theAlert = [[NSAlert new] autorelease];
-		[theAlert setMessageText:@"Sending a SMS Message"];
-		[theAlert setInformativeText:@"Your SMS Message is currently being sent, please wait for it to be sent."];
-		[theAlert runModal];
+		NSAlert *alert = [[NSAlert new] autorelease];
+		[alert setMessageText:@"Sending a SMS Message"];
+		[alert setInformativeText:@"Your SMS Message is currently being sent, please wait for it to be sent."];
+		[alert runModal];
 	} else if (marking) {
 		
 	} else if (![[messageInfo objectForKey:MGMIRead] boolValue]) {
@@ -265,15 +270,18 @@
 }
 - (void)mark:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	marking = NO;
-	NSAlert *theAlert = [[NSAlert new] autorelease];
-	[theAlert setMessageText:@"Error marking as read"];
-	[theAlert setInformativeText:[theError localizedDescription]];
-	[theAlert runModal];
+	NSAlert *alert = [[NSAlert new] autorelease];
+	[alert setMessageText:@"Error marking as read"];
+	[alert setInformativeText:[theError localizedDescription]];
+	[alert runModal];
 }
 - (void)markDidFinish:(MGMDelegateInfo *)theInfo instance:(MGMInstance *)theInstance {
 	marking = NO;
 	[messageInfo setObject:[NSNumber numberWithBool:YES] forKey:MGMIRead];
-	[self close:self];
+	if (markingForMessage)
+		markingForMessage = NO;
+	else
+		[self close:self];
 }
 
 #if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)

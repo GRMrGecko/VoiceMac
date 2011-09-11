@@ -160,8 +160,8 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	registrar = [theRegistrar copy];
 }
 - (NSString *)SIPAddress {
-	if (SIPAddress==nil && domain!=nil && userName!=nil)
-		return [NSString stringWithFormat:@"%@@%@", userName, domain];
+	if (SIPAddress==nil && registrar!=nil && userName!=nil)
+		return [NSString stringWithFormat:@"%@@%@", userName, registrar];
 	return SIPAddress;
 }
 - (void)setSIPAddress:(NSString *)theSIPAddress {
@@ -387,7 +387,7 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 - (MGMSIPCall *)makeCallToNumber:(NSString *)theNumber {
 	MGMSIPURL *SIPURL = [MGMSIPURL URLWithSIPAddress:theNumber];
 	if ([[SIPURL host] isEqual:theNumber]) {
-		[SIPURL setHost:domain];
+		[SIPURL setHost:registrar];
 		[SIPURL setUserName:theNumber];
 	}
 	return [self makeCallToSIPURL:SIPURL];

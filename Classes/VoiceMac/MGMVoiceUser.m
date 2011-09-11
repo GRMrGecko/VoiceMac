@@ -120,10 +120,10 @@ NSString * const MGMLastUserPhoneKey = @"MGMLastUserPhone";
 }
 
 - (void)loginError:(NSError *)theError {
-	NSAlert *theAlert = [[NSAlert new] autorelease];
-	[theAlert setMessageText:@"Error logging in"];
-	[theAlert setInformativeText:[theError localizedDescription]];
-	[theAlert runModal];
+	NSAlert *alert = [[NSAlert new] autorelease];
+	[alert setMessageText:@"Error logging in"];
+	[alert setInformativeText:[theError localizedDescription]];
+	[alert runModal];
 	
 	[verifyWindow release];
 	verifyWindow = nil;

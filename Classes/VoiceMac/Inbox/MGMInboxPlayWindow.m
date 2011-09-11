@@ -81,10 +81,10 @@
 
 - (void)handler:(MGMURLBasicHandler *)theHandler didFailWithError:(NSError *)theError {
 	NSLog(@"Starting Audio Error: %@", theError);
-	NSAlert *theAlert = [[NSAlert new] autorelease];
-	[theAlert setMessageText:@"Error loading audio"];
-	[theAlert setInformativeText:[theError localizedDescription]];
-	[theAlert runModal];
+	NSAlert *alert = [[NSAlert new] autorelease];
+	[alert setMessageText:@"Error loading audio"];
+	[alert setInformativeText:[theError localizedDescription]];
+	[alert runModal];
 }
 - (void)handlerDidFinish:(MGMURLBasicHandler *)theHandler {
 	QTDataReference *audioReference = [QTDataReference dataReferenceWithReferenceToData:[theHandler data] name:@"voicemail.mp3" MIMEType:nil];

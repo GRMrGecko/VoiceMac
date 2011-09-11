@@ -28,8 +28,8 @@
 
 NSString * const MGMVoiceBaseCopyright = @"Copyright (c) 2011 Mr. Gecko's Media (James Coleman). http://mrgeckosmedia.com/";
 
-NSString * const MGMVoiceIndexURL = @"https://www.google.com/voice/#inbox";
-NSString * const MGMLoginURL = @"https://www.google.com/accounts/ServiceLoginAuth";
+NSString * const MGMVoiceIndexURL = @"https://www.google.com/voice/";
+NSString * const MGMLoginURL = @"https://accounts.google.com/ServiceLoginAuth";
 NSString * const MGMLoginVerifyURL = @"https://www.google.com/accounts/SmsAuth?persistent=yes";
 NSString * const MGMXPCPath = @"/voice/xpc/?xpc=%7B%22cn%22%3A%22i70avDIMsA%22%2C%22tp%22%3Anull%2C%22pru%22%3A%22https%3A%2F%2Fwww.google.com%2Fvoice%2Fxpc%2Frelay%22%2C%22ppu%22%3A%22https%3A%2F%2Fwww.google.com%2Fvoice%2Fxpc%2Fblank%2F%22%2C%22lpu%22%3A%22https%3A%2F%2Fclients4.google.com%2Fvoice%2Fxpc%2Fblank%2F%22%7D";
 NSString * const MGMCheckPath = @"/voice/xpc/checkMessages?r=%@";
@@ -237,7 +237,7 @@ const BOOL MGMInstanceInvisible = YES;
 		[handler setFinish:@selector(indexDidFinish:)];
 		[handler setInvisible:MGMInstanceInvisible];
 		[connectionManager addHandler:handler];
-	} else if ([returnedString containsString:@"Enter verification code"]) {
+	} else if ([returnedString containsString:@"verification code"]) {
 		[verificationParameters release];
 		verificationParameters = [NSMutableDictionary new];
 		[verificationParameters setObject:@"yes" forKey:@"PersistentCookie"];
@@ -376,7 +376,7 @@ const BOOL MGMInstanceInvisible = YES;
 		NSString *valueEnd = @"\"";
 		NSString *valueStartQ = @"value='";
 		NSString *valueEndQ = @"'";
-		NSArray *names = [NSArray arrayWithObjects:@"ltmpl", @"continue", @"followup", @"service", @"dsh", @"GALX", @"rmShown", nil];
+		NSArray *names = [NSArray arrayWithObjects:@"ltmpl", @"pstMsg", @"dnConn", @"continue", @"followup", @"service", @"dsh", @"timeStmp", @"secTok", @"GALX", @"signIn", @"asts", @"rmShown", nil];
 		for (int i=0; i<[names count]; i++) {
 			NSAutoreleasePool *pool = [NSAutoreleasePool new];
 			NSString *nameString = [NSString stringWithFormat:nameValue, [names objectAtIndex:i]];
@@ -532,7 +532,15 @@ const BOOL MGMInstanceInvisible = YES;
 				}
 			}
 		}
-		if (![returnedString containsString:@"gc-header-did-display"] && ![userNumber isPhoneComplete]) {
+		if ([returnedString containsString:@"cookie functionality"]) {
+			NSError *error = [NSError errorWithDomain:@"com.MrGeckosMedia.MGMInstance.Login" code:3 userInfo:[NSDictionary dictionaryWithObject:@"There is a problem with VoiceMac's Cookie system, please contact the developer via the help menu." forKey:NSLocalizedDescriptionKey]];
+			if (delegate!=nil && [delegate respondsToSelector:@selector(loginError:)]) {
+				[delegate loginError:error];
+			} else {
+				NSLog(@"Login Error: %@", error);
+			}
+			return;
+		} else if (![returnedString containsString:@"gc-header-did-display"] && ![userNumber isPhoneComplete]) {
 			NSError *error = [NSError errorWithDomain:@"com.MrGeckosMedia.MGMInstance.Login" code:2 userInfo:[NSDictionary dictionaryWithObject:@"Your Google Account does not appear to have a Google Number, please visit voice.google.com and setup one before continuing." forKey:NSLocalizedDescriptionKey]];
 			if (delegate!=nil && [delegate respondsToSelector:@selector(loginError:)]) {
 				[delegate loginError:error];
@@ -580,7 +588,6 @@ const BOOL MGMInstanceInvisible = YES;
 		NSLog(@"XPCURL = %@", XPCURL);
 #endif
 		loggedIn = YES;
-		if (delegate!=nil && [delegate respondsToSelector:@selector(loginSuccessful)]) [delegate loginSuccessful];
 		if (!checkingAccount) {
 			[contacts updateContacts];
 			[checkTimer invalidate];
@@ -592,6 +599,7 @@ const BOOL MGMInstanceInvisible = YES;
 			creditTimer = [[NSTimer scheduledTimerWithTimeInterval:60.0 target:self selector:@selector(creditTimer) userInfo:nil repeats:YES] retain];
 			[creditTimer fire];
 		}
+		if (delegate!=nil && [delegate respondsToSelector:@selector(loginSuccessful)]) [delegate loginSuccessful];
 	}
 }
 - (void)cancelVerification {

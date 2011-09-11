@@ -258,7 +258,7 @@
 		}
 		return areaCode;
 	}
-	return nil;
+	return @"";
 }
 - (NSString *)areaCodeLocation {
 	switch ([self intValue]) {
@@ -1310,7 +1310,7 @@
 - (NSString *)addPercentEscapes {
 	NSString *result = [self stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 	
-	CFStringRef escapedString = CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)self, NULL, CFSTR("!*'();:@&=+$,/?%#[]|"), kCFStringEncodingUTF8);
+	CFStringRef escapedString = CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)self, NULL, CFSTR("!*'();:^@&=+$,/?%#[]|"), kCFStringEncodingUTF8);
 	
 	if (escapedString) {
 		result = [NSString stringWithString:(NSString *)escapedString];

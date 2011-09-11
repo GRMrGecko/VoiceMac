@@ -261,7 +261,7 @@ NSString * const MGMLogout = @"Logout";
 		else
 			[SIPFullNameField setStringValue:@""];
 		if ([user settingForKey:MGMSIPAccountDomain]==nil || [[user settingForKey:MGMSIPAccountDomain] isEqual:@""]) {
-			[[SIPRegistrarField cell] setPlaceholderString:MGMSIPDefaultDomain];
+			[[SIPRegistrarField cell] setPlaceholderString:@""];
 			[SIPDomainField setStringValue:@""];
 		} else {
 			[[SIPRegistrarField cell] setPlaceholderString:[user settingForKey:MGMSIPAccountDomain]];
@@ -369,13 +369,16 @@ NSString * const MGMLogout = @"Logout";
 	MGMUser *user = [MGMUser userWithID:[[MGMUser users] objectAtIndex:[usersTable selectedRow]]];
 	[user setSetting:[SIPFullNameField stringValue] forKey:MGMSIPAccountFullName];
 	if ([[SIPDomainField stringValue] isEqual:@""]) {
-		[[SIPRegistrarField cell] setPlaceholderString:MGMSIPDefaultDomain];
-		[user setSetting:MGMSIPDefaultDomain forKey:MGMSIPAccountDomain];
+		[[SIPRegistrarField cell] setPlaceholderString:@""];
+		[user setSetting:@"" forKey:MGMSIPAccountDomain];
 	} else {
 		[[SIPRegistrarField cell] setPlaceholderString:[SIPDomainField stringValue]];
 		[user setSetting:[SIPDomainField stringValue] forKey:MGMSIPAccountDomain];
 	}
-	[user setSetting:[SIPRegistrarField stringValue] forKey:MGMSIPAccountRegistrar];
+	if ([[SIPRegistrarField stringValue] isEqual:@""] && [[SIPDomainField stringValue] isEqual:@""])
+		NSBeep();
+	else
+		[user setSetting:[SIPRegistrarField stringValue] forKey:MGMSIPAccountRegistrar];
 	if ([[SIPUserNameField stringValue] isEqual:@""] || [[SIPPasswordField stringValue] isEqual:@""]) {
 		NSBeep();
 		if ([user settingForKey:MGMSIPAccountUserName]!=nil) {

@@ -285,9 +285,18 @@ const int MGMCMaxResults = 10;
 	return [count autorelease];
 }
 - (NSArray *)contactsMatching:(NSString *)theString page:(int)thePage {
+	return [self contactsMatching:theString page:thePage includePhoto:YES];
+}
+- (NSArray *)contactsMatching:(NSString *)theString page:(int)thePage includePhoto:(BOOL)shouldIncludePhoto {
 	if (contactsConnection==nil)
 		return nil;
 	[contactsLock lock];
+	NSString *select = nil;
+	if (shouldIncludePhoto)
+		select = @"SELECT docid, name, company, number, label, photo";
+	else
+		select = @"SELECT docid, name, company, number, label";
+	
 	NSMutableArray *contactsArray = [NSMutableArray array];
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	NSString *string = [theString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -295,11 +304,11 @@ const int MGMCMaxResults = 10;
 	if (thePage==0) thePage = 1;
 	long long int page = (thePage*maxResults)-maxResults;
 	if (theString==nil || [string isEqual:@""]) {
-		result = [contactsConnection query:@"SELECT docid, * FROM contacts ORDER BY company, name LIMIT %qi, %d", page, maxResults];
+		result = [contactsConnection query:[select stringByAppendingString:@" FROM contacts ORDER BY company, name LIMIT %qi, %d"], page, maxResults];
 	} else {
 		if ([string isPhone]) {
 			NSString *search = [NSString stringWithFormat:MGMCNum, [[string removePhoneWhiteSpace] littersToNumbers]];
-			result = [contactsConnection query:@"SELECT docid, * FROM contacts WHERE number LIKE %@ ORDER BY company, name LIMIT %qi, %d", search, page, maxResults];
+			result = [contactsConnection query:[select stringByAppendingString:@" FROM contacts WHERE number LIKE %@ ORDER BY company, name LIMIT %qi, %d"], search, page, maxResults];
 		} else {
 			NSArray *words = [string componentsSeparatedByString:@" "];
 			NSMutableString *search = [NSMutableString string];
@@ -329,7 +338,7 @@ const int MGMCMaxResults = 10;
 					}
 				}
 			}
-			result = [contactsConnection query:@"SELECT docid, *, offsets(contacts) AS offset FROM contacts WHERE contacts MATCH %@ ORDER BY offset LIMIT %qi, %d", search, page, maxResults];
+			result = [contactsConnection query:[select stringByAppendingString:@", offsets(contacts) AS offset FROM contacts WHERE contacts MATCH %@ ORDER BY offset LIMIT %qi, %d"], search, page, maxResults];
 		}
 	}
 	NSDictionary *contact = nil;
@@ -354,7 +363,7 @@ const int MGMCMaxResults = 10;
 		if ([string isPhone]) {
 			for (int i=0; i<2; i++) {
 				NSString *search = [NSString stringWithFormat:@"%@%%", (i==0 ? [string phoneFormat] : [string phoneFormatAreaCode:[delegate areaCode]])];
-				MGMLiteResult *result = [contactsConnection query:@"SELECT docid, * FROM contacts WHERE number LIKE %@ ORDER BY company, name LIMIT %d", search, maxResults];
+				MGMLiteResult *result = [contactsConnection query:@"SELECT name, company, number FROM contacts WHERE number LIKE %@ ORDER BY company, name LIMIT %d", search, maxResults];
 				
 				NSDictionary *contact = nil;
 				while ((contact=[result nextRow])!=nil) {
@@ -389,7 +398,7 @@ const int MGMCMaxResults = 10;
 					[search appendFormat:MGMCWordSSA, word];
 				}
 			}
-			MGMLiteResult *result = [contactsConnection query:@"SELECT docid, *, offsets(contacts) AS offset FROM contacts WHERE contacts MATCH %@ ORDER BY offset LIMIT %d", search, maxResults];
+			MGMLiteResult *result = [contactsConnection query:@"SELECT name, company, number, offsets(contacts) AS offset FROM contacts WHERE contacts MATCH %@ ORDER BY offset LIMIT %d", search, maxResults];
 			
 			NSDictionary *contact = nil;
 			while ((contact=[result nextRow])!=nil) {
@@ -426,6 +435,7 @@ const int MGMCMaxResults = 10;
 	[pool drain];
 	return completions;
 }
+
 - (NSDictionary *)contactWithID:(NSNumber *)theID {
 	if (contactsConnection==nil)
 		return nil;

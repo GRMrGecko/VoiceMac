@@ -12,7 +12,7 @@
 
 @interface MGMPreferences : NSObject
 #if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)
-	<NSWindowDelegate, NSToolbarDelegate>
+<NSWindowDelegate, NSToolbarDelegate>
 #endif
 {
 @private

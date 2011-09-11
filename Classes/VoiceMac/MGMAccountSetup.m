@@ -40,8 +40,6 @@ NSString * const MGMSAccountType = @"MGMSAccountType";
 NSString * const MGMS7Crediential = @"Checking Login Credentials.";
 NSString * const MGMS7SIPWaiting = @"Waiting for Registration Status.";
 
-NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
-
 @implementation MGMAccountSetup
 - (id)init {
 	if ((self = [super init])) {
@@ -238,10 +236,10 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 #if MGMSIPENABLED
 					step = 6;
 #else
-					NSAlert *theAlert = [[NSAlert new] autorelease];
-					[theAlert setMessageText:@"Unable to Add Account"];
-					[theAlert setInformativeText:@"MGMSIP is not compiled with VoiceMac, you can not add a SIP account without first compiling with MGMSIP."];
-					[theAlert runModal];
+					NSAlert *alert = [[NSAlert new] autorelease];
+					[alert setMessageText:@"Unable to Add Account"];
+					[alert setInformativeText:@"MGMSIP is not compiled with VoiceMac, you can not add a SIP account without first compiling with MGMSIP."];
+					[alert runModal];
 #endif
 					break;
 				}
@@ -261,14 +259,14 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 				if ([[S5EmailField stringValue] isEqual:@""] || [[S5PasswordField stringValue] isEqual:@""])
 					emptyFields = YES;
 			} else if (accountType==2) {
-				if ([[S6UserNameField stringValue] isEqual:@""] || [[S6PasswordField stringValue] isEqual:@""])
+				if ([[S6UserNameField stringValue] isEqual:@""] || [[S6PasswordField stringValue] isEqual:@""] || [[S6RegistrarField stringValue] isEqual:@""])
 					emptyFields = YES;
 			}
 			if (emptyFields) {
-				NSAlert *theAlert = [[NSAlert new] autorelease];
-				[theAlert setMessageText:@"Missing Information"];
-				[theAlert setInformativeText:@"It appears as if you did not fill the required fields, please fill out the required fields and then continue."];
-				[theAlert runModal];
+				NSAlert *alert = [[NSAlert new] autorelease];
+				[alert setMessageText:@"Missing Information"];
+				[alert setInformativeText:@"It appears as if you did not fill the required fields, please fill out the required fields and then continue."];
+				[alert runModal];
 				return;
 			}
 			step = 7;
@@ -307,7 +305,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 }
 - (IBAction)S6DomainChanged:(id)sender {
 	if ([[S6DomainField stringValue] isEqual:@""])
-		[[S6RegistrarField cell] setPlaceholderString:MGMSIPDefaultDomain];
+		[[S6RegistrarField cell] setPlaceholderString:@""];
 	else
 		[[S6RegistrarField cell] setPlaceholderString:[S6DomainField stringValue]];
 }
@@ -322,6 +320,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 
 //Step 7
 - (void)S7CheckGoogleVoice {
+	S7Verified = NO;
 	S7CheckUser = [[MGMUser createUserWithName:[S4EmailField stringValue] password:[S4PasswordField stringValue]] retain];
 	[S7CheckUser setSetting:MGMSGoogleVoice forKey:MGMSAccountType];
 	S7CheckInstance = [[MGMInstance instanceWithUser:S7CheckUser delegate:self isCheck:YES] retain];
@@ -340,6 +339,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	[self displayStep];
 }
 - (void)loginVerificationRequested {
+	S7Verified = YES;
 	[S7VerifyWindow release];
 	S7VerifyWindow = [[MGMVoiceVerify verifyWithInstance:S7CheckInstance] retain];
 }
@@ -348,9 +348,11 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	S7VerifyWindow = nil;
 	if (S7CheckUser!=nil) {
 		[accountsCreated addObject:S7CheckUser];
-		MGMUser *contactsUser = [MGMUser createUserWithName:[S4EmailField stringValue] password:[S4PasswordField stringValue]];
-		[contactsUser setSetting:MGMSGoogleContacts forKey:MGMSAccountType];
-		[S7CheckUser setSetting:[contactsUser settingForKey:MGMUserID] forKey:MGMCGoogleContactsUser];
+		if (!S7Verified) {
+			MGMUser *contactsUser = [MGMUser createUserWithName:[S4EmailField stringValue] password:[S4PasswordField stringValue]];
+			[contactsUser setSetting:MGMSGoogleContacts forKey:MGMSAccountType];
+			[S7CheckUser setSetting:[contactsUser settingForKey:MGMUserID] forKey:MGMCGoogleContactsUser];
+		}
 		[S7CheckUser release];
 		S7CheckUser = nil;
 	}
@@ -424,7 +426,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	if ([[S6UserNameField stringValue] isPhone])
 		[S7CheckUser setSetting:[[S6UserNameField stringValue] areaCode] forKey:MGMSIPUserAreaCode];
 	if ([[S6DomainField stringValue] isEqual:@""])
-		[S7CheckUser setSetting:MGMSIPDefaultDomain forKey:MGMSIPAccountDomain];
+		[S7CheckUser setSetting:@"" forKey:MGMSIPAccountDomain];
 	else
 		[S7CheckUser setSetting:[S6DomainField stringValue] forKey:MGMSIPAccountDomain];
 	if (![[S6RegistrarField stringValue] isEqual:@""])

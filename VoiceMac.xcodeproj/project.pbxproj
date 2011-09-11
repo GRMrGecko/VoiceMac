@@ -663,6 +663,7 @@
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				2A1175F91245705200D119B5 /* Frameworks */,
+				2A0EADDD13608B5A0074C118 /* Update Version */,
 			);
 			buildRules = (
 			);
@@ -797,6 +798,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		2A0EADDD13608B5A0074C118 /* Update Version */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Update Version";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n#\n# Git Version\n#\n# Created by Mr. Gecko <GRMrGecko@gmail.com> on 4/21/11.\n# No Copyright Claimed. Public Domain.\n#\n\nPATH=\"${PATH}:/usr/local/git/bin/\"\n\nINFO=\"${CONFIGURATION_BUILD_DIR}/${CONTENTS_FOLDER_PATH}/Info\"\nGITDIR=\"${PROJECT_DIR}/.git\"\n\nVERSION=`defaults read \"${INFO}\" CFBundleVersion`\nif [ -d \"${GITDIR}\" ]; then\n\tREVISION=`git --git-dir=\"${GITDIR}\" rev-parse --short HEAD`\n\tdefaults write \"${INFO}\" CFBundleShortVersionString -string \"${VERSION} (${REVISION})\"\nelse\n\tdefaults write \"${INFO}\" CFBundleShortVersionString -string \"${VERSION}\"\nfi";
+			showEnvVarsInLog = 0;
+		};
 		2A9FE23C13098D600061FB64 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

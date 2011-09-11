@@ -95,7 +95,7 @@
 
 - (void)setRequest:(NSURLRequest *)theRequest;
 - (NSMutableURLRequest *)request;
-- (NSURLResponse *)response;
+- (NSHTTPURLResponse *)response;
 - (NSData *)data;
 - (NSString *)string;
 @end

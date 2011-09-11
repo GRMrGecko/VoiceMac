@@ -326,10 +326,10 @@ const float updateTimeInterval = 300.0;
 	}
 	if ([SMSMessages count]==1) {
 		if (![[SMSMessages objectAtIndex:0] shouldClose]) {
-			NSAlert *theAlert = [[NSAlert new] autorelease];
-			[theAlert setMessageText:@"Sending a SMS Message"];
-			[theAlert setInformativeText:@"You currently have a SMS Message being sent, please wait for it to be sent."];
-			[theAlert runModal];
+			NSAlert *alert = [[NSAlert new] autorelease];
+			[alert setMessageText:@"Sending a SMS Message"];
+			[alert setInformativeText:@"You currently have a SMS Message being sent, please wait for it to be sent."];
+			[alert runModal];
 			return NO;
 		} else {
 			[[SMSMessages objectAtIndex:0] close:self];

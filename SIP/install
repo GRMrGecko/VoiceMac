@@ -39,7 +39,6 @@ if [ "$1" = "ios" ]; then
 	echo "#include <pj/config_site_sample.h>" >> ${PJPROJECTNAME}-ios6/pjlib/include/pj/config_site.h
 	echo "#define PJMEDIA_AUDIO_DEV_HAS_PORTAUDIO 0" >> ${PJPROJECTNAME}-ios6/pjlib/include/pj/config_site.h
 	echo "#define PJMEDIA_AUDIO_DEV_HAS_COREAUDIO 1" >> ${PJPROJECTNAME}-ios6/pjlib/include/pj/config_site.h
-	echo "#define PJMEDIA_HAS_G722_CODEC 2" >> ${PJPROJECTNAME}-ios6/pjlib/include/pj/config_site.h
 	
 	OLDDIR="${PWD}"
 	cd ${PJPROJECTNAME}-ios6
@@ -110,7 +109,6 @@ if [ "$1" = "simulator" ]; then
 	echo "#include <pj/config_site_sample.h>" >> ${PJPROJECTNAME}-simulator/pjlib/include/pj/config_site.h
 	echo "#define PJMEDIA_AUDIO_DEV_HAS_PORTAUDIO 0" >> ${PJPROJECTNAME}-simulator/pjlib/include/pj/config_site.h
 	echo "#define PJMEDIA_AUDIO_DEV_HAS_COREAUDIO 1" >> ${PJPROJECTNAME}-simulator/pjlib/include/pj/config_site.h
-	echo "#define PJMEDIA_HAS_G722_CODEC 2" >> ${PJPROJECTNAME}-simulator/pjlib/include/pj/config_site.h
 	
 	OLDDIR="${PWD}"
 	cd ${PJPROJECTNAME}-simulator

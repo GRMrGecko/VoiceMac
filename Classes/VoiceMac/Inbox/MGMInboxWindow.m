@@ -252,10 +252,10 @@ NSString * const MGMSID = @"id";
 }
 - (void)inbox:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	NSLog(@"Inbox Error: %@ for instance: %@", theError, theInstance);
-	NSAlert *theAlert = [[NSAlert new] autorelease];
-	[theAlert setMessageText:@"Error loading inbox"];
-	[theAlert setInformativeText:[theError localizedDescription]];
-	[theAlert runModal];
+	NSAlert *alert = [[NSAlert new] autorelease];
+	[alert setMessageText:@"Error loading inbox"];
+	[alert setInformativeText:[theError localizedDescription]];
+	[alert runModal];
 	[self stopProgress];
 }
 - (void)inboxGotInfo:(NSArray *)theInfo instance:(MGMInstance *)theInstance {
@@ -313,10 +313,10 @@ NSString * const MGMSID = @"id";
 }
 - (IBAction)report:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	NSLog(@"Report Error: %@ for instance: %@", theError, theInstance);
-	NSAlert *theAlert = [[NSAlert new] autorelease];
-	[theAlert setMessageText:@"Error reporting"];
-	[theAlert setInformativeText:[theError localizedDescription]];
-	[theAlert runModal];
+	NSAlert *alert = [[NSAlert new] autorelease];
+	[alert setMessageText:@"Error reporting"];
+	[alert setInformativeText:[theError localizedDescription]];
+	[alert runModal];
 	[self stopProgress];
 }
 - (void)reportDidFinish:(MGMDelegateInfo *)theInfo instance:(MGMInstance *)theInstance {
@@ -355,10 +355,10 @@ NSString * const MGMSID = @"id";
 }
 - (void)delete:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	NSLog(@"Delete Error: %@ for instance: %@", theError, theInstance);
-	NSAlert *theAlert = [[NSAlert new] autorelease];
-	[theAlert setMessageText:@"Error deleting"];
-	[theAlert setInformativeText:[theError localizedDescription]];
-	[theAlert runModal];
+	NSAlert *alert = [[NSAlert new] autorelease];
+	[alert setMessageText:@"Error deleting"];
+	[alert setInformativeText:[theError localizedDescription]];
+	[alert runModal];
 	[self stopProgress];
 }
 - (void)deleteDidFinish:(MGMDelegateInfo *)theInfo instance:(MGMInstance *)theInstance {

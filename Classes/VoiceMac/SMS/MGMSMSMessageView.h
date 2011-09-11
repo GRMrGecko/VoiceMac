@@ -34,6 +34,7 @@
 	BOOL sendingMessage;
 	
 	BOOL marking;
+	BOOL markingForMessage;
 	
 	float bottomMax;
 }

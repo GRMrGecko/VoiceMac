@@ -26,8 +26,6 @@ extern NSString * const MGMSGoogleContacts;
 extern NSString * const MGMSSIP;
 extern NSString * const MGMSAccountType;
 
-extern NSString * const MGMSIPDefaultDomain;
-
 @interface MGMAccountSetup : NSObject {
 	IBOutlet NSWindow *setupWindow;
 	IBOutlet NSTextField *titleField;
@@ -69,6 +67,7 @@ extern NSString * const MGMSIPDefaultDomain;
 	MGMUser *S7CheckUser;
 	MGMInstance *S7CheckInstance;
 	MGMVoiceVerify *S7VerifyWindow;
+	BOOL S7Verified;
 	MGMURLConnectionManager *S7ConnectionManager;
 #if MGMSIPENABLED
 	MGMSIPAccount *S7CheckSIPAccount;

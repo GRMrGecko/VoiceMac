@@ -134,10 +134,10 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 	SIPRegistrationTimeout = nil;
 	if (!acountRegistered) {
 		if (![account isRegistered]) {
-			NSAlert *theAlert = [[NSAlert new] autorelease];
-			[theAlert setMessageText:@"Error logging in"];
-			[theAlert setInformativeText:@"Unable to Register with Server. Please check your credentials."];
-			[theAlert runModal];
+			NSAlert *alert = [[NSAlert new] autorelease];
+			[alert setMessageText:@"Error logging in"];
+			[alert setInformativeText:@"Unable to Register with Server. Please check your credentials."];
+			[alert runModal];
 		}
 		acountRegistered = YES;
 		[self performSelectorOnMainThread:@selector(removeLoginProgress) withObject:nil waitUntilDone:YES];
@@ -174,10 +174,10 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 }
 - (void)loginErrored {
 	loggingIn = NO;
-	NSAlert *theAlert = [[NSAlert new] autorelease];
-	[theAlert setMessageText:@"Error logging in"];
-	[theAlert setInformativeText:[account lastError]];
-	[theAlert runModal];
+	NSAlert *alert = [[NSAlert new] autorelease];
+	[alert setMessageText:@"Error logging in"];
+	[alert setInformativeText:[account lastError]];
+	[alert runModal];
 	
 	[progressView stopProgess];
 	[progressView removeFromSuperview];
@@ -186,10 +186,10 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 	[self performSelectorOnMainThread:@selector(removeLoginProgress) withObject:nil waitUntilDone:YES];
 }
 - (void)logoutErrored {
-	NSAlert *theAlert = [[NSAlert new] autorelease];
-	[theAlert setMessageText:@"Error logging out"];
-	[theAlert setInformativeText:[account lastError]];
-	[theAlert runModal];
+	NSAlert *alert = [[NSAlert new] autorelease];
+	[alert setMessageText:@"Error logging out"];
+	[alert setInformativeText:[account lastError]];
+	[alert runModal];
 }
 - (void)animationDidEnd:(NSAnimation *)animation {
 	[progressFadeAnimation release];
@@ -233,7 +233,8 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 		NSBeep();
 		return;
 	}
-	
+	if ([phoneNumber hasPrefix:@"011"])
+		phoneNumber = [phoneNumber substringFromIndex:3];
 	[account makeCallToNumber:phoneNumber];
 }
 

@@ -57,6 +57,7 @@
 
 - (NSNumber *)countContactsMatching:(NSString *)theString;
 - (NSArray *)contactsMatching:(NSString *)theString page:(int)thePage;
+- (NSArray *)contactsMatching:(NSString *)theString page:(int)thePage includePhoto:(BOOL)shouldIncludePhoto;
 - (NSArray *)contactCompletionsMatching:(NSString *)theString;
 - (NSDictionary *)contactWithID:(NSNumber *)theID;
 - (NSData *)photoDataForNumber:(NSString *)theNumber;
