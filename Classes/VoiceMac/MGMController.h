@@ -85,6 +85,7 @@ extern NSString * const MGMContactsControllersChangedNotification;
 - (IBAction)reverseLookup:(id)sender;
 
 - (IBAction)donate:(id)sender;
+- (IBAction)openSource:(id)sender;
 - (IBAction)viewTOS:(id)sender;
 - (IBAction)rates:(id)sender;
 - (IBAction)billing:(id)sender;

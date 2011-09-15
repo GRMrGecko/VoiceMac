@@ -586,6 +586,9 @@ NSString * const MGMLoading = @"Loading...";
 		[RLMap stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"showAddress('%@', %d);", [address javascriptEscape], zoom]];
 }
 
+- (IBAction)openSource:(id)sender {
+	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://opensource.mrgeckosmedia.com/VoiceBase/Mac/Mob"]];
+}
 - (IBAction)donate:(id)sender {
 	[[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=7693931"]];
 }
