@@ -293,44 +293,72 @@ const BOOL MGMInstanceInvisible = YES;
 			return;
 		}
 	} else if ([returnedString containsString:@"onload=\"autoSubmit()\""]) {
-		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMLoginURL]];
+		NSRange actionRange = [returnedString rangeOfString:@"<form"];
+		NSString *loginURL = [MGMLoginURL copy];
+		if (actionRange.location!=NSNotFound) {
+			NSAutoreleasePool *pool = [NSAutoreleasePool new];
+			NSString *string = [returnedString substringFromIndex:actionRange.location+actionRange.length];
+			actionRange = [string rangeOfString:@"action="];
+			if (actionRange.location!=NSNotFound) {
+				NSString *end = [string substringWithRange:NSMakeRange(actionRange.location+actionRange.length, 1)];
+				actionRange.location += 1;
+				string = [string substringFromIndex:actionRange.location+actionRange.length];
+				actionRange = [string rangeOfString:end];
+				[loginURL release];
+				loginURL = [[string substringWithRange:NSMakeRange(0, actionRange.location)] copy];
+			}
+			[pool drain];
+		}
+		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:loginURL]];
+		[loginURL release];
 		[request setHTTPMethod:MGMPostMethod];
 		[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
 		NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-		NSString *nameValue = @"name=\"%@\"";
-		NSString *valueStart = @"value=\"";
-		NSString *valueEnd = @"\"";
-		NSString *valueStartQ = @"value='";
-		NSString *valueEndQ = @"'";
-		NSArray *names = [NSArray arrayWithObjects:@"dsh", @"smsToken", @"followup", @"continue", @"PersistentCookie", @"service", @"rmShown", @"GALX", @"ltmpl", nil];
-		for (int i=0; i<[names count]; i++) {
+		
+		NSRange range = NSMakeRange(0, [returnedString length]);
+		while (range.length>1) {
 			NSAutoreleasePool *pool = [NSAutoreleasePool new];
-			NSString *nameString = [NSString stringWithFormat:nameValue, [names objectAtIndex:i]];
-			NSRange range = [returnedString rangeOfString:nameString];
-			if (range.location==NSNotFound) {
-				nameString = [nameString replace:@"\"" with:@"'"];
-				range = [returnedString rangeOfString:nameString];
-			}
-			if (range.location==NSNotFound) {
-				NSLog(@"Unable to find %@", [names objectAtIndex:i]);
+			NSRange inputRange = [returnedString rangeOfString:@"<input " options:NSCaseInsensitiveSearch range:range];
+			if (inputRange.location!=NSNotFound) {
+				range.location = inputRange.location+inputRange.length;
+				range.length = [returnedString length]-range.location;
+				NSRange endInputRange = [returnedString rangeOfString:@">" options:NSCaseInsensitiveSearch range:range];
+				if (endInputRange.location==NSNotFound)
+					endInputRange.length = range.length;
+				else
+					endInputRange.length = endInputRange.location-range.location;
+				endInputRange.location = range.location;
+				NSRange nameRange = [returnedString rangeOfString:@"name=" options:NSCaseInsensitiveSearch range:endInputRange];
+				if (nameRange.location==NSNotFound)
+					continue;
+				NSString *end = [returnedString substringWithRange:NSMakeRange(nameRange.location+nameRange.length, 1)];
+				nameRange.location += 1;
+				NSRange endRange = nameRange;
+				endRange.location = nameRange.location+nameRange.length;
+				endRange.length = [returnedString length]-endRange.location;
+				endRange = [returnedString rangeOfString:end options:NSCaseInsensitiveSearch range:endRange];
+				if (endRange.location==NSNotFound)
+					continue;
+				NSString *name = [returnedString substringWithRange:NSMakeRange(nameRange.location+nameRange.length, endRange.location-(nameRange.location+nameRange.length))];
+				
+				range.location = inputRange.location+inputRange.length;
+				range.length = [returnedString length]-range.location;
+				NSRange valueRange = [returnedString rangeOfString:@"value=" options:NSCaseInsensitiveSearch range:endInputRange];
+				if (valueRange.location==NSNotFound)
+					continue;
+				end = [returnedString substringWithRange:NSMakeRange(valueRange.location+valueRange.length, 1)];
+				valueRange.location += 1;
+				endRange = valueRange;
+				endRange.location = valueRange.location+valueRange.length;
+				endRange.length = [returnedString length]-endRange.location;
+				endRange = [returnedString rangeOfString:end options:NSCaseInsensitiveSearch range:endRange];
+				if (endRange.location==NSNotFound)
+					continue;
+				NSString *value = [returnedString substringWithRange:NSMakeRange(valueRange.location+valueRange.length, endRange.location-(valueRange.location+valueRange.length))];
+				
+				[parameters setObject:value forKey:name];
 			} else {
-				NSString *string = [returnedString substringFromIndex:range.location+range.length];
-				range = [string rangeOfString:valueStart];
-				if (range.location==NSNotFound) {
-					range = [string rangeOfString:valueStartQ];
-					if (range.location==NSNotFound) {
-						NSLog(@"Unable to find value for %@", [names objectAtIndex:i]);
-						[pool drain];
-						continue;
-					}
-					string = [string substringFromIndex:range.location+range.length];
-					range = [string rangeOfString:valueEndQ];
-				} else {
-					string = [string substringFromIndex:range.location+range.length];
-					range = [string rangeOfString:valueEnd];
-				}
-				if (range.location==NSNotFound) NSLog(@"failed 532");
-				[parameters setObject:[[[string substringWithRange:NSMakeRange(0, range.location)] copy] autorelease] forKey:[names objectAtIndex:i]];
+				break;
 			}
 			[pool drain];
 		}
@@ -353,7 +381,7 @@ const BOOL MGMInstanceInvisible = YES;
 		[handler setFinish:@selector(indexDidFinish:)];
 		[handler setInvisible:MGMInstanceInvisible];
 		[connectionManager addHandler:handler];
-	} else if ([returnedString containsString:@"<div id=\"gaia_loginbox\">"]) {
+	} else if ([returnedString containsString:@"<div class=\"sign-in\""]) {
 		if (webLoginTries>2) {
 			NSError *error = [NSError errorWithDomain:@"com.MrGeckosMedia.MGMInstance.Login" code:1 userInfo:[NSDictionary dictionaryWithObject:@"Unable to login. Please check your Credentials." forKey:NSLocalizedDescriptionKey]];
 			if (delegate!=nil && [delegate respondsToSelector:@selector(loginError:)]) {
@@ -364,56 +392,87 @@ const BOOL MGMInstanceInvisible = YES;
 			return;
 		}
 		webLoginTries++;
-		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMLoginURL]];
+		NSRange actionRange = [returnedString rangeOfString:@"<form"];
+		NSString *loginURL = [MGMLoginURL copy];
+		if (actionRange.location!=NSNotFound) {
+			NSAutoreleasePool *pool = [NSAutoreleasePool new];
+			NSString *string = [returnedString substringFromIndex:actionRange.location+actionRange.length];
+			actionRange = [string rangeOfString:@"action="];
+			if (actionRange.location!=NSNotFound) {
+				NSString *end = [string substringWithRange:NSMakeRange(actionRange.location+actionRange.length, 1)];
+				actionRange.location += 1;
+				string = [string substringFromIndex:actionRange.location+actionRange.length];
+				actionRange = [string rangeOfString:end];
+				[loginURL release];
+				loginURL = [[string substringWithRange:NSMakeRange(0, actionRange.location)] copy];
+			}
+			[pool drain];
+		}
+		NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:loginURL]];
+		[loginURL release];
 		[request setHTTPMethod:MGMPostMethod];
 		[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
 		NSMutableDictionary *parameters = [NSMutableDictionary dictionary];
-		[parameters setObject:(webLoginTries==2 ? [[user settingForKey:MGMUserName] stringByAppendingString:@"@gmail.com"] : [user settingForKey:MGMUserName]) forKey:@"Email"];
-		[parameters setObject:[user password] forKey:@"Passwd"];
-		[parameters setObject:@"yes" forKey:@"PersistentCookie"];
-		NSString *nameValue = @"name=\"%@\"";
-		NSString *valueStart = @"value=\"";
-		NSString *valueEnd = @"\"";
-		NSString *valueStartQ = @"value='";
-		NSString *valueEndQ = @"'";
-		NSArray *names = [NSArray arrayWithObjects:@"ltmpl", @"pstMsg", @"dnConn", @"continue", @"followup", @"service", @"dsh", @"timeStmp", @"secTok", @"GALX", @"signIn", @"asts", @"rmShown", nil];
-		for (int i=0; i<[names count]; i++) {
+		
+		NSRange range = NSMakeRange(0, [returnedString length]);
+		while (range.length>1) {
 			NSAutoreleasePool *pool = [NSAutoreleasePool new];
-			NSString *nameString = [NSString stringWithFormat:nameValue, [names objectAtIndex:i]];
-			NSRange range = [returnedString rangeOfString:nameString];
-			if (range.location==NSNotFound) {
-				nameString = [nameString replace:@"\"" with:@"'"];
-				range = [returnedString rangeOfString:nameString];
-			}
-			if (range.location==NSNotFound) {
-				NSLog(@"Unable to find %@", [names objectAtIndex:i]);
+			NSRange inputRange = [returnedString rangeOfString:@"<input " options:NSCaseInsensitiveSearch range:range];
+			if (inputRange.location!=NSNotFound) {
+				range.location = inputRange.location+inputRange.length;
+				range.length = [returnedString length]-range.location;
+				NSRange endInputRange = [returnedString rangeOfString:@">" options:NSCaseInsensitiveSearch range:range];
+				if (endInputRange.location==NSNotFound)
+					endInputRange.length = range.length;
+				else
+					endInputRange.length = endInputRange.location-range.location;
+				endInputRange.location = range.location;
+				NSRange nameRange = [returnedString rangeOfString:@"name=" options:NSCaseInsensitiveSearch range:endInputRange];
+				if (nameRange.location==NSNotFound)
+					continue;
+				NSString *end = [returnedString substringWithRange:NSMakeRange(nameRange.location+nameRange.length, 1)];
+				nameRange.location += 1;
+				NSRange endRange = nameRange;
+				endRange.location = nameRange.location+nameRange.length;
+				endRange.length = [returnedString length]-endRange.location;
+				endRange = [returnedString rangeOfString:end options:NSCaseInsensitiveSearch range:endRange];
+				if (endRange.location==NSNotFound)
+					continue;
+				NSString *name = [returnedString substringWithRange:NSMakeRange(nameRange.location+nameRange.length, endRange.location-(nameRange.location+nameRange.length))];
+				
+				range.location = inputRange.location+inputRange.length;
+				range.length = [returnedString length]-range.location;
+				NSRange valueRange = [returnedString rangeOfString:@"value=" options:NSCaseInsensitiveSearch range:endInputRange];
+				if (valueRange.location==NSNotFound)
+					continue;
+				end = [returnedString substringWithRange:NSMakeRange(valueRange.location+valueRange.length, 1)];
+				valueRange.location += 1;
+				endRange = valueRange;
+				endRange.location = valueRange.location+valueRange.length;
+				endRange.length = [returnedString length]-endRange.location;
+				endRange = [returnedString rangeOfString:end options:NSCaseInsensitiveSearch range:endRange];
+				if (endRange.location==NSNotFound)
+					continue;
+				NSString *value = [returnedString substringWithRange:NSMakeRange(valueRange.location+valueRange.length, endRange.location-(valueRange.location+valueRange.length))];
+				
+				[parameters setObject:value forKey:name];
 			} else {
-				NSString *string = [returnedString substringFromIndex:range.location+range.length];
-				range = [string rangeOfString:valueStart];
-				if (range.location==NSNotFound) {
-					range = [string rangeOfString:valueStartQ];
-					if (range.location==NSNotFound) {
-						NSLog(@"Unable to find value for %@", [names objectAtIndex:i]);
-						[pool drain];
-						continue;
-					}
-					string = [string substringFromIndex:range.location+range.length];
-					range = [string rangeOfString:valueEndQ];
-				} else {
-					string = [string substringFromIndex:range.location+range.length];
-					range = [string rangeOfString:valueEnd];
-				}
-				if (range.location==NSNotFound) NSLog(@"failed 532");
-				[parameters setObject:[[[string substringWithRange:NSMakeRange(0, range.location)] copy] autorelease] forKey:[names objectAtIndex:i]];
+				break;
 			}
 			[pool drain];
 		}
 		
+		if ([parameters objectForKey:@"PersistentCookie"]!=nil)
+			[parameters setObject:@"yes" forKey:@"PersistentCookie"];
+		
+		if ([[parameters objectForKey:@"Email"] isEqual:@""])
+			[parameters setObject:(webLoginTries==2 ? [[user settingForKey:MGMUserName] stringByAppendingString:@"@gmail.com"] : [user settingForKey:MGMUserName]) forKey:@"Email"];
+		
 #if MGMInstanceDebug
-		NSMutableDictionary *parametersDebug = [[parameters mutableCopy] autorelease];
-		[parametersDebug removeObjectForKey:@"Passwd"];
-		NSLog(@"%@", parametersDebug);
+		NSLog(@"%@", parameters);
 #endif
+		
+		[parameters setObject:[user password] forKey:@"Passwd"];
 		
 		NSArray *parametersKeys = [parameters allKeys];
 		NSMutableString *bodyString = [NSMutableString string];

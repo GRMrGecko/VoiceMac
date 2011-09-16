@@ -398,7 +398,7 @@ const int MGMCMaxResults = 10;
 					[search appendFormat:MGMCWordSSA, word];
 				}
 			}
-			MGMLiteResult *result = [contactsConnection query:@"SELECT name, company, number, offsets(contacts) AS offset FROM contacts WHERE contacts MATCH %@ ORDER BY offset LIMIT %d", search, maxResults];
+			MGMLiteResult *result = [contactsConnection query:@"SELECT name, company, label, number, offsets(contacts) AS offset FROM contacts WHERE contacts MATCH %@ ORDER BY offset LIMIT %d", search, maxResults];
 			
 			NSDictionary *contact = nil;
 			while ((contact=[result nextRow])!=nil) {
@@ -423,7 +423,10 @@ const int MGMCMaxResults = 10;
 							name = [name stringByAppendingFormat:MGMCWordS, [nameArray objectAtIndex:i]];
 						}
 					}
-					completion = [NSString stringWithFormat:@"%@ <%@>", name, [[contact objectForKey:MGMCNumber] readableNumber]];
+					if ([[contact objectForKey:MGMCLabel] isEqual:@""])
+						completion = [NSString stringWithFormat:@"%@ <%@>", name, [[contact objectForKey:MGMCNumber] readableNumber]];
+					else
+						completion = [NSString stringWithFormat:@"%@ <%@> (%@)", name, [[contact objectForKey:MGMCNumber] readableNumber], [contact objectForKey:MGMCLabel]];
 				} else {
 					completion = [[contact objectForKey:MGMCNumber] readableNumber];
 				}
