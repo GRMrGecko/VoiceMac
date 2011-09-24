@@ -82,6 +82,7 @@ extern NSString * const MGMUCVoicemail;
 	int webLoginTries;
 	BOOL loggedIn;
 	NSMutableDictionary *verificationParameters;
+	NSURL *verificationURL;
 	
 	NSString *XPCURL;
 	NSString *XPCCD;

@@ -30,7 +30,6 @@ NSString * const MGMVoiceBaseCopyright = @"Copyright (c) 2011 Mr. Gecko's Media 
 
 NSString * const MGMVoiceIndexURL = @"https://www.google.com/voice/";
 NSString * const MGMLoginURL = @"https://accounts.google.com/ServiceLoginAuth";
-NSString * const MGMLoginVerifyURL = @"https://www.google.com/accounts/SmsAuth?persistent=yes";
 NSString * const MGMXPCPath = @"/voice/xpc/?xpc=%7B%22cn%22%3A%22i70avDIMsA%22%2C%22tp%22%3Anull%2C%22pru%22%3A%22https%3A%2F%2Fwww.google.com%2Fvoice%2Fxpc%2Frelay%22%2C%22ppu%22%3A%22https%3A%2F%2Fwww.google.com%2Fvoice%2Fxpc%2Fblank%2F%22%2C%22lpu%22%3A%22https%3A%2F%2Fclients4.google.com%2Fvoice%2Fxpc%2Fblank%2F%22%7D";
 NSString * const MGMCheckPath = @"/voice/xpc/checkMessages?r=%@";
 NSString * const MGMCreditURL = @"https://www.google.com/voice/settings/billingcredit/";
@@ -240,44 +239,87 @@ const BOOL MGMInstanceInvisible = YES;
 	} else if ([returnedString containsString:@"verification code"]) {
 		[verificationParameters release];
 		verificationParameters = [NSMutableDictionary new];
-		[verificationParameters setObject:@"yes" forKey:@"PersistentCookie"];
-		NSString *nameValue = @"name=\"%@\"";
-		NSString *valueStart = @"value=\"";
-		NSString *valueEnd = @"\"";
-		NSString *valueStartQ = @"value='";
-		NSString *valueEndQ = @"'";
-		NSArray *names = [NSArray arrayWithObjects:@"timeStmp", @"secTok", @"smsToken", @"email", nil];
-		for (int i=0; i<[names count]; i++) {
-			NSAutoreleasePool *pool = [NSAutoreleasePool new];
-			NSString *nameString = [NSString stringWithFormat:nameValue, [names objectAtIndex:i]];
-			NSRange range = [returnedString rangeOfString:nameString];
-			if (range.location==NSNotFound) {
-				nameString = [nameString replace:@"\"" with:@"'"];
-				range = [returnedString rangeOfString:nameString];
-			}
-			if (range.location==NSNotFound) {
-				NSLog(@"Unable to find %@", [names objectAtIndex:i]);
+		
+		NSRange formRange = [returnedString rangeOfString:@"<form"];
+		NSRange formEndRange = [returnedString rangeOfString:@"</form>"];
+		
+		if (formRange.location==NSNotFound || formEndRange.location==NSNotFound) {
+			NSError *error = [NSError errorWithDomain:@"com.MrGeckosMedia.MGMInstance.Login" code:56 userInfo:[NSDictionary dictionaryWithObject:@"Unable to login. There is a bug with 2 step verification." forKey:NSLocalizedDescriptionKey]];
+			if (delegate!=nil && [delegate respondsToSelector:@selector(loginError:)]) {
+				[delegate loginError:error];
 			} else {
-				NSString *string = [returnedString substringFromIndex:range.location+range.length];
-				range = [string rangeOfString:valueStart];
-				if (range.location==NSNotFound) {
-					range = [string rangeOfString:valueStartQ];
-					if (range.location==NSNotFound) {
-						NSLog(@"Unable to find value for %@", [names objectAtIndex:i]);
-						[pool drain];
-						continue;
-					}
-					string = [string substringFromIndex:range.location+range.length];
-					range = [string rangeOfString:valueEndQ];
-				} else {
-					string = [string substringFromIndex:range.location+range.length];
-					range = [string rangeOfString:valueEnd];
-				}
-				if (range.location==NSNotFound) NSLog(@"failed 532");
-				[verificationParameters setObject:[[[string substringWithRange:NSMakeRange(0, range.location)] copy] autorelease] forKey:[names objectAtIndex:i]];
+				NSLog(@"Login Error: %@", error);
+			}
+			return;
+		}
+		
+		NSString *form = [returnedString substringWithRange:NSMakeRange(formRange.location, (formEndRange.location+formEndRange.length)-formRange.location)];
+		
+		NSString *loginURL = [@"" retain];
+		NSAutoreleasePool *pool = [NSAutoreleasePool new];
+		NSRange actionRange = [form rangeOfString:@"action="];
+		if (actionRange.location!=NSNotFound) {
+			NSString *end = [form substringWithRange:NSMakeRange(actionRange.location+actionRange.length, 1)];
+			actionRange.location += 1;
+			NSString *string = [form substringFromIndex:actionRange.location+actionRange.length];
+			actionRange = [string rangeOfString:end];
+			[loginURL release];
+			loginURL = [[string substringWithRange:NSMakeRange(0, actionRange.location)] copy];
+		}
+		[pool drain];
+		
+		[verificationURL release];
+		verificationURL = [[NSURL URLWithString:loginURL relativeToURL:[[theHandler response] URL]] retain];
+		[loginURL release];
+		
+		NSRange range = NSMakeRange(0, [form length]);
+		while (range.length>1) {
+			NSAutoreleasePool *pool = [NSAutoreleasePool new];
+			NSRange inputRange = [form rangeOfString:@"<input " options:NSCaseInsensitiveSearch range:range];
+			if (inputRange.location!=NSNotFound) {
+				range.location = inputRange.location+inputRange.length;
+				range.length = [form length]-range.location;
+				NSRange endInputRange = [form rangeOfString:@">" options:NSCaseInsensitiveSearch range:range];
+				if (endInputRange.location==NSNotFound)
+					endInputRange.length = range.length;
+				else
+					endInputRange.length = endInputRange.location-range.location;
+				endInputRange.location = range.location;
+				NSRange nameRange = [form rangeOfString:@"name=" options:NSCaseInsensitiveSearch range:endInputRange];
+				if (nameRange.location==NSNotFound)
+					continue;
+				NSString *end = [form substringWithRange:NSMakeRange(nameRange.location+nameRange.length, 1)];
+				nameRange.location += 1;
+				NSRange endRange = nameRange;
+				endRange.location = nameRange.location+nameRange.length;
+				endRange.length = [form length]-endRange.location;
+				endRange = [form rangeOfString:end options:NSCaseInsensitiveSearch range:endRange];
+				if (endRange.location==NSNotFound)
+					continue;
+				NSString *name = [form substringWithRange:NSMakeRange(nameRange.location+nameRange.length, endRange.location-(nameRange.location+nameRange.length))];
+				
+				range.location = inputRange.location+inputRange.length;
+				range.length = [form length]-range.location;
+				NSRange valueRange = [form rangeOfString:@"value=" options:NSCaseInsensitiveSearch range:endInputRange];
+				if (valueRange.location==NSNotFound)
+					continue;
+				end = [form substringWithRange:NSMakeRange(valueRange.location+valueRange.length, 1)];
+				valueRange.location += 1;
+				endRange = valueRange;
+				endRange.location = valueRange.location+valueRange.length;
+				endRange.length = [form length]-endRange.location;
+				endRange = [form rangeOfString:end options:NSCaseInsensitiveSearch range:endRange];
+				if (endRange.location==NSNotFound)
+					continue;
+				NSString *value = [form substringWithRange:NSMakeRange(valueRange.location+valueRange.length, endRange.location-(valueRange.location+valueRange.length))];
+				
+				[verificationParameters setObject:value forKey:name];
+			} else {
+				break;
 			}
 			[pool drain];
 		}
+		
 		if ([delegate respondsToSelector:@selector(loginVerificationRequested)]) {
 #if MGMInstanceDebug
 			NSLog(@"%@", verificationParameters);
@@ -672,7 +714,7 @@ const BOOL MGMInstanceInvisible = YES;
 	}
 }
 - (void)verifyWithCode:(NSString *)theCode {
-	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMLoginVerifyURL]];
+	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:verificationURL];
 	[request setHTTPMethod:MGMPostMethod];
 	[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
 	[verificationParameters setObject:theCode forKey:@"smsUserPin"];
