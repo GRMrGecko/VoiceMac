@@ -134,7 +134,8 @@ NSString * const MGMSID = @"id";
 	[inboxWindow makeKeyAndOrderFront:self];
 }
 - (void)closeWindow {
-	[inboxWindow close];
+	if ([inboxWindow isVisible])
+		[inboxWindow close];
 }
 
 - (void)startProgress {

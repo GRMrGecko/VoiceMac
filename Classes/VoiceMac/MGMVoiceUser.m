@@ -80,7 +80,8 @@ NSString * const MGMLastUserPhoneKey = @"MGMLastUserPhone";
 	[instance setDelegate:nil];
 	[instance stop];
 	[instance release];
-	[progressView removeFromSuperview];
+	if ([progressView superview]!=nil)
+		[progressView removeFromSuperview];
 	[progressView release];
 	[callTimer invalidate];
 	[callTimer release];
