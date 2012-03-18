@@ -37,6 +37,11 @@ extern NSString * const MGMContactsControllersChangedNotification;
 	MGMSMSManager *SMSManager;
 	MGMBadge *badge;
 	NSMutableDictionary *badgeValues;
+    
+    IBOutlet NSMenu *statusMenu;
+    NSStatusItem *statusItem;
+    NSImage *statusImage;
+    NSImage *statusActiveImage;
 	
     IBOutlet NSWindow *RLWindow;
     IBOutlet NSTextField *RLName;
@@ -60,6 +65,7 @@ extern NSString * const MGMContactsControllersChangedNotification;
 - (void)updateWindowMenu;
 
 - (IBAction)about:(id)sender;
+- (IBAction)showApp:(id)sender;
 - (IBAction)showTaskManager:(id)sender;
 
 - (IBAction)showInbox:(id)sender;
