@@ -157,7 +157,7 @@ NSString * const MGMS7SIPWaiting = @"Waiting for Registration Status.";
 			[backButton setEnabled:YES];
 			[continueButton setTitle:MGMSContinue];
 			[continueButton setEnabled:NO];
-			[S8MessageField setStringValue:[NSString stringWithFormat:@"Unable to set up your %@ account, the error we receviced was \"%@\" Please go back and correct the problem.", type, S8Message]];
+			[S8MessageField setStringValue:[NSString stringWithFormat:@"Unable to set up your %@ account, the error we received was \"%@\" Please go back and correct the problem.", type, S8Message]];
 			[S8Message release];
 			S8Message = nil;
 			NSBeep();

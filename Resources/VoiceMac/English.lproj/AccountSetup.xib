@@ -1056,7 +1056,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 												<object class="NSTextFieldCell" key="NSCell" id="197753671">
 													<int key="NSCellFlags">67239424</int>
 													<int key="NSCellFlags2">272891904</int>
-													<string key="NSContents">Unable to set up your ACCOUNTTYPE account, the error we receviced was ERRORMESSAGE. Please go back and correct the problem.</string>
+													<string key="NSContents">Unable to set up your ACCOUNTTYPE account, the error we received was ERRORMESSAGE. Please go back and correct the problem.</string>
 													<reference key="NSSupport" ref="657871326"/>
 													<reference key="NSControlView" ref="484670474"/>
 													<reference key="NSBackgroundColor" ref="373911208"/>
