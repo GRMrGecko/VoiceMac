@@ -968,7 +968,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<bool key="IBUIScrollEnabled">NO</bool>
 						<bool key="IBUIEditable">NO</bool>
-						<string key="IBUIText">Unable to set up your ACCOUNTTYPE account, the error we receviced was ERRORMESSAGE. Please go back and correct the problem.</string>
+						<string key="IBUIText">Unable to set up your ACCOUNTTYPE account, the error we received was ERRORMESSAGE. Please go back and correct the problem.</string>
 						<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 							<int key="IBUIAutocapitalizationType">2</int>
 							<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>

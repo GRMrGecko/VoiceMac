@@ -203,7 +203,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 			[backButton setEnabled:YES];
 			[continueButton setTitle:MGMSContinue];
 			[continueButton setEnabled:NO];
-			[S8MessageField setText:[NSString stringWithFormat:@"Unable to set up your %@ account, the error we receviced was \"%@\" Please go back and correct the problem.", type, S8Message]];
+			[S8MessageField setText:[NSString stringWithFormat:@"Unable to set up your %@ account, the error we received was \"%@\" Please go back and correct the problem.", type, S8Message]];
 			if (S8Message!=nil) {
 				[S8Message release];
 				S8Message = nil;
