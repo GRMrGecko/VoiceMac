@@ -49,6 +49,16 @@ NSString * const MGMLoading = @"Loading...";
 - (void)awakeFromNib {
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setup) name:MGMGRDoneNotification object:nil];
 	[MGMReporter sharedReporter];
+    
+    statusItem = [[[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength] retain];
+    NSBundle *bundle = [NSBundle mainBundle];
+    statusImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"VoiceMacStatusIcon" ofType:@"png"]];
+    statusActiveImage = [[NSImage alloc] initWithContentsOfFile:[bundle pathForResource:@"VoiceMacStatusActiveIcon" ofType:@"png"]];
+    
+    [statusItem setImage:statusImage];
+    [statusItem setTitle:@""];
+    [statusItem setMenu:statusMenu];
+    [statusItem setHighlightMode:YES];
 }
 - (void)setup {
 	[GrowlApplicationBridge setGrowlDelegate:nil];
@@ -215,10 +225,15 @@ NSString * const MGMLoading = @"Loading...";
 	int value = 0;
 	for (int i=0; i<[valueKeys count]; i++)
 		value += [[badgeValues objectForKey:[valueKeys objectAtIndex:i]] intValue];
-	if (value==0)
+	if (value==0) {
 		[badge setLabel:nil];
-	else
+        [statusItem setTitle:@""];
+        [statusItem setImage:statusImage];
+    } else {
 		[badge setLabel:[[NSNumber numberWithInt:value] stringValue]];
+        [statusItem setTitle:[NSString stringWithFormat:@"%d", value]];
+        [statusItem setImage:statusActiveImage];
+    }
 }
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
@@ -356,11 +371,15 @@ NSString * const MGMLoading = @"Loading...";
 - (IBAction)about:(id)sender {
 	[about show];
 }
+- (IBAction)showApp:(id)sender {
+    [[NSApplication sharedApplication] activateIgnoringOtherApps:true];
+}
 - (IBAction)showTaskManager:(id)sender {
 	[taskManager showTaskManager:sender];
 }
 
 - (IBAction)showInbox:(id)sender {
+    [self showApp:sender];
 	if (currentContactsController==-1 || ![[contactsControllers objectAtIndex:currentContactsController] respondsToSelector:@selector(inboxWindow)]) {
 		NSBeep();
 		return;
@@ -471,6 +490,7 @@ NSString * const MGMLoading = @"Loading...";
 }
 
 - (IBAction)preferences:(id)sender {
+    [self showApp:sender];
 	[preferences showPreferences];
 }
 
