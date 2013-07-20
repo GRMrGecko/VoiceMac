@@ -3,11 +3,11 @@
 //  VoiceMob
 //
 //  Created by Mr. Gecko on 10/1/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). http://mrgeckosmedia.com/
 //
 
 #import "MGMGradientButton.h"
-#import "MGMPath.h"
+#import <MGMUsers/MGMUsers.h>
 #import "MGMVMAddons.h"
 
 @implementation MGMGradientButton
@@ -18,12 +18,12 @@
 	[self setBackgroundColor:[UIColor clearColor]];
 }
 - (void)dealloc {
-	if (buttonColor!=nil)
-		[buttonColor release];
-	if (buttonTouchColor!=nil)
-		[buttonTouchColor release];
-	if (buttonDisabledColor!=nil)
-		[buttonDisabledColor release];
+#if releaseDebug
+	NSLog(@"%s Releasing", __PRETTY_FUNCTION__);
+#endif
+	[buttonColor release];
+	[buttonTouchColor release];
+	[buttonDisabledColor release];
 	[super dealloc];
 }
 
@@ -63,8 +63,8 @@
 	CGRect pathBounds = whitePathBounds;
 	whitePathBounds.size.width -= 2.0;
 	whitePathBounds.origin.x += 1.0;
-	whitePathBounds.size.height -= 2.0;
-	whitePathBounds.origin.y += 0.7;
+	whitePathBounds.size.height -= 2.3;
+	whitePathBounds.origin.y += 1.0;
 	MGMPath *whitePath = [MGMPath pathWithRoundedRect:whitePathBounds cornerRadius:12];
 	[[UIColor colorWithWhite:1.0 alpha:1.0] setStroke];
 	[whitePath setLineWidth:2.0];
@@ -103,7 +103,7 @@
     [gradientPath addCurveToPoint:CGPointMake(CGRectGetMaxX(gradientRect), edges.origin.y) controlPoint1:CGPointMake(CGRectGetMaxX(edges) + controlX, gradientRect.origin.y) controlPoint2:CGPointMake(CGRectGetMaxX(gradientRect), edges.origin.y - controlY)];
     
     [gradientPath addLineToPoint:CGPointMake(CGRectGetMaxX(gradientRect), CGRectGetMidY(gradientRect))];
-    [gradientPath addLineToPoint:CGPointMake(CGRectGetMidX(gradientRect), CGRectGetMidY(gradientRect))];
+    [gradientPath addLineToPoint:CGPointMake(CGRectGetMinX(gradientRect), CGRectGetMidY(gradientRect))];
     
     // top left corner
     [gradientPath addLineToPoint:CGPointMake(gradientRect.origin.x, edges.origin.y)];

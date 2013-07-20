@@ -3,12 +3,14 @@
 //  VoiceMob
 //
 //  Created by Mr. Gecko on 9/27/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). http://mrgeckosmedia.com/
 //
 
 #import "MGMAccounts.h"
 #import "MGMAccountController.h"
+#import "MGMBadgeView.h"
 #import "MGMAccountSetup.h"
+#import "MGMVoiceUser.h"
 #import "MGMVMAddons.h"
 #import <MGMUsers/MGMUsers.h>
 #import <VoiceBase/VoiceBase.h>
@@ -17,12 +19,15 @@ NSString * const MGMAccountCellIdentifier = @"MGMAccountCellIdentifier";
 
 @implementation MGMAccounts
 - (id)initWithAccountController:(MGMAccountController *)theAccountController {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		accountController = theAccountController;
 	}
 	return self;
 }
 - (void)dealloc {
+#if releaseDebug
+	NSLog(@"%s Releasing", __PRETTY_FUNCTION__);
+#endif
 	[self releaseView];
 	[super dealloc];
 }
@@ -31,8 +36,6 @@ NSString * const MGMAccountCellIdentifier = @"MGMAccountCellIdentifier";
 	if (tableView==nil) {
 		if (![[NSBundle mainBundle] loadNibNamed:[[UIDevice currentDevice] appendDeviceSuffixToString:@"Accounts"] owner:self options:nil]) {
 			NSLog(@"Unable to load Accounts");
-			[self release];
-			self = nil;
 		} else {
 			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 			[notificationCenter addObserver:tableView selector:@selector(reloadData) name:MGMUserStartNotification object:nil];
@@ -42,32 +45,45 @@ NSString * const MGMAccountCellIdentifier = @"MGMAccountCellIdentifier";
 	return tableView;
 }
 - (void)releaseView {
-	if (tableView!=nil) {
-		[tableView release];
-		tableView = nil;
-		[[NSNotificationCenter defaultCenter] removeObserver:self];
-	}
+#if releaseDebug
+	NSLog(@"%s Releasing", __PRETTY_FUNCTION__);
+#endif
+	[tableView release];
+	tableView = nil;
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (NSInteger)tableView:(UITableView *)theTableView numberOfRowsInSection:(NSInteger)section {
 	return [[MGMUser users] count];
 }
 - (UITableViewCell *)tableView:(UITableView *)theTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:MGMAccountCellIdentifier];
+	MGMBadgeView *cell = (MGMBadgeView *)[tableView dequeueReusableCellWithIdentifier:MGMAccountCellIdentifier];
 	if (cell==nil) {
-		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MGMAccountCellIdentifier] autorelease];
+		cell = [[[MGMBadgeView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MGMAccountCellIdentifier] autorelease];
 		[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
 	}
 	NSArray *users = [MGMUser users];
 	if ([users count]<=[indexPath indexAtPosition:1]) {
-		[cell setText:@"Unknown"];
+		[cell setName:@"Unknown"];
 	} else {
-		[cell setText:[[MGMUser userNames] objectAtIndex:[indexPath indexAtPosition:1]]];
+		[cell setName:[[MGMUser userNames] objectAtIndex:[indexPath indexAtPosition:1]]];
 		MGMUser *user = [MGMUser userWithID:[users objectAtIndex:[indexPath indexAtPosition:1]]];
+		id<MGMAccountProtocol> account = [accountController contactControllerWithUser:user];
+		if ([account isKindOfClass:[MGMVoiceUser class]]) {
+			int count = [accountController badgeValueForInstance:[(MGMVoiceUser *)account instance]];
+			if (count!=0)
+				[cell setBadge:[[NSNumber numberWithInt:count] stringValue]];
+			else
+				[cell setBadge:nil];
+		} else {
+			[cell setBadge:nil];
+		}
+#if MGMSPENABLED
 		if ([[user settingForKey:MGMSAccountType] isEqual:MGMSSIP]) {
 			if ([user settingForKey:MGMSIPAccountFullName]!=nil && ![[user settingForKey:MGMSIPAccountFullName] isEqual:@""])
-				[cell setText:[user settingForKey:MGMSIPAccountFullName]];
+				[cell setName:[user settingForKey:MGMSIPAccountFullName]];
 		}
+#endif
 	}
 	return cell;
 }

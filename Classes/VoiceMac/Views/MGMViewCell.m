@@ -29,7 +29,7 @@
 }
 
 - (void)addSubview:(NSView *)theView {
-	subview = theView;
+	subview = (NSView<MGMViewCellProtocol> *)theView;
 }
 - (NSView *)view {
 	return subview;

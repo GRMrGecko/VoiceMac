@@ -1063,6 +1063,8 @@
 				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
+				"SDKROOT[arch=x86_64]" = macosx10.7;
+				VALID_ARCHS = "ppc i386 x86_64";
 			};
 			name = "Debug SIP";
 		};
@@ -1124,6 +1126,8 @@
 				);
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
+				"SDKROOT[arch=x86_64]" = macosx10.7;
+				VALID_ARCHS = "ppc i386 x86_64";
 			};
 			name = "Release SIP";
 		};
@@ -1231,6 +1235,8 @@
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
+				"SDKROOT[arch=x86_64]" = macosx10.7;
+				VALID_ARCHS = "ppc i386 x86_64";
 			};
 			name = Debug;
 		};
@@ -1251,6 +1257,8 @@
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
+				"SDKROOT[arch=x86_64]" = macosx10.7;
+				VALID_ARCHS = "ppc i386 x86_64";
 			};
 			name = Release;
 		};

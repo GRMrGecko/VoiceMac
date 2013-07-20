@@ -56,20 +56,19 @@
 	while (1) {
 		NSRange rangeToCopy;
 		NSRange foundRange = [self rangeOfString:targetString options:0 range:rangeInOriginalString];
-		if (foundRange.length == 0) break;
+		if (foundRange.length==0) break;
 		rangeToCopy = NSMakeRange(rangeInOriginalString.location, foundRange.location - rangeInOriginalString.location);	
 		[temp appendString:[self substringWithRange:rangeToCopy]];
 		[temp appendString:replaceString];
-		rangeInOriginalString.length -= NSMaxRange(foundRange) -
-		rangeInOriginalString.location;
+		rangeInOriginalString.length -= (NSMaxRange(foundRange)-rangeInOriginalString.location);
 		rangeInOriginalString.location = NSMaxRange(foundRange);
 		replaced++;
-		if (replaced % 100 == 0) {
+		if ((replaced%100)==0) {
 			[pool drain];
 			pool = [NSAutoreleasePool new];
 		}
 	}
-	if (rangeInOriginalString.length > 0) [temp appendString:[self substringWithRange:rangeInOriginalString]];
+	if (rangeInOriginalString.length>0) [temp appendString:[self substringWithRange:rangeInOriginalString]];
 	[pool drain];
 	
 	return [temp autorelease];
@@ -1309,13 +1308,10 @@
 
 - (NSString *)addPercentEscapes {
 	NSString *result = [self stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-	
 	CFStringRef escapedString = CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault, (CFStringRef)self, NULL, CFSTR("!*'();:^@&=+$,/?%#[]|"), kCFStringEncodingUTF8);
 	
-	if (escapedString) {
-		result = [NSString stringWithString:(NSString *)escapedString];
-		CFRelease(escapedString);
-	}
+	if (escapedString!=NULL)
+		result = [(NSString *)escapedString autorelease];
 	return result;
 }
 

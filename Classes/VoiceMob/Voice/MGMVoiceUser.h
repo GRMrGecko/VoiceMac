@@ -3,17 +3,19 @@
 //  VoiceMob
 //
 //  Created by Mr. Gecko on 9/28/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). http://mrgeckosmedia.com/
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 @class MGMVoiceUser, MGMAccountController, MGMUser, MGMInstance, MGMProgressView;
 
-extern const int MGMKeypadTabIndex;
-extern const int MGMContactsTabIndex;
-extern const int MGMSMSTabIndex;
-extern const int MGMInboxTabIndex;
+extern const int MGMVUKeypadTabIndex;
+extern const int MGMVUContactsTabIndex;
+extern const int MGMVUSMSTabIndex;
+extern const int MGMVUInboxTabIndex;
+
+extern NSString * const MGMLastUserPhoneKey;
 
 @protocol MGMVoiceUserTabProtocol <NSObject>
 + (id)tabWithVoiceUser:(MGMVoiceUser *)theVoiceUser;
@@ -25,7 +27,7 @@ extern const int MGMInboxTabIndex;
 - (void)releaseView;
 @end
 
-@interface MGMVoiceUser : NSObject {
+@interface MGMVoiceUser : NSObject <UIActionSheetDelegate> {
 	MGMAccountController *accountController;
 	MGMUser *user;
 	MGMInstance *instance;
@@ -34,6 +36,8 @@ extern const int MGMInboxTabIndex;
 	NSMutableArray *tabObjects;
 	
 	MGMProgressView *progressView;
+	UIAlertView *verificationView;
+	UITextField *verificationField;
 	IBOutlet UIView *view;
 	IBOutlet UIView *tabView;
 	IBOutlet UITabBar *tabBar;
@@ -41,9 +45,17 @@ extern const int MGMInboxTabIndex;
 	BOOL placingCall;
 	NSTimer *callTimer;
 	UIAlertView *callCancelView;
+	
+	NSString *currentPhoneNumber;
+	
+	NSString *optionsNumber;
+	
+	int unreadCount;
 }
 + (id)voiceUser:(MGMUser *)theUser accountController:(MGMAccountController *)theAccountController;
 - (id)initWithUser:(MGMUser *)theUser accountController:(MGMAccountController *)theAccountController;
+
+- (void)registerSettings;
 
 - (MGMAccountController *)accountController;
 - (MGMUser *)user;
@@ -61,7 +73,11 @@ extern const int MGMInboxTabIndex;
 - (void)setInstanceInfo;
 
 - (BOOL)isPlacingCall;
+- (void)donePlacingCall;
+- (NSString *)currentPhoneNumber;
 - (void)call:(NSString *)theNumber;
 
 - (void)tabBar:(UITabBar *)theTabBar didSelectItem:(UITabBarItem *)item;
+
+- (void)showOptionsForNumber:(NSString *)theNumber;
 @end

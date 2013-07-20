@@ -25,6 +25,7 @@
 	MGMInstance *instance;
 	
 	IBOutlet NSWindow *window;
+	IBOutlet NSTextField *accountNameField;
 	IBOutlet NSTextField *codeField;
 }
 + (id)verifyWithInstance:(MGMInstance *)theInstance;

@@ -97,7 +97,7 @@ extern NSString * const MGMSAccountType;
 
 //Step 6
 - (IBAction)S6UserNameChanged:(id)sender;
-- (IBAction)S6DomainChanged:(id)sender;
+- (IBAction)S6RegistrarChanged:(id)sender;
 - (void)S6Reset;
 
 //Step 7

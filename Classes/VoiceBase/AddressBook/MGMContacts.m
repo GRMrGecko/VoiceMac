@@ -158,7 +158,7 @@ const int MGMCMaxResults = 10;
 	NSLog(@"Getting Contacts");
 	[updateConnection setLogQuery:YES];
 #endif
-	[updateConnection query:@"CREATE VIRTUAL TABLE contacts USING fts3(name, company, number, label, photo)"];
+	[updateConnection query:@"CREATE VIRTUAL TABLE contacts USING fts3(name, company, number INTEGER, label, photo)"];
 	[updateConnection query:@"CREATE TABLE groups (docid INTEGER PRIMARY KEY AUTOINCREMENT, name)"];
 	[updateConnection query:@"CREATE TABLE groupMembers (docid INTEGER PRIMARY KEY AUTOINCREMENT, groupid INTEGER, contactid INTEGER)"];
 	[updateLock unlock];

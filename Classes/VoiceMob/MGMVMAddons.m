@@ -3,7 +3,7 @@
 //  VoiceMob
 //
 //  Created by Mr. Gecko on 9/24/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). http://mrgeckosmedia.com/
 //
 
 #import "MGMVMAddons.h"
@@ -19,6 +19,12 @@
 		return [theString stringByAppendingString:@"_iPad"];
 	else
 		return [theString stringByAppendingString:@"_iPhone"];
+}
+@end
+
+@implementation UIScreen (MGMVMAddons)
+- (BOOL)isRetina {
+	return ([self respondsToSelector:@selector(scale)] && [self scale]==2);
 }
 @end
 

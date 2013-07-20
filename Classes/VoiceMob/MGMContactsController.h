@@ -3,14 +3,14 @@
 //  VoiceMob
 //
 //  Created by Mr. Gecko on 9/29/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). http://mrgeckosmedia.com/
 //
 
 #import <UIKit/UIKit.h>
 
 @class MGMAccountController, MGMContacts;
 
-@interface MGMContactsController : NSObject {
+@interface MGMContactsController : NSObject <UITableViewDelegate, UITableViewDataSource> {
 	MGMAccountController *accountController;
 	
 	IBOutlet UISearchBar *searchBar;
@@ -29,6 +29,7 @@
 
 - (void)awakeFromNib;
 - (void)releaseView;
+- (void)cleanup;
 
 - (MGMContacts *)contacts;
 - (NSString *)filterString;

@@ -69,8 +69,9 @@ NSString * const MGMLoading = @"Loading...";
 		[defaults removeObjectForKey:MGMMakeDefault];
 	}
 	
+	NSString *appVersion = [[MGMSystemInfo info] applicationVersion];
 	if ([defaults objectForKey:MGMVersion]==nil) {
-        [defaults setObject:[[MGMSystemInfo info] applicationVersion] forKey:MGMVersion];
+        [defaults setObject:appVersion forKey:MGMVersion];
         [defaults removeObjectForKey:@"actionCall"];
 		[defaults removeObjectForKey:@"googleContact"];
 		[defaults removeObjectForKey:@"lastPhone"];
@@ -85,6 +86,24 @@ NSString * const MGMLoading = @"Loading...";
 		[defaults removeObjectForKey:@"SMSThemePath"];
 		[defaults removeObjectForKey:@"SMSThemeVariant"];
     }
+#if MGMSIPENABLED
+	if (![[defaults objectForKey:MGMVersion] isEqual:@"0.3"]) {
+		[defaults setObject:appVersion forKey:MGMVersion];
+		NSAutoreleasePool *pool = [NSAutoreleasePool new];
+		NSArray *users = [MGMUser users];
+		for (int i=0; i<[users count]; i++) {
+			MGMUser *user = [MGMUser userWithID:[users objectAtIndex:i]];
+			if ([[user settingForKey:MGMSAccountType] isEqual:MGMSSIP]) {
+				if ([user settingForKey:MGMSIPAccountRegistrar]==nil || [[user settingForKey:MGMSIPAccountRegistrar] isEqual:@""])
+					[user setSetting:[user settingForKey:MGMSIPAccountDomain] forKey:MGMSIPAccountRegistrar];
+			}
+		}
+		[pool drain];
+	}
+#endif
+	if (![[defaults objectForKey:MGMVersion] isEqual:appVersion]) {
+		[defaults setObject:appVersion forKey:MGMVersion];
+	}
 	[self registerDefaults];
 	if ([defaults integerForKey:MGMLaunchCount]!=5) {
 		[defaults setInteger:[defaults integerForKey:MGMLaunchCount]+1 forKey:MGMLaunchCount];

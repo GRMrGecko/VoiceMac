@@ -3,7 +3,7 @@
 //  VoiceMob
 //
 //  Created by Mr. Gecko on 9/30/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). http://mrgeckosmedia.com/
 //
 
 #import "MGMVoiceSMS.h"
@@ -14,6 +14,9 @@
 #import "MGMInboxMessageView.h"
 #import "MGMVMAddons.h"
 #import <VoiceBase/VoiceBase.h>
+#import <MGMUsers/MGMUsers.h>
+
+NSString * const MGMSMSDB = @"sms.db";
 
 NSString * const MGMMessageViewText = @"MGMMessageViewText";
 NSString * const MGMKeyboardBounds = @"UIKeyboardBoundsUserInfoKey";
@@ -27,10 +30,12 @@ const float updateTimeInterval = 300.0;
 	return [[[self alloc] initWithVoiceUser:theVoiceUser] autorelease];
 }
 - (id)initWithVoiceUser:(MGMVoiceUser *)theVoiceUser {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		voiceUser = theVoiceUser;
 		
 		messageItems = [[NSArray arrayWithObjects:[[[UIBarButtonItem alloc] initWithTitle:@"Messages" style:UIBarButtonItemStyleBordered target:self action:@selector(showMessages:)] autorelease], [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL] autorelease], [[[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStyleBordered target:[voiceUser accountController] action:@selector(showSettings:)] autorelease], nil] retain];
+		
+		messagesItems = [[NSArray arrayWithObjects:[[[UIBarButtonItem alloc] initWithTitle:@"Accounts" style:UIBarButtonItemStyleBordered target:[voiceUser accountController] action:@selector(showAccounts:)] autorelease], [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL] autorelease], [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showMulti:)] autorelease], nil] retain];
 		
 		SMSMessages = [NSMutableArray new];
 		currentSMSMessage = -1;
@@ -39,7 +44,16 @@ const float updateTimeInterval = 300.0;
 	return self;
 }
 - (void)dealloc {
+#if releaseDebug
+	NSLog(@"%s Releasing", __PRETTY_FUNCTION__);
+#endif
 	[self releaseView];
+	[messageItems release];
+	[messagesItems release];
+	[SMSMessages release];
+	[lastDate release];
+	[updateTimer invalidate];
+	[updateTimer release];
 	[super dealloc];
 }
 
@@ -49,14 +63,20 @@ const float updateTimeInterval = 300.0;
 - (MGMThemeManager *)themeManager {
 	return [[[voiceUser accountController] controller] themeManager];
 }
+- (NSString *)title {
+	if (currentSMSMessage!=-1)
+		return [[[SMSMessages objectAtIndex:currentSMSMessage] objectForKey:MGMIPhoneNumber] readableNumber];
+	return [voiceUser title];
+}
 
 - (UIView *)view {
 	if (messageView==nil) {
 		if (![[NSBundle mainBundle] loadNibNamed:[[UIDevice currentDevice] appendDeviceSuffixToString:@"VoiceSMS"] owner:self options:nil]) {
 			NSLog(@"Unable to load Voice SMS");
-			[self release];
-			self = nil;
 		} else {
+			if ([SMSMessages count]<=0 && [[NSFileManager defaultManager] fileExistsAtPath:[[[voiceUser user] supportPath] stringByAppendingPathComponent:MGMSMSDB]])
+				[SMSMessages addObjectsFromArray:[NSArray arrayWithContentsOfFile:[[[voiceUser user] supportPath] stringByAppendingPathComponent:MGMSMSDB]]];
+			
 			[SMSTextCountField setHidden:YES];
 			[SMSView setDelegate:self];
 			if (currentSMSMessage!=-1) {
@@ -65,10 +85,12 @@ const float updateTimeInterval = 300.0;
 				[self buildHTML];
 				[[voiceUser accountController] setItems:messageItems animated:YES];
 			} else {
-				[[voiceUser accountController] setItems:[[voiceUser accountController] accountItems] animated:YES];
+				[[voiceUser accountController] setItems:messagesItems animated:YES];
 			}
-			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-			[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+			NSNotificationCenter *notifications = [NSNotificationCenter defaultCenter];
+			[notifications addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+			[notifications addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+			[[voiceUser accountController] setTitle:[self title]];
 		}
 	}
 	if (currentSMSMessage!=-1)
@@ -76,25 +98,33 @@ const float updateTimeInterval = 300.0;
 	return messagesTable;
 }
 - (void)releaseView {
+#if releaseDebug
+	NSLog(@"%s Releasing", __PRETTY_FUNCTION__);
+#endif
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	if (messagesTable!=nil) {
-		[messagesTable release];
-		messagesTable = nil;
-	}
+	[messagesTable release];
+	messagesTable = nil;
 	if (messageView!=nil) {
 		if (currentSMSMessage!=-1) {
-			NSMutableDictionary *messageInfo = [[SMSMessages objectAtIndex:currentSMSMessage] mutableCopy];
+			NSMutableDictionary *messageInfo = [NSMutableDictionary dictionaryWithDictionary:[SMSMessages objectAtIndex:currentSMSMessage]];
 			[messageInfo setObject:[SMSTextView text] forKey:MGMMessageViewText];
 			[SMSMessages replaceObjectAtIndex:currentSMSMessage withObject:messageInfo];
-			[messageInfo release];	
 		}
 		[messageView release];
 		messageView = nil;
-		SMSView = nil;
-		SMSBottomView = nil;
-		SMSTextView = nil;
-		SMSTextCountField = nil;
 	}
+	[SMSView release];
+	SMSView = nil;
+	[SMSBottomView release];
+	SMSBottomView = nil;
+	[SMSTextView release];
+	SMSTextView = nil;
+	[SMSTextCountField release];
+	SMSTextCountField = nil;
+	[SMSSendButton release];
+	SMSSendButton = nil;
+	[SMSMessages writeToFile:[[[voiceUser user] supportPath] stringByAppendingPathComponent:MGMSMSDB] atomically:YES];
+	[SMSMessages removeAllObjects];
 }
 
 
@@ -106,15 +136,13 @@ const float updateTimeInterval = 300.0;
 - (void)checkSMSMessages {
 	[[[voiceUser instance] inbox] getSMSForPage:1 delegate:self];
 }
-- (void)inbox:(NSDictionary *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
+- (void)inbox:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	NSLog(@"SMS Error: %@ for instance: %@", theError, theInstance);
 }
 - (void)inboxGotInfo:(NSArray *)theMessages instance:(MGMInstance *)theInstance {
-	if (updateTimer!=nil) {
-		[updateTimer invalidate];
-		[updateTimer release];
-		updateTimer = [[NSTimer scheduledTimerWithTimeInterval:updateTimeInterval target:self selector:@selector(update) userInfo:nil repeats:YES] retain];
-	}
+	[updateTimer invalidate];
+	[updateTimer release];
+	updateTimer = [[NSTimer scheduledTimerWithTimeInterval:updateTimeInterval target:self selector:@selector(update) userInfo:nil repeats:YES] retain];
 	NSDate *newestDate = [NSDate distantPast];
 	BOOL newMessage = NO;
 	BOOL newTab = NO;
@@ -144,7 +172,7 @@ const float updateTimeInterval = 300.0;
 		}
 	}
 	if (newMessage) {
-		if (lastDate!=nil) [lastDate release];
+		[lastDate release];
 		lastDate = [newestDate copy];
 		[[self themeManager] playSound:MGMTSSMSMessage];
 		if (currentSMSMessage==-1 && messagesTable!=nil)
@@ -165,7 +193,7 @@ const float updateTimeInterval = 300.0;
 	[self view];
 	NSMutableDictionary *messageInfo = [NSMutableDictionary dictionary];
 	[messageInfo setObject:[NSArray array] forKey:MGMIMessages];
-	[messageInfo setObject:[NSNumber numberWithInt:MGMISMSOut] forKey:MGMIType];
+	[messageInfo setObject:[NSNumber numberWithInt:MGMISMSOutType] forKey:MGMIType];
 	[messageInfo setObject:[NSDate date] forKey:MGMITime];
 	[messageInfo setObject:[[theInstance contacts] nameForNumber:theNumber] forKey:MGMTInName];
 	[messageInfo setObject:theNumber forKey:MGMIPhoneNumber];
@@ -180,11 +208,15 @@ const float updateTimeInterval = 300.0;
 			if ([[SMSMessages objectAtIndex:currentSMSMessage] objectForKey:MGMMessageViewText]!=nil)
 				[SMSTextView setText:[[SMSMessages objectAtIndex:currentSMSMessage] objectForKey:MGMMessageViewText]];		
 			[self buildHTML];
-			UITabBarItem *thisTab = [[[voiceUser tabBar] items] objectAtIndex:MGMSMSTabIndex];
+			UITabBarItem *thisTab = [[[voiceUser tabBar] items] objectAtIndex:MGMVUSMSTabIndex];
 			[[voiceUser tabBar] setSelectedItem:thisTab];
 			[voiceUser tabBar:[voiceUser tabBar] didSelectItem:thisTab];
+			CGRect viewFrame = [messageView frame];
+			viewFrame.size = [[voiceUser tabView] frame].size;
+			[messageView setFrame:viewFrame];
 			[[voiceUser tabView] addSubview:messageView];
 			[messagesTable removeFromSuperview];
+			[[voiceUser accountController] setTitle:[self title]];
 			break;
 		}
 	}
@@ -195,11 +227,15 @@ const float updateTimeInterval = 300.0;
 		if ([[SMSMessages objectAtIndex:currentSMSMessage] objectForKey:MGMMessageViewText]!=nil)
 			[SMSTextView setText:[[SMSMessages objectAtIndex:currentSMSMessage] objectForKey:MGMMessageViewText]];		
 		[self buildHTML];
-		UITabBarItem *thisTab = [[[voiceUser tabBar] items] objectAtIndex:MGMSMSTabIndex];
+		UITabBarItem *thisTab = [[[voiceUser tabBar] items] objectAtIndex:MGMVUSMSTabIndex];
 		[[voiceUser tabBar] setSelectedItem:thisTab];
 		[voiceUser tabBar:[voiceUser tabBar] didSelectItem:thisTab];
+		CGRect viewFrame = [messageView frame];
+		viewFrame.size = [[voiceUser tabView] frame].size;
+		[messageView setFrame:viewFrame];
 		[[voiceUser tabView] addSubview:messageView];
 		[messagesTable removeFromSuperview];
+		[[voiceUser accountController] setTitle:[self title]];
 	}
 	[[voiceUser accountController] setItems:messageItems animated:YES];
 }
@@ -215,7 +251,7 @@ const float updateTimeInterval = 300.0;
 		[SMSView loadHTMLString:@"" baseURL:nil];
 	}
 	[self view];
-	NSMutableDictionary *messageInfo = [NSMutableDictionary dictionaryWithDictionary:theData];
+	NSMutableDictionary *messageInfo = [[theData mutableCopy] autorelease];
 	[messageInfo setObject:[[theInstance contacts] nameForNumber:[messageInfo objectForKey:MGMIPhoneNumber]] forKey:MGMTInName];
 	[messageInfo setObject:[theInstance userNumber] forKey:MGMTUserNumber];
 	BOOL window = NO;
@@ -227,11 +263,15 @@ const float updateTimeInterval = 300.0;
 			if ([[SMSMessages objectAtIndex:currentSMSMessage] objectForKey:MGMMessageViewText]!=nil)
 				[SMSTextView setText:[[SMSMessages objectAtIndex:currentSMSMessage] objectForKey:MGMMessageViewText]];		
 			[self buildHTML];
-			UITabBarItem *thisTab = [[[voiceUser tabBar] items] objectAtIndex:MGMSMSTabIndex];
+			UITabBarItem *thisTab = [[[voiceUser tabBar] items] objectAtIndex:MGMVUSMSTabIndex];
 			[[voiceUser tabBar] setSelectedItem:thisTab];
 			[voiceUser tabBar:[voiceUser tabBar] didSelectItem:thisTab];
+			CGRect viewFrame = [messageView frame];
+			viewFrame.size = [[voiceUser tabView] frame].size;
+			[messageView setFrame:viewFrame];
 			[[voiceUser tabView] addSubview:messageView];
 			[messagesTable removeFromSuperview];
+			[[voiceUser accountController] setTitle:[self title]];
 			break;
 		}
 	}
@@ -242,22 +282,30 @@ const float updateTimeInterval = 300.0;
 		if ([[SMSMessages objectAtIndex:currentSMSMessage] objectForKey:MGMMessageViewText]!=nil)
 			[SMSTextView setText:[[SMSMessages objectAtIndex:currentSMSMessage] objectForKey:MGMMessageViewText]];		
 		[self buildHTML];
-		UITabBarItem *thisTab = [[[voiceUser tabBar] items] objectAtIndex:MGMSMSTabIndex];
+		UITabBarItem *thisTab = [[[voiceUser tabBar] items] objectAtIndex:MGMVUSMSTabIndex];
 		[[voiceUser tabBar] setSelectedItem:thisTab];
 		[voiceUser tabBar:[voiceUser tabBar] didSelectItem:thisTab];
+		CGRect viewFrame = [messageView frame];
+		viewFrame.size = [[voiceUser tabView] frame].size;
+		[messageView setFrame:viewFrame];
 		[[voiceUser tabView] addSubview:messageView];
 		[messagesTable removeFromSuperview];
+		[[voiceUser accountController] setTitle:[self title]];
 	}
 	[[voiceUser accountController] setItems:messageItems animated:YES];
 }
 
+- (IBAction)showMulti:(id)sender {
+	[[[voiceUser accountController] controller] showMultiSMSWithInstance:[voiceUser instance]];
+}
+
 - (IBAction)showMessages:(id)sender {
 	if (sendingMessage) {
-		UIAlertView *theAlert = [[UIAlertView new] autorelease];
-		[theAlert setTitle:@"Sending a SMS Message"];
-		[theAlert setMessage:@"Your SMS Message is currently being sent, please wait for it to be sent."];
-		[theAlert addButtonWithTitle:MGMOkButtonTitle];
-		[theAlert show];
+		UIAlertView *alert = [[UIAlertView new] autorelease];
+		[alert setTitle:@"Sending a SMS Message"];
+		[alert setMessage:@"Your SMS Message is currently being sent, please wait for it to be sent."];
+		[alert addButtonWithTitle:MGMOkButtonTitle];
+		[alert show];
 	} else if (marking) {
 		
 	} else if (![[[SMSMessages objectAtIndex:currentSMSMessage] objectForKey:MGMIRead] boolValue]) {
@@ -265,7 +313,9 @@ const float updateTimeInterval = 300.0;
 		[[[voiceUser instance] inbox] markEntries:[NSArray arrayWithObject:[[SMSMessages objectAtIndex:currentSMSMessage] objectForKey:MGMIID]] read:YES delegate:self];
 	} else {
 		[messagesTable reloadData];
+		CGRect outViewFrame = [messageView frame];
 		CGRect inViewFrame = [messagesTable frame];
+		inViewFrame.size = outViewFrame.size;
 		inViewFrame.origin.x = -inViewFrame.size.width;
 		[messagesTable setFrame:inViewFrame];
 		[[voiceUser tabView] addSubview:messagesTable];
@@ -274,23 +324,22 @@ const float updateTimeInterval = 300.0;
 		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 		[UIView setAnimationDelegate:self];
 		[UIView setAnimationDidStopSelector:@selector(messagesAnimationDidStop:finished:context:)];
-		[messagesTable setFrame:[messageView frame]];
-		CGRect outViewFrame = [messageView frame];
+		[messagesTable setFrame:outViewFrame];
 		outViewFrame.origin.x = +outViewFrame.size.width;
 		[messageView setFrame:outViewFrame];
 		[UIView commitAnimations];
-		[[voiceUser accountController] setItems:[[voiceUser accountController] accountItems] animated:YES];
+		[[voiceUser accountController] setItems:messagesItems animated:YES];
 	}
 }
-- (void)mark:(NSDictionary *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
+- (void)mark:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	marking = NO;
-	UIAlertView *theAlert = [[UIAlertView new] autorelease];
-	[theAlert setTitle:@"Error marking as read"];
-	[theAlert setMessage:[theError localizedDescription]];
-	[theAlert addButtonWithTitle:MGMOkButtonTitle];
-	[theAlert show];
+	UIAlertView *alert = [[UIAlertView new] autorelease];
+	[alert setTitle:@"Error marking as read"];
+	[alert setMessage:[theError localizedDescription]];
+	[alert addButtonWithTitle:MGMOkButtonTitle];
+	[alert show];
 }
-- (void)markDidFinish:(NSDictionary *)theInfo instance:(MGMInstance *)theInstance {
+- (void)markDidFinish:(MGMDelegateInfo *)theInfo instance:(MGMInstance *)theInstance {
 	marking = NO;
 	[self setMessage:currentSMSMessage read:YES];
 	[self showMessages:self];
@@ -305,6 +354,7 @@ const float updateTimeInterval = 300.0;
 	[self textViewDidChange:SMSTextView];
 	currentSMSMessage = -1;
 	[SMSView loadHTMLString:@"" baseURL:nil];
+	[[voiceUser accountController] setTitle:[self title]];
 }
 
 - (NSInteger)tableView:(UITableView *)theTableView numberOfRowsInSection:(NSInteger)section {
@@ -341,7 +391,9 @@ const float updateTimeInterval = 300.0;
 	[[messageItems objectAtIndex:0] setEnabled:NO];
 	[[voiceUser accountController] setItems:messageItems animated:YES];
 	
+	CGRect outViewFrame = [messagesTable frame];
 	CGRect inViewFrame = [messageView frame];
+	inViewFrame.size = outViewFrame.size;
 	inViewFrame.origin.x = +inViewFrame.size.width;
 	[messageView setFrame:inViewFrame];
 	[[voiceUser tabView] addSubview:messageView];
@@ -350,8 +402,7 @@ const float updateTimeInterval = 300.0;
 	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 	[UIView setAnimationDelegate:self];
 	[UIView setAnimationDidStopSelector:@selector(messageAnimationDidStop:finished:context:)];
-	[messageView setFrame:[messagesTable frame]];
-	CGRect outViewFrame = [messagesTable frame];
+	[messageView setFrame:outViewFrame];
 	outViewFrame.origin.x = -outViewFrame.size.width;
 	[messagesTable setFrame:outViewFrame];
 	[UIView commitAnimations];
@@ -360,6 +411,7 @@ const float updateTimeInterval = 300.0;
 	[messagesTable removeFromSuperview];
 	[messagesTable deselectRowAtIndexPath:[messagesTable indexPathForSelectedRow] animated:NO];
 	[[messageItems objectAtIndex:0] setEnabled:YES];
+	[[voiceUser accountController] setTitle:[self title]];
 }
 
 - (void)setMessage:(int)theMessage read:(BOOL)isRead {
@@ -460,9 +512,8 @@ const float updateTimeInterval = 300.0;
 		UIScrollView *SMSScrollView = [[SMSView subviews] objectAtIndex:0];
 		[SMSScrollView setContentInset:UIEdgeInsetsZero];
 		[SMSScrollView setScrollIndicatorInsets:UIEdgeInsetsZero];
-		if (heightDifference<0) {
+		if (heightDifference<0)
 			[SMSScrollView scrollRectToVisible:CGRectMake(0, [SMSScrollView contentSize].height-44, 320, 44) animated:NO];
-		}
 	}
 	if (![SMSTextCountField isHidden])
 		[SMSTextCountField setText:[[NSNumber numberWithInt:160-[[SMSTextView text] length]] stringValue]];
@@ -486,7 +537,7 @@ const float updateTimeInterval = 300.0;
 	[SMSView setFrame:SMSViewFrame];
 	UIScrollView *SMSScrollView = [[SMSView subviews] objectAtIndex:0];
 	UIEdgeInsets SMSScrollContentInset = [SMSScrollView contentInset];
-	SMSScrollContentInset.bottom += (keyboardSize.height-SMSBottomFrame.size.height)-SMSViewHeightDifference;
+	//SMSScrollContentInset.bottom -= (keyboardSize.height-SMSBottomFrame.size.height)-SMSViewHeightDifference;
 	[SMSScrollView setContentInset:SMSScrollContentInset];
 	UIEdgeInsets SMSScrollInset = [SMSScrollView scrollIndicatorInsets];
 	SMSScrollInset.bottom += (keyboardSize.height-SMSBottomFrame.size.height)-SMSViewHeightDifference;
@@ -518,14 +569,15 @@ const float updateTimeInterval = 300.0;
 			[message setObject:[messageInfo objectForKey:MGMIPhoneNumber] forKey:MGMIPhoneNumber];
 		}
 		[messageArray addObject:message];
-	}NSString *html = [[self themeManager] buildHTMLWithMessages:messageArray messageInfo:messageInfo];
+	}
+	NSString *html = [[self themeManager] buildHTMLWithMessages:messageArray messageInfo:messageInfo];
 	[SMSView loadHTMLString:html baseURL:[NSURL fileURLWithPath:[[self themeManager] currentThemeVariantPath]]];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
 	[SMSView stringByEvaluatingJavaScriptFromString:@"scrollToBottom();"];
 }
 - (void)addMessage:(NSDictionary *)theMessage withInfo:(NSMutableDictionary *)theMessageInfo {
-	NSArray *messages = [theMessageInfo objectForKey:MGMIMessage];
+	NSArray *messages = [theMessageInfo objectForKey:MGMIMessages];
 	NSString *yPhotoPath = [[[voiceUser instance] contacts] cachedPhotoForNumber:[theMessageInfo objectForKey:MGMTUserNumber]];
 	if (yPhotoPath==nil)
 		yPhotoPath = [[[self themeManager] outgoingIconPath] filePath];
@@ -534,21 +586,31 @@ const float updateTimeInterval = 300.0;
 		tPhotoPath = [[[self themeManager] incomingIconPath] filePath];
 	NSMutableDictionary *message = [NSMutableDictionary dictionaryWithDictionary:theMessage];
 	[message setObject:[[NSNumber numberWithInt:[messages count]-1] stringValue] forKey:MGMIID];
+	NSMutableArray *classes = [NSMutableArray array];
 	int type = 1;
 	if ([[message objectForKey:MGMIYou] boolValue]) {
+		[classes addObject:MGMTCOutgoing];
 		type = (([[message objectForKey:MGMIID] intValue]==0 || ![[[messages objectAtIndex:[[message objectForKey:MGMIID] intValue]-1] objectForKey:MGMIYou] boolValue]) ? 1 : 2);
+		if (type==2)
+			[classes addObject:MGMTCNext];
 		[message setObject:yPhotoPath forKey:MGMTPhoto];
 		[message setObject:NSFullUserName() forKey:MGMTName];
 		[message setObject:[theMessageInfo objectForKey:MGMTUserNumber] forKey:MGMIPhoneNumber];
 	} else {
+		[classes addObject:MGMTCIncoming];
 		type = (([[message objectForKey:MGMIID] intValue]==0 || [[[messages objectAtIndex:[[message objectForKey:MGMIID] intValue]-1] objectForKey:MGMIYou] boolValue]) ? 3 : 4);
+		if (type==4)
+			[classes addObject:MGMTCNext];
 		[message setObject:tPhotoPath forKey:MGMTPhoto];
 		[message setObject:[theMessageInfo objectForKey:MGMTInName] forKey:MGMTName];
 		[message setObject:[theMessageInfo objectForKey:MGMIPhoneNumber] forKey:MGMIPhoneNumber];
 	}
+	[classes addObject:MGMTCMessage];
+	if (![[NSUserDefaults standardUserDefaults] boolForKey:MGMTShowIcons])
+		[classes addObject:MGMTCHideIcons];
 	NSDateFormatter *formatter = [[NSDateFormatter new] autorelease];
 	[formatter setDateFormat:[[[self themeManager] variant] objectForKey:MGMTDate]];
-	[SMSView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"newMessage('%@', '%@', '%@', %@, '%@', '%@', '%@', %d);", [[message objectForKey:MGMIText] escapeSMS], [[message objectForKey:MGMTPhoto] escapeSMS], [[message objectForKey:MGMITime] escapeSMS], [message objectForKey:MGMIID], [[message objectForKey:MGMTName] escapeSMS], [[[message objectForKey:MGMIPhoneNumber] readableNumber] escapeSMS], [formatter stringFromDate:[theMessageInfo objectForKey:MGMITime]], type]];
+	[SMSView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"newMessage('%@', '%@', '%@', %@, '%@', '%@', '%@', %d, '%@');", [[[self themeManager] htmlTextFromMessage:message] javascriptEscape], [[message objectForKey:MGMTPhoto] javascriptEscape], [[message objectForKey:MGMITime] javascriptEscape], [message objectForKey:MGMIID], [[message objectForKey:MGMTName] javascriptEscape], [[[message objectForKey:MGMIPhoneNumber] readableNumber] javascriptEscape], [formatter stringFromDate:[theMessageInfo objectForKey:MGMITime]], type, [classes componentsJoinedByString:@" "]]];
 	[SMSView stringByEvaluatingJavaScriptFromString:@"scrollToBottom();"];
 }
 
@@ -561,25 +623,25 @@ const float updateTimeInterval = 300.0;
 	[SMSTextView setText:@""];
 	[self textViewDidChange:SMSTextView];
 }
-- (void)message:(NSDictionary *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
+- (void)message:(MGMDelegateInfo *)theInfo didFailWithError:(NSError *)theError instance:(MGMInstance *)theInstance {
 	sendingMessage = NO;
 	[SMSSendButton setEnabled:YES];
-	[SMSTextView setText:[[theInfo objectForKey:MGMIMessage] stringByAppendingFormat:@" %@", [SMSTextView text]]];
+	[SMSTextView setText:[[theInfo message] stringByAppendingFormat:@" %@", [SMSTextView text]]];
 	[self textViewDidChange:SMSTextView];
 	[SMSTextView becomeFirstResponder];
-	UIAlertView *theAlert = [[UIAlertView new] autorelease];
-	[theAlert setTitle:@"Error sending a SMS Message"];
-	[theAlert setMessage:[theError localizedDescription]];
-	[theAlert addButtonWithTitle:MGMOkButtonTitle];
-	[theAlert show];
+	UIAlertView *alert = [[UIAlertView new] autorelease];
+	[alert setTitle:@"Error sending a SMS Message"];
+	[alert setMessage:[theError localizedDescription]];
+	[alert addButtonWithTitle:MGMOkButtonTitle];
+	[alert show];
 }
-- (void)messageDidFinish:(NSDictionary *)theInfo instance:(MGMInstance *)theInstance {
+- (void)messageDidFinish:(MGMDelegateInfo *)theInfo instance:(MGMInstance *)theInstance {
 	sendingMessage = NO;
 	NSDateFormatter *formatter = [[NSDateFormatter new] autorelease];
 	[formatter setDateFormat:@"h:mm a"];
 	NSMutableDictionary *messageInfo = [[SMSMessages objectAtIndex:currentSMSMessage] mutableCopy];
 	NSMutableArray *messages = [[messageInfo objectForKey:MGMIMessages] mutableCopy];
-	NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:[theInfo objectForKey:MGMIMessage], MGMIText, [formatter stringFromDate:[NSDate date]], MGMITime, [NSNumber numberWithBool:YES], MGMIYou, nil];
+	NSDictionary *message = [NSDictionary dictionaryWithObjectsAndKeys:[theInfo message], MGMIText, [formatter stringFromDate:[NSDate date]], MGMITime, [NSNumber numberWithBool:YES], MGMIYou, nil];
 	[messages addObject:message];
 	[messageInfo setObject:messages forKey:MGMIMessages];
 	[messageInfo setObject:[NSDate date] forKey:MGMITime];

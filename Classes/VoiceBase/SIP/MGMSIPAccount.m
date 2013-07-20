@@ -44,16 +44,16 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 @implementation MGMSIPAccount
 - (id)initWithSettings:(NSDictionary *)theSettings {
 	if ((self = [self init])) {
-		if ([theSettings objectForKey:MGMSIPAccountUserName]==nil || [[theSettings objectForKey:MGMSIPAccountUserName] isEqual:@""] || [theSettings objectForKey:MGMSIPAccountDomain]==nil || [[theSettings objectForKey:MGMSIPAccountDomain] isEqual:@""]) {
+		if ([theSettings objectForKey:MGMSIPAccountUserName]==nil || [[theSettings objectForKey:MGMSIPAccountUserName] isEqual:@""] || [theSettings objectForKey:MGMSIPAccountRegistrar]==nil || [[theSettings objectForKey:MGMSIPAccountRegistrar] isEqual:@""]) {
 			[self release];
 			self = nil;
 		} else {
 			if ([theSettings objectForKey:MGMSIPAccountFullName]!=nil && ![[theSettings objectForKey:MGMSIPAccountFullName] isEqual:@""])
 				fullName = [[theSettings objectForKey:MGMSIPAccountFullName] copy];
 			userName = [[theSettings objectForKey:MGMSIPAccountUserName] copy];
-			domain = [[theSettings objectForKey:MGMSIPAccountDomain] copy];
-			if ([theSettings objectForKey:MGMSIPAccountRegistrar]!=nil && ![[theSettings objectForKey:MGMSIPAccountRegistrar] isEqual:@""])
-				registrar = [[theSettings objectForKey:MGMSIPAccountRegistrar] copy];
+			registrar = [[theSettings objectForKey:MGMSIPAccountRegistrar] copy];
+			if ([theSettings objectForKey:MGMSIPAccountDomain]!=nil && ![[theSettings objectForKey:MGMSIPAccountDomain] isEqual:@""])
+				domain = [[theSettings objectForKey:MGMSIPAccountDomain] copy];
 			if ([theSettings objectForKey:MGMSIPAccountSIPAddress]!=nil && ![[theSettings objectForKey:MGMSIPAccountSIPAddress] isEqual:@""])
 				SIPAddress = [[theSettings objectForKey:MGMSIPAccountSIPAddress] copy];
 			if ([theSettings objectForKey:MGMSIPAccountProxy]!=nil && ![[theSettings objectForKey:MGMSIPAccountProxy] isEqual:@""])
@@ -76,23 +76,23 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	}
 	return self;
 }
-- (id)initWithFullName:(NSString *)theFullName userName:(NSString *)theUserName domain:(NSString *)theDomain {
-	return [self initWithFullName:theFullName userName:theUserName domain:theDomain SIPAddress:nil];
+- (id)initWithFullName:(NSString *)theFullName userName:(NSString *)theUserName registrar:(NSString *)theRegistrar {
+	return [self initWithFullName:theFullName userName:theUserName registrar:theRegistrar SIPAddress:nil];
 }
-- (id)initWithFullName:(NSString *)theFullName userName:(NSString *)theUserName domain:(NSString *)theDomain SIPAddress:(NSString *)theSIPAddress {
-	return [self initWithFullName:theFullName userName:theUserName domain:theDomain SIPAddress:theSIPAddress registrar:nil];
+- (id)initWithFullName:(NSString *)theFullName userName:(NSString *)theUserName registrar:(NSString *)theRegistrar SIPAddress:(NSString *)theSIPAddress {
+	return [self initWithFullName:theFullName userName:theUserName registrar:theRegistrar SIPAddress:theSIPAddress domain:nil];
 }
-- (id)initWithFullName:(NSString *)theFullName userName:(NSString *)theUserName domain:(NSString *)theDomain SIPAddress:(NSString *)theSIPAddress registrar:(NSString *)theRegistrar {
-	if (theUserName==nil || theDomain==nil) return nil;
+- (id)initWithFullName:(NSString *)theFullName userName:(NSString *)theUserName registrar:(NSString *)theRegistrar SIPAddress:(NSString *)theSIPAddress domain:(NSString *)theDomain {
+	if (theUserName==nil || theRegistrar==nil) return nil;
 	NSMutableDictionary *settings = [NSMutableDictionary dictionary];
 	if (theFullName!=nil)
 		[settings setObject:theFullName forKey:MGMSIPAccountFullName];
 	[settings setObject:theUserName forKey:MGMSIPAccountUserName];
-	[settings setObject:theDomain forKey:MGMSIPAccountDomain];
+	[settings setObject:theRegistrar forKey:MGMSIPAccountRegistrar];
 	if (theSIPAddress!=nil)
 		[settings setObject:theSIPAddress forKey:MGMSIPAccountSIPAddress];
-	if (theRegistrar!=nil)
-		[settings setObject:theRegistrar forKey:MGMSIPAccountRegistrar];
+	if (theDomain!=nil)
+		[settings setObject:theDomain forKey:MGMSIPAccountDomain];
 	return [self initWithSettings:settings];
 }
 - (id)init {
@@ -118,7 +118,7 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 }
 
 - (BOOL)informationComplete {
-	return ((delegate!=nil && [delegate respondsToSelector:@selector(password)]) && userName!=nil && (domain!=nil || [self SIPAddress]!=nil));
+	return ((delegate!=nil && [delegate respondsToSelector:@selector(password)]) && userName!=nil && (registrar!=nil || [self SIPAddress]!=nil));
 }
 - (NSString *)description {
 	return [NSString stringWithFormat:@"%@ %@", [super description], [self SIPAddress]];
@@ -145,6 +145,7 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	userName = [theUserName copy];
 }
 - (NSString *)domain {
+	if ((domain==nil || [domain isEqual:@""]) && registrar!=nil) return registrar;
 	return domain;
 }
 - (void)setDomain:(NSString *)theDomain {
@@ -152,7 +153,6 @@ const int MGMSIPAccountReregisterTimeoutDefault = 300;
 	domain = [theDomain copy];
 }
 - (NSString *)registrar {
-	if (registrar==nil && domain!=nil) return domain;
 	return registrar;
 }
 - (void)setRegistrar:(NSString *)theRegistrar {

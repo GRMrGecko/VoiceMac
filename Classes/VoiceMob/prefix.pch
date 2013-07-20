@@ -6,4 +6,5 @@
     #import <Foundation/Foundation.h>
     #import <UIKit/UIKit.h>
 	#define MGMOkButtonTitle @"Ok"
+	#define releaseDebug 0
 #endif

@@ -303,11 +303,11 @@ NSString * const MGMS7SIPWaiting = @"Waiting for Registration Status.";
 - (IBAction)S6UserNameChanged:(id)sender {
 	[[S6FullNameField cell] setPlaceholderString:[S6UserNameField stringValue]];
 }
-- (IBAction)S6DomainChanged:(id)sender {
-	if ([[S6DomainField stringValue] isEqual:@""])
-		[[S6RegistrarField cell] setPlaceholderString:@""];
+- (IBAction)S6RegistrarChanged:(id)sender {
+	if ([[S6RegistrarField stringValue] isEqual:@""])
+		[[S6DomainField cell] setPlaceholderString:@"Providers usually require *"];
 	else
-		[[S6RegistrarField cell] setPlaceholderString:[S6DomainField stringValue]];
+		[[S6DomainField cell] setPlaceholderString:[S6DomainField stringValue]];
 }
 - (void)S6Reset {
 	[S6FullNameField setStringValue:@""];

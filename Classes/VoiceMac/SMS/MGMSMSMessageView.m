@@ -97,11 +97,13 @@
 }
 
 - (void)sendNotifications {
-	for (unsigned int i=[messages count]-1; i>=0; i--) {
+	for (unsigned int i=[messages count]-1;; i--) {
 		if (![[[messages objectAtIndex:i] objectForKey:MGMIYou] boolValue]) {
 			[GrowlApplicationBridge notifyWithTitle:[NSString stringWithFormat:@"SMS from %@", [messageInfo objectForKey:MGMTInName]] description:[[[messages objectAtIndex:i] objectForKey:MGMIText] flattenHTML] notificationName:@"SMS" iconData:[[instance contacts] photoDataForNumber:[messageInfo objectForKey:MGMIPhoneNumber]] priority:0 isSticky:NO clickContext:nil];
 			break;
 		}
+		if (i==0)
+			break;
 	}
 }
 

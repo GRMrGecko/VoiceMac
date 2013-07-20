@@ -530,8 +530,18 @@ const BOOL MGMInstanceInvisible = YES;
 		[handler setFinish:@selector(indexDidFinish:)];
 		[handler setInvisible:MGMInstanceInvisible];
 		[connectionManager addHandler:handler];
-	} else {
-		NSString *string, *guser = @"", *phonesInfo = @"";
+	} else if ([[[[theHandler request] URL] relativeString] containsString:@"NewPrivacyPolicy"]) {
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://accounts.google.com/b/0/NewPrivacyPolicy"]];
+		[request setHTTPMethod:MGMPostMethod];
+		[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
+        [request setHTTPBody:[@"service=grandcentral&continue=https://www.google.com/voice&submitbutton=OK,%20got%20it" dataUsingEncoding:NSUTF8StringEncoding]];
+        MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+		[handler setFailWithError:@selector(index:didFailWithError:)];
+		[handler setFinish:@selector(indexDidFinish:)];
+		[handler setInvisible:MGMInstanceInvisible];
+		[connectionManager addHandler:handler];
+    } else {
+        NSString *string, *guser = @"", *phonesInfo = @"";
 		NSRange range;
 		
 #if MGMInstanceDebug

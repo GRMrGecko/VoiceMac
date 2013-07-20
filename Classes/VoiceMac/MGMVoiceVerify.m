@@ -19,6 +19,7 @@
 
 #import "MGMVoiceVerify.h"
 #import <VoiceBase/VoiceBase.h>
+#import <MGMUsers/MGMUsers.h>
 
 @implementation MGMVoiceVerify
 + (id)verifyWithInstance:(MGMInstance *)theInstance {
@@ -33,6 +34,7 @@
 			self = nil;
 		} else {
 			instance = theInstance;
+			[accountNameField setStringValue:[[instance user] settingForKey:MGMUserName]];
 			[window makeKeyAndOrderFront:self];
 		}
 	}

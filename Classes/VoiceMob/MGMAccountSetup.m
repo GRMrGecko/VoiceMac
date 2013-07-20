@@ -3,7 +3,7 @@
 //  VoiceMob
 //
 //  Created by Mr. Gecko on 9/24/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). http://mrgeckosmedia.com/
 //
 
 #import "MGMAccountSetup.h"
@@ -33,9 +33,11 @@ NSString * const MGMS7SIPWaiting = @"Waiting for Registration Status.";
 
 NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 
+NSString * const MGMASKeyboardBounds = @"UIKeyboardBoundsUserInfoKey";
+
 @implementation MGMAccountSetup
 - (id)initWithController:(MGMController *)theController {
-	if (self = [super init]) {
+	if ((self = [super init])) {
 		if (![[NSBundle mainBundle] loadNibNamed:[[UIDevice currentDevice] appendDeviceSuffixToString:@"AccountSetup"] owner:self options:nil]) {
 			NSLog(@"Unable to load Account Setup");
 			[self release];
@@ -50,48 +52,60 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 			accountType = 0;
 			accountsCreated = [NSMutableArray new];
 			S7ConnectionManager = [[MGMURLConnectionManager managerWithCookieStorage:nil] retain];
-			setupRect = [setupView frame];
-			setupKeyboardRect = setupRect;
-			setupKeyboardRect.origin.y = (-(setupKeyboardRect.size.height-45))+246;
+			
+			NSNotificationCenter *notifications = [NSNotificationCenter defaultCenter];
+			[notifications addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+			[notifications addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 		}
 	}
 	return self;
 }
 - (void)dealloc {
-	if (setupView!=nil)
-		[setupView release];
-	if (S1View!=nil)
-		[S1View release];
-	if (S2View!=nil)
-		[S2View release];
-	if (S3View!=nil)
-		[S3View release];
-	if (S4View!=nil)
-		[S4View release];
-	if (S5View!=nil)
-		[S5View release];
-	if (S6View!=nil)
-		[S6View release];
-	if (S7View!=nil)
-		[S7View release];
-	if (S8View!=nil)
-		[S8View release];
-	if (S9View!=nil)
-		[S9View release];
-	if (accountsCreated!=nil)
-		[accountsCreated release];
-	if (S7CheckUser!=nil)
-		[S7CheckUser release];
-	if (S7CheckInstance!=nil)
-		[S7CheckInstance release];
-	if (S7ConnectionManager!=nil)
-		[S7ConnectionManager release];
-#if MGMSIPENABLED
-	if (S7CheckSIPAccount!=nil)
-		[S7CheckSIPAccount release];
+#if releaseDebug
+	NSLog(@"%s Releasing", __PRETTY_FUNCTION__);
 #endif
-	if (S8Message!=nil)
-		[S8Message release];
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[setupView release];
+	[view release];
+	[titleField release];
+	[backButton release];
+	[continueButton release];
+	[S1View release];
+	[S2View release];
+	[S2GVButton release];
+	[S2GCButton release];
+	[S2SIPButton release];
+	[S3View release];
+	[S3Browser release];
+	[S4View release];
+	[S4EmailField release];
+	[S4PasswordField release];
+	[S5View release];
+	[S5EmailField release];
+	[S5PasswordField release];
+	[S6View release];
+	[S6FullNameField release];
+	[S6DomainField release];
+	[S6RegistrarField release];
+	[S6UserNameField release];
+	[S6PasswordField release];
+	[S7View release];
+	[S7Progress release];
+	[S7StatusField release];
+	[S7CheckUser release];
+	[S7CheckInstance release];
+	[S7ConnectionManager release];
+#if MGMSIPENABLED
+	[S7CheckSIPAccount release];
+	[S7SIPRegistrationTimeout invalidate];
+	[S7SIPRegistrationTimeout release];
+#endif
+	[S8View release];
+	[S8MessageField release];
+	[S8Message release];
+	[S9View release];
+	[S9MessageField release];
+	[accountsCreated release];
 	[super dealloc];
 }
 
@@ -103,6 +117,42 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 
 - (IBAction)closeKeyboard:(id)sender {
 	
+}
+- (void)keyboardWillShow:(NSNotification *)theNotification {
+	if (step!=6) return;
+	CGSize keyboardSize = CGSizeZero;
+	if ([[theNotification userInfo] objectForKey:MGMASKeyboardBounds]!=nil)
+		keyboardSize = [[[theNotification userInfo] objectForKey:MGMASKeyboardBounds] CGRectValue].size;
+	else
+		keyboardSize = [[[theNotification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+	
+	CGRect setupRect = [setupView frame];
+	setupRect.origin.y = (-keyboardSize.height)+44;
+	if (!CGRectEqualToRect([setupView frame], setupRect)) {
+		[UIView beginAnimations:nil context:nil];
+		[UIView setAnimationDuration:0.3];
+		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+		[setupView setFrame:setupRect];
+		[UIView commitAnimations];
+	}
+}
+- (void)keyboardWillHide:(NSNotification *)theNotification {
+	if (step!=6) return;
+	CGSize keyboardSize = CGSizeZero;
+	if ([[theNotification userInfo] objectForKey:MGMASKeyboardBounds]!=nil)
+		keyboardSize = [[[theNotification userInfo] objectForKey:MGMASKeyboardBounds] CGRectValue].size;
+	else
+		keyboardSize = [[[theNotification userInfo] objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+	
+	CGRect setupRect = [setupView frame];
+	setupRect.origin.y = 0;
+	if (!CGRectEqualToRect([setupView frame], setupRect)) {
+		[UIView beginAnimations:nil context:nil];
+		[UIView setAnimationDuration:0.3];
+		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
+		[setupView setFrame:setupRect];
+		[UIView commitAnimations];
+	}
 }
 
 - (void)setSetupOnly:(BOOL)isSetupOnly {
@@ -203,11 +253,17 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 			[backButton setEnabled:YES];
 			[continueButton setTitle:MGMSContinue];
 			[continueButton setEnabled:NO];
+<<<<<<< HEAD
+			[S8MessageField setText:[NSString stringWithFormat:@"Unable to set up your %@ account, the error we receviced was \"%@\" Please go back and correct the problem.", type, S8Message]];
+			[S8Message release];
+			S8Message = nil;
+=======
 			[S8MessageField setText:[NSString stringWithFormat:@"Unable to set up your %@ account, the error we received was \"%@\" Please go back and correct the problem.", type, S8Message]];
 			if (S8Message!=nil) {
 				[S8Message release];
 				S8Message = nil;
 			}
+>>>>>>> 13b6d2ac024f36826fdb6cd6dcb05710e133e842
 			break;
 		}
 		case 9: {
@@ -239,7 +295,9 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 		[continueButton setEnabled:NO];
 		displaying = YES;
 		if (goingBack) {
+			CGRect outViewFrame = [lastView frame];
 			CGRect inViewFrame = [nextView frame];
+			inViewFrame.size = outViewFrame.size;
 			inViewFrame.origin.x = -inViewFrame.size.width;
 			[nextView setFrame:inViewFrame];
 			[view addSubview:nextView];
@@ -248,13 +306,14 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 			[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 			[UIView setAnimationDelegate:self];
 			[UIView setAnimationDidStopSelector:@selector(displayAnimationDidStop:finished:context:)];
-			[nextView setFrame:[lastView frame]];
-			CGRect outViewFrame = [lastView frame];
+			[nextView setFrame:outViewFrame];
 			outViewFrame.origin.x = +outViewFrame.size.width;
 			[lastView  setFrame:outViewFrame];
 			[UIView commitAnimations];
 		} else {
+			CGRect outViewFrame = [lastView frame];
 			CGRect inViewFrame = [nextView frame];
+			inViewFrame.size = outViewFrame.size;
 			inViewFrame.origin.x = +inViewFrame.size.width;
 			[nextView setFrame:inViewFrame];
 			[view addSubview:nextView];
@@ -263,8 +322,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 			[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
 			[UIView setAnimationDelegate:self];
 			[UIView setAnimationDidStopSelector:@selector(displayAnimationDidStop:finished:context:)];
-			[nextView setFrame:[lastView frame]];
-			CGRect outViewFrame = [lastView frame];
+			[nextView setFrame:outViewFrame];
 			outViewFrame.origin.x = -outViewFrame.size.width;
 			[lastView setFrame:outViewFrame];
 			[UIView commitAnimations];
@@ -334,11 +392,11 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 #if MGMSIPENABLED
 					step = 6;
 #else
-					UIAlertView *theAlert = [[UIAlertView new] autorelease];
-					[theAlert setTitle:@"Unable to Add Account"];
-					[theAlert setMessage:@"MGMSIP is not compiled with VoiceMob, you can not add a SIP account without first compiling with MGMSIP."];
-					[theAlert addButtonWithTitle:MGMOkButtonTitle];
-					[theAlert show];
+					UIAlertView *alert = [[UIAlertView new] autorelease];
+					[alert setTitle:@"Unable to Add Account"];
+					[alert setMessage:@"MGMSIP is not compiled with VoiceMob, you can not add a SIP account without first compiling with MGMSIP."];
+					[alert addButtonWithTitle:MGMOkButtonTitle];
+					[alert show];
 					return;
 #endif
 					break;
@@ -363,11 +421,11 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 					emptyFields = YES;
 			}
 			if (emptyFields) {
-				UIAlertView *theAlert = [[UIAlertView new] autorelease];
-				[theAlert setTitle:@"Missing Information"];
-				[theAlert setMessage:@"It appears as if you did not fill the required fields, please fill out the required fields and then continue."];
-				[theAlert addButtonWithTitle:MGMOkButtonTitle];
-				[theAlert show];
+				UIAlertView *alert = [[UIAlertView new] autorelease];
+				[alert setTitle:@"Missing Information"];
+				[alert setMessage:@"It appears as if you did not fill the required fields, please fill out the required fields and then continue."];
+				[alert addButtonWithTitle:MGMOkButtonTitle];
+				[alert show];
 				return;
 			}
 			step = 7;
@@ -412,22 +470,6 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 }
 
 //Step 6
-- (IBAction)S6ShowKeyboard:(id)sender {
-	if (CGRectEqualToRect([setupView frame], setupRect)) {
-		[UIView beginAnimations:nil context:nil];
-		[UIView setAnimationDuration:0.3];
-		[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-		[setupView setFrame:setupKeyboardRect];
-		[UIView commitAnimations];
-	}
-}
-- (IBAction)S6CloseKeyboard:(id)sender {
-	[UIView beginAnimations:nil context:nil];
-	[UIView setAnimationDuration:0.3];
-	[UIView setAnimationCurve:UIViewAnimationCurveEaseInOut];
-	[setupView setFrame:setupRect];
-	[UIView commitAnimations];
-}
 - (IBAction)S6UserNameChanged:(id)sender {
 	[S6FullNameField setPlaceholder:[S6UserNameField text]];
 }
@@ -453,21 +495,51 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	S7CheckInstance = [[MGMInstance instanceWithUser:S7CheckUser delegate:self isCheck:YES] retain];
 }
 - (void)loginError:(NSError *)theError {
-	if (S7CheckUser!=nil) {
-		[S7CheckUser remove];
-		[S7CheckUser release];
-		S7CheckUser = nil;
-	}
-	if (S7CheckInstance!=nil) {
-		[S7CheckInstance release];
-		S7CheckInstance = nil;
-	}
+	[S7VerificationView release];
+	S7VerificationView = nil;
+	[S7VerificationField release];
+	S7VerificationField = nil;
+	[S7CheckUser remove];
+	[S7CheckUser release];
+	S7CheckUser = nil;
+	[S7CheckInstance release];
+	S7CheckInstance = nil;
 	NSLog(@"Login Failed %@", theError);
 	S8Message = [[theError localizedDescription] copy];
 	step = 8;
 	[self displayStep];
 }
+- (void)loginVerificationRequested {
+	[S7VerificationView release];
+	S7VerificationView = [UIAlertView new];
+	[S7VerificationView setTitle:@"Account Verification"];
+	[S7VerificationView setMessage:@" "];
+	[S7VerificationView addButtonWithTitle:@"Cancel"];
+	[S7VerificationView addButtonWithTitle:@"Verify"];
+	[S7VerificationView setCancelButtonIndex:1];
+	[S7VerificationView setDelegate:self];
+	[S7VerificationField release];
+	S7VerificationField = [[UITextField alloc] initWithFrame:CGRectMake(12.0, 45.0, 260.0, 25.0)];
+	[S7VerificationField setBorderStyle:UITextBorderStyleLine];
+	[S7VerificationField setBackgroundColor:[UIColor whiteColor]];
+	[S7VerificationField setKeyboardType:UIKeyboardTypeNumbersAndPunctuation];
+	[S7VerificationView addSubview:S7VerificationField];
+	[S7VerificationView show];
+	[S7VerificationField becomeFirstResponder];
+}
+- (void)alertView:(UIAlertView *)theAlertView clickedButtonAtIndex:(NSInteger)theIndex {
+	if (theAlertView==S7VerificationView) {
+		if (theIndex==1)
+			[S7CheckInstance verifyWithCode:[S7VerificationField text]];
+		else
+			[S7CheckInstance cancelVerification];
+	}
+}
 - (void)loginSuccessful {
+	[S7VerificationView release];
+	S7VerificationView = nil;
+	[S7VerificationField release];
+	S7VerificationField = nil;
 	if (S7CheckUser!=nil) {
 		[accountsCreated addObject:S7CheckUser];
 		MGMUser *contactsUser = [MGMUser createUserWithName:[S4EmailField text] password:[S4PasswordField text]];
@@ -476,10 +548,8 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 		[S7CheckUser release];
 		S7CheckUser = nil;
 	}
-	if (S7CheckInstance!=nil) {
-		[S7CheckInstance release];
-		S7CheckInstance = nil;
-	}
+	[S7CheckInstance release];
+	S7CheckInstance = nil;
 	[self S4Reset];
 	step = 9;
 	[self displayStep];
@@ -494,44 +564,41 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	NSURLCredential *credentials = [NSURLCredential credentialWithUser:username password:[S7CheckUser password] persistence:NSURLCredentialPersistenceForSession];
 	[S7ConnectionManager setCookieStorage:[S7CheckUser cookieStorage]];
 	[S7ConnectionManager setCredentials:credentials];
-	[S7ConnectionManager setCustomUseragent:MGMGCUseragent];
+	[S7ConnectionManager setUserAgent:MGMGCUseragent];
 	NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:MGMGCAuthenticationURL] cachePolicy:NSURLRequestReloadIgnoringCacheData timeoutInterval:15.0];
 	[request setHTTPMethod:MGMPostMethod];
 	[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
 	[request setHTTPBody:[[NSString stringWithFormat:MGMGCAuthenticationBody, [username addPercentEscapes], [[S7CheckUser password] addPercentEscapes]] dataUsingEncoding:NSUTF8StringEncoding]];
-	[S7ConnectionManager connectionWithRequest:request delegate:self didFailWithError:@selector(authentication:didFailWithError:) didFinish:@selector(authenticationDidFinish:) invisible:NO object:nil];
+	MGMURLBasicHandler *handler = [MGMURLBasicHandler handlerWithRequest:request delegate:self];
+	[handler setFailWithError:@selector(authentication:didFailWithError:)];
+	[handler setFinish:@selector(authenticationDidFinish:)];
+	[S7ConnectionManager addHandler:handler];
 }
-- (void)authentication:(NSDictionary *)theInfo didFailWithError:(NSError *)theError {
-	if (S7CheckUser!=nil) {
-		[S7CheckUser remove];
-		[S7CheckUser release];
-		S7CheckUser = nil;
-	}
-	if (S7ConnectionManager!=nil)
-		[S7ConnectionManager setCookieStorage:nil];
+- (void)authentication:(MGMURLBasicHandler *)theHandler didFailWithError:(NSError *)theError {
+	[S7CheckUser remove];
+	[S7CheckUser release];
+	S7CheckUser = nil;
+	[S7ConnectionManager setCookieStorage:nil];
 	NSLog(@"Login Failed %@", theError);
 	S8Message = [[theError localizedDescription] copy];
 	step = 8;
 	[self displayStep];
 }
-- (void)authenticationDidFinish:(NSDictionary *)theInfo {
-	NSDictionary *info = [MGMGoogleContacts dictionaryWithData:[theInfo objectForKey:MGMConnectionData]];
-	if (S7ConnectionManager!=nil)
-		[S7ConnectionManager setCookieStorage:nil];
-	if (S7CheckUser!=nil) {
-		if ([info objectForKey:@"Error"]!=nil) {
-			[S7CheckUser remove];
-			[S7CheckUser release];
-			S7CheckUser = nil;
-			S8Message = [@"Unable to login. Please check your Credentials." retain];
-			step = 8;
-			[self displayStep];
-			return;
-		}
-		[S7CheckUser done];
+- (void)authenticationDidFinish:(MGMURLBasicHandler *)theHandler {
+	NSDictionary *info = [MGMGoogleContacts dictionaryWithString:[theHandler string]];
+	[S7ConnectionManager setCookieStorage:nil];
+	if ([info objectForKey:@"Error"]!=nil) {
+		[S7CheckUser remove];
 		[S7CheckUser release];
 		S7CheckUser = nil;
+		S8Message = [@"Unable to login. Please check your Credentials." retain];
+		step = 8;
+		[self displayStep];
+		return;
 	}
+	[S7CheckUser done];
+	[S7CheckUser release];
+	S7CheckUser = nil;
 	
 	[self S5Reset];
 	step = 9;
@@ -557,6 +624,7 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	if (![[S6RegistrarField text] isEqual:@""])
 		[S7CheckUser setSetting:[S6RegistrarField text] forKey:MGMSIPAccountRegistrar];
 	S7CheckSIPAccount = [[MGMSIPAccount alloc] initWithSettings:[S7CheckUser settings]];
+	[S7CheckUser registerSettings:[S7CheckSIPAccount settings]];
 	[S7CheckSIPAccount setDelegate:self];
 	S7AccountRegistered = NO;
 	NSLog(@"Logging in");
@@ -567,23 +635,22 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	return [S7CheckUser password];
 }
 - (void)registrationChanged {
+	[self performSelector:@selector(S7RegistrationChanged) withObject:nil afterDelay:0.5];
+}
+- (void)S7RegistrationChanged {
 #if MGMSIPENABLED
-	if (S7SIPRegistrationTimeout!=nil) {
-		[S7SIPRegistrationTimeout invalidate];
-		[S7SIPRegistrationTimeout release];
-		S7SIPRegistrationTimeout = nil;
+	[S7SIPRegistrationTimeout invalidate];
+	[S7SIPRegistrationTimeout release];
+	S7SIPRegistrationTimeout = nil;
+	if (![S7CheckSIPAccount isRegistered]) {
+		[S7CheckSIPAccount setLastError:@"Unable to Register with Server. Please check your credentials."];
+		[self loginErrored];
+		return;
 	}
-	if (S7CheckSIPAccount!=nil) {
-		if (![S7CheckSIPAccount isRegistered]) {
-			[S7CheckSIPAccount setLastError:@"Unable to Register with Server. Please check your credentials."];
-			[self loginErrored];
-			return;
-		}
-		[S7CheckSIPAccount setDelegate:nil];
-		[S7CheckSIPAccount logout];
-		[S7CheckSIPAccount release];
-		S7CheckSIPAccount = nil;
-	}
+	[S7CheckSIPAccount setDelegate:nil];
+	[S7CheckSIPAccount logout];
+	[S7CheckSIPAccount release];
+	S7CheckSIPAccount = nil;
 	if (S7CheckUser!=nil) {
 		[accountsCreated addObject:S7CheckUser];
 		[S7CheckUser release];
@@ -592,16 +659,14 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 	[self S6Reset];
 	S7AccountRegistered = YES;
 	step = 9;
-	[self performSelectorOnMainThread:@selector(displayStep) withObject:nil waitUntilDone:NO];
+	[self displayStep];
 #endif
 }
 #if MGMSIPENABLED
 - (void)S7SIPTimeout {
-	if (S7SIPRegistrationTimeout!=nil) {
-		[S7SIPRegistrationTimeout invalidate];
-		[S7SIPRegistrationTimeout release];
-		S7SIPRegistrationTimeout = nil;
-	}
+	[S7SIPRegistrationTimeout invalidate];
+	[S7SIPRegistrationTimeout release];
+	S7SIPRegistrationTimeout = nil;
 	[S7CheckSIPAccount setLastError:@"Registration Timeout."];
 	[self loginErrored];
 }
@@ -614,19 +679,15 @@ NSString * const MGMSIPDefaultDomain = @"proxy01.sipphone.com";
 		S7SIPRegistrationTimeout = [[NSTimer scheduledTimerWithTimeInterval:10.0 target:self selector:@selector(S7SIPTimeout) userInfo:nil repeats:NO] retain];
 }
 - (void)loginErrored {
-	if (S7CheckUser!=nil) {
-		[S7CheckUser remove];
-		[S7CheckUser release];
-		S7CheckUser = nil;
-	}
-	if (S7CheckSIPAccount!=nil) {
-		NSLog(@"Login Failed %@", [S7CheckSIPAccount lastError]);
-		S8Message = [[S7CheckSIPAccount lastError] copy];
-		[S7CheckSIPAccount setDelegate:nil];
-		[S7CheckSIPAccount logout];
-		[S7CheckSIPAccount release];
-		S7CheckSIPAccount = nil;
-	}
+	[S7CheckUser remove];
+	[S7CheckUser release];
+	S7CheckUser = nil;
+	NSLog(@"Login Failed %@", [S7CheckSIPAccount lastError]);
+	S8Message = [[S7CheckSIPAccount lastError] copy];
+	[S7CheckSIPAccount setDelegate:nil];
+	[S7CheckSIPAccount logout];
+	[S7CheckSIPAccount release];
+	S7CheckSIPAccount = nil;
 	step = 8;
 	[self performSelectorOnMainThread:@selector(displayStep) withObject:nil waitUntilDone:NO];
 }

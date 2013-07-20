@@ -2,8 +2,10 @@ Getting the source code to PJProject.
 To get the latest source to PJProject, run the command below.
 svn checkout http://svn.pjsip.org/repos/pjproject/trunk pjproject
 
-To get the revision that I am using in VoiceMac and VoiceMob, run the command below.
-svn checkout -r 3773 http://svn.pjsip.org/repos/pjproject/trunk pjproject
+I am currently using version 2.1 stable.
+
+//To get the revision that I am using in VoiceMac and VoiceMob, run the command below.
+//svn checkout -r 4293 http://svn.pjsip.org/repos/pjproject/trunk pjproject
 
 Building.
 To build for VoiceMac, run the command below.

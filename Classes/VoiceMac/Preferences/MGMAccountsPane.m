@@ -260,17 +260,17 @@ NSString * const MGMLogout = @"Logout";
 			[SIPFullNameField setStringValue:[user settingForKey:MGMSIPAccountFullName]];
 		else
 			[SIPFullNameField setStringValue:@""];
-		if ([user settingForKey:MGMSIPAccountDomain]==nil || [[user settingForKey:MGMSIPAccountDomain] isEqual:@""]) {
-			[[SIPRegistrarField cell] setPlaceholderString:@""];
-			[SIPDomainField setStringValue:@""];
-		} else {
-			[[SIPRegistrarField cell] setPlaceholderString:[user settingForKey:MGMSIPAccountDomain]];
+		if ([user settingForKey:MGMSIPAccountDomain]!=nil)
 			[SIPDomainField setStringValue:[user settingForKey:MGMSIPAccountDomain]];
-		}
-		if ([user settingForKey:MGMSIPAccountRegistrar]!=nil)
-			[SIPRegistrarField setStringValue:[user settingForKey:MGMSIPAccountRegistrar]];
 		else
+			[SIPDomainField setStringValue:@""];
+		if ([user settingForKey:MGMSIPAccountRegistrar]==nil || [[user settingForKey:MGMSIPAccountRegistrar] isEqual:@""]) {
+			[[SIPDomainField cell] setPlaceholderString:@"Usually *"];
 			[SIPRegistrarField setStringValue:@""];
+		} else {
+			[[SIPDomainField cell] setPlaceholderString:[user settingForKey:MGMSIPAccountRegistrar]];
+			[SIPRegistrarField setStringValue:[user settingForKey:MGMSIPAccountRegistrar]];
+		}
 		if ([user settingForKey:MGMSIPAccountUserName]!=nil)
 			[SIPUserNameField setStringValue:[user settingForKey:MGMSIPAccountUserName]];
 		else
@@ -292,7 +292,7 @@ NSString * const MGMLogout = @"Logout";
 			[SIPSIPAddressField setStringValue:[user settingForKey:MGMSIPAccountSIPAddress]];
 		else
 			[SIPSIPAddressField setStringValue:@""];
-		[[SIPSIPAddressField cell] setPlaceholderString:[NSString stringWithFormat:@"%@@%@", [user settingForKey:MGMSIPAccountUserName], [user settingForKey:MGMSIPAccountDomain]]];
+		[[SIPSIPAddressField cell] setPlaceholderString:[NSString stringWithFormat:@"%@@%@", [user settingForKey:MGMSIPAccountUserName], [user settingForKey:MGMSIPAccountRegistrar]]];
 		if ([user settingForKey:MGMSIPAccountRegisterTimeout]!=nil && [[user settingForKey:MGMSIPAccountRegisterTimeout] intValue]!=0)
 			[SIPRegistrarTimeoutField setIntValue:[[user settingForKey:MGMSIPAccountRegisterTimeout] intValue]];
 		else
@@ -368,17 +368,17 @@ NSString * const MGMLogout = @"Logout";
 #if MGMSIPENABLED
 	MGMUser *user = [MGMUser userWithID:[[MGMUser users] objectAtIndex:[usersTable selectedRow]]];
 	[user setSetting:[SIPFullNameField stringValue] forKey:MGMSIPAccountFullName];
-	if ([[SIPDomainField stringValue] isEqual:@""]) {
-		[[SIPRegistrarField cell] setPlaceholderString:@""];
-		[user setSetting:@"" forKey:MGMSIPAccountDomain];
+	if ([[SIPRegistrarField stringValue] isEqual:@""]) {
+		[[SIPDomainField cell] setPlaceholderString:@"Usually *"];
+		[user setSetting:@"" forKey:MGMSIPAccountRegistrar];
 	} else {
-		[[SIPRegistrarField cell] setPlaceholderString:[SIPDomainField stringValue]];
-		[user setSetting:[SIPDomainField stringValue] forKey:MGMSIPAccountDomain];
+		[[SIPDomainField cell] setPlaceholderString:[SIPRegistrarField stringValue]];
+		[user setSetting:[SIPRegistrarField stringValue] forKey:MGMSIPAccountRegistrar];
 	}
 	if ([[SIPRegistrarField stringValue] isEqual:@""] && [[SIPDomainField stringValue] isEqual:@""])
 		NSBeep();
 	else
-		[user setSetting:[SIPRegistrarField stringValue] forKey:MGMSIPAccountRegistrar];
+		[user setSetting:[SIPDomainField stringValue] forKey:MGMSIPAccountDomain];
 	if ([[SIPUserNameField stringValue] isEqual:@""] || [[SIPPasswordField stringValue] isEqual:@""]) {
 		NSBeep();
 		if ([user settingForKey:MGMSIPAccountUserName]!=nil) {
@@ -396,7 +396,7 @@ NSString * const MGMLogout = @"Logout";
 	[user setSetting:[SIPProxyHostField stringValue] forKey:MGMSIPAccountProxy];
 	[user setSetting:[NSNumber numberWithInt:[SIPProxyPortField intValue]] forKey:MGMSIPAccountProxyPort];
 	[user setSetting:[SIPSIPAddressField stringValue] forKey:MGMSIPAccountSIPAddress];
-	[[SIPSIPAddressField cell] setPlaceholderString:[NSString stringWithFormat:@"%@@%@", [user settingForKey:MGMSIPAccountUserName], [user settingForKey:MGMSIPAccountDomain]]];
+	[[SIPSIPAddressField cell] setPlaceholderString:[NSString stringWithFormat:@"%@@%@", [user settingForKey:MGMSIPAccountUserName], [user settingForKey:MGMSIPAccountRegistrar]]];
 	[user setSetting:[NSNumber numberWithInt:[SIPRegistrarTimeoutField intValue]] forKey:MGMSIPAccountRegisterTimeout];
 	[user setSetting:[NSNumber numberWithInt:[SIPTransportPopUp indexOfSelectedItem]] forKey:MGMSIPAccountTransport];
 	[user setSetting:[NSNumber numberWithInt:[SIPToneTypePopUp indexOfSelectedItem]] forKey:MGMSIPAccountDTMFToneType];

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>75771D5A-78D5-46C4-8C05-13DFF6965F5F</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Voice</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>CE70E678-AB55-4060-AF6A-1AD50AE8569A</key>
+		<string>ssh://mrgeckosmedia.com/public/VoiceMac</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Voice.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>CE70E678-AB55-4060-AF6A-1AD50AE8569A</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://mrgeckosmedia.com/public/VoiceMac</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>CE70E678-AB55-4060-AF6A-1AD50AE8569A</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CE70E678-AB55-4060-AF6A-1AD50AE8569A</string>
+			<key>IDESourceControlWCCName</key>
+			<string>VoiceMac</string>
+		</dict>
+	</array>
+</dict>
+</plist>

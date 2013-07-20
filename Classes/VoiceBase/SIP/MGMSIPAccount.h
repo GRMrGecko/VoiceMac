@@ -69,9 +69,9 @@ extern const int MGMSIPAccountDefaultProxyPort;
 	NSString *lastError;
 }
 - (id)initWithSettings:(NSDictionary *)theSettings;
-- (id)initWithFullName:(NSString *)theFullName userName:(NSString *)theUserName domain:(NSString *)theDomain;
-- (id)initWithFullName:(NSString *)theFullName userName:(NSString *)theUserName domain:(NSString *)theDomain SIPAddress:(NSString *)theSIPAddress;
-- (id)initWithFullName:(NSString *)theFullName userName:(NSString *)theUserName domain:(NSString *)theDomain SIPAddress:(NSString *)theSIPAddress registrar:(NSString *)theRegistrar;
+- (id)initWithFullName:(NSString *)theFullName userName:(NSString *)theUserName registrar:(NSString *)theRegistrar;
+- (id)initWithFullName:(NSString *)theFullName userName:(NSString *)theUserName registrar:(NSString *)theRegistrar SIPAddress:(NSString *)theSIPAddress;
+- (id)initWithFullName:(NSString *)theFullName userName:(NSString *)theUserName registrar:(NSString *)theRegistrar SIPAddress:(NSString *)theSIPAddress domain:(NSString *)theDomain;
 - (BOOL)informationComplete;
 - (id<MGMSIPAccountDelegate>)delegate;
 - (void)setDelegate:(id)theDelegate;

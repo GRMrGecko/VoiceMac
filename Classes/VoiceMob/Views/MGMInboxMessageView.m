@@ -3,15 +3,16 @@
 //  VoiceMob
 //
 //  Created by Mr. Gecko on 9/30/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). http://mrgeckosmedia.com/
 //
 
 #import "MGMInboxMessageView.h"
 #import <VoiceBase/VoiceBase.h>
+#import <MGMUsers/MGMUsers.h>
 
 @implementation MGMInboxMessageView
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
-    if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
+    if ((self = [super initWithStyle:style reuseIdentifier:reuseIdentifier])) {
 		nameField = [[UILabel alloc] initWithFrame:CGRectZero];
 		[nameField setBackgroundColor:[UIColor clearColor]];
 		[nameField setFont:[UIFont boldSystemFontOfSize:18.0]];
@@ -33,12 +34,13 @@
 	return self;
 }
 - (void)dealloc {
-	if (nameField!=nil)
-		[nameField release];
-	if (dateField!=nil)
-		[dateField release];
-	if (messageField!=nil)
-		[messageField release];
+#if releaseDebug
+	NSLog(@"%s Releasing", __PRETTY_FUNCTION__);
+#endif
+	[nameField release];
+	[dateField release];
+	[messageField release];
+	[messageData release];
 	[super dealloc];
 }
 
@@ -46,7 +48,7 @@
 	instance = theInstance;
 }
 - (void)setMessageData:(NSDictionary *)theMessageData {
-	if (messageData!=nil) [messageData release];
+	[messageData release];
 	messageData = [theMessageData retain];
 }
 
@@ -55,16 +57,15 @@
 	
     CGRect frameRect = [[self contentView] bounds];
 	
-	if (messageField!=nil) {
+	if (messageData!=nil) {
 		[nameField setText:[[instance contacts] nameForNumber:[messageData objectForKey:MGMIPhoneNumber]]];
 		int type = [[messageData objectForKey:MGMIType] intValue];
-		if (type==MGMIVoicemailType) {
+		if (type==MGMIVoicemailType)
 			[messageField setText:[messageData objectForKey:MGMIText]];
-		} else if (type==MGMISMSIn || type==MGMISMSOut) {
+		else if (type==MGMISMSInType || type==MGMISMSOutType)
 			[messageField setText:[[[[messageData objectForKey:MGMIMessages] lastObject] objectForKey:MGMIText] flattenHTML]];
-		} else {
+		else
 			[messageField setText:[[[messageData objectForKey:MGMIPhoneNumber] areaCode] areaCodeLocation]];
-		}
 		NSDate *today = [NSDate dateWithTimeIntervalSinceNow:-86400];
 		if ([[messageData objectForKey:MGMITime] earlierDate:today]==today) {
 			NSDateFormatter *formatter = [[NSDateFormatter new] autorelease];
@@ -77,8 +78,19 @@
 		}
 	}
 	
-	[nameField setFrame:CGRectMake(8, 3, frameRect.size.width-74, 20)];
+	[nameField setFrame:CGRectMake(20, 3, frameRect.size.width-86, 20)];
 	[dateField setFrame:CGRectMake(frameRect.size.width-64, 3, 60, 20)];
-	[messageField setFrame:CGRectMake(8, frameRect.size.height-35, frameRect.size.width-12, 32)];
+	[messageField setFrame:CGRectMake(20, frameRect.size.height-41, frameRect.size.width-18, 32)];
+	[self setNeedsDisplay];
+}
+- (void)drawRect:(CGRect)rect {
+	if (messageData!=nil) {
+		if (![[messageData objectForKey:MGMIRead] boolValue]) {
+			CGRect frameRect = [[self contentView] bounds];
+			MGMPath *path = [MGMPath pathWithRoundedRect:CGRectMake(4, (frameRect.size.height/2)-6.5, 13, 13) cornerRadius:6.5];
+			[path fillGradientFrom:[UIColor colorWithRed:0.5215 green:0.6901 blue:0.9607 alpha:1.0] to:[UIColor colorWithRed:0.1255 green:0.3138 blue:0.6589 alpha:1.0]];			
+		}
+	}
+	[super drawRect:rect];
 }
 @end

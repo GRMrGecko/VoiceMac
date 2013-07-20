@@ -1,16 +1,16 @@
 //
-//  MGMLoginProcessView.m
+//  MGMProgressView.m
 //  VoiceMac
 //
 //  Created by Mr. Gecko on 8/19/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). http://mrgeckosmedia.com/
 //
 
 #import "MGMProgressView.h"
 
 @implementation MGMProgressView
 - (id)initWithFrame:(CGRect)frameRect {
-	if (self = [super initWithFrame:frameRect]) {
+	if ((self = [super initWithFrame:frameRect])) {
 		[self setBackgroundColor:[UIColor clearColor]];
 		progress = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
 		[progress setFrame:CGRectMake((frameRect.size.width-37)/2, (frameRect.size.height-37)/2, 37, 37)];
@@ -31,12 +31,12 @@
 	return self;
 }
 - (void)dealloc {
-	if (progress)
-		[progress release];
-	if (pleaseWaitField!=nil)
-		[pleaseWaitField release];
-	if (progressField!=nil)
-		[progressField release];
+#if releaseDebug
+	NSLog(@"%s Releasing", __PRETTY_FUNCTION__);
+#endif
+	[progress release];
+	[pleaseWaitField release];
+	[progressField release];
 	[super dealloc];
 }
 - (void)layoutSubviews {

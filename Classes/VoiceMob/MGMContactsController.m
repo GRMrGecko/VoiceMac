@@ -3,7 +3,7 @@
 //  VoiceMob
 //
 //  Created by Mr. Gecko on 9/29/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). http://mrgeckosmedia.com/
 //
 
 #import "MGMContactsController.h"
@@ -15,10 +15,8 @@
 NSString * const MGMContactViewCellIdentifier = @"MGMContactViewCellIdentifier";
 
 @implementation MGMContactsController
-- (id)initWithAccountController:(MGMAccountController *)theAccountController {
-	if (self = [super init]) {
-		accountController = theAccountController;
-		
+- (id)init {
+	if ((self = [super init])) {
 		filterLock = [NSLock new];
 		filterWaiting = 0;
 		contactViews = [NSMutableArray new];
@@ -26,27 +24,42 @@ NSString * const MGMContactViewCellIdentifier = @"MGMContactViewCellIdentifier";
 	}
 	return self;
 }
+- (id)initWithAccountController:(MGMAccountController *)theAccountController {
+	if ((self = [self init])) {
+		accountController = theAccountController;
+	}
+	return self;
+}
 - (void)awakeFromNib {
-	if (contactsMatchString!=nil)
-		[searchBar setText:contactsMatchString];
+	[searchBar setText:contactsMatchString];
 	[self filterContacts];
 	[searchCancelButton setHidden:YES];
 }
+- (void)dealloc {
+#if releaseDebug
+	NSLog(@"%s Releasing", __PRETTY_FUNCTION__);
+#endif
+	[self releaseView];
+	[filterLock release];
+	[contactsMatchString release];
+	[contactViews release];
+	[super dealloc];
+}
 - (void)releaseView {
+#if releaseDebug
+	NSLog(@"%s Releasing", __PRETTY_FUNCTION__);
+#endif
+	[searchBar release];
 	searchBar = nil;
+	[searchCancelButton release];
 	searchCancelButton = nil;
+	[contactsTable release];
 	contactsTable = nil;
+	[self cleanup];
+}
+- (void)cleanup {
 	contactsCount = 0;
 	[contactViews removeAllObjects];
-}
-- (void)dealloc {
-	if (filterLock!=nil)
-		[filterLock release];
-	if (contactsMatchString!=nil)
-		[contactsMatchString release];
-	if (contactViews!=nil)
-		[contactViews release];
-	[super dealloc];
 }
 
 - (MGMContacts *)contacts {
@@ -56,8 +69,11 @@ NSString * const MGMContactViewCellIdentifier = @"MGMContactViewCellIdentifier";
 	return [searchBar text];
 }
 - (void)updateMatchString {
-	if (contactsMatchString!=nil) [contactsMatchString release];
+	[contactsMatchString release];
 	contactsMatchString = [[self filterString] copy];
+}
+- (void)scrollToTop {
+	[contactsTable scrollRectToVisible:CGRectMake(0, 0, [contactsTable frame].size.width, 20) animated:NO];
 }
 
 - (BOOL)searchBarShouldBeginEditing:(UISearchBar *)theSearchBar {
@@ -87,6 +103,7 @@ NSString * const MGMContactViewCellIdentifier = @"MGMContactViewCellIdentifier";
 		cell = [[[MGMContactView alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:MGMContactViewCellIdentifier] autorelease];
 		[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
 		[cell setThemeManager:[[accountController controller] themeManager]];
+		[cell setContacts:[self contacts]];
 	}
 	
 	int row = [indexPath indexAtPosition:1];
@@ -137,13 +154,13 @@ NSString * const MGMContactViewCellIdentifier = @"MGMContactViewCellIdentifier";
 	contactsVisible.location = 0;
 	contactsVisible.length = [[self contacts] maxResults];
 	
-	[contactViews addObjectsFromArray:[[self contacts] contactsMatching:contactsMatchString page:1]];
+	[contactViews addObjectsFromArray:[[self contacts] contactsMatching:contactsMatchString page:1 includePhoto:NO]];
 	contactsCount = count;
 	[filterLock unlock];
 	if (contactsTable==nil) return;
 	[contactsTable performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
 	if (contactsCount!=0)
-		[contactsTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+		[self performSelectorOnMainThread:@selector(scrollToTop) withObject:nil waitUntilDone:NO];
 	[pool drain];
 }
 - (void)loadContacts:(BOOL)updatingCount {
@@ -161,7 +178,7 @@ NSString * const MGMContactViewCellIdentifier = @"MGMContactViewCellIdentifier";
 	int times = contactsLoading.length/maxResults;
 	for (int t=0; t<times; t++) {
 		page++;
-		[contactViews addObjectsFromArray:[[self contacts] contactsMatching:contactsMatchString page:page]];
+		[contactViews addObjectsFromArray:[[self contacts] contactsMatching:contactsMatchString page:page includePhoto:NO]];
 	}
 	contactsVisible = contactsLoading;
 	if (updatingCount)

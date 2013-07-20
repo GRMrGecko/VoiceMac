@@ -3,7 +3,7 @@
 //  VoiceMob
 //
 //  Created by Mr. Gecko on 9/24/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). http://mrgeckosmedia.com/
 //
 
 #import <UIKit/UIKit.h>
@@ -22,8 +22,6 @@ extern NSString * const MGMSIPDefaultDomain;
 	BOOL setupOnly;
 	
 	IBOutlet UIView *setupView;
-	CGRect setupRect;
-	CGRect setupKeyboardRect;
 	IBOutlet UIView *view;
 	IBOutlet UILabel *titleField;
 	IBOutlet UIBarButtonItem *backButton;
@@ -77,6 +75,8 @@ extern NSString * const MGMSIPDefaultDomain;
 	IBOutlet UILabel *S7StatusField;
 	MGMUser *S7CheckUser;
 	MGMInstance *S7CheckInstance;
+	UIAlertView *S7VerificationView;
+	UITextField *S7VerificationField;
 	MGMURLConnectionManager *S7ConnectionManager;
 #if MGMSIPENABLED
 	MGMSIPAccount *S7CheckSIPAccount;
@@ -115,8 +115,6 @@ extern NSString * const MGMSIPDefaultDomain;
 - (void)S5Reset;
 
 //Step 6
-- (IBAction)S6ShowKeyboard:(id)sender;
-- (IBAction)S6CloseKeyboard:(id)sender;
 - (IBAction)S6UserNameChanged:(id)sender;
 - (IBAction)S6DomainChanged:(id)sender;
 - (void)S6Reset;

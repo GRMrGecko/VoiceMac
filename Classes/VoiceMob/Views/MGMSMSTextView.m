@@ -3,11 +3,11 @@
 //  VoiceMob
 //
 //  Created by Mr. Gecko on 10/1/10.
-//  Copyright (c) 2010 Mr. Gecko's Media (James Coleman). All rights reserved. http://mrgeckosmedia.com/
+//  Copyright (c) 2011 Mr. Gecko's Media (James Coleman). http://mrgeckosmedia.com/
 //
 
 #import "MGMSMSTextView.h"
-#import "MGMPath.h"
+#import <MGMUsers/MGMUsers.h>
 
 @implementation MGMSMSTextView
 - (void)awakeFromNib {

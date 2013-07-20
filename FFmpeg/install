@@ -1,25 +1,27 @@
 #!/bin/bash
 
-#PPCFLAGS="-isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.4 -arch ppc"
-PPCFLAGS="-isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.4 -arch ppc"
-PPCCC="/usr/bin/gcc-4.0"
-PPCHOST="ppc-apple-darwin8"
+PPCFLAGS="-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.4  -arch ppc -ggdb"
+PPCCC="/Applications/Xcode.app/Contents/Developer/usr/bin/gcc-4.2"
+PPCCXX="/Applications/Xcode.app/Contents/Developer/usr/bin/g++-4.2"
+PPCAR="/Applications/Xcode.app/Contents/Developer/usr/bin/ar rv"
+PPCRANLIB="/Applications/Xcode.app/Contents/Developer/usr/bin/ranlib"
+PPCHOST="ppc-apple-darwin10"
 PPCPATH="${PWD}/opt-ppc"
-PPCLDFLAGS="${PPCFLAGS}"
+PPCLDFLAGS="-arch ppc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk"
 
-#I386FLAGS="-isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.4 -arch i386"
-I386FLAGS="-isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.4 -arch i386"
-I386CC="/usr/bin/gcc-4.0"
-I386HOST="i386-apple-darwin8"
+I386FLAGS="-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.4  -arch i386 -ggdb"
+I386CC="/Applications/Xcode.app/Contents/Developer/usr/bin/gcc-4.2"
+I386CXX="/Applications/Xcode.app/Contents/Developer/usr/bin/g++-4.2"
+I386HOST="i386-apple-darwin10"
 I386PATH="${PWD}/opt-i386"
-I386LDFLAGS="${I386FLAGS}"
+I386LDFLAGS="-arch i386"
 
-#X86_64FLAGS="-isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.5 -arch x86_64"
-X86_64FLAGS="-isysroot /Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5 -arch x86_64"
-X86_64CC="/usr/bin/gcc-4.0"
-X86_64HOST="x86_64-apple-darwin9"
+X86_64FLAGS="-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5  -arch x86_64 -ggdb"
+X86_64CC="/Applications/Xcode.app/Contents/Developer/usr/bin/gcc-4.2"
+X86_64CXX="/Applications/Xcode.app/Contents/Developer/usr/bin/g++-4.2"
+X86_64HOST="x86_64-apple-darwin10"
 X86_64PATH="${PWD}/opt-x86_64"
-X86_64LDFLAGS="${X86_64FLAGS}"
+X86_64LDFLAGS="-arch x86_64"
 
 STANDARD="--disable-bzlib --enable-pthreads --disable-network --enable-small --disable-ffprobe --disable-ffplay --disable-ffserver --disable-decoder=atrac3 --disable-shared --enable-static \
 --disable-decoders \
@@ -240,11 +242,11 @@ if [ "$1" = "" ]; then
 	
 	echo "Configuring FFmpeg"
 	cd ${FFMPEGNAME}-ppc
-	LDFLAGS="${PPCLDFLAGS} -L${PPCPATH}/lib" CFLAGS="${PPCFLAGS} -I${PPCPATH}/include -mdynamic-no-pic" CC="${PPCCC}" ./configure --prefix="${PPCPATH}" --arch=ppc ${STANDARD}
+	LDFLAGS="${PPCLDFLAGS} -L${PPCPATH}/lib" CFLAGS="${PPCFLAGS} -I${PPCPATH}/include -mdynamic-no-pic" ./configure --enable-cross-compile --prefix="${PPCPATH}" --enable-memalign-hack --target-os=darwin --cc="${PPCCC}" --arch=ppc ${STANDARD}
 	cd ../${FFMPEGNAME}-i386
-	LDFLAGS="${I386LDFLAGS} -L${I386PATH}/lib" CFLAGS="${I386FLAGS} -I${I386PATH}/include -mdynamic-no-pic" CC="${I386CC}" ./configure --prefix="${I386PATH}" --arch=i386 ${STANDARD}
+	LDFLAGS="${I386LDFLAGS} -L${I386PATH}/lib" CFLAGS="${I386FLAGS} -I${I386PATH}/include -mdynamic-no-pic" ./configure --enable-cross-compile --prefix="${I386PATH}" --enable-memalign-hack --target-os=darwin --cc="${I386CC}" --arch=i386 ${STANDARD}
 	cd ../${FFMPEGNAME}-x86_64
-	LDFLAGS="${X86_64LDFLAGS} -L${X86_64PATH}/lib" CFLAGS="${X86_64FLAGS} -I${X86_64PATH}/include -mdynamic-no-pic" CC="${X86_64CC}" ./configure --prefix="${X86_64PATH}" --enable-cross-compile --target-os=darwin --arch=x86_64 ${STANDARD}
+	LDFLAGS="${X86_64LDFLAGS} -L${X86_64PATH}/lib" CFLAGS="${X86_64FLAGS} -I${X86_64PATH}/include -mdynamic-no-pic" ./configure --prefix="${X86_64PATH}" --target-os=darwin --cc="${X86_64CC}" --arch=x86_64 ${STANDARD}
 	
 	echo "Compiling FFmpeg"
 	cd ../${FFMPEGNAME}-ppc
