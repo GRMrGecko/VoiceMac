@@ -22,6 +22,7 @@
 @class MGMContactsController, MGMPreferences, MGMAbout, MGMTaskManager, MGMURLConnectionManager, MGMThemeManager, MGMSMSManager, MGMBadge, MGMMultiSMS, MGMInstance, WebView;
 
 extern NSString * const MGMContactsControllersChangedNotification;
+extern NSString * const MGMSIPRecordFolder;
 
 @interface MGMController : NSObject {
 	NSMutableArray *contactsControllers;

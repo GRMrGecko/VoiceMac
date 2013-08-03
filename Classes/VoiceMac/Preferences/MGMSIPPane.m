@@ -19,7 +19,11 @@
 
 #if MGMSIPENABLED
 #import "MGMSIPPane.h"
+#import "MGMController.h"
 #import <VoiceBase/VoiceBase.h>
+
+NSString * const MGMCodecName = @"name";
+NSString * const MGMCodecPriority = @"priority";
 
 @implementation MGMSIPPane
 - (id)initWithPreferences:(MGMPreferences *)thePreferences {
@@ -62,15 +66,10 @@
 				[publicAddressField setStringValue:[defaults objectForKey:MGMSIPPublicAddress]];
 			if ([defaults objectForKey:MGMSIPUserAgent]!=nil)
 				[userAgentField setStringValue:[defaults objectForKey:MGMSIPUserAgent]];
-			NSArray *codecs = [[[MGMSIP sharedSIP] codecs] allKeys];
-			codecs = [codecs sortedArrayUsingSelector:@selector(compare:)];
-			int currentCodecIndex = 0;
-			for (int i=0; i<[codecs count]; i++) {
-				if ([[codecs objectAtIndex:i] isEqual:[defaults objectForKey:MGMSIPCodec]])
-					currentCodecIndex = i;
-				[codecPopUp addItemWithTitle:[codecs objectAtIndex:i]];
+			if ([defaults objectForKey:MGMSIPRecordFolder]==nil || [[defaults objectForKey:MGMSIPRecordFolder] isEqual:@""]) {
+				[defaults setObject:@"~/Desktop/" forKey:MGMSIPRecordFolder];
 			}
-			[codecPopUp selectItemAtIndex:currentCodecIndex];
+			[recordedCallsField setStringValue:[defaults objectForKey:MGMSIPRecordFolder]];
 			
 			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 			[notificationCenter addObserver:self selector:@selector(volumeChanged:) name:MGMSIPVolumeChangedNotification object:nil];
@@ -99,6 +98,8 @@
 		//[[MGMSIP sharedSIP] restart];
 	}
 	[mainView release];
+	[codecs release];
+	[codecWindow release];
 	[super dealloc];
 }
 + (void)setUpToolbarItem:(NSToolbarItem *)theItem {
@@ -253,8 +254,76 @@
 	[[NSUserDefaults standardUserDefaults] setObject:[userAgentField stringValue] forKey:MGMSIPUserAgent];
 	shouldRestart = YES;
 }
-- (IBAction)codec:(id)sender {
-	[[MGMSIP sharedSIP] setTopCodec:[[codecPopUp selectedItem] title]];
+- (IBAction)recordedCallsFolder:(id)sender {
+	[[NSUserDefaults standardUserDefaults] setObject:[logFileField stringValue] forKey:MGMSIPRecordFolder];
+}
+- (IBAction)chooseRecordedCallsFolder:(id)sender {
+	NSOpenPanel *panel = [NSOpenPanel openPanel];
+	[panel setCanChooseDirectories:YES];
+	[panel setCanChooseFiles:NO];
+	int returnCode;
+	returnCode = [panel runModal];
+	if (returnCode==NSOKButton) {
+		NSString *path = [[panel URL] path];
+		[recordedCallsField setStringValue:path];
+		[[NSUserDefaults standardUserDefaults] setObject:path forKey:MGMSIPRecordFolder];
+	}
+}
+- (void)reloadCodecs {
+	NSDictionary *allCodecs = [[MGMSIP sharedSIP] codecs];
+	NSArray *codecKeys = [allCodecs allKeys];
+	[codecs release];
+	codecs = [NSMutableArray new];
+	for (int i=0; i<[codecKeys count]; i++) {
+		[codecs addObject:[NSDictionary dictionaryWithObjectsAndKeys:[codecKeys objectAtIndex:i], MGMCodecName, [allCodecs objectForKey:[codecKeys objectAtIndex:i]], MGMCodecPriority, nil]];
+	}
+	if ([[codecView sortDescriptors] count]==0) {
+		[codecView setSortDescriptors:[NSArray arrayWithObject:[[[NSSortDescriptor alloc] initWithKey:MGMCodecName ascending:YES] autorelease]]];
+	}
+	[codecs sortUsingDescriptors:[codecView sortDescriptors]];
+	[codecView reloadData];
+}
+- (IBAction)showCodecs:(id)sender {
+	[self reloadCodecs];
+	[[NSApplication sharedApplication] beginSheet:codecWindow modalForWindow:[preferences preferencesWindow] modalDelegate:nil didEndSelector:nil contextInfo:nil];
+}
+- (IBAction)hideCodecs:(id)sender {
+	[[NSApplication sharedApplication] endSheet:codecWindow returnCode:NSCancelButton];
+	[codecWindow orderOut:sender];
+}
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)theTableView {
+	return [codecs count];
+}
+- (id)tableView:(NSTableView *)theTableView objectValueForTableColumn:(NSTableColumn *)theColumn row:(NSInteger)rowIndex {
+	if ([[theColumn identifier] isEqualToString:MGMCodecName]) {
+		return [[codecs objectAtIndex:rowIndex] objectForKey:MGMCodecName];
+	} else if ([[theColumn identifier] isEqualToString:MGMCodecPriority]) {
+		return [[codecs objectAtIndex:rowIndex] objectForKey:MGMCodecPriority];
+	}
+	return @"";
+}
+- (BOOL)tableView:(NSTableView *)theTableView shouldEditTableColumn:(NSTableColumn *)theColumn row:(NSInteger)rowIndex {
+	if ([[theColumn identifier] isEqualToString:MGMCodecPriority])
+		return YES;
+	return NO;
+}
+- (void)tableView:(NSTableView *)theTableView setObjectValue:(id)theValue forTableColumn:(NSTableColumn *)theColumn row:(NSInteger)rowIndex {
+	NSString *codecName = [[codecs objectAtIndex:rowIndex] objectForKey:MGMCodecName];
+	unsigned int priority = [theValue unsignedIntValue];
+	if (priority>255)
+		priority = 255;
+	[codecs replaceObjectAtIndex:rowIndex withObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithUnsignedInt:priority], MGMCodecPriority, codecName, MGMCodecName, nil]];
+	[[MGMSIP sharedSIP] setPriority:priority forCodec:codecName];
+	[codecs sortUsingDescriptors:[theTableView sortDescriptors]];
+	[theTableView reloadData];
+}
+- (BOOL)tableView:(NSTableView *)aTableView shouldSelectTableColumn:(NSTableColumn *)aTableColumn {
+	return NO;
+}
+- (void)tableView:(NSTableView *)theTableView sortDescriptorsDidChange:(NSArray *)oldDescriptors {
+	[codecs sortUsingDescriptors:[theTableView sortDescriptors]];
+	[theTableView reloadData];
 }
 @end
 #endif

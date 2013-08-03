@@ -40,7 +40,7 @@ extern NSString * const MGMSIPEchoCacnellationEnabled;
 extern NSString * const MGMSIPPort;
 extern NSString * const MGMSIPPublicAddress;
 extern NSString * const MGMSIPUserAgent;
-extern NSString * const MGMSIPCodec;
+extern NSString * const MGMSIPCodecs;
 
 extern NSString * const MGMNetworkConnectedNotification;
 extern NSString * const MGMNetworkDisconnectedNotification;
@@ -113,7 +113,6 @@ typedef enum {
 	BOOL shouldRestart;
 	NSTimer *restartTimer;
 	
-	unsigned int codecOriginalPriority;
 	NSMutableDictionary *codecsInfo;
 	
 	NSMutableArray *accounts;
@@ -165,7 +164,6 @@ typedef enum {
 
 - (void)registerThread:(pj_thread_desc *)thePJThreadDesc;
 
-- (void)setTopCodec:(NSString *)theCodec;
 - (void)setPriority:(unsigned int)thePriority forCodec:(NSString *)theCodec;
 - (NSDictionary *)codecs;
 

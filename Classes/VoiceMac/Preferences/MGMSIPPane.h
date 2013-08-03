@@ -48,8 +48,12 @@
 	IBOutlet NSTextField *logFileLevelField;
 	IBOutlet NSTextField *consoleLogLevelField;
 	IBOutlet NSTextField *publicAddressField;
+	IBOutlet NSTextField *recordedCallsField;
 	IBOutlet NSTextField *userAgentField;
-	IBOutlet NSPopUpButton *codecPopUp;
+	
+	NSMutableArray *codecs;
+	IBOutlet NSWindow *codecWindow;
+	IBOutlet NSTableView *codecView;
 }
 - (id)initWithPreferences:(MGMPreferences *)thePreferences;
 + (void)setUpToolbarItem:(NSToolbarItem *)theItem;
@@ -80,6 +84,9 @@
 - (IBAction)consoleLogLevel:(id)sender;
 - (IBAction)publicAddress:(id)sender;
 - (IBAction)userAgent:(id)sender;
-- (IBAction)codec:(id)sender;
+- (IBAction)recordedCallsFolder:(id)sender;
+- (IBAction)chooseRecordedCallsFolder:(id)sender;
+- (IBAction)showCodecs:(id)sender;
+- (IBAction)hideCodecs:(id)sender;
 @end
 #endif

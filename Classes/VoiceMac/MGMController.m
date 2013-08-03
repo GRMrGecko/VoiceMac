@@ -40,6 +40,8 @@ NSString * const MGMLaunchCount = @"MGMLaunchCount";
 
 NSString * const MGMMakeDefault = @"MGMMakeDefault";
 
+NSString * const MGMSIPRecordFolder = @"MGMSIPRecordFolder";
+
 NSString * const MGMContactsControllersChangedNotification = @"MGMContactsControllersChangedNotification";
 
 NSString * const MGMLoading = @"Loading...";
@@ -54,6 +56,7 @@ NSString * const MGMLoading = @"Loading...";
 	[GrowlApplicationBridge setGrowlDelegate:nil];
 	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults registerDefaults:[NSMutableDictionary dictionaryWithObjectsAndKeys:@"~/Desktop/", MGMSIPRecordFolder, nil]];
 	if ([defaults boolForKey:MGMMakeDefault]) {
 		NSString *bundleID = [[NSBundle mainBundle] bundleIdentifier];
 		LSSetDefaultHandlerForURLScheme(CFSTR("tel"), (CFStringRef)bundleID);

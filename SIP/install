@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PPCFLAGS="-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.4  -arch ppc -ggdb"
+PPCFLAGS="-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.4  -arch ppc -ggdb  -DPJMEDIA_HAS_G7221_CODEC=1 -DPJMEDIA_HAS_G711_CODEC=1"
 PPCCC="/Applications/Xcode.app/Contents/Developer/usr/bin/gcc-4.2"
 PPCCXX="/Applications/Xcode.app/Contents/Developer/usr/bin/g++-4.2"
 PPCAR="/Applications/Xcode.app/Contents/Developer/usr/bin/ar rv"
@@ -9,14 +9,14 @@ PPCHOST="ppc-apple-darwin10"
 PPCPATH="${PWD}/opt-ppc"
 PPCLDFLAGS="-arch ppc -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk"
 
-I386FLAGS="-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.4  -arch i386 -ggdb"
+I386FLAGS="-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.4  -arch i386 -ggdb  -DPJMEDIA_HAS_G7221_CODEC=1 -DPJMEDIA_HAS_G711_CODEC=1"
 I386CC="/Applications/Xcode.app/Contents/Developer/usr/bin/gcc-4.2"
 I386CXX="/Applications/Xcode.app/Contents/Developer/usr/bin/g++-4.2"
 I386HOST="i386-apple-darwin10"
 I386PATH="${PWD}/opt-i386"
 I386LDFLAGS="-arch i386"
 
-X86_64FLAGS="-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5  -arch x86_64 -ggdb"
+X86_64FLAGS="-isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.5.sdk -mmacosx-version-min=10.5  -arch x86_64 -ggdb  -DPJMEDIA_HAS_G7221_CODEC=1 -DPJMEDIA_HAS_G711_CODEC=1"
 X86_64CC="/Applications/Xcode.app/Contents/Developer/usr/bin/gcc-4.2"
 X86_64CXX="/Applications/Xcode.app/Contents/Developer/usr/bin/g++-4.2"
 X86_64HOST="x86_64-apple-darwin10"
@@ -204,6 +204,7 @@ if [ "$1" = "" ]; then
 	lipo -create "${PPCPATH}/lib/libpjlib-util-powerpc-apple-darwin10.a" "${I386PATH}/lib/libpjlib-util-i386-apple-darwin10.a" "${X86_64PATH}/lib/libpjlib-util-x86_64-apple-darwin10.a" -output "${FINALPATH}/lib/libpjlib-util.a"
 	lipo -create "${PPCPATH}/lib/libpjmedia-audiodev-powerpc-apple-darwin10.a" "${I386PATH}/lib/libpjmedia-audiodev-i386-apple-darwin10.a" "${X86_64PATH}/lib/libpjmedia-audiodev-x86_64-apple-darwin10.a" -output "${FINALPATH}/lib/libpjmedia-audiodev.a"
 	lipo -create "${PPCPATH}/lib/libpjmedia-codec-powerpc-apple-darwin10.a" "${I386PATH}/lib/libpjmedia-codec-i386-apple-darwin10.a" "${X86_64PATH}/lib/libpjmedia-codec-x86_64-apple-darwin10.a" -output "${FINALPATH}/lib/libpjmedia-codec.a"
+	lipo -create "${PPCPATH}/lib/libpjmedia-videodev-powerpc-apple-darwin10.a" "${I386PATH}/lib/libpjmedia-videodev-i386-apple-darwin10.a" "${X86_64PATH}/lib/libpjmedia-videodev-x86_64-apple-darwin10.a" -output "${FINALPATH}/lib/libpjmedia-videodev.a"
 	lipo -create "${PPCPATH}/lib/libpjmedia-powerpc-apple-darwin10.a" "${I386PATH}/lib/libpjmedia-i386-apple-darwin10.a" "${X86_64PATH}/lib/libpjmedia-x86_64-apple-darwin10.a" -output "${FINALPATH}/lib/libpjmedia.a"
 	lipo -create "${PPCPATH}/lib/libpjnath-powerpc-apple-darwin10.a" "${I386PATH}/lib/libpjnath-i386-apple-darwin10.a" "${X86_64PATH}/lib/libpjnath-x86_64-apple-darwin10.a" -output "${FINALPATH}/lib/libpjnath.a"
 	lipo -create "${PPCPATH}/lib/libpjsip-powerpc-apple-darwin10.a" "${I386PATH}/lib/libpjsip-i386-apple-darwin10.a" "${X86_64PATH}/lib/libpjsip-simple-x86_64-apple-darwin10.a" -output "${FINALPATH}/lib/libpjsip-simple.a"

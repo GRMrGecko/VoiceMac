@@ -289,7 +289,7 @@ NSString * const MGMSCTitleNoNameFormat = @"Call With %@";
 		[call stopRecording];
 	} else {
 		NSFileManager *manager = [NSFileManager defaultManager];
-		NSString *baseName = [[NSString stringWithFormat:@"~/Desktop/Call With %@ - ", phoneNumber] stringByExpandingTildeInPath];
+		NSString *baseName = [[[[NSUserDefaults standardUserDefaults] objectForKey:MGMSIPRecordFolder] stringByExpandingTildeInPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"Call With %@ - ", phoneNumber]];
 		NSString *name = nil;
 		for (int i=1; i<50; i++) { // Not like someone will have 50 recordings with one person on their desktop...
 			name = [[baseName stringByAppendingFormat:@"%02d", i] stringByAppendingPathExtension:MGMWavExt];
