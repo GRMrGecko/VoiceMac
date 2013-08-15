@@ -24,6 +24,7 @@
 @class MGMUser, MGMContacts, MGMProgressView, MGMSIPAccount, MGMSIPCall, MGMSIPCallWindow;
 
 extern NSString * const MGMSIPUserAreaCode;
+extern NSString * const MGMSIPExitCode;
 
 @interface MGMSIPUser : MGMContactsController
 #if (MAC_OS_X_VERSION_MAX_ALLOWED >= 1060)

@@ -28,6 +28,7 @@
 #import <MGMUsers/MGMUsers.h>
 
 NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
+NSString * const MGMSIPExitCode = @"MGMVSIPExitCode";
 
 @implementation MGMSIPUser
 + (id)SIPUser:(MGMUser *)theUser controller:(MGMController *)theController {
@@ -233,8 +234,11 @@ NSString * const MGMSIPUserAreaCode = @"MGMVSIPUserAreaCode";
 		NSBeep();
 		return;
 	}
-	if ([phoneNumber hasPrefix:@"011"])
+	if ([phoneNumber hasPrefix:@"011"]) {
 		phoneNumber = [phoneNumber substringFromIndex:3];
+		if ([user settingForKey:MGMSIPExitCode]!=nil)
+			phoneNumber = [[user settingForKey:MGMSIPExitCode] stringByAppendingString:phoneNumber];
+	}
 	[account makeCallToNumber:phoneNumber];
 }
 

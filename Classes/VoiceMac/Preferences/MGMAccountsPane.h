@@ -57,6 +57,7 @@
 	IBOutlet NSTextField *SIPRegistrarTimeoutField;
 	IBOutlet NSPopUpButton *SIPTransportPopUp;
 	IBOutlet NSPopUpButton *SIPToneTypePopUp;
+	IBOutlet NSTextField *SIPExitCodeField;
 	IBOutlet NSMatrix *SIPContactsMatrix;
 	IBOutlet NSPopUpButton *SIPGoogleContactsPopUp;
 }

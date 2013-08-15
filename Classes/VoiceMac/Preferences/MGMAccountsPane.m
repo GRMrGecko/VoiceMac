@@ -61,6 +61,7 @@ NSString * const MGMLogout = @"Logout";
 			[SIPRegistrarTimeoutField setEnabled:NO];
 			[SIPTransportPopUp setEnabled:NO];
 			[SIPToneTypePopUp setEnabled:NO];
+			[SIPExitCodeField setEnabled:NO];
 			[SIPContactsMatrix setEnabled:NO];
 			[SIPGoogleContactsPopUp setEnabled:NO];
 			[settingsTab selectTabViewItemAtIndex:0];
@@ -166,6 +167,7 @@ NSString * const MGMLogout = @"Logout";
 	[SIPRegistrarTimeoutField setEnabled:NO];
 	[SIPTransportPopUp setEnabled:NO];
 	[SIPToneTypePopUp setEnabled:NO];
+	[SIPExitCodeField setEnabled:NO];
 	[SIPContactsMatrix setEnabled:NO];
 	[SIPGoogleContactsPopUp setEnabled:NO];
 	if (selected==-1)
@@ -255,6 +257,7 @@ NSString * const MGMLogout = @"Logout";
 			[SIPRegistrarTimeoutField setEnabled:YES];
 			[SIPTransportPopUp setEnabled:YES];
 			[SIPToneTypePopUp setEnabled:YES];
+			[SIPExitCodeField setEnabled:YES];
 		}
 		if ([user settingForKey:MGMSIPAccountFullName]!=nil)
 			[SIPFullNameField setStringValue:[user settingForKey:MGMSIPAccountFullName]];
@@ -301,6 +304,10 @@ NSString * const MGMLogout = @"Logout";
 		[SIPTransportPopUp selectItemAtIndex:transport];
 		int dtmfToneType = [[user settingForKey:MGMSIPAccountDTMFToneType] intValue];
 		[SIPToneTypePopUp selectItemAtIndex:dtmfToneType];
+		if ([user settingForKey:MGMSIPExitCode]!=nil)
+			[SIPExitCodeField setStringValue:[user settingForKey:MGMSIPExitCode]];
+		else
+			[SIPExitCodeField setStringValue:@""];
 		
 		NSArray *users = [MGMUser users];
 		NSMenu *menu = [[NSMenu new] autorelease];
@@ -400,6 +407,7 @@ NSString * const MGMLogout = @"Logout";
 	[user setSetting:[NSNumber numberWithInt:[SIPRegistrarTimeoutField intValue]] forKey:MGMSIPAccountRegisterTimeout];
 	[user setSetting:[NSNumber numberWithInt:[SIPTransportPopUp indexOfSelectedItem]] forKey:MGMSIPAccountTransport];
 	[user setSetting:[NSNumber numberWithInt:[SIPToneTypePopUp indexOfSelectedItem]] forKey:MGMSIPAccountDTMFToneType];
+	[user setSetting:[SIPExitCodeField stringValue] forKey:MGMSIPExitCode];
 #endif
 }
 
