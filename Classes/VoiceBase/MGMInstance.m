@@ -423,7 +423,7 @@ const BOOL MGMInstanceInvisible = YES;
 		[handler setFinish:@selector(indexDidFinish:)];
 		[handler setInvisible:MGMInstanceInvisible];
 		[connectionManager addHandler:handler];
-	} else if ([returnedString containsString:@"<div class=\"sign-in\""]) {
+	} else if ([returnedString containsString:@"id=\"gaia_loginform\""]) {
 		if (webLoginTries>2) {
 			NSError *error = [NSError errorWithDomain:@"com.MrGeckosMedia.MGMInstance.Login" code:1 userInfo:[NSDictionary dictionaryWithObject:@"Unable to login. Please check your Credentials." forKey:NSLocalizedDescriptionKey]];
 			if (delegate!=nil && [delegate respondsToSelector:@selector(loginError:)]) {
@@ -728,6 +728,9 @@ const BOOL MGMInstanceInvisible = YES;
 	[request setHTTPMethod:MGMPostMethod];
 	[request setValue:MGMURLForm forHTTPHeaderField:MGMContentType];
 	[verificationParameters setObject:theCode forKey:@"smsUserPin"];
+	[verificationParameters setObject:@"1" forKey:@"pstMsg"];
+	[verificationParameters removeObjectForKey:@"retry"];
+	[verificationParameters removeObjectForKey:@"smsSend"];
 	NSArray *parametersKeys = [verificationParameters allKeys];
 	NSMutableString *bodyString = [NSMutableString string];
 	for (int i=0; i<[parametersKeys count]; i++) {
